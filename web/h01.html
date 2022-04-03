@@ -4,14 +4,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>test1</title>
+    <title>가상선택자</title>
     <style>
-        div{width:300px; height:200px;}
+        div{width:500px; height:400px;}
+        div>ul>li{width:100px; height:50px; border: 1px solid black; float:left; list-style-type: none;}
+        div+p{font-size:15px; color:blue;}
+        p{clear:both;}
+        p::first-letter{font-size:25px;}
+        ul li:nth-child(2){background:lightpink;}
+        a:hover{font-size: 30px; color:red;}
+        input[type="checkbox"]{display: none;}
+        input[type="checkbox"]:checked+label::after{width:30px; height:30px; content:'✓';}
     </style>
 </head>
 <body>
     <div>
-        hello
+        <p>과일에는 어떤 것들이 있을까요?</p>
+        <ul>
+            <li>오렌지</li>
+            <li>수박</li>
+            <li>딸기</li>
+        </ul>
     </div>
+    <p>동물에는 어떤 것들이 있을까요?</p>
+    <ul>
+        <li>호랑이</li>
+        <li>토끼</li>
+        <a href="#" type="_blank">
+            <li>공룡</li>
+        </a> 
+    </ul>
+    <form>
+        <label>좋아하는 과일</label>
+        <input type="checkbox" name="fruit" value="orange" id="orange"><label for="orange"></label><label for="orange">오렌지</label>
+        <input type="checkbox" name="fruit" value="strawberry" id="strawberry"><label for="strawberry"></label><label for="strawberry">딸기</label>
+        <input type="checkbox" name="fruit" value="apple" id="apple"><label for="apple"></label><label for="apple">사과</label>
+        <input type="checkbox" name="fruit" value="melon" id="melon"><label for="melon"></label><label for="melon">메론</label>
+        
+    </form>
 </body>
 </html>
