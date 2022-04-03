@@ -12,9 +12,11 @@
         p{clear:both;}
         p::first-letter{font-size:25px;}
         ul li:nth-child(2){background:lightpink;}
-        a:hover{font-size: 30px; color:red;}
+        ul>a:hover{font-size: 30px; color:red;}
         input[type="checkbox"]{display: none;}
         input[type="checkbox"]:checked+label::after{width:30px; height:30px; content:'✓';}
+        form+a:link::before{content:'☆'}
+        form+a:hover::after{content:'✖︎'}
     </style>
 </head>
 <body>
@@ -34,7 +36,7 @@
             <li>공룡</li>
         </a> 
     </ul>
-    <form>
+    <form action="#" method="get" name="fruitselect">
         <label>좋아하는 과일</label>
         <input type="checkbox" name="fruit" value="orange" id="orange"><label for="orange"></label><label for="orange">오렌지</label>
         <input type="checkbox" name="fruit" value="strawberry" id="strawberry"><label for="strawberry"></label><label for="strawberry">딸기</label>
