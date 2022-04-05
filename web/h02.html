@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>jquery & js</title>
+    <script>
+        let n=1;
+        function gallery(num){
+                n += num;
+                if (n<1){n=5;}else if(n>5){n=1;}
+                document.getElementById('photo').setAttribute('src','images/'+n+'.jpg');
+            }        
+        $('#left').click(function(){gallery(-1)
+           
+            
+        });
+
+    </script>
+    <style>
+        #main{width:400px; height:300px; overflow:hidden; border:1px solid black; margin:0 auto;}
+        #btnbox{width:400px; margin:10px auto; text-align: center;}
+    </style>
+</head>
+<body>
+    <div id="main">
+        <img src="images/1.jpg" name="photo" id="photo">
+    </div>
+    <div id="btnbox">
+        <button id="left">◀︎ 이전</button>
+        <button onclick ="gallery(1)" id="right">다음 ►</button>
+    </div>
+</body>
+</html>
