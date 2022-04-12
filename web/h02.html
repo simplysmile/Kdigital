@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>비교해보기</title>
+    <script>
+        $(function(){
+            let note = '<p> 차이를 알아봅시다. </p>'
+            $("#div1").prepend(note)
+            $("#div2").append(note)
+            $("#div3").html(note)
+            $("#div4").text(note)
+        })
+    </script>
+    <style>
+        div{width:400px; height:80px; border:1px solid black; font-size: 15px;}
+        #div1{background:lightpink;}
+        #div2{background:rgb(195, 228, 234);}
+        #div3{background:rgb(164, 241, 227);}
+        #div4{background:rgb(246, 213, 155);}
+    </style>
+</head>
+<body>
+    <div id="div1">
+        <p>prepend()입니다.</p>
+    </div>
+    <div id="div2">
+        <p>append()입니다.</p>
+    </div>
+    <div id="div3">
+        <p>html()입니다.</p>
+    </div>
+    <div id="div4">
+        <p>text()입니다.</p>
+    </div>
+
+    
+</body>
+</html>

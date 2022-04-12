@@ -5,38 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>비교해보기</title>
+    <title>Document</title>
     <script>
         $(function(){
-            let note = '<p> 차이를 알아봅시다. </p>'
-            $("#div1").prepend(note)
-            $("#div2").append(note)
-            $("#div3").html(note)
-            $("#div4").text(note)
-        })
+            $('#check').click(function(){
+                $('#attrTry').text('h2 클래스 이름 : '+$('h2').attr("class"))
+                $('p').attr("class","on")
+            })//button
+        })//jquery
     </script>
     <style>
-        div{width:400px; height:80px; border:1px solid black; font-size: 15px;}
-        #div1{background:lightpink;}
-        #div2{background:rgb(195, 228, 234);}
-        #div3{background:rgb(164, 241, 227);}
-        #div4{background:rgb(246, 213, 155);}
+        .h2Tag{color:blue;}
+        .on{color:green; font-weight: 400;}
     </style>
 </head>
 <body>
-    <div id="div1">
-        <p>prepend()입니다.</p>
+    <div>
+        <button type="button" id="check">확인</button>
+        <h2 class="h2Tag">attr로 속성 읽어오기</h2>
+        <h4 id="attrTry"></h4>
+        <p>attr로 속성 부여</p>
     </div>
-    <div id="div2">
-        <p>append()입니다.</p>
-    </div>
-    <div id="div3">
-        <p>html()입니다.</p>
-    </div>
-    <div id="div4">
-        <p>text()입니다.</p>
-    </div>
-
-    
 </body>
 </html>
