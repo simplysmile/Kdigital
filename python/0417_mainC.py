@@ -1,3 +1,4 @@
+from stumanage.stuC_0417 import Student
 from stumanage.defC_0417 import *
 
 while True:
