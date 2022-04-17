@@ -1,9 +1,11 @@
 import cx_Oracle
+import sys
+import os
 
-cx_Oracle.init_oracle_client(lib_dir=r"/Users/yunjihyeon/Documents/cloud/instantclient_19_8 ") 
+cx_Oracle.init_oracle_client(lib_dir=r"/Users/yunjihyeon/Documents/cloud/instantclient_19_8") 
 # 본인이 Instant Client 넣어놓은 경로를 입력해준다
 
-connection = cx_Oracle.connect(user='admin', password='Clouddata2022!', dsn='guro_high')
+connection = cx_Oracle.connect(user='oceanastraea', password='Clouddata2022!', dsn='oceanastraea/guro_high')
 # 본인이 접속할 오라클 클라우드 DB 사용자이름, 비밀번호, dsn을 넣어준다.
 # 커서 생성
 cursor = connection.cursor()
