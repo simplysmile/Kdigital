@@ -1,0 +1,132 @@
+@charset "utf-8";
+/*
+ Filename:		icon.js
+ Descript:		
+ Writer--:		glim
+ CreateDate :	20180828
+ LatestDate:	20180828
+*/
+
+
+/* E:sprite icon ****************************************************************************
+*********************************************************************************************/
+i.ico{
+	width:0;height:0;
+   display:inline-block;
+   vertical-align:top;color:transparent; overflow:hidden;line-height:999px;
+   background:url(../images/common/sprite.png) no-repeat;}
+/* E:sprite icon ****************************************************************************
+*********************************************************************************************/
+
+/*PC 버전 에만 적용*/
+@media screen and (min-width:824px) {
+	
+	
+	/* header *********************************************************************/
+	.ico.ilogo{width:61px;height:30px;}
+	.ico.ilogo{background-position:-2px -2px}
+	.logo.about .ico.ilogo{background-position:-2px -32px}
+	.logo.portfolio .ico.ilogo{background-position:-2px -62px}
+	.logo.story .ico.ilogo{background-position:-2px -92px}
+	.logo.contact .ico.ilogo{background-position:-2px -122px}
+	
+	/* footer *********************************************************************/
+	.footer .ibtn_intro_download .ico.iintro_download {width:17px;height:17px;background-position:-2px -240px}
+	.footer .ibtn_intro_request .ico.irequest{width:17px;height:17px;background-position:-50px -240px}
+	.footer .ibtn_intro_download:hover .ico.iintro_download {background-position:-2px -260px}
+	.footer .ibtn_intro_request:hover .ico.irequest{background-position:-50px -260px}
+	
+	.ibtn_facebook .ico.ifacebook{width:24px;height:24px;background-position:-310px -52px}
+	.ibtn_instagram .ico.iinstar{width:24px;height:24px;background-position:-360px -52px}
+	
+	.ico.ico_intro_service_01 {background-position: -600px -60px;}
+	.ico.ico_intro_service_02 {background-position: -680px -60px;}
+	.ico.ico_intro_service_03 {background-position: -760px -60px;}
+	.ico.ico_intro_service_04 {background-position: -840px -60px;}
+	
+	.ibtn_intro_download .ico.iintro_download {width:17px;height:17px;background-position:-2px -260px}
+	.ico.ibtn_history_prev {width:41px;height:41px;background-position:-260px -86px}
+	.ico.ibtn_history_next {width:41px;height:41px;background-position:-303px -86px}
+	.ico.i_social_share{width:20px;height:20px;background-position:-100px -240px}
+	.ico.i_social_share{background-position:-100px -260px}
+	
+	.ibtn_social .ico.i_social_share{width:20px;height:20px;background-position:-100px -240px}
+	.ibtn_social:hover .ico.i_social_share{background-position:-100px -260px}
+	
+	.ico.ibtn_list_more {width:36px;height:36px;background-position:-900px -110px;}
+	
+	.ibtn_share .ico_share_kakao {width:70px;height:70px;background-position:-720px -210px}
+	.ibtn_share .ico_share_facebook {width:70px;height:70px;background-position:-790px -210px}
+	.ibtn_share .ico_share_twitter {width:70px;height:70px;background-position:-860px -210px}
+	.ibtn_share .ico_share_link {width:70px;height:70px;background-position:-930px -210px}
+	
+	.ibtn_share:hover .ico_share_kakao {background-position:-720px -280px}
+	.ibtn_share:hover .ico_share_facebook {background-position:-790px -280px}
+	.ibtn_share:hover .ico_share_twitter {background-position:-860px -280px}
+	.ibtn_share:hover .ico_share_link {background-position:-930px -280px}
+	
+	.btn_go_top .ico_go_top {width:18px;height:18px;background-position:-200px -2px;}
+	.btn_go_top:hover .ico_go_top {width:18px;height:18px;background-position:-200px -30px;}
+	
+	
+	.ico.ico_file_delete {width:20px;height:20px;background-position:-230px -2px;}
+	
+}
+
+/*모바일 defualt 가로버전 - 823px 이하 전체적용 */
+@media screen and (max-width:823px ) {
+	i.ico{background-size:500px 350px;}
+	
+	/* header *********************************************************************/
+	.ico.ilogo{width:43px;height:21px;}
+	.ico.ilogo{background-position:-35px -2px}
+	.logo.about .ico.ilogo{background-position:-35px -24px}
+	.logo.portfolio .ico.ilogo{background-position:-35px -46px}
+	.logo.story .ico.ilogo{background-position:-35px -68px}
+	.logo.contact .ico.ilogo{background-position:-35px -90px}
+	
+	
+	/* footer *********************************************************************/
+	.footer .ibtn_intro_request .ico.irequest{width:19px;height:19px;background-position:-25px -140px}
+	.footer .ibtn_intro_request:hover .ico.irequest {background-position:-25px -160px}
+	.footer .ibtn_facebook .ico.ifacebook{width:17px;height:17px;background-position:-161px -2px}
+	.footer .ibtn_instagram .ico.iinstar{width:17px;height:17px;background-position:-180px -2px}
+	/* .footer .ibtn_intro_download .ico.iintro_download {width:91px;height:23px;background-position:-200px -2px} */
+	
+	.ibtn_facebook .ico.ifacebook{width:24px;height:24px;background-position:-155px 0}
+	.ibtn_instagram .ico.iinstar{width:24px;height:24px;background-position:-180px 0}
+	
+	
+	.ico.ico_intro_service_01 {background-position: -300px -2px;}
+	.ico.ico_intro_service_02 {background-position: -340px -2px;}
+	.ico.ico_intro_service_03 {background-position: -380px -2px;}
+	.ico.ico_intro_service_04 {background-position: -420px -2px;}
+	
+	
+	
+	.ibtn_intro_download .ico.iintro_download {width:19px;height:19px;background-position:-1px -140px}
+	
+	
+	.ico.ico_intro_arr {width:14px;height:12px;background-position:-88px -120px}
+	.device.about .ico.ico_intro_arr {width:14px;height:12px;background-position:-88px -140px}
+		
+	
+	.ico.i_detail_facebook{width:25px;height:25px;background-position:-300px -55px}
+	.ico.i_detail_blog{width:25px;height:25px;background-position:-327px -55px}
+	
+	
+	.ico.ibtn_list_more {width:28px;height:28px;background-position:-470px -55px;}
+		
+	.ico.i_social_share {width:20px;height:20px;background-position:  -68px -140px;}
+	
+	/* pop_share */
+	.ibtn_share .ico_share_kakao {width:45px;height:45px;background-position:-320px -175px}
+	.ibtn_share .ico_share_facebook {width:45px;height:45px;background-position:-365px -175px}
+	.ibtn_share .ico_share_twitter {width:45px;height:45px;background-position:-410px -175px}
+	.ibtn_share .ico_share_link {width:45px;height:45px;background-position:-455px -175px}
+	
+	.ibtn_share:hover .ico_share_kakao {background-position:-320px -220px}
+	.ibtn_share:hover .ico_share_facebook {background-position:-365px -220px}
+	.ibtn_share:hover .ico_share_twitter {background-position:-410px -220px}
+	.ibtn_share:hover .ico_share_link {background-position:-455px -220px}
+}

@@ -1,0 +1,129 @@
+@charset "utf-8";
+/*
+ Filename:		lpop.css
+ Descript:		
+ Writer--:		glim
+ CreateDate :	20180712
+ LatestDate:	20180927
+ 
+ 
+*/
+
+/* lpop *********************************************************************/
+
+/* dialog popup 기본스타일*/
+.ui-dialog {position: absolute !important;}
+.ui-widget.ui-widget-content.ui-dialog {position: relative; background: #fff; margin: 0; padding: 38px 48px 0 48px;border:0;}
+.ui-dialog-titlebar {font-size: 0;z-index:1;}
+/*.ui-dialog-titlebar .ui-dialog-title {display: block; }*/
+.ui-dialog-titlebar .ui-dialog-titlebar-close {position: absolute; width: 30px; height: 30px; top: 0; right: 0;border:0;background-color:#fff;}
+.ui-dialog-titlebar .ui-dialog-titlebar-close .ui-icon {width: 30px; height: 30px; margin: 0; background: url(../images/common/ico_pop_close_pc.png) no-repeat top center; left: 0; top: 0;}
+.ui-dialog-titlebar .ui-dialog-titlebar-close:hover .ui-icon,
+.ui-dialog-titlebar .ui-dialog-titlebar-close:active .ui-icon {background-position:bottom center;}
+.ui-dialog-content {border: none;}
+.ui-dialog-content .dialog_title {color: #000;  text-align: left; }
+
+.ui-dialog-content .dstit_wrap h3 { display: inline-block; }
+.ui-dialog-content .dialog_title .sub_title {color: #707070;}
+.ui-dialog-content .dialog_content {margin-top: 20px;}
+.ui-dialog-content .dialog_btn_wrap {margin-top: 40px; text-align: center;border-top:solid 3px #000;margin-left:-48px;margin-right:-48px;}
+.ui-dialog-content .dialog_btn_wrap .dialog_btn_wrap_inner {display: inline-block; text-align: center;vertical-align:top;}
+.ui-dialog-content .dialog_btn_wrap .dialog_btn_wrap_inner:after {content:".";clear:both;display:block;height:0;visibility:hidden;font-size:0;line-height:0;}
+.ui-dialog-content .dialog_btn_wrap button {float: left;}
+.ui-dialog-content .dialog_btn_wrap .paging { margin-top: 0; }
+.ui-dialog-content .dialog_btn_wrap .paging:after {content:".";clear:both;display:block;height:0;visibility:hidden;font-size:0;line-height:0;}
+.ui-dialog-content .dialog_btn_wrap button + button {margin-left: 5px;}
+
+.ui-dialog .ui-resizable-handle {width: 0; height: 0; margin: 0;}
+.ui-dialog-content .dialog_btn_wrap .paging .page_num {float: left;}
+.ui-dialog-content .dialog_content .tit_desc { color: #222; text-align:center; }
+.ui-dialog-content .dialog_content .tit_desc .txt { display:inline-block;}
+
+
+
+/* REQUEST *********************************************************************/
+.lpop-request .dialog_title h2.tit_request {text-align:left;line-height:1.2;}
+.lpop-request .dialog_btn_wrap {margin-top: 50px; text-align: center;border:0;margin-left:-48px;margin-right:-48px;height:60px;}
+.lpop-request .dialog_btn_wrap .dialog_btn_wrap_inner {width:100%;height:60px;box-sizing:border-box;}
+.lpop-request .dialog_btn_wrap .dialog_btn_wrap_inner:after {content:".";clear:both;display:block;height:0;visibility:hidden;font-size:0;line-height:0;}
+.lpop-request .dialog_btn_wrap .btn_re{float:left;width:50%;height:60px;border:0;padding:12px;margin:0;box-sizing:border-box;border-top:solid 3px #000;}
+.lpop-request .dialog_btn_wrap .btn_re:hover {text-transform:none !important;}
+.lpop-request .dialog_btn_wrap .btn_re:hover .lb {text-transform:none !important;}
+.lpop-request .dialog_btn_wrap .btn_re.btn_re_cancle {background:#fff;color:#000;}
+.lpop-request .dialog_btn_wrap .btn_re.btn_re_send {background:#000;color:#fff;}
+.lpop-request .dialog_btn_wrap .btn_re.btn_ani_up_full:hover {border-color:#333;}
+.lpop-request .dialog_btn_wrap .btn_re.btn_ani_up_full .hover {border-color:#333;background:#333;}
+
+.request_cont .tbl_ip{border-left:solid 3px #000;border-bottom:solid 3px #000;border-right:solid 3px #000;}
+.request_cont .tbl_ip:after {content:".";clear:both;display:block;height:0;visibility:hidden;font-size:0;line-height:0;}
+.request_cont .tbl_ip li {border-top:solid 3px #000;float:left;width:50%;box-sizing:border-box;vertical-align:top;}
+.request_cont .tbl_ip li * {vertical-align:top;box-sizing:border-box;}
+.request_cont .tbl_ip li span {display:inline-block;box-sizing:border-box;}
+.request_cont .tbl_ip li.left {clear:both;}
+.request_cont .tbl_ip li.right {border-left:solid 3px #000;}
+.request_cont .tbl_ip li.full {width:100%;}
+.request_cont .tbl_ip li.title {width:70%;}
+.request_cont .tbl_ip li.category {width:30%;}
+.request_cont .tbl_ip li.category span {width:100%;}
+.request_cont .tbl_ip li .th {width:95px;padding:11px 6px 12px 12px;text-align:left;box-sizing:border-box;}
+.request_cont .tbl_ip li .td {padding:0;width:calc(100% - 100px);box-sizing:border-box;}
+.request_cont .tbl_ip li.comment span {width:100%;}
+.request_cont .tbl_ip input[type=text].req_ip {width:100%;height:44px;padding:11px 20px 12px 20px;border:0;outline:0;}
+.request_cont .tbl_ip textarea.req_ta {width:100%;;padding:11px 6px 12px 12px;border:0;min-height:230px;outline:0;}
+.request_cont .tbl_ip .req_sel {width:100%;height:44px;padding:11px 6px 12px 12px;border:0;outline:0;color:#fff;line-height:1.4; background:#000 url(../images/ui/ui_sel_request_arr.png) 100% 50% no-repeat; }
+.request_cont .tbl_ip .req_sel option {background:#000;color:#fff;}
+
+.request_cont .automated { margin-top:30px; vertical-align:top;}
+.request_cont .automated:after {content:".";clear:both;display:block;height:0;visibility:hidden;font-size:0;line-height:0;}
+.request_cont .automated label {position:relative; display:inline-block;float:left; padding-right:10px;vertical-align:top;margin-right:10px;margin-bottom:10px;}
+.request_cont .automated label:after {content:'';position:absolute; top:3px;right:0;width:6px;height:6px;border-radius:6px; background-color:#ff4444;}
+.request_cont .automated .automated_div { display:inline-block;vertical-align:top; background:#fefefe; }
+.request_cont .automated .automated_div #kcaptcha_image {border: 1px solid #dedede;}
+.request_cont .automated .automated_div em {display:block; font-size:13px; height:25px; font-weight:normal;}
+.request_cont .automated .automated_div .desc {display:block; width:auto; line-height:1.4em;font-size:12px; color:#666666; padding-top:10px;}
+.request_cont .automated .automated_div .desc .tc_red {text-decoration:underline;}
+.request_cont .automated .automated_div input {width:170px; line-height:15px; height:60px;border: 1px solid #dedede; color: #333; padding: 5px 3px 5px 10px; text-align:left;padding: 10px 10px 10px 10px; font-size:15px;  color:#000; background:#fefefe; border-color:#ccc;box-sizing:border-box;  }
+.request_cont .automated .automated_div input:focus {border:solid 1px #ff8989;box-shadow: 0 0 0 rgba(0, 0, 0, 0); outline: none; background:#fff; }
+
+
+
+
+/* SHARE *********************************************************************/
+.lpop-share .dialog_title h2.tit_share {text-align:left;line-height:1.2;}
+.lpop-share {margin:-16px -16px 60px ;}
+.share_cont ul {margin-top:40px;display:flex;}
+.share_cont ul li {-webkit-flex: 1;flex: 1;text-align:center;}
+.share_cont .ibtn_share {display:inline-block;width:70px;height:70px;}
+
+/*모바일 defualt */
+@media screen and (max-width:823px ) {
+	
+	.ui-widget.ui-widget-content.ui-dialog {padding:20px 20px 0 20px;}
+	.ui-dialog-titlebar .ui-dialog-titlebar-close {top:10px;right:0;width: 24px; height: 24px; }
+	.ui-dialog-titlebar .ui-dialog-titlebar-close .ui-icon {width: 24px; height: 24px; margin: 0; background: url(../images/common/ico_pop_close_mo.png) no-repeat top center; left: 0; top: 0;background-size:24px 48px;}
+	.ui-dialog-titlebar .ui-dialog-titlebar-close:active .ui-icon {background-position:bottom center;}
+	
+	.request_cont .tbl_ip{border-left:solid 2px #000;border-bottom:solid 2px #000;border-right:solid 2px #000;}
+	.request_cont .tbl_ip li {border-top:solid 2px #000;}
+	.request_cont .tbl_ip li {width:100%;}
+	.request_cont .tbl_ip li.right {border-left:solid 0 #000;}
+	.request_cont .tbl_ip li.title {width:100%;}
+	.request_cont .tbl_ip li.category {width:100%;}
+	.request_cont .tbl_ip li.category span {width:100%;}
+	
+	.request_cont .tbl_ip li .th {padding:10px 6px 10px 12px}
+	.request_cont .tbl_ip input[type=text].req_ip {height:40px;padding:10px 6px 10px 12px}
+	.request_cont .tbl_ip .req_sel {height:38px;padding:10px 6px 10px 12px}
+	
+	.lpop-request .dialog_btn_wrap {height:48px; border-bottom:solid 3px #000; margin-left:-20px;margin-right:-20px;}
+	.lpop-request .dialog_btn_wrap .dialog_btn_wrap_inner {height:45px;}
+	.lpop-request .dialog_btn_wrap .btn_re{height:45px;padding:0;}
+	
+	.request_cont .automated_div {display:block;}
+	
+	
+	.lpop-share {margin:0 0 30px ;}
+	.share_cont ul {margin-top:20px;display:flex;}
+	.share_cont ul li {-webkit-flex: 1;flex: 1;text-align:center;}
+	.share_cont .ibtn_share {display:inline-block;width:45px;height:45px;}
+}

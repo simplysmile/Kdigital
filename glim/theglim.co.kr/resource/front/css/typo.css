@@ -1,0 +1,269 @@
+@charset "utf-8";
+/*
+ Filename:		glim.js
+ Descript:		
+ Writer--:		glim
+ CreateDate :	20180828
+ LatestDate:	20180927
+ basefont - 400
+ 강조폰트 - 700
+*/ 
+
+@import url(../../../../cdn.jsdelivr.net/gh/moonspam/NanumSquare%40master/nanumsquare.css);
+@import url('https://fonts.googleapis.com/css?family=Montserrat:500,700');
+
+
+.ui-widget input,
+.ui-widget select,
+.ui-widget textarea,
+.ui-widget button,
+.ui-widget,
+html,
+body,
+input, textarea,
+select,
+a{font-family:  malgun gothic,malgun,맑은 고딕, AppleSDGothicNeo, Apple-Gothic,sans-serif;font-weight:400;letter-spacing: -0.5px;
+button,
+-webkit-text-size-adjust: none; -moz-text-size-adjust: none; -ms-text-size-adjust: none;
+}
+
+b
+/*말줄임*/
+.ellipsis {white-space: nowrap; overflow: hidden;text-overflow: ellipsis;}
+
+
+/* font-family : 'Nanum Square', */
+/* NanumSquare Weight 400 */
+.swiper-pagination-custom,
+.contact .btn_request,
+.pager.pagers_swiper_container .swiper_slide .area .txt,
+.bb {font-family: 'NanumSquare', sans-serif;}
+
+
+/* font-family : 'Montserrat', Weight 800 */
+.filebox .file_upload_wrap .btn_fake,
+.swiper_wrap .portfolio_type_wrap .portfolio_select_button,
+.swiper_wrap .portfolio_info_wrap .portfolio_type,
+.swiper_wrap .portfolio_info_wrap .portfolio_name,
+.swiper_wrap .portfolio_type_wrap .portfolio_type_list li button,
+.about.pager-body .about_theme_03 .ibtn_intro_download,
+.about .about_history .about_history_yy .lb,
+.about.pager-body .about_sub_title,
+.ani_title,
+.ani_sub_title,
+.request_cont .tbl_ip li .th,
+.request_cont .tbl_ip li .req_sel,
+.request_cont table.tbl_ip td .req_sel,
+.lpop-request .dialog_btn_wrap .btn_re,
+.footer_pager_nav .lb,
+.request_cont table th .lb,
+.ui-dialog-content .dialog_title h2,
+.footer .copy,
+.footer .ibtn_intro_request,
+.footer .ibtn_intro_download,
+.pager-body .pager_wrap .pager_home.theme_cover .contents .form_info .psocial .ibtn_social,
+.header .menu ul li a {font-family: 'Montserrat', sans-serif;font-weight:700;}
+
+
+/* NanumSquare Weight 300 */
+.contact .title_txt,
+.pagers_swiper_container .swiper_slide.theme_01 .area .txt {font-family: 'NanumSquare', sans-serif;font-weight:300;}
+
+/* NanumSquare Weight 800 */
+.pager-body .pager_wrap .pager_home.theme_cover .contents .form_info .ptt_02,
+.pager-body .pager_wrap .pager_home.theme_cover .contents .txt > .lb
+.popup_layer .pop_header > h1,
+body.lists.main .wrap .body .sec .lists_swiper_container.portfolio_swiper .swiper-slide.btn_more .abtn_more .lb,
+.pager-body .pager_wrap .pager_home.theme_cover .contents .txt > .lb {font-family: 'NanumSquare', sans-serif;font-weight:800;}
+
+.pagers_swiper_container .swiper_slide.theme_01 .area .txt {font-family: 'NanumSquare', sans-serif;font-weight:400;}
+
+/* BOLD
+*/
+.device.pager-body .pager_wrap .pager_home.theme_cover .txt_slide,
+.contact-body .contents .info .company_name,
+.contact-body .contents .btn_map_link ,
+.request_cont .automated label,
+.request_cont .automated .automated_div .desc,
+.pager.details .wrap .footer_pager_nav,
+.pagers_swiper_container .swiper_slide .area .float_txt,
+.pager-body .pager_wrap .pager_home.theme_cover .contents .form_info .psocial .ibtn_social,
+.pager-body .pager_wrap .pager_home.theme_cover .contents .form_info .ptt_03,
+.pager-body .pager_wrap .pager_home.theme_cover .contents .form_info .ptt_01,
+.pager-body .pager_wrap .pager_home .contents .txt .ptt_11,
+.contact .contents .info .btn_map_link,
+.mouse_follow .icon,
+.lists_wrapper .lists_swiper_container.portfolio_swiper .swiper_slide .descbox .tit,
+.header .menu ul li a {font-weight:700;}
+
+.filebox_desc,
+.request_cont .automated .automated_div input{font-weight:600;}
+
+
+/*PC 버전 에만 적용*/
+@media screen and (min-width:824px) {
+
+	html {font-size:0.875em;}/*14px*/
+	
+	
+	.menu ul li a {font-size:20px;}
+	.footer .copy {font-size:12px;letter-spacing:-0.5px;}
+	.footer .ibtn_intro_request,
+	.footer .ibtn_intro_download {font-size:14px;}
+	
+	.pager.details .wrap .footer_pager_nav .ibtn_details_foot {font-size:16px;}
+	
+	.pagers_swiper_container .swiper_slide .area .float_txt{font-size:130px;}
+	.pagers_swiper_container .swiper_slide .area .tit {font-size:35px;}
+	.pagers_swiper_container .swiper_slide .area .tt1 {font-size:20px;}
+	.pagers_swiper_container .swiper_slide .area .tt2 {font-size:15px;}
+	.pagers_swiper_container .swiper_slide.theme_03 .area .box_department ul li .desc {font-size:12px;}
+	.pagers_swiper_container .swiper_slide.theme_03 .area .box_department ul li .desc .t1 {font-size:15px;}
+	
+	.pagers_swiper_container .swiper_slide.theme_05 .area .box_history .yy {font-size:28px;}
+	.pagers_swiper_container .swiper_slide.theme_05 .area .box_history ul li .history .lb {font-size:12px;}
+	
+	
+	.pager-body .pager_wrap .pager_home.theme_cover .contents .txt > .lb {font-size:75px;}
+	
+	.pager-body .pager_wrap .pager_home.theme_cover .contents .form_info .ptt_01 {font-size:16px;}
+	.pager-body .pager_wrap .pager_home.theme_cover .contents .form_info .ptt_02 {font-size:50px;}
+	.pager-body .pager_wrap .pager_home.theme_cover .contents .form_info .ptt_03 {font-size:18px;}
+	.pager-body .pager_wrap .pager_home.theme_cover .contents .form_info .ptt_04 {font-size:15px;}
+	.pager-body .pager_wrap .pager_home.theme_cover .contents .form_info .psocial .ibtn_social {font-size:14px;}
+	
+	
+	.pager-body .pager_wrap .pager_home .contents .txt .ptt_11 {font-size:28px;}
+	.pager-body .pager_wrap .pager_home .contents .txt .ptt_12 {font-size:15px;}
+	
+	.pagers_swiper_container .swiper_slide.theme_details .area  .tbl_profile {font-size:15px;}
+	
+	.lists_wrapper .lists_swiper_container.portfolio_swiper .swiper_slide .descbox .tit {font-size:15px;}
+	.lists_wrapper .lists_swiper_container.portfolio_swiper .swiper_slide .descbox .subtit {font-size:12px;}
+	
+	.mouse_follow .icon {font-size:10px;}
+	.mouse_follow .icon .num_current{font-size:14px;}
+	
+	body.lists.main .wrap .body .sec .lists_swiper_container.portfolio_swiper .swiper-slide.btn_more .abtn_more .lb {font-size:17px;}
+	
+	.ibtn_details_foot {font-size:16px;}
+	
+	.ani_title {font-size:58px;}
+	.ani_sub_title {font-size:16px;}
+	.about .about_sub_title {font-size:16px;color:#000;}
+	.ani_desc {font-size:14px;}
+	
+	.contact-body .contents .info .company_name { font-size: 15px;}
+	.contact-body .contents .info .txt { font-size: 12px;}
+	.contact-body .contents .btn_map_link { font-size: 12px;}
+	
+	.contact-body .contents .ani_title {font-size:58px;}
+		
+	.about .about_history .about_history_yy .lb{font-size:30px;}
+	.about .about_history .about_history_yy > ul > li {font-size:13px;}
+	.about .about_history .about_history_yy > ul > li .award {font-size:12px;}
+	.about.pager-body .about_theme_03 .ibtn_intro_download {font-size:14px;}
+	
+	.swiper_wrap .portfolio_info_wrap .portfolio_type {font-size:12px;}
+	.swiper_wrap .portfolio_info_wrap .portfolio_name {font-size:18px}
+	.swiper_wrap .portfolio_type_wrap .portfolio_type_list li button{font-size:20px;}
+	
+	/* POPUP */
+	.lpop-request .dialog_title h2.tit_request {font-size:58px;}	
+	.request_cont table th {font-size:14px;}
+	.lpop-request .dialog_btn_wrap .btn_re {font-size:18px;}
+	
+	.lpop-share .dialog_title h2.tit_share {font-size:44px;}
+	
+	.filebox .file_upload_wrap .btn_fake {font-size:14px;letter-spacing:0.5px;}
+}
+
+@media screen and (max-width:1199px ) and (min-width:824px ) {
+	
+	.contact-body .contents .ani_title {font-size:3.9vw;}
+}
+
+/*모바일 defualt */
+@media screen and (max-width:823px ) {
+
+	html {font-size:0.813em;}/*13px*/
+	
+	
+	.menu ul li a {font-size:22px;}
+	.footer .copy {font-size:11px;}
+	.footer .btn_ani_up_full .lb {font-size:13px;}
+	
+	
+	.swiper-pagination-custom{font-size:13px;}
+	.swiper-pagination-custom .slash {font-size:13px;}
+	.swiper-pagination-custom .swiper-pagination-current{font-size:17px;}
+	
+	.pagers_swiper_container .swiper_slide .txt_slide .lb {font-size:11px;}
+	
+	.pagers_swiper_container .swiper_slide .area .float_txt{font-size:54px;}
+	.pagers_swiper_container .swiper_slide .area .tit {font-size:25px;}
+	.pagers_swiper_container .swiper_slide .area .tt1 {font-size:14px;}
+	.pagers_swiper_container .swiper_slide .area .tt2 {font-size:14px;}
+	
+	.pagers_swiper_container .swiper_slide.theme_01 .area .txt {font-size:25px;}
+	
+	.pagers_swiper_container .swiper_slide.theme_03 .area .box_department ul li .desc .t1 {font-size:14px;}
+	.pagers_swiper_container .swiper_slide.theme_03 .area .box_department ul li .desc .t2 {font-size:13.5px;}
+	
+	.pagers_swiper_container .swiper_slide.theme_05 .area .box_history .yy {font-size:15px;}
+	.pagers_swiper_container .swiper_slide.theme_05 .area .box_history ul li .history .lb {font-size:14px;}
+	
+	
+	.pager-body .pager_wrap .pager_home.theme_cover .contents .txt > .lb {/* font-size:10vw; */font-size:44px;font-size:11vw;}
+	
+	
+	/* .pager-body .pager_wrap .pager_home.theme_cover .contents .form_info .ptt_01 {font-size:16px;}
+	.pager-body .pager_wrap .pager_home.theme_cover .contents .form_info .ptt_02 {font-size:28px;}
+	.pager-body .pager_wrap .pager_home.theme_cover .contents .form_info .ptt_03 {font-size:14px;} */
+	.pager-body .pager_wrap .pager_home.theme_cover .contents .form_info .ptt_01 {font-size:14px;}
+	.pager-body .pager_wrap .pager_home.theme_cover .contents .form_info .ptt_02 {font-size:22px;}
+	.pager-body .pager_wrap .pager_home.theme_cover .contents .form_info .ptt_03 {font-size:14px;}
+	.pager-body .pager_wrap .pager_home.theme_cover .contents .form_info .ptt_04 {font-size:11px;}
+	
+	
+	/* .pager-body .pager_wrap .pager_home .contents .txt .ptt_11 {font-size:21px;} */
+	.pager-body .pager_wrap .pager_home .contents .txt .ptt_11 {font-size:23px;}	
+	.pager-body .pager_wrap .pager_home .contents .txt .ptt_12 {font-size:15px;}
+	
+	
+	.device.pager-body .wrap .footer_pager_nav {font-size:13px;}	
+	.device.pager-body .pager_wrap .pager_home.theme_cover .txt_slide .lb {font-size:15px;}
+	
+	
+	.ani_title {font-size:37px;}
+	.ani_sub_title {font-size:15px;}
+	.ani_desc {font-size:14px;}
+	.contact-body .contents .info .company_name { font-size: 16px;}
+	.contact-body .contents .info .txt { font-size: 13px;}
+	.contact-body .contents .btn_map_link { font-size: 13px;}
+	.contact-body .contents .info .txt {font-size: 14px;}
+	
+	.about .about_history .about_history_yy .lb{font-size:24px;}
+	.about .about_history .about_history_yy > ul > li {font-size:15px;}
+	.about.pager-body .about_theme_03 .ibtn_intro_download {font-size:13px;}
+	
+	.swiper_wrap .portfolio_type_wrap .portfolio_select_button {font-size:13px;}
+	.swiper_wrap .portfolio_type_wrap .portfolio_type_list li button {font-size:13px;}
+	.swiper_wrap .portfolio_info_wrap .portfolio_type {font-size:12px;}
+	
+	/* POPUP */
+	.ui-dialog-content .dialog_title h2 {font-size:37px;}
+	.request_cont .tbl_ip li .th {font-size:14px;}
+}
+
+
+
+/*모바일 세로 버전 */
+@media screen and (max-width:567px ) {
+
+	body {min-width:320px;}
+	.sec {width: 100%; min-width:320px; }
+	
+	.mp {display:block}
+	
+}	

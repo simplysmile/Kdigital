@@ -1,0 +1,40 @@
+@charset "utf-8";
+/*
+ Filename:		glim.js
+ Descript:
+ Writer--:		glim
+ CreateDate :	20180828
+ LatestDate:	20180828
+
+*/
+
+@import url('common.css');
+@import url('dev.css');
+@import url('typo.css');
+@import url('lpop.css');
+@import url('icon.css');
+@import url('animation.css');
+@import url('pager.css');
+@import url('lists.swiper.css');
+@import url('layout.css');
+
+.offscreen {
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px,1px,1px,1px);
+}
+
+section,
+nav,
+div {-webkit-box-sizing: border-box;box-sizing: border-box;}
+
+body { width:100%; min-height:100%; background:#fff;}
+html,
+body {height:100%;}
+
+/*drag*/
+/* ::selection {background:#00ffde; color:#fff; text-shadow:none;}
+::-moz-selection {background:#00ffde; color:#fff; text-shadow:none;}
+::-webkit-selection {background:#00ffde; color:#fff; text-shadow:none;}  */

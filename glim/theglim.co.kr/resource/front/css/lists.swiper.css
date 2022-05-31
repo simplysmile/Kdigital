@@ -1,0 +1,312 @@
+@charset "utf-8";
+/*
+ Filename:		list.swiper.js
+ Descript:
+ Writer--:		glim
+ CreateDate :	20180828
+ LatestDate:	20180927 
+
+*/
+.swiper_wrap {
+	overflow: hidden;
+	opacity:1;
+	/* :20180905 */
+}
+
+.swiper-container {
+	/* overflow:visible; */
+	width: 100%;
+	height: 358px;
+}
+.swiper-slide {
+	text-align: center;
+	font-size: 18px;
+	background: #fff;
+	-webkit-transform: translateX(-100%);
+    		transform: translateX(-100%);
+    left: -40px;
+}
+
+.swiper-container .swiper-pagination {
+	position: fixed;
+	height: 6px;
+	top: auto;
+	bottom: 0;
+}
+
+.swiper-pagination-progressbar {
+	background: #fff;
+}
+
+.swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
+	background: #000;
+}
+.swiper-slide a {
+	display: block;
+	width: 100%;
+}
+.swiper-slide a:hover {
+	text-decoration:none;
+}
+.swiper-slide a .img_wrap {
+	position: relative;
+	display: inline-block;
+	width: 100%;
+	height: 320px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	box-sizing:border-box;
+}
+
+.swiper-slide  a .img_wrap{
+	box-sizing:border-box;
+}
+
+.swiper_wrap .portfolio_info_wrap {
+	position: relative;
+	display: block;
+	text-align: left;
+	margin-top: -20px;
+	padding: 0 10px;
+	z-index: 1;
+}
+
+
+.swiper_wrap .portfolio_info_wrap .portfolio_type {
+	display: inline-block;
+	color: #fff;
+	padding: 0 8px;
+	background: #000;
+	line-height: 20px;
+}
+.swiper_wrap .portfolio_info_wrap .portfolio_name {
+	display: block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color:#000;
+	margin-top:6px;
+}
+
+
+
+.swiper_wrap .portfolio_type_wrap {
+	position: relative;
+}
+
+.swiper_wrap .portfolio_type_wrap .portfolio_select_button {
+	display: none;
+}
+
+.swiper_wrap .portfolio_type_wrap .portfolio_type_list:after {
+	content: '';
+	display: block;
+	width: 100%;
+	height: 0px;
+	clear: both;
+}
+.swiper_wrap .portfolio_type_wrap .portfolio_type_list li {
+	float: left;
+}
+.swiper_wrap .portfolio_type_wrap .portfolio_type_list li + li {
+	margin-left: 20px;
+}
+.swiper_wrap .portfolio_type_wrap .portfolio_type_list li button {
+	height: 34px;
+	margin: 0;
+	padding: 0 9px;
+	background: #fff;
+
+}
+.swiper_wrap .portfolio_type_wrap .portfolio_type_list li.selected button {
+	color: #fff;
+	background: #000;
+}
+
+.swiper_wrap .portfolio_type_wrap + .swiper-container {
+	margin-top: 33px;
+}
+
+@media screen and (max-width:1200px) {
+	.swiper_wrap {
+		padding: 0 30px 0;
+	}
+	.swiper-container {
+		height: auto;
+		overflow: visible;
+	}
+	.swiper-slide {
+		-webkit-transform: none;
+		        transform: none;
+		left: 0;
+	}
+	.swiper-slide a .img_wrap {
+		height: auto;
+		padding-top: 64%;
+	}
+}
+
+@media screen and (max-width:823px) {
+	.swiper_wrap {
+		position: relative;
+		padding: 0 40px 0 20px;
+		/* height:100%; */
+	}
+	.swiper-container {
+		/* height: 100%; */
+	}
+	.swiper-wrapper {
+		padding-right: 40px;
+	}
+	.swiper-slide {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-pack: center;
+		-ms-flex-pack: center;
+		justify-content: center;
+		-webkit-box-align: center;
+		-ms-flex-align: center;
+		align-items: center;
+        -webkit-transform: none;
+                transform: none;
+	}
+
+	.swiper_wrap .portfolio_type_wrap {
+		z-index: 2;
+	}
+	.swiper_wrap .portfolio_type_wrap .portfolio_select_button {
+		position: relative;
+		display: inline-block;
+		color: #fff;
+		width: 150px;
+		height: 40px;
+		padding: 0 32px 0 10px;
+		background: #000;
+		text-align: left;
+	}
+	.swiper_wrap .portfolio_type_wrap .portfolio_select_button:after {
+		content: '';
+		position: absolute;
+		display: inline-block;
+		width: 10px;
+		height: 7px;
+		background: url(../images/ui/sel_arrow_portfolio.png) no-repeat center;
+		background-size: 10px 7px;
+		right: 12px;
+		top: 17px;
+	}
+	.swiper_wrap .portfolio_type_wrap .portfolio_type_list {
+		position: absolute;
+		display: none;
+		left: 0;
+		top: 45px;
+	}
+	.swiper_wrap .portfolio_type_wrap .portfolio_type_list.show {
+		display: inline-block;
+	}
+	.swiper_wrap .portfolio_type_wrap .portfolio_type_list li {
+		clear: both;
+	}
+	.swiper_wrap .portfolio_type_wrap .portfolio_type_list li + li {
+		margin: 0;
+	}
+	.swiper_wrap .portfolio_type_wrap .portfolio_type_list li button {
+		width: 150px;
+		height: 40px;
+		padding: 0 10px;
+		text-align: left;
+		font-size: 13px;
+	}
+	
+	
+	.swiper_wrap .swiper-slide .portfolio_info_wrap {
+		
+		opacity:0;
+		transition:all .5s;
+		-webkit-transition:all .5s;
+		-moz-transition:all .5s;
+		-ms-transition:all .5s;
+	}
+	
+	.swiper_wrap .swiper-slide.swiper-slide-active .portfolio_info_wrap {
+		opacity:1;
+	}
+	
+}
+
+
+.swiper-slide  .line {
+  position: absolute;
+  background: #000;
+}
+.swiper-slide  .line.-right, 
+.swiper-slide  .line.-left {
+  width: 6px;
+  bottom: 0;
+  top: 0;
+  transform: scale3d(1, 0, 1);
+}
+.swiper-slide  .line.-top, 
+.swiper-slide  .line.-bottom {
+  height: 6px;
+  left: 0;
+  right: 0;
+  transform: scale3d(0, 1, 1);
+}
+.swiper-slide  .line.-right {
+  right: 0;
+  transition: transform 0.3s cubic-bezier(1, 0, 0.65, 1.01) 0.43s;
+  transform-origin: top;
+}
+.swiper-slide  .line.-top {
+  top: 0;
+  transition: transform 0.18s linear 0.53s;
+  transform-origin: left;
+}
+.swiper-slide  .line.-left {
+  left: 0;
+  transition: transform 0.18s linear 0.61s;
+  transform-origin: bottom;
+}
+.swiper-slide  .line.-bottom {
+  bottom: 0;
+  transition: transform 0.4s cubic-bezier(1, 0, 0.65, 1.01);
+  transform-origin: right;
+}
+
+.desktop .swiper-slide  a:hover:after,
+.desktop .swiper-slide  a:active:after {
+  transform: scale3d(0, 1, 1);
+  right: 0;
+  left: 0;
+  transform-origin: right;
+  transition: transform 0.3s cubic-bezier(1, 0, 0.65, 1.01) 0.27s, right 0.2s cubic-bezier(1, 0, 0.65, 1.01), left 0.1s 0.4s;
+}
+.desktop .swiper-slide  a:hover .line,
+.desktop .swiper-slide  a:active .line {
+  transform: scale3d(1, 1, 1);
+}
+.desktop .swiper-slide  a:hover .line.-right,
+.desktop .swiper-slide  a:active .line.-right {
+  transition: transform 0.2s cubic-bezier(1, 0, 0.65, 1.01) 0.3s;
+  transform-origin: bottom;
+}
+.desktop .swiper-slide  a:hover .line.-top,
+.desktop .swiper-slide  a:active .line.-top {
+  transition: transform 0.18s linear 0.5s;
+  transform-origin: right;
+}
+.desktop .swiper-slide  a:hover .line.-left,
+.desktop .swiper-slide  a:active .line.-left {
+  transition: transform 0.18s linear 0.68s;
+  transform-origin: top;
+}
+.desktop .swiper-slide  a:hover .line.-bottom,
+.desktop .swiper-slide  a:active .line.-bottom {
+  transition: transform 0.6s cubic-bezier(0, 0.53, 0.29, 1) 0.86s;
+  transform-origin: left;
+}
+
+
