@@ -1,0 +1,4 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+www.jungonenutri.com	TRUE	/	FALSE	1999999999	JSESSIONID	0EAE1730A3B86AA277A1D35D25013528
+

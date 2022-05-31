@@ -1,0 +1,70 @@
+@charset "utf-8";
+
+/* WebFont */
+@font-face {
+  font-family: 'NanumBarunGothicBold';
+  src: url('../fonts/NanumBarunGothicBold.eot');
+  src:local(¡Ø), url('../fonts/NanumBarunGothicBoldd41d.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/NanumBarunGothicBold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Nanum Gothic';
+  src: url('../fonts/NanumGothic.eot');
+  src:local(¡Ø), url('../fonts/NanumGothicd41d.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/NanumGothic.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* basic css */
+* {padding:0;margin:0;}
+
+abbr, article, aside, audio, bb, canvas, datagrid, datalist, details, dialog, eventsource, figure, footer, header, mark, menu, meter, nav, output, progress, section, time, video{padding:0;margin:0;display: block;}
+
+body {font-family:dotum, Arial, sans-serif;font-size:12px;line-height:16px;color:#1e1e1e;word-break: keep-all;word-wrap:break-word;}
+
+dl, dt, dd, ul, ol, li{
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+
+h1,h2,h3,h4,p{
+	list-style:none;
+	padding:0;
+	margin:0;
+	font-size:12px;
+}
+
+img {border:0px;vertical-align:middle;}
+
+img.db {display:block;}
+
+table {border-spacing:0px;border:0px;border-collapse:collapse;}
+
+address,hr,
+.dn{display:none;}
+
+form {display:inline;}
+
+fieldset {padding:0;margin:0;border:0;}
+
+legend,
+caption,
+hr {display:none;}
+
+
+/* a css */
+a{text-decoration:none;color:#464646;}
+a:link{text-decoration:none;}
+a:visited{text-decoration:none;}
+a:hover{text-decoration:none;}
+
+/* form tag css */
+input,
+textarea,
+select {vertical-align:middle;}
+input.text {border:1px solid #dddddd;height:19px;}
+textarea.text {border:1px solid #dddddd;}

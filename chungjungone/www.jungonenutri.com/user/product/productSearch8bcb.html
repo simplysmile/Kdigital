@@ -1,0 +1,963 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<!-- Mirrored from www.jungonenutri.com/user/product/productSearch.do?cateCd=CUISINE by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 31 May 2022 00:33:10 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" /> 
+<meta name="HandheldFriendly" content="True" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+
+<title>DAESANG : 영양정보와 건강 식단관리</title>
+
+<!-- Libraries -->
+
+<link rel="stylesheet" href="../css/basic.css" type="text/css" />
+<link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+<script type="text/javascript" src="../lib/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="../lib/jQuery.print.js"></script>
+<script type="text/javascript" src="../lib/jquery.imgpreload.min.js"></script>
+<script type="text/javascript" src="../js/jquery.nutrient.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+
+<!--[if lt IE 9]>
+	<script type="text/javascript" src="/user/lib/html5shiv-printshiv.js"></script>
+<![endif]-->
+<!-- //Libraries -->
+<script type="text/javascript">
+	var productList = {
+		// 조건 초기화
+		resetCondition : function() {
+			$("#intakeTypeCd").val("");	//섭취유형
+			$("#cateCd").val("");	// 카테고리
+			$("#hTypeBtn").val("");	// List view type
+			$("#brandCd").val(""); // brand
+			
+		}
+	};
+
+	function fn_pageNum(page) {
+		$("#pageNum").val( page );	
+		$("#searchForm").submit();
+	}
+
+	$(function(){
+		bner.init();
+		untrFn();
+		
+		// initialize();
+		// list view type (img/list)
+		if ( $("#hTypeBtn").val() === "list" ) {
+			$("#aTypeBtnList").click();
+		}
+		// initialize(); end
+		
+		// Search Button Click
+		$("#btnSearch").on("click", function(){
+			productList.resetCondition();
+			$("#searchForm").submit();
+		});
+		
+		// 10개씩 보기 Select box Change
+		$("#selRowCount").on("change", function(){
+			$("#searchForm").submit();
+		});
+		
+		// Intake Type Button Click
+		$(".schBox .searchIntakeType").click(function(){
+			productList.resetCondition();
+			$("#prdNm").val("");
+			var $thisId = $(this).attr("id");
+			$("#intakeTypeCd").val ( $thisId.substring ( $thisId.indexOf("_") + 1 ) );
+			$("#searchForm").submit();
+		});
+		
+		// typeBtn
+		$(".typeBtn a").click(function(){
+			var $this = $(this);
+			var $thisId = $this.attr("id");
+			
+			if ($thisId === 'aTypeBtnList') {
+				$("#hTypeBtn").val("list");
+			} else {
+				$("#hTypeBtn").val("img");
+			}
+		});
+
+		// Brand Search
+		$(".searchBrand").click(function(){
+			//console.log("searchBrand");
+		});
+		
+		// 영양성분표 클릭
+		$(".subContainer .nutrientCon .btnNutriDetail").click(function(){
+			
+			var $thisId = $(this).attr("id");
+			var prdCd = $thisId.substring ( $thisId.indexOf("_") + 1 );
+
+			$("#chart").load("/user/product/productNutriDetail.do", {
+				prdCd : prdCd
+			}, function(data) {
+				pop.open('chart.html');
+			});
+			
+		});
+		
+		// 레시피 클릭
+		$(".subContainer .nutrientCon .recipeBtn").click(function(){
+			var $thisId = $(this).attr("id");
+			var prdCd = $thisId.substring ( $thisId.indexOf("_") + 1 );
+
+			$("#ifrRecipe").attr("src", "/user/recipe/recipeSearchByProduct.do?prdCd=" + prdCd + "&rowCount=5");
+			pop.open('recipePop.html');
+			
+		});
+	
+		// 추천식단 클릭
+		$(".subContainer .nutrientCon .recomBtn").click(function(){
+			var $thisId = $(this).attr("id");
+			var prdCd = $thisId.substring ( $thisId.indexOf("_") + 1 );
+
+			$("#ifrRecom").attr("src", "/user/diet/dietSearchByProduct.do?prdCd=" + prdCd + "&rowCount=5");
+			pop.open('recomList.html');
+			
+		});
+		
+		// Show Product Detail
+		$(".subContainer .nutrientCon .btnProductDetail").click(function(){
+			var $thisId = $(this).attr("id");
+			var paramArr = $thisId.split("_");
+			var intakeTypeCd = paramArr[1];
+			var prdCd = paramArr[2];
+
+			// 제품 상세
+			$("#dataPop").load("/user/product/productDetail.do", {
+				prdCd : prdCd,
+				intakeTypeCd : intakeTypeCd
+			}, function(data) {
+				pop.open('dataPop.html');
+			});
+			
+		});
+
+		
+	});
+
+	// == 추천식단 상세용 ==
+	// SNS공유하기
+	function share_sns(sns, diet_cd) {
+		var cw=screen.availWidth;     //화면 넓이
+		var ch=screen.availHeight;    //화면 높이
+
+		var sw=450;    //띄울 창의 넓이
+		var sh=200;    //띄울 창의 높이
+
+		var ml=(cw-sw)/2;        //가운데 띄우기위한 창의 x위치
+		var mt=(ch-sh)/2;         //가운데 띄우기위한 창의 y위치
+		 
+		var param = $("form[name=searchForm]").serialize() + "&snsDietCd=" + diet_cd;
+		var url = encodeURIComponent("http://"+location.host+"/user/diet/dietSearch.do?" + param);
+		
+		if(sns=="FB"){
+			var fullUrl = "https://www.facebook.com/sharer/sharer.php?u='" + url + "&t=공유하기 테스트~'";
+			//console.log(fullUrl);
+			window.open(fullUrl, "fb_share", "width="+sw+",height="+sh+",top="+mt+",left="+ml+",resizable=yes,scrollbars=no ");
+		}
+	}
+	
+	//엑셀 다운로드
+	function downLoadExcel(dietCd){
+		location.href="/user/diet/excelDownload.do?dietCd=" + dietCd;
+	}
+</script>
+</head>
+<body>
+
+<div id="wrap">
+	<!-- Header -->
+	
+<header id="header">
+	<div class="header">
+
+		<h1><a href="../index.html"><img src="../images/common/logo.png" alt="DAESANG : 영양정보와 건강 식단관리" /></a></h1>
+
+	</div>
+</header>
+	<!-- //Header -->
+
+	<!-- Container -->
+	<article id="container">
+		<section id="content">
+				
+			<!-- Sub Title -->
+			<div class="subTit nutrientTit">
+				<div class="titBg">
+					<p><img src="../images/txt/tit_sub0.gif" alt="건강과 균형 '푸드를 아는 사람들'" /></p>
+				</div>
+			</div>
+			<!-- //Sub Title -->
+
+			<!-- TabNav -->
+			
+<nav id="tabNav">
+	<div class="tabNav">
+		<ul>
+			<li><a href="productSearch.html"><img src="../images/common/btn_lnb0.gif" alt="영양정보 조회" /></a></li>
+			<li><a href="../diet/dietSearch.html"><img src="../images/common/btn_lnb1.gif" alt="추천 식단" /></a></li>
+			<li><a href="../mydiet/myDiet.html"><img src="../images/common/btn_lnb2.gif" alt="나만의 식단" /></a></li>
+			<li><a href="../notice/notice.html"><img src="../images/common/btn_lnb3.gif" alt="영양정보 게시판" /></a></li>
+		</ul>
+	</div>
+</nav>
+			<!-- //TabNav -->
+
+			<!-- Sub Content -->
+			<div class="subContainer">
+				<form name="searchForm" id="searchForm" method="get" action="http://www.jungonenutri.com/user/product/productSearch.do">
+					<input type="hidden" name="intakeTypeCd" id="intakeTypeCd" value="" />
+					<input type="hidden" name="brandCd" id="brandCd" value=""/>
+					<input type="hidden" name="cateCd" id="cateCd" value="CUISINE" />
+					<input type="hidden" name="pageNum" id="pageNum" />
+					<input type="hidden" name="hTypeBtn" id="hTypeBtn" value="" />
+				
+				<div class="subCon">
+
+					<div class="nutrientSch">
+
+						<div class="schBox">
+							<dl>
+								<dt><img src="../images/txt/txt_prod_name.gif" alt="제품명" /></dt>
+								<dd><input type="text" name="prdNm" id="prdNm" value="" maxlength="200" /><a href="javascript:;" id="btnSearch"><img src="../images/btn/btn_sch_nutr.gif" alt="검색" /></a></dd>
+								<dt><img src="../images/txt/txt_intake.gif" alt="섭취유형별" /></dt>
+								<dd>
+									<ul>
+										<li><a href="javascript:;" id="searchIntakeType_MEAL" class="searchIntakeType"><img src="../images/btn/btn_intake0.gif" alt="식사" /></a></li>
+										<li><a href="javascript:;" id="searchIntakeType_SNACK" class="searchIntakeType"><img src="../images/btn/btn_intake1.gif" alt="간식" /></a></li>
+										<li><a href="javascript:;" id="searchIntakeType_INGREDIENT" class="searchIntakeType"><img src="../images/btn/btn_intake2.gif" alt="재료" /></a></li>
+									</ul>
+								</dd>
+							</dl>
+						</div>
+
+						<div class="brandBtn"><a href="#none"><img src="../images/btn/btn_sch_brand.gif" alt="브랜드 별" /></a></div>
+
+						<div class="brandNav">
+							<ul>
+								<li><a href="productSearch5424.html?brandCd=ORGANIC"><img src="../images/btn/btn_brand0.gif" alt="청정원" /></a></li>
+								<li><a href="productSearch37d0.html?brandCd=SUNCHANG"><img src="../images/btn/btn_brand1.gif" alt="청정원 순창" /></a></li>
+								<li><a href="productSearchaf35.html?brandCd=HONGCHO"><img src="../images/btn/btn_brand2.gif" alt="카레여왕" /></a></li>
+								<li><a href="productSearch5eea.html?brandCd=MAT"><img src="../images/btn/btn_brand3.gif" alt="햇살담은 간장" /></a></li>
+								<li><a href="productSearch787a.html?brandCd=CHUNGJUNGONE"><img src="../images/btn/btn_brand4.gif" alt="홍초" /></a></li>
+								<li><a href="productSearch3b6f.html?brandCd=HATDAM"><img src="../images/btn/btn_brand5.gif" alt="맛선생" /></a></li>
+								<li><a href="productSearchbdba.html?brandCd=CURRYQUEEN"><img src="../images/btn/btn_brand6.gif" alt="청정원organic" /></a></li>
+								<li><a href="productSearcha3a6.html?brandCd=CHEF1"><img src="../images/btn/btn_brand7.gif" alt="셰프콘" /></a></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="nutrientCon">
+						<div class="listType">
+							<select name="rowCount" class="listSel" id="selRowCount">
+								<option value="10" >10개 씩 보기</option>
+								<option value="20" >20개 씩 보기</option>
+								<option value="50" >50개 씩 보기</option>
+							</select>
+							<div class="typeBtn">
+								<a href="javascript:;" class="on" id="aTypeBtnImg"><img src="../images/btn/btn_image.gif" alt="이미지로 보기" /></a><a href="javascript:;" id="aTypeBtnList"><img src="../images/btn/btn_list.gif" alt="리스트로 보기" /></a>
+							</div>
+						</div>
+						<!-- listTpye -->
+						<div class="list typeImg"> <!-- typeImg // typeTxt -->
+
+							
+
+							<div class="box">
+								<a href="#none" class="btnProductDetail" id="btnProductDetail_INGREDIENT_1503">
+									<dl>
+										<dt><span>[재료]</span> <strong>청정원 블랙블루베리잼</strong></dt>
+										<dd>
+											<img src="../../upload/product/product_201510270448017061.jpg" class="b-lazy" alt="청정원 블랙블루베리잼" />
+											
+										</dd>
+									</dl>
+								</a>
+
+								<p class="kcal"><span><strong>50</strong></span></p>
+
+								<div class="popBtn">
+									<a href="#none" class="btnNutriDetail" id="btnNutriDetail_1503">영양 성분표</a>
+
+									
+										
+										
+										<!-- 레시피일 때 (간식, 재료) -->
+										<a href="#none" class="recipeBtn" id="btnRecipe_1503">레시피보기</a>
+										<!-- //레시피일 때 -->
+										
+									
+								</div>
+
+								<div class="tgBtn">
+									<a href="http://www.jungoneshop.com/product/detail.do?P_CODE=P000056367" target="_blank">해당제품 구매</a>
+									<a href="http://www.chungjungone.com/" target="_blank">공식사이트 방문</a>  
+								</div>
+							</div>
+							
+
+							<div class="box">
+								<a href="#none" class="btnProductDetail" id="btnProductDetail_INGREDIENT_1386">
+									<dl>
+										<dt><span>[재료]</span> <strong>청정원 리얼 키위잼</strong></dt>
+										<dd>
+											<img src="../../upload/product/product_201510270347438351.jpg" class="b-lazy" alt="청정원 리얼 키위잼" />
+											
+										</dd>
+									</dl>
+								</a>
+
+								<p class="kcal"><span><strong>50</strong></span></p>
+
+								<div class="popBtn">
+									<a href="#none" class="btnNutriDetail" id="btnNutriDetail_1386">영양 성분표</a>
+
+									
+										
+										
+										<!-- 레시피일 때 (간식, 재료) -->
+										<a href="#none" class="recipeBtn" id="btnRecipe_1386">레시피보기</a>
+										<!-- //레시피일 때 -->
+										
+									
+								</div>
+
+								<div class="tgBtn">
+									<a href="http://www.jungoneshop.com/product/detail.do?P_CODE=P000056350" target="_blank">해당제품 구매</a>
+									<a href="http://www.chungjungone.com/" target="_blank">공식사이트 방문</a>  
+								</div>
+							</div>
+							
+
+							<div class="box">
+								<a href="#none" class="btnProductDetail" id="btnProductDetail_INGREDIENT_1385">
+									<dl>
+										<dt><span>[재료]</span> <strong>청정원 리얼 레몬잼</strong></dt>
+										<dd>
+											<img src="../../upload/product/product_201510270347098531.jpg" class="b-lazy" alt="청정원 리얼 레몬잼" />
+											
+										</dd>
+									</dl>
+								</a>
+
+								<p class="kcal"><span><strong>50</strong></span></p>
+
+								<div class="popBtn">
+									<a href="#none" class="btnNutriDetail" id="btnNutriDetail_1385">영양 성분표</a>
+
+									
+										
+										
+										<!-- 레시피일 때 (간식, 재료) -->
+										<a href="#none" class="recipeBtn" id="btnRecipe_1385">레시피보기</a>
+										<!-- //레시피일 때 -->
+										
+									
+								</div>
+
+								<div class="tgBtn">
+									<a href="http://www.jungoneshop.com/product/detail.do?P_CODE=P000056346" target="_blank">해당제품 구매</a>
+									<a href="http://www.chungjungone.com/" target="_blank">공식사이트 방문</a>  
+								</div>
+							</div>
+							
+
+							<div class="box">
+								<a href="#none" class="btnProductDetail" id="btnProductDetail_INGREDIENT_1384">
+									<dl>
+										<dt><span>[재료]</span> <strong>청정원 리얼 블루베리잼</strong></dt>
+										<dd>
+											<img src="../../upload/product/product_201510270344481361.jpg" class="b-lazy" alt="청정원 리얼 블루베리잼" />
+											
+										</dd>
+									</dl>
+								</a>
+
+								<p class="kcal"><span><strong>50</strong></span></p>
+
+								<div class="popBtn">
+									<a href="#none" class="btnNutriDetail" id="btnNutriDetail_1384">영양 성분표</a>
+
+									
+										
+										
+										<!-- 레시피일 때 (간식, 재료) -->
+										<a href="#none" class="recipeBtn" id="btnRecipe_1384">레시피보기</a>
+										<!-- //레시피일 때 -->
+										
+									
+								</div>
+
+								<div class="tgBtn">
+									<a href="http://www.jungoneshop.com/product/detail.do?P_CODE=P000056144" target="_blank">해당제품 구매</a>
+									<a href="http://www.chungjungone.com/" target="_blank">공식사이트 방문</a>  
+								</div>
+							</div>
+							
+
+							<div class="box">
+								<a href="#none" class="btnProductDetail" id="btnProductDetail_INGREDIENT_1383">
+									<dl>
+										<dt><span>[재료]</span> <strong>청정원 리얼 딸기잼</strong></dt>
+										<dd>
+											<img src="../../upload/product/product_201510270345471371.jpg" class="b-lazy" alt="청정원 리얼 딸기잼" />
+											
+										</dd>
+									</dl>
+								</a>
+
+								<p class="kcal"><span><strong>50</strong></span></p>
+
+								<div class="popBtn">
+									<a href="#none" class="btnNutriDetail" id="btnNutriDetail_1383">영양 성분표</a>
+
+									
+										
+										
+										<!-- 레시피일 때 (간식, 재료) -->
+										<a href="#none" class="recipeBtn" id="btnRecipe_1383">레시피보기</a>
+										<!-- //레시피일 때 -->
+										
+									
+								</div>
+
+								<div class="tgBtn">
+									<a href="http://www.jungoneshop.com/product/detail.do?P_CODE=P000056134" target="_blank">해당제품 구매</a>
+									<a href="http://www.chungjungone.com/" target="_blank">공식사이트 방문</a>  
+								</div>
+							</div>
+							
+
+							<div class="box">
+								<a href="#none" class="btnProductDetail" id="btnProductDetail_INGREDIENT_1081">
+									<dl>
+										<dt><span>[재료]</span> <strong>청정원 레드자몽오렌지무지방샐러드소스</strong></dt>
+										<dd>
+											<img src="../../upload/product/product_20150417023238616.jpg" class="b-lazy" alt="청정원 레드자몽오렌지무지방샐러드소스" />
+											
+										</dd>
+									</dl>
+								</a>
+
+								<p class="kcal"><span><strong>35</strong></span></p>
+
+								<div class="popBtn">
+									<a href="#none" class="btnNutriDetail" id="btnNutriDetail_1081">영양 성분표</a>
+
+									
+										
+										
+										<!-- 레시피일 때 (간식, 재료) -->
+										<a href="#none" class="recipeBtn" id="btnRecipe_1081">레시피보기</a>
+										<!-- //레시피일 때 -->
+										
+									
+								</div>
+
+								<div class="tgBtn">
+									<a href="http://www.jungoneshop.com/product/detail.do?P_CODE=P000042729" target="_blank">해당제품 구매</a>
+									<a href="http://www.chungjungone.com/" target="_blank">공식사이트 방문</a>  
+								</div>
+							</div>
+							
+
+							<div class="box">
+								<a href="#none" class="btnProductDetail" id="btnProductDetail_INGREDIENT_1080">
+									<dl>
+										<dt><span>[재료]</span> <strong>청정원 라임파인애플무지방샐러드소스</strong></dt>
+										<dd>
+											<img src="../../upload/product/product_20150417023057514.jpg" class="b-lazy" alt="청정원 라임파인애플무지방샐러드소스" />
+											
+										</dd>
+									</dl>
+								</a>
+
+								<p class="kcal"><span><strong>40</strong></span></p>
+
+								<div class="popBtn">
+									<a href="#none" class="btnNutriDetail" id="btnNutriDetail_1080">영양 성분표</a>
+
+									
+										
+										
+										<!-- 레시피일 때 (간식, 재료) -->
+										<a href="#none" class="recipeBtn" id="btnRecipe_1080">레시피보기</a>
+										<!-- //레시피일 때 -->
+										
+									
+								</div>
+
+								<div class="tgBtn">
+									<a href="http://www.jungoneshop.com/product/detail.do?P_CODE=P000042727" target="_blank">해당제품 구매</a>
+									<a href="http://www.chungjungone.com/" target="_blank">공식사이트 방문</a>  
+								</div>
+							</div>
+							
+
+							<div class="box">
+								<a href="#none" class="btnProductDetail" id="btnProductDetail_INGREDIENT_312">
+									<dl>
+										<dt><span>[재료]</span> <strong>청정원 매콤한삼선짜장</strong></dt>
+										<dd>
+											<img src="../../upload/product/product_20150302024554784.jpg" class="b-lazy" alt="청정원 매콤한삼선짜장" />
+											
+										</dd>
+									</dl>
+								</a>
+
+								<p class="kcal"><span><strong>150</strong></span></p>
+
+								<div class="popBtn">
+									<a href="#none" class="btnNutriDetail" id="btnNutriDetail_312">영양 성분표</a>
+
+									
+										
+										
+										<!-- 레시피일 때 (간식, 재료) -->
+										<a href="#none" class="recipeBtn" id="btnRecipe_312">레시피보기</a>
+										<!-- //레시피일 때 -->
+										
+									
+								</div>
+
+								<div class="tgBtn">
+									<a href="http://www.jungoneshop.com/index.do" target="_blank">해당제품 구매</a>
+									<a href="http://www.chungjungone.com/index.jsp" target="_blank">공식사이트 방문</a>  
+								</div>
+							</div>
+							
+
+							<div class="box">
+								<a href="#none" class="btnProductDetail" id="btnProductDetail_INGREDIENT_175">
+									<dl>
+										<dt><span>[재료]</span> <strong>청정원 후르츠잼</strong></dt>
+										<dd>
+											<img src="../../upload/product/product_20150302024315955.jpg" class="b-lazy" alt="청정원 후르츠잼" />
+											
+										</dd>
+									</dl>
+								</a>
+
+								<p class="kcal"><span><strong>50</strong></span></p>
+
+								<div class="popBtn">
+									<a href="#none" class="btnNutriDetail" id="btnNutriDetail_175">영양 성분표</a>
+
+									
+										
+										
+										<!-- 레시피일 때 (간식, 재료) -->
+										<a href="#none" class="recipeBtn" id="btnRecipe_175">레시피보기</a>
+										<!-- //레시피일 때 -->
+										
+									
+								</div>
+
+								<div class="tgBtn">
+									<a href="http://www.jungoneshop.com/product/detail.do?P_CODE=P000001089&amp;cPage=2&amp;category=1346&amp;listType=image&amp;sortType=sell&amp;pageSize=20" target="_blank">해당제품 구매</a>
+									<a href="http://www.chungjungone.com/index.jsp" target="_blank">공식사이트 방문</a>  
+								</div>
+							</div>
+							
+
+							<div class="box">
+								<a href="#none" class="btnProductDetail" id="btnProductDetail_INGREDIENT_174">
+									<dl>
+										<dt><span>[재료]</span> <strong>청정원 포도잼</strong></dt>
+										<dd>
+											<img src="../../upload/product/product_20150302024255241.jpg" class="b-lazy" alt="청정원 포도잼" />
+											
+										</dd>
+									</dl>
+								</a>
+
+								<p class="kcal"><span><strong>50</strong></span></p>
+
+								<div class="popBtn">
+									<a href="#none" class="btnNutriDetail" id="btnNutriDetail_174">영양 성분표</a>
+
+									
+										
+										
+										<!-- 레시피일 때 (간식, 재료) -->
+										<a href="#none" class="recipeBtn" id="btnRecipe_174">레시피보기</a>
+										<!-- //레시피일 때 -->
+										
+									
+								</div>
+
+								<div class="tgBtn">
+									<a href="http://www.jungoneshop.com/product/detail.do?P_CODE=P000001590&amp;cPage=2&amp;category=1346&amp;listType=image&amp;sortType=sell&amp;pageSize=20" target="_blank">해당제품 구매</a>
+									<a href="http://www.chungjungone.com/index.jsp" target="_blank">공식사이트 방문</a>  
+								</div>
+							</div>
+							
+							
+						</div>
+						<!-- listTpye -->
+
+						<div class="pag">
+							<span>
+<font style="display:inline-block;padding-top:3px;width:21px;height:18px;font-size:11px;color:red;">1</font>
+<a href="#" onclick="fn_pageNum(2); return false;">2</a>
+<a href="#" onclick="fn_pageNum(3); return false;">3</a>
+</span>
+
+						</div>
+
+					</div>
+
+				</div>
+				</form>
+			</div>
+			<!-- //Sub Content -->
+
+		</section>
+	</article>
+	<!-- //Container -->
+
+	<!-- Aside -->
+	
+
+
+
+
+
+
+
+
+	<!-- Aside -->
+	<aside id="aside">
+	
+		<div class="leftSide">
+			<a href="#none" onclick="$('.jisuCon .box').hide().eq(0).show();pop.open('jisuPop.html');"><img src="../images/btn/btn_jisu.gif" alt="식중독지수" /></a>
+		</div>
+		
+		<div class="aside">
+			<p><img src="../images/txt/tit_aside.gif" alt="청정원 브랜드관" /></p>
+			<ul>
+				<li><a href="productSearcha565.html?cateCd=CLASSIC"><img src="../images/btn/btn_side0.gif" alt="classic 한국전통식품군" /></a></li>
+				<li><a href="productSearchb00f.html?cateCd=SMART"><img src="../images/btn/btn_side1.gif" alt="smart 편의형 제품" /></a></li>
+				<li><a href="productSearch8bcb.html?cateCd=CUISINE"><img src="../images/btn/btn_side2.gif" alt="cuisine 서구식품군" /></a></li>
+				<li><a href="productSearch93bb.html?cateCd=FRESH"><img src="../images/btn/btn_side3.gif" alt="fresh 냉장/냉동" /></a></li>
+				<li><a href="productSearch1be9.html?cateCd=ESSENTIAL"><img src="../images/btn/btn_side4.gif" alt="essential 조미료/향신료" /></a></li>
+				<li><a href="productSearch49d2.html?cateCd=ORGANIC"><img src="../images/btn/btn_side5.gif" alt="organic 유기가공식품군" /></a></li>
+			</ul>
+		</div>
+		<div class="aside2">
+			<ul>
+				<li><a href="http://daesang.com/"><img src="../images/btn/banner01_daesang.gif" alt="대상" /></a></li>
+				<li><a href="http://chungjungone.com/"><img src="../images/btn/banner02_chungjungone.gif" alt="청정원" /></a></li>
+				<li><a href="http://jungoneshop.com/"><img src="../images/btn/banner03_jungoneeshop.gif" alt="정원이샵" /></a></li>
+			</ul>
+		</div>
+		<!-- 
+		<div class="notiList">
+			<div class="btn">
+				<a href="#none">Play</a>
+				<a href="#none">Stop</a>
+			</div>
+			<div class="list">
+				<ul onclick="window.open('http://www.kma.go.kr/weather/lifenindustry/life_jisu.jsp?JISU_INFO=lifedayimg_A01_2','', '');">
+				</ul>
+			</div>
+		</div>
+		 -->
+		<script type="text/javascript">
+		$(function(){
+			/* 
+			$.ajax({
+				type: "POST"  
+				,url: "/user/getFoodPoisonInfo.do"
+				,success:function(data){
+
+					var html = "<li><a href=\"#none\">서울 "+data.seoul+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.seoulStep)+"\">"+data.seoulStep+"</font>"
+					+ "<li><a href=\"#none\">인천 "+data.incheon+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.incheonStep)+"\">"+data.incheonStep+"</font>" 
+					+ "<li><a href=\"#none\">광주 "+data.gwangju+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.gwangjuStep)+"\">"+data.gwangjuStep+"</font>" 
+					+ "<li><a href=\"#none\">부산 "+data.busan+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.busanStep)+"\">"+data.busanStep+"</font>" 
+					+ "<li><a href=\"#none\">대전 "+data.daejeon+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.daejeonStep)+"\">"+data.daejeonStep+"</font>" 
+					+ "<li><a href=\"#none\">세종 "+data.sejong+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.sejongStep)+"\">"+data.sejongStep+"</font>" 
+					+ "<li><a href=\"#none\">대구 "+data.daegu+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.daeguStep)+"\">"+data.daeguStep+"</font>" 
+					+ "<li><a href=\"#none\">울산 "+data.ulsan+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.ulsanStep)+"\">"+data.ulsanStep+"</font>" 
+					+ "<li><a href=\"#none\">춘천 "+data.chuncheon+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.chuncheonStep)+"\">"+data.chuncheonStep+"</font>" 
+					+ "<li><a href=\"#none\">수원 "+data.suwon+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.suwonStep)+"\">"+data.suwonStep+"</font>" 
+					+ "<li><a href=\"#none\">청주 "+data.chungju+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.chungjuStep)+"\">"+data.chungjuStep+"</font>" 
+					+ "<li><a href=\"#none\">전주 "+data.jeonju+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.jeonjuStep)+"\">"+data.jeonjuStep+"</font>" 
+					+ "<li><a href=\"#none\">목포 "+data.mokpo+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.mokpoStep)+"\">"+data.mokpoStep+"</font>" 
+					+ "<li><a href=\"#none\">제주 "+data.jeju+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.jejuStep)+"\">"+data.jejuStep+"</font>";
+					
+					$(".notiList .list ul").html(html);
+					
+					rollNoti();
+				}
+			});
+			 */
+		});
+		
+		var getFontColor = function(param) {
+			var color = "";
+			if(param == "위험") color = "C50100";
+			else if(param == "경고") color = "FF5206";
+			else if(param == "주의") color = "932402";
+			else if(param == "관심") color = "3366CC";
+			
+			return color;
+		};
+		
+		var rollNoti = function(){
+			var $con = $(".notiList"),
+				$play = $con.find(".btn a").eq(0),
+				$stop = $con.find(".btn a").eq(1),
+				$ul = $con.find(".list ul"),
+				$li = $ul.find("li"),
+				max = $li.length,
+				hig = $li.outerHeight(),
+				now = 0,
+				time = 2000,
+				setTime = null;
+			
+			$ul.append("<li>"+$li.eq(0).html()+"</li>");
+
+			$play.bind("click", function(){
+				clearTimeout(setTime);
+				setTime = setTimeout(roll, time);
+				
+			});
+			$stop.bind("click", function(){
+				clearTimeout(setTime);		
+			});
+			
+			var roll = function(){
+				if(now != max){
+					now+=1,
+					time = 2000;
+					$ul.stop().animate({
+						"margin-top" : -1*(now*hig) + "px"
+					},200)
+					
+				}else{
+					now = time = 0;
+					
+					$ul.css("margin-top" , "0");
+					
+					clearTimeout(setTime);
+					
+				}
+				setTime = setTimeout(roll, time);
+			}
+			
+			setTime = setTimeout(roll, time);		
+			
+		}
+		</script>
+	</aside>
+	<!-- //Aside -->
+	
+	
+<!-- 식중독 지수 팝업 -->
+<div class="LayPop" id="jisuPop">
+	<div class="popCon">
+	
+		<div class="jisuCon">
+		
+			<dl class="tit">
+				<dt>식중독 지수</dt>
+				<dd><span class="today"></span> 예보</dd>
+			</dl>
+			
+			<div class="box">
+				<div class="jisuBox">
+					
+					<div class="dayBtn">
+						<a href="#none"><img src="../images/btn/btn_today.gif" alt="오늘" /></a>
+						<a href="#none"><img src="../images/btn/btn_tomor.gif" alt="내일" /></a>
+						<a href="#none"><img src="../images/btn/btn_sand.gif" alt="모래" /></a>
+					</div>
+								
+					<div class="imgView">
+						<div class="view"><img src="#" alt="" /></div>
+						<div class="btn">
+							<a href="#none" class="branchBtn"><img src="../images/btn/btn_branch.gif" alt="지점값 보기" /></a>
+						</div>
+					</div>
+					
+					<div class="jisuGuide">
+						<p><img src="../images/img/img_jisu.gif" alt="" /></p>
+						<table class="jisuTbl">
+							<colgroup>
+								<col width="80">
+								<col width="*">
+							</colgroup>
+							<thead>
+								<tr>
+									<th>단계</th>
+									<th>설명 및 주의사항</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th><strong>위험</strong> <span>(95이상)</span></th>
+									<td>식중독 발생가능성이 매우 높으므로 식중독예방에 각별한 경계요망</td>
+								</tr>
+								<tr>
+									<th><strong>경고</strong> <span>(70이상~95미만)</span></th>
+									<td>식중독 발생가능성이 높으므로 식중독예방에 경계요망</td>
+								</tr>
+								<tr>
+									<th><strong>주의</strong> <span>(35이상~70미만)</span></th>
+									<td>식중독 발생가능성이 중간단계이므로 식중독예방에 주의요망</td>
+								</tr>
+								<tr>
+									<th><strong>관심</strong> <span>(35미만)</span></th>
+									<td>식중독 발생가능성은 낮으나 식중독 예방에 지속적인 관심요망</td>
+								</tr>
+							</tbody>
+						</table>
+						<p class="txt">※ 식중독지수는 기상청과 식품의약품안전처와<br />공동으로 제공하고 있습니다.</p>
+					</div>
+					
+				</div>
+			</div>
+			<div class="box frame">
+				<iframe width="665" height="472" frameborder="0" scrolling="yes" marginheight="0" id="frame" marginwidth="0" src="http://www.kma.go.kr/weather/lifenindustry/li_asset/popup/imgdata_popup.jsp?CODE=A01&amp;point=0"></iframe>
+			</div>
+		</div>
+		<div class="close">
+			<a href="#none" onclick="pop.close();"><img src="../images/btn/btn_close.gif" alt="CLOSE"></a>
+		</div>
+	</div>
+</div>
+<!-- //식중독 지수 팝업 -->
+
+<script type="text/javascript">			
+	$(function(){
+		var $jisu = $(".jisuCon"),
+			$btn = $jisu.find(".dayBtn a"),
+			$img = $jisu.find(".imgView .view img"),
+			$today = $jisu.find(".today"),
+			$branchBtn = $jisu.find(".branchBtn"),
+			url = "http://www.kma.go.kr/repositary/xml/imi2/FCT_IDX_A01_2_",
+			today = getDate(0)[0].toString()+getDate(0)[1]+getDate(0)[2];
+		var d = new Date(), 
+			time = (d.getHours() >= "18") ? "1" : "0";
+		
+		$("#frame").attr("src", "http://www.kma.go.kr/weather/lifenindustry/li_asset/popup/imgdata_popup.jsp?CODE=A01&amp;point="+time);
+		
+		$img.attr("src" , url+today+"06_00D.gif");
+		
+		$today.html(getDate(0)[0]+"."+getDate(0)[1]+"."+getDate(0)[2]);
+		
+		$branchBtn.bind("click", function(){
+			$jisu.find(".box").hide().eq(1).show();
+		})
+		
+		$btn.each(function(idx){
+			$(this).bind("click", function(){
+				$today.html(getDate(idx)[0]+"."+getDate(idx)[1]+"."+getDate(idx)[2]);
+				$img.attr("src" , url+today+"06_0"+idx+"D.gif");
+			});
+		});
+		function getDate(o){
+			  var today = new Date(),
+			  		tomorrow = new Date(today.valueOf() + (24*60*60*1000)*o),
+			  		y = tomorrow.getFullYear(),
+			  		mDay = tomorrow.getMonth() + 1,
+			  		m = (mDay.toString().length == 1) ? "0"+mDay.toString() : mDay.toString(),
+			  		dDay = tomorrow.getDate(),
+			  		d = (dDay.toString().length == 1) ? "0"+dDay.toString() : dDay.toString(),
+			  		dayArr = [y,m,d];
+			  
+			 return dayArr;
+		}
+	});
+</script>
+
+	<!-- //Aside -->
+	
+</div>
+
+<!-- Footer -->
+<footer id="footer">
+	
+<footer id="footer">
+	<div class="footer">
+		<img src="../images/common/tit_footer.gif" alt="DAESANG : COPYRIGHT © DAESANG 2014 ALL RIGHT RESEVED " />
+	</div>
+	
+	<div class="popBg"></div>
+</footer>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','../../../www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-59799444-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</footer>
+<!-- //Footer -->
+
+<!-- 전체 보기 -->
+<div class="LayPop" id="dataPop">
+</div>
+<!-- //전체 보기 -->
+
+<!-- 영양성분 -->
+<div class="LayPop chartPop" id="chart">
+</div>
+<!-- 영양성분 -->
+
+
+<!-- 레시피 보기 -->
+<div class="LayPop" id="recipePop">
+	<div class="popCon">
+		<iframe src="#" id="ifrRecipe" frameborder="0" width="537" height="304" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+		<div class="close">
+			<a href="#none" onclick="pop.close();"><img src="../images/btn/btn_close.gif" alt="CLOSE" /></a>
+		</div>
+	</div>
+</div>
+<!-- //레시피 보기 -->
+
+
+<!-- 추천식단 보기 -->
+<div class="LayPop" id="recomList">
+	<div class="popCon">
+		<iframe src="#" id="ifrRecom" frameborder="0" width="537" height="304" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+		<div class="close">
+			<a href="#none" onclick="pop.close();"><img src="../images/btn/btn_close.gif" alt="CLOSE" /></a>
+		</div>
+	</div>
+</div>
+<!-- //추천식단 보기 -->
+
+
+<!-- 추천식단 상세 보기 -->
+<div class="LayPop" id="recomPop"></div>
+<!-- //추천식단 상세 보기 -->
+
+</body>
+
+<!-- Mirrored from www.jungonenutri.com/user/product/productSearch.do?cateCd=CUISINE by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 31 May 2022 00:33:15 GMT -->
+</html>

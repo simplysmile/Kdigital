@@ -1,0 +1,5522 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<!-- Mirrored from www.jungonenutri.com/user/diet/dietSearch.do by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 31 May 2022 00:28:04 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" /> 
+<meta name="HandheldFriendly" content="True" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+
+<title>DAESANG : 영양정보와 건강 식단관리</title>
+
+<!-- Library -->
+
+<link rel="stylesheet" href="../css/basic.css" type="text/css" />
+<link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+<script type="text/javascript" src="../lib/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="../lib/jQuery.print.js"></script>
+<script type="text/javascript" src="../lib/jquery.imgpreload.min.js"></script>
+<script type="text/javascript" src="../js/jquery.nutrient.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+
+<!--[if lt IE 9]>
+	<script type="text/javascript" src="/user/lib/html5shiv-printshiv.js"></script>
+<![endif]-->
+<!-- //Library -->
+
+<script type="text/javascript">
+	$(function(){
+		bner.init();
+		recomFn();
+		
+		//나이,하루목표칼로리 조회조건 입력시
+		$("input:text[name=kcal], input:text[name=age]").on("keyup", function(){
+			$(this).val( $(this).val().replace(/[^0-9]/gi,"") );
+			
+			$("#rdoGender").val("");
+			$("input:radio:checked").parent().attr("class", "");
+			$("input:radio:checked").attr("checked", false);
+		});
+		
+		//성별 조회조건 변경 시
+		$("select:[name=gender]").on("change", function(){
+			$("#rdoGender").val("");
+			$("input:radio:checked").parent().attr("class", "");
+			$("input:radio:checked").attr("checked", false);
+		});
+
+		// 국가선택시
+		$("input[name='dietGrpCd']").on("click", function(){
+			resetSeasonValue();
+			$("#rdoGender").val("");
+			$("input:radio[name=rdoAge]:checked").prop('checked', false);
+
+			$("#searchForm").attr("action", "/user/diet/dietSearch.do");
+			$("#searchForm").submit();
+		});
+
+		// Search Button Click
+		$("#btnSearch").on("click", function(){
+			
+			if(parseInt($("input:text[name=age]").val()) < 15){
+				alert("최소 나이는 15세 입니다.\n\n다시 입력해주세요.");
+				$("input:text[name=age]").val("");
+				return;
+			}
+
+			resetSeasonValue();
+			resetDietGrpCdValue();
+
+			$("#searchForm").attr("action", "/user/diet/dietSearch.do");
+			$("#searchForm").submit();
+		});
+		
+		// 10개씩 보기 Select box Change
+		$("#selRowCount").on("change", function(){
+			$("#searchForm").attr("action", "/user/diet/dietSearch.do");
+			$("#searchForm").submit();
+		});
+		
+		// 상세보기 클릭
+		$(".subContainer .recomCon .recomPopBtn").click(function(){
+			var $thisId = $(this).attr("id");
+			var dietCd = $thisId.substring ( $thisId.indexOf("_") + 1 );
+			$("#dietCd").val(dietCd);
+			var param = $("form[name=searchForm]").serialize();
+			 
+			 $.ajax({   
+				type: "GET"  
+				,url: "/user/diet/dietDetail.do"
+				,data: param
+				,success:function(data){
+					$("#recomPop").html(data);
+					pop.open('recomPop.html');
+				}
+				,error:function(data){
+					alert("error");
+				}
+			});
+		});
+
+		//SNS 에서 링크로 진입 했을 경우 상세 팝업 오픈
+		if('' != ""){
+			var $thisId = $(".snsLink").attr("id");
+			var dietCd = $thisId.substring ( $thisId.indexOf("_") + 1 );
+			$("#dietCd").val(dietCd);
+			var param = $("form[name=searchForm]").serialize();
+			 
+			 $.ajax({   
+				type: "GET"  
+				,url: "/user/diet/dietDetail.do"
+				,data: param
+				,success:function(data){
+					$("#recomPop").html(data);
+					pop.open('recomPop.html');
+				}
+				,error:function(data){
+					alert("error");
+				}
+			});
+		}
+	});
+	
+	//남자,여자 나이 버튼 클릭시
+	function rdoAgeClick(){
+		var chkId = $("input:radio[name=rdoAge]:checked").attr("id");
+		$("#rdoGender").val(chkId.substring(0,chkId.length-1) == "man" ? "M" : "F");
+		
+		$("select[name=gender]").val("");
+		$("input:text[name=age]").val("");
+		$("input:text[name=kcal]").val("");
+
+		//resetSeasonValue();
+
+		$("#searchForm").attr("action", "/user/diet/dietSearch.do");
+		$("#searchForm").submit();
+	}
+	
+	//식단 음식 클릭 시
+	function linkFoodClick(param){
+		param = encodeURIComponent(param);
+		window.open("http://www.jungoneshop.com/common/search/search_result.do?searchTerm="+param, "", "");
+	}
+	
+	// 페이징 클릭 이벤트
+	function fn_pageNum(page) {
+		$("#pageNum").val( page );
+		$("#searchForm").attr("action", "/user/diet/dietSearch.do");
+		$("#searchForm").submit();
+	}
+	
+	// SNS공유하기
+	function share_sns(sns, diet_cd) {
+		var cw=screen.availWidth;     //화면 넓이
+		var ch=screen.availHeight;    //화면 높이
+
+		var sw=450;    //띄울 창의 넓이
+		var sh=200;    //띄울 창의 높이
+
+		var ml=(cw-sw)/2;        //가운데 띄우기위한 창의 x위치
+		var mt=(ch-sh)/2;         //가운데 띄우기위한 창의 y위치
+		 
+		var param = $("form[name=searchForm]").serialize() + "&snsDietCd=" + diet_cd;
+		var url = encodeURIComponent("http://"+location.host+"/user/diet/dietSearch.do?" + param);
+		
+		if(sns=="FB"){
+			var fullUrl = "https://www.facebook.com/sharer/sharer.php?u='" + url + "&t=공유하기 테스트~'";
+			window.open(fullUrl, "fb_share", "width="+sw+",height="+sh+",top="+mt+",left="+ml+",resizable=yes,scrollbars=no ");
+		}
+	}
+	
+	//엑셀 다운로드
+	function downLoadExcel(dietCd){
+		$("#dietCd").val(dietCd);
+		$("#searchForm").attr("action", "/user/diet/excelDownload.do");
+		$("#searchForm").submit();
+	}
+
+	// 계절별 라디오 클릭
+	function rdoSeasonClick() {
+
+		$("#rdoGender").val("");
+		$("select[name=gender]").val("");
+		$("input:text[name=age]").val("");
+		$("input:text[name=kcal]").val("");
+		$("input:radio[name=rdoAge]:checked").prop('checked', false);
+
+		setSelectedSeasonValue();
+
+		$("#searchForm").attr("action", "/user/diet/dietSearch.do");
+		$("#searchForm").submit();
+	}
+
+	//계절별 라디오 버튼 선택시 Y할당 서브밋 전처리용
+	function setSelectedSeasonValue() {
+		// 계절별
+		$("#springYn, #summerYn, #autumnYn, #winterYn").each(function() {
+			if ( $(this).parent().hasClass("on") ) {
+				$(this).val("Y");
+			} else {
+				$(this).val("");
+			}
+		});
+	}
+
+	//계절별 라디오버튼 리셋
+	function resetSeasonValue() {
+		$("#springYn, #summerYn, #autumnYn, #winterYn").each(function() {
+			$(this).parent().removeClass("on");
+			$(this).prop("checked", false);
+			$(this).val("");
+		});
+	}
+
+	//국가별 라디오버튼 리셋
+	function resetDietGrpCdValue() {
+		$("input[name='dietGrpCd'").each(function() {
+			$(this).parent().removeClass("on");
+			$(this).prop("checked", false);
+			$(this).val("");
+		});
+	}
+</script>
+
+</head>
+<body>
+
+<!-- SNS 링크용 -->
+<div id="dietCd_" class="snsLink" onclick="pop.open('recomPop.html');"></div>
+ 
+<div id="wrap">
+	<!-- Header -->
+	
+<header id="header">
+	<div class="header">
+
+		<h1><a href="../index.html"><img src="../images/common/logo.png" alt="DAESANG : 영양정보와 건강 식단관리" /></a></h1>
+
+	</div>
+</header>
+	<!-- //Header -->
+
+	<!-- Container -->
+	<article id="container">
+		<section id="content">
+				
+			<!-- Sub Title -->
+			<div class="subTit recomTit">
+				<div class="titBg">
+					<p><img src="../images/txt/tit_sub0.gif" alt="건강과 균형 '푸드를 아는 사람들'" /></p>
+				</div>
+			</div>
+			<!-- //Sub Title -->
+			
+			<!-- TabNav -->
+			
+<nav id="tabNav">
+	<div class="tabNav">
+		<ul>
+			<li><a href="../product/productSearch.html"><img src="../images/common/btn_lnb0.gif" alt="영양정보 조회" /></a></li>
+			<li><a href="dietSearch.html"><img src="../images/common/btn_lnb1.gif" alt="추천 식단" /></a></li>
+			<li><a href="../mydiet/myDiet.html"><img src="../images/common/btn_lnb2.gif" alt="나만의 식단" /></a></li>
+			<li><a href="../notice/notice.html"><img src="../images/common/btn_lnb3.gif" alt="영양정보 게시판" /></a></li>
+		</ul>
+	</div>
+</nav>
+			<!-- //TabNav -->
+
+			<!-- Sub Content -->
+			<div class="subContainer">
+				<form name="searchForm" id="searchForm" method="GET" action="http://www.jungonenutri.com/user/diet/dietSearch.do">
+					<input type="hidden" name="dietOrdYn" id="dietOrdYn" value="Y"/>
+					<input type="hidden" name="pageNum" id="pageNum" />
+					<input type="hidden" name="rdoGender" id="rdoGender" value=""/>
+					<input type="hidden" name="dietCd" id="dietCd"/>
+
+				<div class="subCon">
+				
+					<div class="recomSch">
+
+						<div class="schBox">
+							<dl>
+								<dt>성별</dt>
+								<dd>
+									<select name="gender">
+										<option value="">선택</option>
+									
+										<option value="M" >남자</option>
+									
+										<option value="F" >여자</option>
+									
+									</select>
+								</dd>
+								<dt>나이</dt>
+								<dd>
+									<input type="text" name="age" style="width:60px;" value="" /> 세
+								</dd>
+								<dt>하루 목표 칼로리</dt>
+								<dd>
+									<input type="text" name="kcal" value="" /> kcal
+								</dd>
+							</dl>
+							<div class="btn">
+								<a href="#none" id="btnSearch"><img src="../images/btn/btn_sch_recom.gif" alt="검색" /></a>
+							</div>
+						</div>
+						
+						<div class="ageBox">
+							<p class="txt">해당 성별의 연령대 버튼 클릭시, 1일 에너지 권장량에 맞춤 설계된 균형식단을 확인할 수 있습니다.</p>
+							<ul class="foodBox" style="display:;">
+								
+									
+									
+									
+									
+									
+								
+
+								<li ><label for="food0">한식</label><input type="radio" name="dietGrpCd" id="food0" value="KOR"     /></li>
+								<li ><label for="food1">양식</label><input type="radio" name="dietGrpCd" id="food1" value="ENG"    /></li>
+								<li ><label for="food2">일식</label><input type="radio" name="dietGrpCd" id="food2" value="JPN"    /></li>
+								<li ><label for="food3">중식</label><input type="radio" name="dietGrpCd" id="food3" value="CHN"    /></li>
+								<li ><label for="food4">퓨전&amp;분식</label><input type="radio" name="dietGrpCd" id="food4" value="ETC"  /></li>
+							</ul>
+							<dl class="seaBox" style="display: none;">
+								<dt><img src="../images/txt/txt_season.gif" alt="계절별" /></dt>
+								<dd>
+									<ul>
+										
+										
+										
+										
+
+										<li ><label for="springYn">봄</label><input type="radio" name="springYn" id="springYn" value=""  onClick="rdoSeasonClick();"  /></li>
+										<li ><label for="summerYn">여름</label><input type="radio" name="summerYn" id="summerYn" value="" onClick="rdoSeasonClick();"  /></li>
+										<li ><label for="autumnYn">가을</label><input type="radio" name="autumnYn" id="autumnYn" value="" onClick="rdoSeasonClick();"  /></li>
+										<li ><label for="winterYn">겨울</label><input type="radio" name="winterYn" id="winterYn" value="" onClick="rdoSeasonClick();"  /></li>
+									</ul>
+								</dd>
+							</dl>
+							<dl class="sexBox" style="display: none;">
+								<dt><img src="../images/txt/txt_man.gif" alt="남자" /></dt>
+								<dd>
+									<ul>
+									
+										<li ><label for="man0">15-18</label><input type="radio" name="rdoAge" id="man0" value="15" onClick="rdoAgeClick();" /></li>
+									
+										<li ><label for="man1">19-29</label><input type="radio" name="rdoAge" id="man1" value="19" onClick="rdoAgeClick();" /></li>
+									
+										<li ><label for="man2">30-49</label><input type="radio" name="rdoAge" id="man2" value="30" onClick="rdoAgeClick();" /></li>
+									
+										<li ><label for="man3">50-64</label><input type="radio" name="rdoAge" id="man3" value="50" onClick="rdoAgeClick();" /></li>
+									
+										<li ><label for="man4">65-74</label><input type="radio" name="rdoAge" id="man4" value="65" onClick="rdoAgeClick();" /></li>
+									
+										<li ><label for="man5">75이상</label><input type="radio" name="rdoAge" id="man5" value="75" onClick="rdoAgeClick();" /></li>
+									
+									</ul>
+								</dd>
+							</dl>
+							<dl class="sexBox" style="display: none;">
+								<dt><img src="../images/txt/txt_girl.gif" alt="여자" /></dt>
+								<dd>
+									<ul>
+									
+										<li ><label for="girl0">15-18</label><input type="radio" name="rdoAge" id="girl0" value="15" onClick="rdoAgeClick();" /></li>
+									
+										<li ><label for="girl1">19-29</label><input type="radio" name="rdoAge" id="girl1" value="19" onClick="rdoAgeClick();" /></li>
+									
+										<li ><label for="girl2">30-49</label><input type="radio" name="rdoAge" id="girl2" value="30" onClick="rdoAgeClick();" /></li>
+									
+										<li ><label for="girl3">50-64</label><input type="radio" name="rdoAge" id="girl3" value="50" onClick="rdoAgeClick();" /></li>
+									
+										<li ><label for="girl4">65-74</label><input type="radio" name="rdoAge" id="girl4" value="65" onClick="rdoAgeClick();" /></li>
+									
+										<li ><label for="girl5">75이상</label><input type="radio" name="rdoAge" id="girl5" value="75" onClick="rdoAgeClick();" /></li>
+									
+									</ul>
+								</dd>
+							</dl>
+							<p class="sourceTxt" style="display: none;">
+								* 출처: 한국인 영양섭취기준(2010년, (사)한국영양학회) 외
+							</p>
+						</div>
+
+					</div>
+
+					<div class="recomCon">
+						<div class="listType">
+							<select name="rowCount" class="listSel" id="selRowCount">
+								<option value="10" >10개 씩 보기</option>
+								<option value="20" >20개 씩 보기</option>
+								<option value="50" >50개 씩 보기</option>
+							</select>
+						</div>
+
+						<!-- diet Con -->
+						<div class="recomList">
+							<!-- list loop start -->
+							
+							<div class="box">
+								<div class="gageBox">
+									<p class="name">건강균형식단159</p>
+									<div class="gage" title="83%"><p style="width:83%;"></p></div>
+									<p class="txt">1일 열량 섭취기준<br /><span>(2,700kcal)</span>에 대한 비율</p>
+									
+									<div class="recBtn">
+										 <a href="#none" class="recomPopBtn" id="dietCd_1340"><img src="../images/btn/btn_view.gif" alt="상세보기" /></a>
+										<a href="../mydiet/myDietb65c.html?dietCd=1340"><img src="../images/btn/btn_edit.gif" alt="편집하기" /></a>
+									</div>
+									
+									<p class="total">총 열량 <span>2,260</span>kcal</p>
+									<div class="btn">
+										<a href="#none" onclick="recomPrint('recomPop','1340')"><img src="../images/btn/btn_print.gif" alt="인쇄" /></a>
+										<a href="#none" onclick="downLoadExcel('1340')"><img src="../images/btn/btn_down.gif" alt="다운로드" /></a>
+										<a href="#none" onclick="share_sns('FB',1340)"><img src="../images/btn/btn_facebook.gif" alt="공유" /></a>
+									</div>
+								</div>
+								
+								<div class="recomTbl">
+									<table class="list">
+										<colgroup>
+											<col width="25%">
+											<col width="25%">
+											<col width="25%">
+											<col width="*">
+										</colgroup>
+										<thead>
+											<tr>
+												<th>
+													<p class="name">
+														아침
+														<span class="kcal"><strong>883</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														점심
+														<span class="kcal"><strong>596</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														저녁
+														<span class="kcal"><strong>781</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														간식
+														<span class="kcal"><strong></strong></span>
+													</p>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('맛선생');">
+														콩나물국(북어)
+														<span class="kcal"><strong>114</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('맛선생');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('된장');">
+														된장국(배추)
+														<span class="kcal"><strong>63</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('된장');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('칼국수');">
+														칼국수(닭)
+														<span class="kcal"><strong>198</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('칼국수');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														검정콩밥
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('나물밥');">
+														취나물밥
+														<span class="kcal"><strong>370</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('나물밥');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('소스');">
+														야채샐러드
+														<span class="kcal"><strong>112</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('소스');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('김치');">
+														돼지고기볶음(김치)
+														<span class="kcal"><strong>279</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('김치');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('카놀라유');">
+														게맛살볶음
+														<span class="kcal"><strong>123</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('카놀라유');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														무말랭이무침
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('두부');">
+														두부
+														<span class="kcal"><strong>67</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('두부');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('열무');">
+														열무김치
+														<span class="kcal"><strong>11</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('열무');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														보리밥
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														근대나물
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('깍두기');">
+														깍두기
+														<span class="kcal"><strong>16</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('깍두기');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														배추겉절이
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('김');">
+														김구이
+														<span class="kcal"><strong>13</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('김');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+										</tbody>
+									</table>
+								</div>
+							</div>
+							
+							<div class="box">
+								<div class="gageBox">
+									<p class="name">건강균형식단158</p>
+									<div class="gage" title="71%"><p style="width:71%;"></p></div>
+									<p class="txt">1일 열량 섭취기준<br /><span>(2,700kcal)</span>에 대한 비율</p>
+									
+									<div class="recBtn">
+										 <a href="#none" class="recomPopBtn" id="dietCd_1240"><img src="../images/btn/btn_view.gif" alt="상세보기" /></a>
+										<a href="../mydiet/myDiet70ba.html?dietCd=1240"><img src="../images/btn/btn_edit.gif" alt="편집하기" /></a>
+									</div>
+									
+									<p class="total">총 열량 <span>1,919</span>kcal</p>
+									<div class="btn">
+										<a href="#none" onclick="recomPrint('recomPop','1240')"><img src="../images/btn/btn_print.gif" alt="인쇄" /></a>
+										<a href="#none" onclick="downLoadExcel('1240')"><img src="../images/btn/btn_down.gif" alt="다운로드" /></a>
+										<a href="#none" onclick="share_sns('FB',1240)"><img src="../images/btn/btn_facebook.gif" alt="공유" /></a>
+									</div>
+								</div>
+								
+								<div class="recomTbl">
+									<table class="list">
+										<colgroup>
+											<col width="25%">
+											<col width="25%">
+											<col width="25%">
+											<col width="*">
+										</colgroup>
+										<thead>
+											<tr>
+												<th>
+													<p class="name">
+														아침
+														<span class="kcal"><strong>381</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														점심
+														<span class="kcal"><strong>723</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														저녁
+														<span class="kcal"><strong>771</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														간식
+														<span class="kcal"><strong>44</strong></span>
+													</p>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('죽');">
+														죽
+														<span class="kcal"><strong>170</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('죽');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														쌀밥
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('스파게티');">
+														마늘 스파게티
+														<span class="kcal"><strong>376</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('스파게티');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														사과
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('동치미');">
+														동치미
+														<span class="kcal"><strong>27</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('동치미');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('맛선생');">
+														표고부추계란국
+														<span class="kcal"><strong>68</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('맛선생');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														양배추오이샐러드
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('젓');">
+														오징어젓
+														<span class="kcal"><strong>18</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('젓');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('양념장');">
+														돼지갈비찜
+														<span class="kcal"><strong>188</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('양념장');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('카놀라유');">
+														감자튀김
+														<span class="kcal"><strong>130</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('카놀라유');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('간장');">
+														쇠고기장조림
+														<span class="kcal"><strong>166</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('간장');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														무말랭이무침
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('오이');">
+														오이피클
+														<span class="kcal"><strong>59</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('오이');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														시금치나물
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('주스');">
+														오렌지쥬스
+														<span class="kcal"><strong>84</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('주스');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('김치');">
+														배추김치
+														<span class="kcal"><strong>10</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('김치');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+										</tbody>
+									</table>
+								</div>
+							</div>
+							
+							<div class="box">
+								<div class="gageBox">
+									<p class="name">건강균형식단157</p>
+									<div class="gage" title="92%"><p style="width:92%;"></p></div>
+									<p class="txt">1일 열량 섭취기준<br /><span>(2,700kcal)</span>에 대한 비율</p>
+									
+									<div class="recBtn">
+										 <a href="#none" class="recomPopBtn" id="dietCd_1220"><img src="../images/btn/btn_view.gif" alt="상세보기" /></a>
+										<a href="../mydiet/myDietbcf2.html?dietCd=1220"><img src="../images/btn/btn_edit.gif" alt="편집하기" /></a>
+									</div>
+									
+									<p class="total">총 열량 <span>2,508</span>kcal</p>
+									<div class="btn">
+										<a href="#none" onclick="recomPrint('recomPop','1220')"><img src="../images/btn/btn_print.gif" alt="인쇄" /></a>
+										<a href="#none" onclick="downLoadExcel('1220')"><img src="../images/btn/btn_down.gif" alt="다운로드" /></a>
+										<a href="#none" onclick="share_sns('FB',1220)"><img src="../images/btn/btn_facebook.gif" alt="공유" /></a>
+									</div>
+								</div>
+								
+								<div class="recomTbl">
+									<table class="list">
+										<colgroup>
+											<col width="25%">
+											<col width="25%">
+											<col width="25%">
+											<col width="*">
+										</colgroup>
+										<thead>
+											<tr>
+												<th>
+													<p class="name">
+														아침
+														<span class="kcal"><strong>690</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														점심
+														<span class="kcal"><strong>812</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														저녁
+														<span class="kcal"><strong>891</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														간식
+														<span class="kcal"><strong>115</strong></span>
+													</p>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														기장밥
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														보리밥
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														검정콩밥
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														삶은달걀
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('맛선생');">
+														콩나물무채국
+														<span class="kcal"><strong>136</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('맛선생');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('된장');">
+														된장국(감자)
+														<span class="kcal"><strong>107</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('된장');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('맛선생');">
+														북어국(계란)
+														<span class="kcal"><strong>95</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('맛선생');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('홍초');">
+														홍초음료
+														<span class="kcal"><strong>40</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('홍초');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('닭');">
+														닭갈비
+														<span class="kcal"><strong>130</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('닭');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('완자');">
+														동그랑땡
+														<span class="kcal"><strong>189</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('완자');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														오리고기구이
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('포도씨유');">
+														멸치볶음
+														<span class="kcal"><strong>64</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('포도씨유');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														고구마줄기나물
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('카놀라유');">
+														가지튀김
+														<span class="kcal"><strong>211</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('카놀라유');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('김치');">
+														배추김치
+														<span class="kcal"><strong>10</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('김치');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('김치');">
+														배추김치
+														<span class="kcal"><strong>10</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('김치');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														부추김치
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+										</tbody>
+									</table>
+								</div>
+							</div>
+							
+							<div class="box">
+								<div class="gageBox">
+									<p class="name">건강균형식단156</p>
+									<div class="gage" title="87%"><p style="width:87%;"></p></div>
+									<p class="txt">1일 열량 섭취기준<br /><span>(2,700kcal)</span>에 대한 비율</p>
+									
+									<div class="recBtn">
+										 <a href="#none" class="recomPopBtn" id="dietCd_1161"><img src="../images/btn/btn_view.gif" alt="상세보기" /></a>
+										<a href="../mydiet/myDiete2b0.html?dietCd=1161"><img src="../images/btn/btn_edit.gif" alt="편집하기" /></a>
+									</div>
+									
+									<p class="total">총 열량 <span>2,354</span>kcal</p>
+									<div class="btn">
+										<a href="#none" onclick="recomPrint('recomPop','1161')"><img src="../images/btn/btn_print.gif" alt="인쇄" /></a>
+										<a href="#none" onclick="downLoadExcel('1161')"><img src="../images/btn/btn_down.gif" alt="다운로드" /></a>
+										<a href="#none" onclick="share_sns('FB',1161)"><img src="../images/btn/btn_facebook.gif" alt="공유" /></a>
+									</div>
+								</div>
+								
+								<div class="recomTbl">
+									<table class="list">
+										<colgroup>
+											<col width="25%">
+											<col width="25%">
+											<col width="25%">
+											<col width="*">
+										</colgroup>
+										<thead>
+											<tr>
+												<th>
+													<p class="name">
+														아침
+														<span class="kcal"><strong>889</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														점심
+														<span class="kcal"><strong>679</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														저녁
+														<span class="kcal"><strong>786</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														간식
+														<span class="kcal"><strong></strong></span>
+													</p>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('스프');">
+														스프,양송이스프
+														<span class="kcal"><strong>63</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('스프');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														현미밥
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('김치');">
+														김치볶음밥
+														<span class="kcal"><strong>354</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('김치');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														모닝빵
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('된장');">
+														우거지국
+														<span class="kcal"><strong>47</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('된장');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														달걀국
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														시리얼
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														도라지생채(오이)
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('포도씨유');">
+														계란후라이
+														<span class="kcal"><strong>105</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('포도씨유');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														토마토
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														고등어구이
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('깍두기');">
+														깍두기
+														<span class="kcal"><strong>16</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('깍두기');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														우유
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('닭');">
+														닭불고기
+														<span class="kcal"><strong>133</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('닭');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														멜론
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('김치');">
+														배추김치
+														<span class="kcal"><strong>10</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('김치');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+										</tbody>
+									</table>
+								</div>
+							</div>
+							
+							<div class="box">
+								<div class="gageBox">
+									<p class="name">건강균형식단155</p>
+									<div class="gage" title="82%"><p style="width:82%;"></p></div>
+									<p class="txt">1일 열량 섭취기준<br /><span>(2,700kcal)</span>에 대한 비율</p>
+									
+									<div class="recBtn">
+										 <a href="#none" class="recomPopBtn" id="dietCd_1160"><img src="../images/btn/btn_view.gif" alt="상세보기" /></a>
+										<a href="../mydiet/myDiet7344.html?dietCd=1160"><img src="../images/btn/btn_edit.gif" alt="편집하기" /></a>
+									</div>
+									
+									<p class="total">총 열량 <span>2,223</span>kcal</p>
+									<div class="btn">
+										<a href="#none" onclick="recomPrint('recomPop','1160')"><img src="../images/btn/btn_print.gif" alt="인쇄" /></a>
+										<a href="#none" onclick="downLoadExcel('1160')"><img src="../images/btn/btn_down.gif" alt="다운로드" /></a>
+										<a href="#none" onclick="share_sns('FB',1160)"><img src="../images/btn/btn_facebook.gif" alt="공유" /></a>
+									</div>
+								</div>
+								
+								<div class="recomTbl">
+									<table class="list">
+										<colgroup>
+											<col width="25%">
+											<col width="25%">
+											<col width="25%">
+											<col width="*">
+										</colgroup>
+										<thead>
+											<tr>
+												<th>
+													<p class="name">
+														아침
+														<span class="kcal"><strong>933</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														점심
+														<span class="kcal"><strong>690</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														저녁
+														<span class="kcal"><strong>460</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														간식
+														<span class="kcal"><strong>140</strong></span>
+													</p>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														검정콩밥
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('나물밥');">
+														무청나물밥
+														<span class="kcal"><strong>355</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('나물밥');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('칼국수');">
+														칼국수
+														<span class="kcal"><strong>408</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('칼국수');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('감츄');">
+														건조감 간식
+														<span class="kcal"><strong>100</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('감츄');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('맛선생');">
+														무채어묵국
+														<span class="kcal"><strong>63</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('맛선생');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('된장');">
+														된장찌개(해물)
+														<span class="kcal"><strong>158</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('된장');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('장아찌');">
+														깻잎장아찌
+														<span class="kcal"><strong>24</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('장아찌');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('홍초');">
+														홍초음료
+														<span class="kcal"><strong>40</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('홍초');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('떡갈비');">
+														숯불떡갈비
+														<span class="kcal"><strong>346</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('떡갈비');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('포도씨유');">
+														멸치볶음
+														<span class="kcal"><strong>64</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('포도씨유');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('젓');">
+														오징어젓
+														<span class="kcal"><strong>18</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('젓');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('포도씨유');">
+														애호박전
+														<span class="kcal"><strong>60</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('포도씨유');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														콩나물무침
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('김치');">
+														배추김치
+														<span class="kcal"><strong>10</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('김치');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														달걀찜
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('간장');">
+														콩조림(콩자반)
+														<span class="kcal"><strong>58</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('간장');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('김치');">
+														배추김치
+														<span class="kcal"><strong>10</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('김치');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('깍두기');">
+														깍두기
+														<span class="kcal"><strong>16</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('깍두기');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+										</tbody>
+									</table>
+								</div>
+							</div>
+							
+							<div class="box">
+								<div class="gageBox">
+									<p class="name">건강균형식단154</p>
+									<div class="gage" title="91%"><p style="width:91%;"></p></div>
+									<p class="txt">1일 열량 섭취기준<br /><span>(2,700kcal)</span>에 대한 비율</p>
+									
+									<div class="recBtn">
+										 <a href="#none" class="recomPopBtn" id="dietCd_1143"><img src="../images/btn/btn_view.gif" alt="상세보기" /></a>
+										<a href="../mydiet/myDietce86.html?dietCd=1143"><img src="../images/btn/btn_edit.gif" alt="편집하기" /></a>
+									</div>
+									
+									<p class="total">총 열량 <span>2,481</span>kcal</p>
+									<div class="btn">
+										<a href="#none" onclick="recomPrint('recomPop','1143')"><img src="../images/btn/btn_print.gif" alt="인쇄" /></a>
+										<a href="#none" onclick="downLoadExcel('1143')"><img src="../images/btn/btn_down.gif" alt="다운로드" /></a>
+										<a href="#none" onclick="share_sns('FB',1143)"><img src="../images/btn/btn_facebook.gif" alt="공유" /></a>
+									</div>
+								</div>
+								
+								<div class="recomTbl">
+									<table class="list">
+										<colgroup>
+											<col width="25%">
+											<col width="25%">
+											<col width="25%">
+											<col width="*">
+										</colgroup>
+										<thead>
+											<tr>
+												<th>
+													<p class="name">
+														아침
+														<span class="kcal"><strong>956</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														점심
+														<span class="kcal"><strong>830</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														저녁
+														<span class="kcal"><strong>695</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														간식
+														<span class="kcal"><strong></strong></span>
+													</p>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														현미밥
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('보크');">
+														오므라이스
+														<span class="kcal"><strong>535</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('보크');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														기장밥
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														부대찌개
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('된장');">
+														무국(된장,쇠고기)
+														<span class="kcal"><strong>54</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('된장');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														육개장
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('간장');">
+														쇠고기장조림
+														<span class="kcal"><strong>166</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('간장');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('카놀라유');">
+														순대볶음
+														<span class="kcal"><strong>118</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('카놀라유');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														삼치구이
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														달걀찜
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('카놀라유');">
+														새우튀김
+														<span class="kcal"><strong>69</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('카놀라유');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('포도씨유');">
+														호박볶음
+														<span class="kcal"><strong>43</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('포도씨유');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														깻잎나물
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('김치');">
+														배추김치
+														<span class="kcal"><strong>10</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('김치');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('깍두기');">
+														깍두기
+														<span class="kcal"><strong>16</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('깍두기');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('김치');">
+														배추김치
+														<span class="kcal"><strong>10</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('김치');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														사과
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														배
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+										</tbody>
+									</table>
+								</div>
+							</div>
+							
+							<div class="box">
+								<div class="gageBox">
+									<p class="name">건강균형식단153</p>
+									<div class="gage" title="94%"><p style="width:94%;"></p></div>
+									<p class="txt">1일 열량 섭취기준<br /><span>(2,700kcal)</span>에 대한 비율</p>
+									
+									<div class="recBtn">
+										 <a href="#none" class="recomPopBtn" id="dietCd_1141"><img src="../images/btn/btn_view.gif" alt="상세보기" /></a>
+										<a href="../mydiet/myDiet540c.html?dietCd=1141"><img src="../images/btn/btn_edit.gif" alt="편집하기" /></a>
+									</div>
+									
+									<p class="total">총 열량 <span>2,542</span>kcal</p>
+									<div class="btn">
+										<a href="#none" onclick="recomPrint('recomPop','1141')"><img src="../images/btn/btn_print.gif" alt="인쇄" /></a>
+										<a href="#none" onclick="downLoadExcel('1141')"><img src="../images/btn/btn_down.gif" alt="다운로드" /></a>
+										<a href="#none" onclick="share_sns('FB',1141)"><img src="../images/btn/btn_facebook.gif" alt="공유" /></a>
+									</div>
+								</div>
+								
+								<div class="recomTbl">
+									<table class="list">
+										<colgroup>
+											<col width="25%">
+											<col width="25%">
+											<col width="25%">
+											<col width="*">
+										</colgroup>
+										<thead>
+											<tr>
+												<th>
+													<p class="name">
+														아침
+														<span class="kcal"><strong>695</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														점심
+														<span class="kcal"><strong>691</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														저녁
+														<span class="kcal"><strong>1,066</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														간식
+														<span class="kcal"><strong>90</strong></span>
+													</p>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														쌀밥
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('김치');">
+														김치볶음밥
+														<span class="kcal"><strong>354</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('김치');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														감자밥
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														포도
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('맛선생');">
+														북어국(계란)
+														<span class="kcal"><strong>95</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('맛선생');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('맛선생');">
+														무채어묵국
+														<span class="kcal"><strong>63</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('맛선생');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('두부');">
+														두부찌개(고추장)
+														<span class="kcal"><strong>109</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('두부');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('홍초');">
+														홍초음료
+														<span class="kcal"><strong>40</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('홍초');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('간장');">
+														돼지고기장조림
+														<span class="kcal"><strong>181</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('간장');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('간장');">
+														닭다리조림
+														<span class="kcal"><strong>148</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('간장');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														가지나물
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('젓');">
+														오징어젓
+														<span class="kcal"><strong>18</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('젓');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														단무지
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														떡산적
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('간장');">
+														콩조림(콩자반)
+														<span class="kcal"><strong>58</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('간장');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														식혜
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														배추겉절이
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('김치');">
+														배추김치
+														<span class="kcal"><strong>10</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('김치');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+										</tbody>
+									</table>
+								</div>
+							</div>
+							
+							<div class="box">
+								<div class="gageBox">
+									<p class="name">건강균형식단152</p>
+									<div class="gage" title="94%"><p style="width:94%;"></p></div>
+									<p class="txt">1일 열량 섭취기준<br /><span>(2,700kcal)</span>에 대한 비율</p>
+									
+									<div class="recBtn">
+										 <a href="#none" class="recomPopBtn" id="dietCd_1140"><img src="../images/btn/btn_view.gif" alt="상세보기" /></a>
+										<a href="../mydiet/myDiet6d64.html?dietCd=1140"><img src="../images/btn/btn_edit.gif" alt="편집하기" /></a>
+									</div>
+									
+									<p class="total">총 열량 <span>2,560</span>kcal</p>
+									<div class="btn">
+										<a href="#none" onclick="recomPrint('recomPop','1140')"><img src="../images/btn/btn_print.gif" alt="인쇄" /></a>
+										<a href="#none" onclick="downLoadExcel('1140')"><img src="../images/btn/btn_down.gif" alt="다운로드" /></a>
+										<a href="#none" onclick="share_sns('FB',1140)"><img src="../images/btn/btn_facebook.gif" alt="공유" /></a>
+									</div>
+								</div>
+								
+								<div class="recomTbl">
+									<table class="list">
+										<colgroup>
+											<col width="25%">
+											<col width="25%">
+											<col width="25%">
+											<col width="*">
+										</colgroup>
+										<thead>
+											<tr>
+												<th>
+													<p class="name">
+														아침
+														<span class="kcal"><strong>776</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														점심
+														<span class="kcal"><strong>885</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														저녁
+														<span class="kcal"><strong>899</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														간식
+														<span class="kcal"><strong></strong></span>
+													</p>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														토스트
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('스파게티');">
+														마늘 스파게티
+														<span class="kcal"><strong>376</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('스파게티');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														하이라이스
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														소세지구이
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('포도씨유');">
+														스크램블드에그
+														<span class="kcal"><strong>106</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('포도씨유');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														옥수수버터구이
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('카놀라유');">
+														감자튀김
+														<span class="kcal"><strong>130</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('카놀라유');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														베이컨말이
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														고구마그라탱
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														브로콜리스프
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('소스');">
+														양상추샐러드
+														<span class="kcal"><strong>110</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('소스');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('오이');">
+														오이피클
+														<span class="kcal"><strong>59</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('오이');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														토마토
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('주스');">
+														오렌지쥬스
+														<span class="kcal"><strong>84</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('주스');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														파인애플
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														요구르트(액상)
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+										</tbody>
+									</table>
+								</div>
+							</div>
+							
+							<div class="box">
+								<div class="gageBox">
+									<p class="name">건강균형식단151</p>
+									<div class="gage" title="82%"><p style="width:82%;"></p></div>
+									<p class="txt">1일 열량 섭취기준<br /><span>(2,700kcal)</span>에 대한 비율</p>
+									
+									<div class="recBtn">
+										 <a href="#none" class="recomPopBtn" id="dietCd_1121"><img src="../images/btn/btn_view.gif" alt="상세보기" /></a>
+										<a href="../mydiet/myDietdf8d.html?dietCd=1121"><img src="../images/btn/btn_edit.gif" alt="편집하기" /></a>
+									</div>
+									
+									<p class="total">총 열량 <span>2,217</span>kcal</p>
+									<div class="btn">
+										<a href="#none" onclick="recomPrint('recomPop','1121')"><img src="../images/btn/btn_print.gif" alt="인쇄" /></a>
+										<a href="#none" onclick="downLoadExcel('1121')"><img src="../images/btn/btn_down.gif" alt="다운로드" /></a>
+										<a href="#none" onclick="share_sns('FB',1121)"><img src="../images/btn/btn_facebook.gif" alt="공유" /></a>
+									</div>
+								</div>
+								
+								<div class="recomTbl">
+									<table class="list">
+										<colgroup>
+											<col width="25%">
+											<col width="25%">
+											<col width="25%">
+											<col width="*">
+										</colgroup>
+										<thead>
+											<tr>
+												<th>
+													<p class="name">
+														아침
+														<span class="kcal"><strong>670</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														점심
+														<span class="kcal"><strong>916</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														저녁
+														<span class="kcal"><strong>631</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														간식
+														<span class="kcal"><strong></strong></span>
+													</p>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														기장밥
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														잡곡밥
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														보리밥
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('김치');">
+														김치찌개(돼지고기)
+														<span class="kcal"><strong>110</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('김치');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('닭');">
+														닭볶음탕
+														<span class="kcal"><strong>204</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('닭');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('두부');">
+														된장국(두부)
+														<span class="kcal"><strong>111</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('두부');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														숙주나물
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														탕평채
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('간장');">
+														오징어채조림
+														<span class="kcal"><strong>62</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('간장');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('포도씨유');">
+														완자전(쇠고기)
+														<span class="kcal"><strong>184</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('포도씨유');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('카놀라유');">
+														다시마튀각
+														<span class="kcal"><strong>74</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('카놀라유');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														깻잎찜
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('깍두기');">
+														깍두기
+														<span class="kcal"><strong>16</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('깍두기');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('총각');">
+														총각김치
+														<span class="kcal"><strong>21</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('총각');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('김치');">
+														배추김치
+														<span class="kcal"><strong>10</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('김치');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('밀가루');">
+														수제비(감자)
+														<span class="kcal"><strong>121</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('밀가루');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														참외
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('홍초');">
+														홍초음료
+														<span class="kcal"><strong>40</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('홍초');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+										</tbody>
+									</table>
+								</div>
+							</div>
+							
+							<div class="box">
+								<div class="gageBox">
+									<p class="name">건강균형식단150</p>
+									<div class="gage" title="89%"><p style="width:89%;"></p></div>
+									<p class="txt">1일 열량 섭취기준<br /><span>(2,700kcal)</span>에 대한 비율</p>
+									
+									<div class="recBtn">
+										 <a href="#none" class="recomPopBtn" id="dietCd_1091"><img src="../images/btn/btn_view.gif" alt="상세보기" /></a>
+										<a href="../mydiet/myDiet188b.html?dietCd=1091"><img src="../images/btn/btn_edit.gif" alt="편집하기" /></a>
+									</div>
+									
+									<p class="total">총 열량 <span>2,424</span>kcal</p>
+									<div class="btn">
+										<a href="#none" onclick="recomPrint('recomPop','1091')"><img src="../images/btn/btn_print.gif" alt="인쇄" /></a>
+										<a href="#none" onclick="downLoadExcel('1091')"><img src="../images/btn/btn_down.gif" alt="다운로드" /></a>
+										<a href="#none" onclick="share_sns('FB',1091)"><img src="../images/btn/btn_facebook.gif" alt="공유" /></a>
+									</div>
+								</div>
+								
+								<div class="recomTbl">
+									<table class="list">
+										<colgroup>
+											<col width="25%">
+											<col width="25%">
+											<col width="25%">
+											<col width="*">
+										</colgroup>
+										<thead>
+											<tr>
+												<th>
+													<p class="name">
+														아침
+														<span class="kcal"><strong>913</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														점심
+														<span class="kcal"><strong>622</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														저녁
+														<span class="kcal"><strong>849</strong></span>
+													</p>
+												</th>
+												<th>
+													<p class="name">
+														간식
+														<span class="kcal"><strong>40</strong></span>
+													</p>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+										
+											
+											<tr>
+												
+													
+													<td>
+														<p class="name">
+														차조밥
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														수수밥
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('양념장');">
+														제육덮밥
+														<span class="kcal"><strong>485</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('양념장');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('홍초');">
+														홍초음료
+														<span class="kcal"><strong>40</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('홍초');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('맛선생');">
+														북어국(계란)
+														<span class="kcal"><strong>95</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('맛선생');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('미역');">
+														미역국(쇠고기)
+														<span class="kcal"><strong>67</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('미역');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('맛선생');">
+														콩나물국
+														<span class="kcal"><strong>37</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('맛선생');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('카놀라유');">
+														취나물볶음
+														<span class="kcal"><strong>123</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('카놀라유');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('포도씨유');">
+														베이컨볶음
+														<span class="kcal"><strong>157</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('포도씨유');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('간장');">
+														우엉조림
+														<span class="kcal"><strong>100</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('간장');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('닭');">
+														닭볶음탕
+														<span class="kcal"><strong>204</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('닭');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														고추잎나물
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('두부');">
+														두부튀김
+														<span class="kcal"><strong>157</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('두부');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('김치');">
+														배추김치
+														<span class="kcal"><strong>10</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('김치');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('김치');">
+														배추김치
+														<span class="kcal"><strong>10</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('김치');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														시금치나물
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+											
+											<tr>
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('소스');">
+														야채샐러드
+														<span class="kcal"><strong>112</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('소스');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+												
+												
+													
+													
+													<td class="cartBtn">
+														<p class="name" style="cursor:pointer;" onClick="linkFoodClick('깍두기');">
+														깍두기
+														<span class="kcal"><strong>16</strong></span>
+														</p>
+														<a href="#none" onClick="linkFoodClick('깍두기');" class="cart"><img src="../images/ico/ico_cart.gif" alt="" /></a>
+													</td>
+													
+												
+												
+												
+													
+													<td>
+														<p class="name">
+														
+														</p>
+													</td>
+													
+													
+												
+											</tr>
+											
+										
+										</tbody>
+									</table>
+								</div>
+							</div>
+							
+							<!-- list loop end -->
+
+						</div>
+						<!-- //diet Con -->
+
+						<div class="pag">
+							<span>
+<font style="display:inline-block;padding-top:3px;width:21px;height:18px;font-size:11px;color:red;">1</font>
+<a href="#" onclick="fn_pageNum(2); return false;">2</a>
+<a href="#" onclick="fn_pageNum(3); return false;">3</a>
+<a href="#" onclick="fn_pageNum(4); return false;">4</a>
+<a href="#" onclick="fn_pageNum(5); return false;">5</a>
+<a href="#" onclick="fn_pageNum(6); return false;">6</a>
+<a href="#" onclick="fn_pageNum(7); return false;">7</a>
+<a href="#" onclick="fn_pageNum(8); return false;">8</a>
+<a href="#" onclick="fn_pageNum(9); return false;">9</a>
+<a href="#" onclick="fn_pageNum(10); return false;">10</a>
+</span>
+	<a href="#none" onclick="fn_pageNum(11); return false;"><img src='../images/btn/btn_next.gif' alt='' /></a>
+	<a href="#none" onclick="fn_pageNum(16); return false;"><img src='../images/btn/btn_next_l.gif' alt='' /></a>
+
+						</div>
+
+					</div>
+
+				</div>
+				</form>
+			</div>
+			<!-- //Sub Content -->
+
+		</section>
+	</article>
+	<!-- //Container -->
+
+	<!-- Aside -->
+	
+
+
+
+
+
+
+
+
+	<!-- Aside -->
+	<aside id="aside">
+	
+		<div class="leftSide">
+			<a href="#none" onclick="$('.jisuCon .box').hide().eq(0).show();pop.open('jisuPop.html');"><img src="../images/btn/btn_jisu.gif" alt="식중독지수" /></a>
+		</div>
+		
+		<div class="aside">
+			<p><img src="../images/txt/tit_aside.gif" alt="청정원 브랜드관" /></p>
+			<ul>
+				<li><a href="../product/productSearcha565.html?cateCd=CLASSIC"><img src="../images/btn/btn_side0.gif" alt="classic 한국전통식품군" /></a></li>
+				<li><a href="../product/productSearchb00f.html?cateCd=SMART"><img src="../images/btn/btn_side1.gif" alt="smart 편의형 제품" /></a></li>
+				<li><a href="../product/productSearch8bcb.html?cateCd=CUISINE"><img src="../images/btn/btn_side2.gif" alt="cuisine 서구식품군" /></a></li>
+				<li><a href="../product/productSearch93bb.html?cateCd=FRESH"><img src="../images/btn/btn_side3.gif" alt="fresh 냉장/냉동" /></a></li>
+				<li><a href="../product/productSearch1be9.html?cateCd=ESSENTIAL"><img src="../images/btn/btn_side4.gif" alt="essential 조미료/향신료" /></a></li>
+				<li><a href="../product/productSearch49d2.html?cateCd=ORGANIC"><img src="../images/btn/btn_side5.gif" alt="organic 유기가공식품군" /></a></li>
+			</ul>
+		</div>
+		<div class="aside2">
+			<ul>
+				<li><a href="http://daesang.com/"><img src="../images/btn/banner01_daesang.gif" alt="대상" /></a></li>
+				<li><a href="http://chungjungone.com/"><img src="../images/btn/banner02_chungjungone.gif" alt="청정원" /></a></li>
+				<li><a href="http://jungoneshop.com/"><img src="../images/btn/banner03_jungoneeshop.gif" alt="정원이샵" /></a></li>
+			</ul>
+		</div>
+		<!-- 
+		<div class="notiList">
+			<div class="btn">
+				<a href="#none">Play</a>
+				<a href="#none">Stop</a>
+			</div>
+			<div class="list">
+				<ul onclick="window.open('http://www.kma.go.kr/weather/lifenindustry/life_jisu.jsp?JISU_INFO=lifedayimg_A01_2','', '');">
+				</ul>
+			</div>
+		</div>
+		 -->
+		<script type="text/javascript">
+		$(function(){
+			/* 
+			$.ajax({
+				type: "POST"  
+				,url: "/user/getFoodPoisonInfo.do"
+				,success:function(data){
+
+					var html = "<li><a href=\"#none\">서울 "+data.seoul+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.seoulStep)+"\">"+data.seoulStep+"</font>"
+					+ "<li><a href=\"#none\">인천 "+data.incheon+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.incheonStep)+"\">"+data.incheonStep+"</font>" 
+					+ "<li><a href=\"#none\">광주 "+data.gwangju+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.gwangjuStep)+"\">"+data.gwangjuStep+"</font>" 
+					+ "<li><a href=\"#none\">부산 "+data.busan+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.busanStep)+"\">"+data.busanStep+"</font>" 
+					+ "<li><a href=\"#none\">대전 "+data.daejeon+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.daejeonStep)+"\">"+data.daejeonStep+"</font>" 
+					+ "<li><a href=\"#none\">세종 "+data.sejong+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.sejongStep)+"\">"+data.sejongStep+"</font>" 
+					+ "<li><a href=\"#none\">대구 "+data.daegu+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.daeguStep)+"\">"+data.daeguStep+"</font>" 
+					+ "<li><a href=\"#none\">울산 "+data.ulsan+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.ulsanStep)+"\">"+data.ulsanStep+"</font>" 
+					+ "<li><a href=\"#none\">춘천 "+data.chuncheon+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.chuncheonStep)+"\">"+data.chuncheonStep+"</font>" 
+					+ "<li><a href=\"#none\">수원 "+data.suwon+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.suwonStep)+"\">"+data.suwonStep+"</font>" 
+					+ "<li><a href=\"#none\">청주 "+data.chungju+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.chungjuStep)+"\">"+data.chungjuStep+"</font>" 
+					+ "<li><a href=\"#none\">전주 "+data.jeonju+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.jeonjuStep)+"\">"+data.jeonjuStep+"</font>" 
+					+ "<li><a href=\"#none\">목포 "+data.mokpo+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.mokpoStep)+"\">"+data.mokpoStep+"</font>" 
+					+ "<li><a href=\"#none\">제주 "+data.jeju+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.jejuStep)+"\">"+data.jejuStep+"</font>";
+					
+					$(".notiList .list ul").html(html);
+					
+					rollNoti();
+				}
+			});
+			 */
+		});
+		
+		var getFontColor = function(param) {
+			var color = "";
+			if(param == "위험") color = "C50100";
+			else if(param == "경고") color = "FF5206";
+			else if(param == "주의") color = "932402";
+			else if(param == "관심") color = "3366CC";
+			
+			return color;
+		};
+		
+		var rollNoti = function(){
+			var $con = $(".notiList"),
+				$play = $con.find(".btn a").eq(0),
+				$stop = $con.find(".btn a").eq(1),
+				$ul = $con.find(".list ul"),
+				$li = $ul.find("li"),
+				max = $li.length,
+				hig = $li.outerHeight(),
+				now = 0,
+				time = 2000,
+				setTime = null;
+			
+			$ul.append("<li>"+$li.eq(0).html()+"</li>");
+
+			$play.bind("click", function(){
+				clearTimeout(setTime);
+				setTime = setTimeout(roll, time);
+				
+			});
+			$stop.bind("click", function(){
+				clearTimeout(setTime);		
+			});
+			
+			var roll = function(){
+				if(now != max){
+					now+=1,
+					time = 2000;
+					$ul.stop().animate({
+						"margin-top" : -1*(now*hig) + "px"
+					},200)
+					
+				}else{
+					now = time = 0;
+					
+					$ul.css("margin-top" , "0");
+					
+					clearTimeout(setTime);
+					
+				}
+				setTime = setTimeout(roll, time);
+			}
+			
+			setTime = setTimeout(roll, time);		
+			
+		}
+		</script>
+	</aside>
+	<!-- //Aside -->
+	
+	
+<!-- 식중독 지수 팝업 -->
+<div class="LayPop" id="jisuPop">
+	<div class="popCon">
+	
+		<div class="jisuCon">
+		
+			<dl class="tit">
+				<dt>식중독 지수</dt>
+				<dd><span class="today"></span> 예보</dd>
+			</dl>
+			
+			<div class="box">
+				<div class="jisuBox">
+					
+					<div class="dayBtn">
+						<a href="#none"><img src="../images/btn/btn_today.gif" alt="오늘" /></a>
+						<a href="#none"><img src="../images/btn/btn_tomor.gif" alt="내일" /></a>
+						<a href="#none"><img src="../images/btn/btn_sand.gif" alt="모래" /></a>
+					</div>
+								
+					<div class="imgView">
+						<div class="view"><img src="#" alt="" /></div>
+						<div class="btn">
+							<a href="#none" class="branchBtn"><img src="../images/btn/btn_branch.gif" alt="지점값 보기" /></a>
+						</div>
+					</div>
+					
+					<div class="jisuGuide">
+						<p><img src="../images/img/img_jisu.gif" alt="" /></p>
+						<table class="jisuTbl">
+							<colgroup>
+								<col width="80">
+								<col width="*">
+							</colgroup>
+							<thead>
+								<tr>
+									<th>단계</th>
+									<th>설명 및 주의사항</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th><strong>위험</strong> <span>(95이상)</span></th>
+									<td>식중독 발생가능성이 매우 높으므로 식중독예방에 각별한 경계요망</td>
+								</tr>
+								<tr>
+									<th><strong>경고</strong> <span>(70이상~95미만)</span></th>
+									<td>식중독 발생가능성이 높으므로 식중독예방에 경계요망</td>
+								</tr>
+								<tr>
+									<th><strong>주의</strong> <span>(35이상~70미만)</span></th>
+									<td>식중독 발생가능성이 중간단계이므로 식중독예방에 주의요망</td>
+								</tr>
+								<tr>
+									<th><strong>관심</strong> <span>(35미만)</span></th>
+									<td>식중독 발생가능성은 낮으나 식중독 예방에 지속적인 관심요망</td>
+								</tr>
+							</tbody>
+						</table>
+						<p class="txt">※ 식중독지수는 기상청과 식품의약품안전처와<br />공동으로 제공하고 있습니다.</p>
+					</div>
+					
+				</div>
+			</div>
+			<div class="box frame">
+				<iframe width="665" height="472" frameborder="0" scrolling="yes" marginheight="0" id="frame" marginwidth="0" src="http://www.kma.go.kr/weather/lifenindustry/li_asset/popup/imgdata_popup.jsp?CODE=A01&amp;point=0"></iframe>
+			</div>
+		</div>
+		<div class="close">
+			<a href="#none" onclick="pop.close();"><img src="../images/btn/btn_close.gif" alt="CLOSE"></a>
+		</div>
+	</div>
+</div>
+<!-- //식중독 지수 팝업 -->
+
+<script type="text/javascript">			
+	$(function(){
+		var $jisu = $(".jisuCon"),
+			$btn = $jisu.find(".dayBtn a"),
+			$img = $jisu.find(".imgView .view img"),
+			$today = $jisu.find(".today"),
+			$branchBtn = $jisu.find(".branchBtn"),
+			url = "http://www.kma.go.kr/repositary/xml/imi2/FCT_IDX_A01_2_",
+			today = getDate(0)[0].toString()+getDate(0)[1]+getDate(0)[2];
+		var d = new Date(), 
+			time = (d.getHours() >= "18") ? "1" : "0";
+		
+		$("#frame").attr("src", "http://www.kma.go.kr/weather/lifenindustry/li_asset/popup/imgdata_popup.jsp?CODE=A01&amp;point="+time);
+		
+		$img.attr("src" , url+today+"06_00D.gif");
+		
+		$today.html(getDate(0)[0]+"."+getDate(0)[1]+"."+getDate(0)[2]);
+		
+		$branchBtn.bind("click", function(){
+			$jisu.find(".box").hide().eq(1).show();
+		})
+		
+		$btn.each(function(idx){
+			$(this).bind("click", function(){
+				$today.html(getDate(idx)[0]+"."+getDate(idx)[1]+"."+getDate(idx)[2]);
+				$img.attr("src" , url+today+"06_0"+idx+"D.gif");
+			});
+		});
+		function getDate(o){
+			  var today = new Date(),
+			  		tomorrow = new Date(today.valueOf() + (24*60*60*1000)*o),
+			  		y = tomorrow.getFullYear(),
+			  		mDay = tomorrow.getMonth() + 1,
+			  		m = (mDay.toString().length == 1) ? "0"+mDay.toString() : mDay.toString(),
+			  		dDay = tomorrow.getDate(),
+			  		d = (dDay.toString().length == 1) ? "0"+dDay.toString() : dDay.toString(),
+			  		dayArr = [y,m,d];
+			  
+			 return dayArr;
+		}
+	});
+</script>
+
+	<!-- //Aside -->
+	
+</div>
+
+<!-- 추천식단 상세 보기 -->
+<div class="LayPop" id="recomPop"></div>
+<!-- //추천식단 상세 보기 -->
+
+<!-- Footer -->
+
+<footer id="footer">
+	<div class="footer">
+		<img src="../images/common/tit_footer.gif" alt="DAESANG : COPYRIGHT © DAESANG 2014 ALL RIGHT RESEVED " />
+	</div>
+	
+	<div class="popBg"></div>
+</footer>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','../../../www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-59799444-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- //Footer -->
+
+</body>
+
+<!-- Mirrored from www.jungonenutri.com/user/diet/dietSearch.do by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 31 May 2022 00:29:00 GMT -->
+</html>

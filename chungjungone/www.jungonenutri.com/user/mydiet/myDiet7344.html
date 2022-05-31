@@ -1,0 +1,1351 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<!-- Mirrored from www.jungonenutri.com/user/mydiet/myDiet.do?dietCd=1160 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 31 May 2022 00:33:49 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" /> 
+<meta name="HandheldFriendly" content="True" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+
+<title>DAESANG : 영양정보와 건강 식단관리</title>
+
+<!-- Library -->
+
+<link rel="stylesheet" href="../css/basic.css" type="text/css" />
+<link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+<script type="text/javascript" src="../lib/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="../lib/jQuery.print.js"></script>
+<script type="text/javascript" src="../lib/jquery.imgpreload.min.js"></script>
+<script type="text/javascript" src="../js/jquery.nutrient.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+
+<!--[if lt IE 9]>
+	<script type="text/javascript" src="/user/lib/html5shiv-printshiv.js"></script>
+<![endif]-->
+<!-- //Library -->
+
+<script type="text/javascript">
+	$(function(){
+		bner.init();
+		mypageTbl();
+		
+		//foodClickEvent();
+		
+		// 상세보기 클릭
+		$("#btnBetail").click(function(){
+//		$(".subContainer .mypageCon .myBox .view a img").click(function(){
+			$("#mypagePop").load("/user/mydiet/myDietDetail.do", {
+			}, function(data) {
+				pop.open('mypagePop.html');
+			});
+		});
+		//나의 운동량 조회 - 기초대사량 입력 시
+		$("input[name=myKcal],input:text[name=age],input:text[name=height],input:text[name=weight]").on("keyup", function(){
+			$(this).val( $(this).val().replace(/[^0-9]/gi,"") );
+		});
+
+		setArrChoesFood();
+
+		setSeason();
+
+		var myDietYn = "N";
+
+		if (myDietYn == "Y") {
+			$("#btnEdit").show();
+			$(".addBtn, .del").hide();
+			$("tfoot").hide();
+			$("img[src='/admin/images/btn/btn_exclude.gif']").hide();
+		}
+
+		//편집하기
+		$("#btnEdit").click(function(){
+			$("#btnEdit").hide();
+			$(".addBtn, .del").show();
+			$("tfoot").show();
+			$("img[src='/admin/images/btn/btn_exclude.gif']").show();
+		});
+	});
+	
+	function mypagePrintBtn(){
+
+		$("#mypagePop").load("/user/mydiet/myDietDetail.do", {
+		}, function(data) {
+			mypagePrint('mypagePop');
+		});
+	}
+	
+	//음식 선택 레이어 td에 클릭 이벤트 추가 
+	function foodClickEvent(){
+		// 음식선택 레이어 클릭
+		$(".addBtn").click(function(){
+			$("#foodPop").load("/user/mydiet/foodSearchAsync.do", {
+			}, function(data) {});
+		});
+	}
+	
+	//나의 기초대사량 계산
+	function myBsmtlCalc(){
+		//남자 - 66.47 + (13.75*체중) + (5*신장) - (6.76*나이)
+		//여자 - 655.1 + (9.56*체중) + (1.85*신장) - (4.68*나이)
+		var sex = $("input:radio[name=sex]:checked").val();				//성별
+		var age = parseInt($("input:text[name=age]").val());				//나이
+		var height = parseInt($("input:text[name=height]").val());		//신장
+		var weight = parseInt($("input:text[name=weight]").val());		//체중
+		
+		if($("input:text[name=age]").val() == "") {
+			alert("나이를 입력해주세요.");
+			$("input:text[name=age]").focus();
+			return;
+		} else if($("input:text[name=height]").val() == "") {
+			alert("신장을 입력해주세요.");
+			$("input:text[name=height]").focus();
+			return;
+		} else if($("input:text[name=weight]").val() == "") {
+			alert("체중을 입력해주세요.");
+			$("input:text[name=weight]").focus();
+			return;
+		}
+		
+		var val;
+		
+		if($("input:radio[name=sex]:checked").val() != "M"){				//남자
+			val = 66.47 + (13.75*weight) + (5*height) - (6.76*age);
+		} else if($("input:radio[name=sex]:checked").val() != "F"){		//여자
+			val = 655.1 + (9.56*weight) + (1.85*height) - (4.68*age);
+		}
+		
+		val = val.toFixed(1);
+		
+		$("input:text[name=myKcal]").val(val);
+		$("input:text[name=myKcal]").focusin();
+		$("input:text[name=myKcal]").focusout();
+	}
+	
+	//나의 기초대사량 계산 팝업 닫기
+	function myBsmtlCalcClose(){
+		pop.close();
+
+		$("#rsWalk").html(walk);
+		$("#rsRun").html(run);
+		$("#rsBicycle").html(bicycle);
+		$("input[name=myKcal]").val("");
+		$("input[name=myKcal]").focusin();
+		$("input[name=myKcal]").focusout();
+	}
+	
+	//나의 운동량 조회 버튼 클릭 
+	function myMomtClickEvent(){
+		/* var val = $("input[name=myKcal]").val();
+		val = val.replace(/[^0-9]/gi,""); */
+		
+		var myKcal = parseInt($("input[name=myKcal]").val());
+		var allKcal = mypage.sumEng;
+		
+		if(allKcal < myKcal) {
+			var txt = "선택하신 식단의 열량이<br/>기초대사량보다 낮습니다.<br/>" +
+						"균형 잡힌 건강한 식단을<br/>구성하시길 권장합니다.";
+			$("#alertPop .txt").html(txt);
+			$("#alertPop").fadeIn(300);
+		} else {
+			allKcal = parseInt(allKcal);
+			myKcal = parseInt(myKcal);
+			rsKcal = allKcal - myKcal;
+			
+			var walk = Math.round(rsKcal / mypage.walkBurnKcal);
+			var run = Math.round(rsKcal / mypage.runBurnKcal);
+			var bicycle = Math.round(rsKcal / mypage.bicycleBurnKcal);
+			
+			$("#rsWalk").html(walk);
+			$("#rsRun").html(run);
+			$("#rsBicycle").html(bicycle);
+			
+			pop.open('resultPop.html');
+			$('#askInpPop').fadeOut();
+		}
+	}
+	
+	//나의 운동량 조회 팝업 닫기
+	function myMontClose(){
+		pop.close();
+	}
+	
+	//엑셀 다운로드
+	function downLoadExce(){
+		for(var divIdx in mypage.arrChoesFood){
+			var arrTmp = new Array();
+			for(var foodIdx in mypage.arrChoesFood[divIdx]){
+				arrTmp.push(mypage.arrChoesFood[divIdx][foodIdx].join("｜"));
+			}
+			
+			if(divIdx==0) $("#excelBreakfast").val(arrTmp.join("‡"));
+			else if(divIdx==1) $("#excelLunch").val(arrTmp.join("‡"));
+			else if(divIdx==2) $("#excelDinner").val(arrTmp.join("‡"));
+			else if(divIdx==3) $("#excelSnack").val(arrTmp.join("‡"));
+		}
+		$("#sumFoodEng").val(mypage.sumEng);
+		$("#breakfastEng").val(mypage.breakfastEng);
+		$("#lunchEng").val(mypage.lunchEng);
+		$("#dinnerEng").val(mypage.dinnerEng);
+		$("#snackEng").val(mypage.snackEng);
+		
+		$("form[name=excelForm]").submit();
+	}
+
+	//식단 정보를 전역변수에 셋팅
+	var setArrChoesFood = function() {
+		
+		
+		
+		mypage.arrChoesFood[0].splice('1',0,'1|0|560|검정콩밥|100|372|'.split("|"));
+		
+		
+		
+		
+		mypage.arrChoesFood[1].splice('1',1,'1|1|2220|무청나물밥|220|355|나물밥'.split("|"));
+		
+		
+		
+		
+		mypage.arrChoesFood[2].splice('1',2,'1|2|556|칼국수|186|408|칼국수'.split("|"));
+		
+		
+		
+		
+		mypage.arrChoesFood[3].splice('1',3,'1|3|2223|건조감 간식|38|100|감츄'.split("|"));
+		
+		
+		
+		
+		
+		mypage.arrChoesFood[0].splice('2',0,'2|0|206|무채어묵국|114|63|맛선생'.split("|"));
+		
+		
+		
+		
+		mypage.arrChoesFood[1].splice('2',1,'2|1|1022|된장찌개(해물)|177|158|된장'.split("|"));
+		
+		
+		
+		
+		mypage.arrChoesFood[2].splice('2',2,'2|2|807|깻잎장아찌|33|24|장아찌'.split("|"));
+		
+		
+		
+		
+		mypage.arrChoesFood[3].splice('2',3,'2|3|1245|홍초음료|25|40|홍초'.split("|"));
+		
+		
+		
+		
+		
+		mypage.arrChoesFood[0].splice('3',0,'3|0|1244|숯불떡갈비|200|346|떡갈비'.split("|"));
+		
+		
+		
+		
+		mypage.arrChoesFood[1].splice('3',1,'3|1|682|멸치볶음|23|64|포도씨유'.split("|"));
+		
+		
+		
+		
+		mypage.arrChoesFood[2].splice('3',2,'3|2|879|오징어젓|15|18|젓'.split("|"));
+		
+		
+		
+		
+		
+		
+		
+		
+		mypage.arrChoesFood[0].splice('4',0,'4|0|850|애호박전|53|60|포도씨유'.split("|"));
+		
+		
+		
+		
+		mypage.arrChoesFood[1].splice('4',1,'4|1|465|콩나물무침|77|39|'.split("|"));
+		
+		
+		
+		
+		mypage.arrChoesFood[2].splice('4',2,'4|2|323|배추김치|60|10|김치'.split("|"));
+		
+		
+		
+		
+		
+		
+		
+		
+		mypage.arrChoesFood[0].splice('5',0,'5|0|1106|달걀찜|64|82|'.split("|"));
+		
+		
+		
+		
+		mypage.arrChoesFood[1].splice('5',1,'5|1|962|콩조림(콩자반)|20|58|간장'.split("|"));
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		mypage.arrChoesFood[0].splice('6',0,'6|0|323|배추김치|60|10|김치'.split("|"));
+		
+		
+		
+		
+		mypage.arrChoesFood[1].splice('6',1,'6|1|316|깍두기|50|16|깍두기'.split("|"));
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		mypage.calcKcalPlus();
+	};
+
+	// 식단저장시 공개여부/비밀번호 입력 팝업
+	function openSavePop() {
+
+		if ( $("input[name=regUserNickNm]").val().trim() == "" ) {
+			alert("닉네임을 입력하세요.");
+			return;
+		}
+
+		if ( $("input[name=dietNm]").val().trim() == "" ) {
+			alert("나만의 식단명을 입력하세요.");
+			return;
+		}
+
+		pop.open('savePop.html');
+	}
+
+	// 나만의 식단 저장
+	function saveMyDiet() {
+
+		if ( $("input[name=publicYn]:checked").length == 0 ) {
+			alert("공개여부를 선택하세요.");
+			return;
+		}
+
+		if ( $("input[name=inpPassword]").val() == "" ) {
+			alert("비밀번호를 입력하세요.");
+			return;
+		}
+
+		if (!confirm("정말로 저장하시겠습니까?")) {
+			return;
+		}
+
+		regDietClickEvt();
+		pop.close();
+
+	}
+
+	//식단 등록
+	var regDietClickEvt = function() {
+		for(var divIdx in mypage.arrChoesFood){
+			var arrTmp = new Array();
+			for(var foodIdx in mypage.arrChoesFood[divIdx]){
+				arrTmp.push(mypage.arrChoesFood[divIdx][foodIdx].join("｜"));
+			}
+
+			if(divIdx==0) $("#infBreakfast").val(arrTmp.join("‡"));
+			else if(divIdx==1) $("#infLunch").val(arrTmp.join("‡"));
+			else if(divIdx==2) $("#infDinner").val(arrTmp.join("‡"));
+			else if(divIdx==3) $("#infSnack").val(arrTmp.join("‡"));
+		}
+
+		$("#useYn").val( $("input[name=publicYn]:checked").val() );
+		$("#password").val ( $("input[name=inpPassword]").val() );
+
+		if ( $("#seasonSelect > option:selected").val() != "") {
+			$ ( "#" + $("#seasonSelect > option:selected").val() + "Yn").val("Y");
+		}
+
+//		var myDietYn = "N";
+
+//		if (myDietYn == "Y") {
+//			 나만의 식단이면 업데이트
+			
+//			$("form[name=myDietForm]").attr("action","/user/mydiet/dietModifyAsync.do");
+//		} else {
+//			$("form[name=myDietForm]").attr("action","/user/mydiet/dietCreateAsync.do");
+//		}
+
+		$("form[name=myDietForm]").attr("action","/user/mydiet/dietCreateAsync.do");
+
+		$("form[name=myDietForm]").submit();
+	};
+
+	function setSeason() {
+
+		var arr_season = ["spring", "summer", "autumn", "winter"];
+		var seasonData = {};
+
+		// 초기 계절 selectbox 선택
+		var seasonData = {
+			"spring": "",
+			"summer": "",
+			"autumn": "Y",
+			"winter": "Y"
+		};
+
+		for (var i=0; i < arr_season.length; i++) {
+			var seasonNm = arr_season[i];
+			if (seasonData[ seasonNm ] == 'Y') {
+				$("#seasonSelect > option[value="+seasonNm+"]").attr("selected", true);
+			}
+		}
+	}
+</script>
+
+</head>
+<body>
+
+<div id="wrap">
+	<!-- Header -->
+	
+<header id="header">
+	<div class="header">
+
+		<h1><a href="../index.html"><img src="../images/common/logo.png" alt="DAESANG : 영양정보와 건강 식단관리" /></a></h1>
+
+	</div>
+</header>
+	<!-- //Header -->
+
+	<!-- Container -->
+	<article id="container">
+		<section id="content">
+				
+			<!-- Sub Title -->
+			<div class="subTit myTit">
+				<div class="titBg">
+					<p><img src="../images/txt/tit_sub0.gif" alt="건강과 균형 '푸드를 아는 사람들'" /></p>
+				</div>
+			</div>
+			<!-- //Sub Title -->
+			
+			<!-- TabNav -->
+			
+<nav id="tabNav">
+	<div class="tabNav">
+		<ul>
+			<li><a href="../product/productSearch.html"><img src="../images/common/btn_lnb0.gif" alt="영양정보 조회" /></a></li>
+			<li><a href="../diet/dietSearch.html"><img src="../images/common/btn_lnb1.gif" alt="추천 식단" /></a></li>
+			<li><a href="myDiet.html"><img src="../images/common/btn_lnb2.gif" alt="나만의 식단" /></a></li>
+			<li><a href="../notice/notice.html"><img src="../images/common/btn_lnb3.gif" alt="영양정보 게시판" /></a></li>
+		</ul>
+	</div>
+</nav>
+			<!-- //TabNav -->
+
+			<!-- Sub Content -->
+			<div class="subContainer">
+				<form name="excelForm" id="excelForm" method="POST" action="http://www.jungonenutri.com/user/myDiet/excelDownload.do">
+					<input type="hidden" id="excelBreakfast" name="excelBreakfast" value=""/>
+					<input type="hidden" id="excelLunch" name="excelLunch" value=""/>
+					<input type="hidden" id="excelDinner" name="excelDinner" value=""/>
+					<input type="hidden" id="excelSnack" name="excelSnack" value=""/>
+					<input type="hidden" id="sumFoodEng" name="sumFoodEng" value=""/>
+					<input type="hidden" id="breakfastEng" name="breakfastEng" value=""/>
+					<input type="hidden" id="lunchEng" name="lunchEng" value=""/>
+					<input type="hidden" id="dinnerEng" name="dinnerEng" value=""/>
+					<input type="hidden" id="snackEng" name="snackEng" value=""/>
+
+				</form>
+				<form name="myDietForm" id="myDietForm" method="POST">
+					<input type="hidden" name="tr" value="1" />
+					<input type="hidden" name="td" value="2" />
+
+					<input type="hidden" id="springYn" name="springYn" value="N"/>
+					<input type="hidden" id="summerYn" name="summerYn" value="N"/>
+					<input type="hidden" id="autumnYn" name="autumnYn" value="N"/>
+					<input type="hidden" id="winterYn" name="winterYn" value="N"/>
+
+					<input type="hidden" id="infAddProd" name="infAddProd" value=""/>
+
+					<input type="hidden" id="infBreakfast" name="infBreakfast" value=""/>
+					<input type="hidden" id="infLunch" name="infLunch" value=""/>
+					<input type="hidden" id="infDinner" name="infDinner" value=""/>
+					<input type="hidden" id="infSnack" name="infSnack" value=""/>
+
+					<input type="hidden" name="cryptoFlag" id="cryptoFlag" value="true"/>
+
+					<input type="hidden" name="useYn" id="useYn" />
+					<input type="hidden" name="password" id="password" />
+
+					<input type="hidden" name="dietCd" id="dietCd" />
+
+					<div class="subCon">
+				
+					<div class="mypageCon">
+						<div class="tit">
+							<img src="../images/txt/tit_mypage.gif" alt="나만의 식단" />
+						</div>
+						<div class="myBox">
+							<p class="img"><img src="../images/img/img_pic_logo.gif" alt="" /></p>
+							<p class="view">
+								<a href="#none" id="btnBetail"><img src="../images/btn/btn_view.gif" alt="상세보기" /></a>
+								<a href="#none" id="btnEdit" style="display: none;"><img src="../images/btn/btn_edit.gif" alt="편집하기"></a>
+							</p>
+							<p class="total">총 열량 <span>2,223</span>kcal</p>
+							<div class="btn">
+								<a href="#none" class="btnAsk" onclick="pop.open('askInpPop.html')"><img src="../images/btn/btn_ask.gif" alt="나의 운동량 조회" /></a>
+								<a href="#none" onclick="mypagePrintBtn()"><img src="../images/btn/btn_print.gif" alt="인쇄" /></a>
+								<a href="#none" onclick="downLoadExce()"><img src="../images/btn/btn_down.gif" alt="다운로드" /></a>
+							</div>
+							<!-- 
+							<div class="btnAsk">
+								<a href="#none" onclick="pop.open('askInpPop')"><img src="../images/btn/btn_ask.gif" alt="나의 운동량 조회" /></a>
+							</div>
+							 -->
+						</div>
+
+						<div class="myTbl">
+							
+							<div class="schBox">
+								<select name="dietGrpCd" style="width:113px">
+									<option value="">선택</option>
+									<option value="KOR" selected>한식</option>
+									<option value="ENG" >양식</option>
+									<option value="CHN" >중식</option>
+									<option value="JPN" >일식</option>
+									<option value="ETC" >퓨전&amp;분식</option>
+								</select>
+								<select id="seasonSelect" style="width:81px">
+									<option value="">선택</option>
+									<option value="spring">봄</option>
+									<option value="summer">여름</option>
+									<option value="autumn">가을</option>
+									<option value="winter">겨울</option>
+								</select>
+
+								<strong>닉네임</strong>
+								<input type="text" style="width:95px;" name="regUserNickNm" value="" maxlength="30"/>
+
+								<strong>나만의 식단명</strong>
+								<input type="text" style="width:170px;" name="dietNm" value="건강균형식단155" maxlength="50" />
+							</div>
+							
+							<table class="list">
+								<colgroup>
+									<col width="176">
+									<col width="176">
+									<col width="176">
+									<col width="176">
+								</colgroup>
+								<thead>
+									<tr>
+										<th>아침 <a href="#none" class="del"><img src="../images/btn/btn_del.gif" alt="삭제" /></a></th>
+										<th>점심 <a href="#none" class="del"><img src="../images/btn/btn_del.gif" alt="삭제" /></a></th>
+										<th>저녁 <a href="#none" class="del"><img src="../images/btn/btn_del.gif" alt="삭제" /></a></th>
+										<th>간식 <a href="#none" class="del"><img src="../images/btn/btn_del.gif" alt="삭제" /></a></th>
+									</tr>
+								</thead>
+								<tbody>
+								
+								
+									
+										<tr>
+											
+												
+													<td>
+														<a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a>
+														<ul><li><input type="hidden" name="inf" value="1|0|560|검정콩밥|100|372|" /><span>검정콩밥</span><a href="#none" onclick="mypage.dietDel('1|0|560|검정콩밥|100|372|', this);">
+														<img src="../../admin/images/btn/btn_exclude.gif" alt="-"></a></li></ul>
+													</td>
+												
+												
+											
+
+											
+												
+													<td>
+														<a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a>
+														<ul><li><input type="hidden" name="inf" value="1|1|2220|무청나물밥|220|355|나물밥" /><span>무청나물밥</span><a href="#none" onclick="mypage.dietDel('1|1|2220|무청나물밥|220|355|나물밥', this);">
+														<img src="../../admin/images/btn/btn_exclude.gif" alt="-"></a></li></ul>
+													</td>
+												
+												
+											
+
+											
+												
+													<td>
+														
+															
+																<a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a>
+																<ul><li><input type="hidden" name="inf" value="1|2|556|칼국수|186|408|칼국수" /><span>칼국수</span><a href="#none" onclick="mypage.dietDel('1|2|556|칼국수|186|408|칼국수', this);">
+																<img src="../../admin/images/btn/btn_exclude.gif" alt="-"></a></li></ul>
+															
+															
+														
+													</td>
+												
+												
+											
+
+											
+												
+													<td>
+														
+															
+																<a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a>
+																<ul><li><input type="hidden" name="inf" value="1|3|2223|건조감 간식|38|100|감츄" /><span>건조감 간식</span><a href="#none" onclick="mypage.dietDel('1|3|2223|건조감 간식|38|100|감츄', this);">
+																<img src="../../admin/images/btn/btn_exclude.gif" alt="-"></a></li></ul>
+															
+															
+														
+													</td>
+												
+												
+											
+										</tr>
+									
+										<tr>
+											
+												
+													<td>
+														<a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a>
+														<ul><li><input type="hidden" name="inf" value="2|0|206|무채어묵국|114|63|맛선생" /><span>무채어묵국</span><a href="#none" onclick="mypage.dietDel('2|0|206|무채어묵국|114|63|맛선생', this);">
+														<img src="../../admin/images/btn/btn_exclude.gif" alt="-"></a></li></ul>
+													</td>
+												
+												
+											
+
+											
+												
+													<td>
+														<a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a>
+														<ul><li><input type="hidden" name="inf" value="2|1|1022|된장찌개(해물)|177|158|된장" /><span>된장찌개(해물)</span><a href="#none" onclick="mypage.dietDel('2|1|1022|된장찌개(해물)|177|158|된장', this);">
+														<img src="../../admin/images/btn/btn_exclude.gif" alt="-"></a></li></ul>
+													</td>
+												
+												
+											
+
+											
+												
+													<td>
+														
+															
+																<a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a>
+																<ul><li><input type="hidden" name="inf" value="2|2|807|깻잎장아찌|33|24|장아찌" /><span>깻잎장아찌</span><a href="#none" onclick="mypage.dietDel('2|2|807|깻잎장아찌|33|24|장아찌', this);">
+																<img src="../../admin/images/btn/btn_exclude.gif" alt="-"></a></li></ul>
+															
+															
+														
+													</td>
+												
+												
+											
+
+											
+												
+													<td>
+														
+															
+																<a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a>
+																<ul><li><input type="hidden" name="inf" value="2|3|1245|홍초음료|25|40|홍초" /><span>홍초음료</span><a href="#none" onclick="mypage.dietDel('2|3|1245|홍초음료|25|40|홍초', this);">
+																<img src="../../admin/images/btn/btn_exclude.gif" alt="-"></a></li></ul>
+															
+															
+														
+													</td>
+												
+												
+											
+										</tr>
+									
+										<tr>
+											
+												
+													<td>
+														<a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a>
+														<ul><li><input type="hidden" name="inf" value="3|0|1244|숯불떡갈비|200|346|떡갈비" /><span>숯불떡갈비</span><a href="#none" onclick="mypage.dietDel('3|0|1244|숯불떡갈비|200|346|떡갈비', this);">
+														<img src="../../admin/images/btn/btn_exclude.gif" alt="-"></a></li></ul>
+													</td>
+												
+												
+											
+
+											
+												
+													<td>
+														<a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a>
+														<ul><li><input type="hidden" name="inf" value="3|1|682|멸치볶음|23|64|포도씨유" /><span>멸치볶음</span><a href="#none" onclick="mypage.dietDel('3|1|682|멸치볶음|23|64|포도씨유', this);">
+														<img src="../../admin/images/btn/btn_exclude.gif" alt="-"></a></li></ul>
+													</td>
+												
+												
+											
+
+											
+												
+													<td>
+														
+															
+																<a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a>
+																<ul><li><input type="hidden" name="inf" value="3|2|879|오징어젓|15|18|젓" /><span>오징어젓</span><a href="#none" onclick="mypage.dietDel('3|2|879|오징어젓|15|18|젓', this);">
+																<img src="../../admin/images/btn/btn_exclude.gif" alt="-"></a></li></ul>
+															
+															
+														
+													</td>
+												
+												
+											
+
+											
+												
+												
+													<td><a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a></td>
+												
+											
+										</tr>
+									
+										<tr>
+											
+												
+													<td>
+														<a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a>
+														<ul><li><input type="hidden" name="inf" value="4|0|850|애호박전|53|60|포도씨유" /><span>애호박전</span><a href="#none" onclick="mypage.dietDel('4|0|850|애호박전|53|60|포도씨유', this);">
+														<img src="../../admin/images/btn/btn_exclude.gif" alt="-"></a></li></ul>
+													</td>
+												
+												
+											
+
+											
+												
+													<td>
+														<a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a>
+														<ul><li><input type="hidden" name="inf" value="4|1|465|콩나물무침|77|39|" /><span>콩나물무침</span><a href="#none" onclick="mypage.dietDel('4|1|465|콩나물무침|77|39|', this);">
+														<img src="../../admin/images/btn/btn_exclude.gif" alt="-"></a></li></ul>
+													</td>
+												
+												
+											
+
+											
+												
+													<td>
+														
+															
+																<a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a>
+																<ul><li><input type="hidden" name="inf" value="4|2|323|배추김치|60|10|김치" /><span>배추김치</span><a href="#none" onclick="mypage.dietDel('4|2|323|배추김치|60|10|김치', this);">
+																<img src="../../admin/images/btn/btn_exclude.gif" alt="-"></a></li></ul>
+															
+															
+														
+													</td>
+												
+												
+											
+
+											
+												
+												
+													<td><a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a></td>
+												
+											
+										</tr>
+									
+										<tr>
+											
+												
+													<td>
+														<a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a>
+														<ul><li><input type="hidden" name="inf" value="5|0|1106|달걀찜|64|82|" /><span>달걀찜</span><a href="#none" onclick="mypage.dietDel('5|0|1106|달걀찜|64|82|', this);">
+														<img src="../../admin/images/btn/btn_exclude.gif" alt="-"></a></li></ul>
+													</td>
+												
+												
+											
+
+											
+												
+													<td>
+														<a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a>
+														<ul><li><input type="hidden" name="inf" value="5|1|962|콩조림(콩자반)|20|58|간장" /><span>콩조림(콩자반)</span><a href="#none" onclick="mypage.dietDel('5|1|962|콩조림(콩자반)|20|58|간장', this);">
+														<img src="../../admin/images/btn/btn_exclude.gif" alt="-"></a></li></ul>
+													</td>
+												
+												
+											
+
+											
+												
+												
+													<td><a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a></td>
+												
+											
+
+											
+												
+												
+													<td><a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a></td>
+												
+											
+										</tr>
+									
+										<tr>
+											
+												
+													<td>
+														<a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a>
+														<ul><li><input type="hidden" name="inf" value="6|0|323|배추김치|60|10|김치" /><span>배추김치</span><a href="#none" onclick="mypage.dietDel('6|0|323|배추김치|60|10|김치', this);">
+														<img src="../../admin/images/btn/btn_exclude.gif" alt="-"></a></li></ul>
+													</td>
+												
+												
+											
+
+											
+												
+													<td>
+														<a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a>
+														<ul><li><input type="hidden" name="inf" value="6|1|316|깍두기|50|16|깍두기" /><span>깍두기</span><a href="#none" onclick="mypage.dietDel('6|1|316|깍두기|50|16|깍두기', this);">
+														<img src="../../admin/images/btn/btn_exclude.gif" alt="-"></a></li></ul>
+													</td>
+												
+												
+											
+
+											
+												
+												
+													<td><a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a></td>
+												
+											
+
+											
+												
+												
+													<td><a href="#none" class="addBtn"><img src="../images/btn/btn_add.gif" alt="+" /></a></td>
+												
+											
+										</tr>
+									
+
+								
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="4">
+											<a href="#none" onclick="mypage.memuAdd();"><img src="../images/btn/btn_add_tr.gif" alt="+행 추가" /></a>
+											<a href="#none" onclick="mypage.memuDel();"><img src="../images/btn/btn_exclude_tr.gif" alt="-행 삭제" /></a>
+											<a href="#none" onclick="openSavePop();"><img src="../images/btn/btn_save.gif" alt="식단저장" /></a>
+										</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+
+				</div>
+				</form>
+			</div>
+			<!-- //Sub Content -->
+
+		</section>
+	</article>
+	<!-- //Container -->
+
+	<!-- Aside -->
+	
+
+
+
+
+
+
+
+
+	<!-- Aside -->
+	<aside id="aside">
+	
+		<div class="leftSide">
+			<a href="#none" onclick="$('.jisuCon .box').hide().eq(0).show();pop.open('jisuPop.html');"><img src="../images/btn/btn_jisu.gif" alt="식중독지수" /></a>
+		</div>
+		
+		<div class="aside">
+			<p><img src="../images/txt/tit_aside.gif" alt="청정원 브랜드관" /></p>
+			<ul>
+				<li><a href="../product/productSearcha565.html?cateCd=CLASSIC"><img src="../images/btn/btn_side0.gif" alt="classic 한국전통식품군" /></a></li>
+				<li><a href="../product/productSearchb00f.html?cateCd=SMART"><img src="../images/btn/btn_side1.gif" alt="smart 편의형 제품" /></a></li>
+				<li><a href="../product/productSearch8bcb.html?cateCd=CUISINE"><img src="../images/btn/btn_side2.gif" alt="cuisine 서구식품군" /></a></li>
+				<li><a href="../product/productSearch93bb.html?cateCd=FRESH"><img src="../images/btn/btn_side3.gif" alt="fresh 냉장/냉동" /></a></li>
+				<li><a href="../product/productSearch1be9.html?cateCd=ESSENTIAL"><img src="../images/btn/btn_side4.gif" alt="essential 조미료/향신료" /></a></li>
+				<li><a href="../product/productSearch49d2.html?cateCd=ORGANIC"><img src="../images/btn/btn_side5.gif" alt="organic 유기가공식품군" /></a></li>
+			</ul>
+		</div>
+		<div class="aside2">
+			<ul>
+				<li><a href="http://daesang.com/"><img src="../images/btn/banner01_daesang.gif" alt="대상" /></a></li>
+				<li><a href="http://chungjungone.com/"><img src="../images/btn/banner02_chungjungone.gif" alt="청정원" /></a></li>
+				<li><a href="http://jungoneshop.com/"><img src="../images/btn/banner03_jungoneeshop.gif" alt="정원이샵" /></a></li>
+			</ul>
+		</div>
+		<!-- 
+		<div class="notiList">
+			<div class="btn">
+				<a href="#none">Play</a>
+				<a href="#none">Stop</a>
+			</div>
+			<div class="list">
+				<ul onclick="window.open('http://www.kma.go.kr/weather/lifenindustry/life_jisu.jsp?JISU_INFO=lifedayimg_A01_2','', '');">
+				</ul>
+			</div>
+		</div>
+		 -->
+		<script type="text/javascript">
+		$(function(){
+			/* 
+			$.ajax({
+				type: "POST"  
+				,url: "/user/getFoodPoisonInfo.do"
+				,success:function(data){
+
+					var html = "<li><a href=\"#none\">서울 "+data.seoul+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.seoulStep)+"\">"+data.seoulStep+"</font>"
+					+ "<li><a href=\"#none\">인천 "+data.incheon+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.incheonStep)+"\">"+data.incheonStep+"</font>" 
+					+ "<li><a href=\"#none\">광주 "+data.gwangju+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.gwangjuStep)+"\">"+data.gwangjuStep+"</font>" 
+					+ "<li><a href=\"#none\">부산 "+data.busan+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.busanStep)+"\">"+data.busanStep+"</font>" 
+					+ "<li><a href=\"#none\">대전 "+data.daejeon+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.daejeonStep)+"\">"+data.daejeonStep+"</font>" 
+					+ "<li><a href=\"#none\">세종 "+data.sejong+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.sejongStep)+"\">"+data.sejongStep+"</font>" 
+					+ "<li><a href=\"#none\">대구 "+data.daegu+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.daeguStep)+"\">"+data.daeguStep+"</font>" 
+					+ "<li><a href=\"#none\">울산 "+data.ulsan+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.ulsanStep)+"\">"+data.ulsanStep+"</font>" 
+					+ "<li><a href=\"#none\">춘천 "+data.chuncheon+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.chuncheonStep)+"\">"+data.chuncheonStep+"</font>" 
+					+ "<li><a href=\"#none\">수원 "+data.suwon+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.suwonStep)+"\">"+data.suwonStep+"</font>" 
+					+ "<li><a href=\"#none\">청주 "+data.chungju+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.chungjuStep)+"\">"+data.chungjuStep+"</font>" 
+					+ "<li><a href=\"#none\">전주 "+data.jeonju+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.jeonjuStep)+"\">"+data.jeonjuStep+"</font>" 
+					+ "<li><a href=\"#none\">목포 "+data.mokpo+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.mokpoStep)+"\">"+data.mokpoStep+"</font>" 
+					+ "<li><a href=\"#none\">제주 "+data.jeju+" <font style=\"font-weight:bold;\" color=\""+getFontColor(data.jejuStep)+"\">"+data.jejuStep+"</font>";
+					
+					$(".notiList .list ul").html(html);
+					
+					rollNoti();
+				}
+			});
+			 */
+		});
+		
+		var getFontColor = function(param) {
+			var color = "";
+			if(param == "위험") color = "C50100";
+			else if(param == "경고") color = "FF5206";
+			else if(param == "주의") color = "932402";
+			else if(param == "관심") color = "3366CC";
+			
+			return color;
+		};
+		
+		var rollNoti = function(){
+			var $con = $(".notiList"),
+				$play = $con.find(".btn a").eq(0),
+				$stop = $con.find(".btn a").eq(1),
+				$ul = $con.find(".list ul"),
+				$li = $ul.find("li"),
+				max = $li.length,
+				hig = $li.outerHeight(),
+				now = 0,
+				time = 2000,
+				setTime = null;
+			
+			$ul.append("<li>"+$li.eq(0).html()+"</li>");
+
+			$play.bind("click", function(){
+				clearTimeout(setTime);
+				setTime = setTimeout(roll, time);
+				
+			});
+			$stop.bind("click", function(){
+				clearTimeout(setTime);		
+			});
+			
+			var roll = function(){
+				if(now != max){
+					now+=1,
+					time = 2000;
+					$ul.stop().animate({
+						"margin-top" : -1*(now*hig) + "px"
+					},200)
+					
+				}else{
+					now = time = 0;
+					
+					$ul.css("margin-top" , "0");
+					
+					clearTimeout(setTime);
+					
+				}
+				setTime = setTimeout(roll, time);
+			}
+			
+			setTime = setTimeout(roll, time);		
+			
+		}
+		</script>
+	</aside>
+	<!-- //Aside -->
+	
+	
+<!-- 식중독 지수 팝업 -->
+<div class="LayPop" id="jisuPop">
+	<div class="popCon">
+	
+		<div class="jisuCon">
+		
+			<dl class="tit">
+				<dt>식중독 지수</dt>
+				<dd><span class="today"></span> 예보</dd>
+			</dl>
+			
+			<div class="box">
+				<div class="jisuBox">
+					
+					<div class="dayBtn">
+						<a href="#none"><img src="../images/btn/btn_today.gif" alt="오늘" /></a>
+						<a href="#none"><img src="../images/btn/btn_tomor.gif" alt="내일" /></a>
+						<a href="#none"><img src="../images/btn/btn_sand.gif" alt="모래" /></a>
+					</div>
+								
+					<div class="imgView">
+						<div class="view"><img src="#" alt="" /></div>
+						<div class="btn">
+							<a href="#none" class="branchBtn"><img src="../images/btn/btn_branch.gif" alt="지점값 보기" /></a>
+						</div>
+					</div>
+					
+					<div class="jisuGuide">
+						<p><img src="../images/img/img_jisu.gif" alt="" /></p>
+						<table class="jisuTbl">
+							<colgroup>
+								<col width="80">
+								<col width="*">
+							</colgroup>
+							<thead>
+								<tr>
+									<th>단계</th>
+									<th>설명 및 주의사항</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th><strong>위험</strong> <span>(95이상)</span></th>
+									<td>식중독 발생가능성이 매우 높으므로 식중독예방에 각별한 경계요망</td>
+								</tr>
+								<tr>
+									<th><strong>경고</strong> <span>(70이상~95미만)</span></th>
+									<td>식중독 발생가능성이 높으므로 식중독예방에 경계요망</td>
+								</tr>
+								<tr>
+									<th><strong>주의</strong> <span>(35이상~70미만)</span></th>
+									<td>식중독 발생가능성이 중간단계이므로 식중독예방에 주의요망</td>
+								</tr>
+								<tr>
+									<th><strong>관심</strong> <span>(35미만)</span></th>
+									<td>식중독 발생가능성은 낮으나 식중독 예방에 지속적인 관심요망</td>
+								</tr>
+							</tbody>
+						</table>
+						<p class="txt">※ 식중독지수는 기상청과 식품의약품안전처와<br />공동으로 제공하고 있습니다.</p>
+					</div>
+					
+				</div>
+			</div>
+			<div class="box frame">
+				<iframe width="665" height="472" frameborder="0" scrolling="yes" marginheight="0" id="frame" marginwidth="0" src="http://www.kma.go.kr/weather/lifenindustry/li_asset/popup/imgdata_popup.jsp?CODE=A01&amp;point=0"></iframe>
+			</div>
+		</div>
+		<div class="close">
+			<a href="#none" onclick="pop.close();"><img src="../images/btn/btn_close.gif" alt="CLOSE"></a>
+		</div>
+	</div>
+</div>
+<!-- //식중독 지수 팝업 -->
+
+<script type="text/javascript">			
+	$(function(){
+		var $jisu = $(".jisuCon"),
+			$btn = $jisu.find(".dayBtn a"),
+			$img = $jisu.find(".imgView .view img"),
+			$today = $jisu.find(".today"),
+			$branchBtn = $jisu.find(".branchBtn"),
+			url = "http://www.kma.go.kr/repositary/xml/imi2/FCT_IDX_A01_2_",
+			today = getDate(0)[0].toString()+getDate(0)[1]+getDate(0)[2];
+		var d = new Date(), 
+			time = (d.getHours() >= "18") ? "1" : "0";
+		
+		$("#frame").attr("src", "http://www.kma.go.kr/weather/lifenindustry/li_asset/popup/imgdata_popup.jsp?CODE=A01&amp;point="+time);
+		
+		$img.attr("src" , url+today+"06_00D.gif");
+		
+		$today.html(getDate(0)[0]+"."+getDate(0)[1]+"."+getDate(0)[2]);
+		
+		$branchBtn.bind("click", function(){
+			$jisu.find(".box").hide().eq(1).show();
+		})
+		
+		$btn.each(function(idx){
+			$(this).bind("click", function(){
+				$today.html(getDate(idx)[0]+"."+getDate(idx)[1]+"."+getDate(idx)[2]);
+				$img.attr("src" , url+today+"06_0"+idx+"D.gif");
+			});
+		});
+		function getDate(o){
+			  var today = new Date(),
+			  		tomorrow = new Date(today.valueOf() + (24*60*60*1000)*o),
+			  		y = tomorrow.getFullYear(),
+			  		mDay = tomorrow.getMonth() + 1,
+			  		m = (mDay.toString().length == 1) ? "0"+mDay.toString() : mDay.toString(),
+			  		dDay = tomorrow.getDate(),
+			  		d = (dDay.toString().length == 1) ? "0"+dDay.toString() : dDay.toString(),
+			  		dayArr = [y,m,d];
+			  
+			 return dayArr;
+		}
+	});
+</script>
+
+	<!-- //Aside -->
+	
+</div>
+
+<!-- Footer -->
+
+<footer id="footer">
+	<div class="footer">
+		<img src="../images/common/tit_footer.gif" alt="DAESANG : COPYRIGHT © DAESANG 2014 ALL RIGHT RESEVED " />
+	</div>
+	
+	<div class="popBg"></div>
+</footer>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','../../../www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-59799444-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- //Footer -->
+
+
+<!-- 식단저장 -->
+<div class="LayPop" id="savePop">
+
+	<div class="popCon">
+		<div class="popBox">
+		
+			<div class="savePop">
+				<dl>
+					<dt>작성하신 식단을 공개 하시겠습니까?</dt>
+					<dd>(공개 시 영양정보 게시판_우리가 만든 식단에서 보여집니다.)</dd>
+				</dl>
+
+				<div class="savePw">
+					<div class="radioBox">
+						<label><input type="radio" name="publicYn" class="" value="Y" /> 공개</label>
+						<label><input type="radio" name="publicYn" class="" value="N" /> 비공개</label>
+					</div>
+					<p>
+						<strong>비밀번호</strong>
+						<input type="password" name="inpPassword" value="" maxlength="8" />
+					</p>
+				</div>
+				
+				<div class="btn">
+					<a href="#none" onclick="saveMyDiet();"><img src="../images/btn/btn_save_pop.gif" alt="저장" /></a>
+				</div>
+
+			</div>
+		</div>
+		<div class="close">
+			<a href="#none" onclick="pop.close();"><img src="../images/btn/btn_close.gif" alt="CLOSE" /></a>
+		</div>
+	</div>
+</div>
+<!-- //식단저장 -->
+
+<!-- 추천식단 상세 보기 -->
+<div class="LayPop" id="mypagePop"></div>
+<!-- //추천식단 상세 보기 -->
+
+
+<!-- 음식선택 -->
+<div class="LayPop" id="foodPop"></div>
+<!-- //음식선택 -->
+
+<!-- 등록 알럿 -->
+	<div class="alertPop" id="addPop">
+		<div class="altCon">
+			<div class="txt">
+				선택하신 <span></span>을(를)<br />식단에 등록 하시겠습니까?
+			</div>
+			<div class="btn">
+				<a href="#none" onclick="mypage.addChoes();"><img src="../images/btn/btn_ok.gif" alt="확인" /></a>
+				<a href="#none" onclick="mypage.addCancel();"><img src="../images/btn/btn_cancel.gif" alt="취소" /></a>
+			</div>
+		</div>
+	</div>
+	<!-- //등록 알럿 -->
+	
+	<!-- 삭제 알럿 -->
+	<div class="alertPop" id="delPop">
+		<div class="altCon">
+			<div class="txt">
+				선택하신 <span></span>을(를)<br />식단에서 삭제 하시겠습니까?
+			</div>
+			<div class="btn">
+				<a href="#none" class="delBtn"><img src="../images/btn/btn_ok.gif" alt="확인" /></a>
+				<a href="#none" onclick="mypage.altCancel();"><img src="../images/btn/btn_cancel.gif" alt="취소" /></a>
+			</div>
+		</div>
+	</div>
+	<!-- //삭제 알럿 -->
+	
+	<!-- 알림 알럿 -->
+	<div class="alertPop" id="alertPop">
+		<div class="altCon">
+			<div class="txt">
+				선택하신 <span></span>은(는)<br />이미 식단에 추가 된 음식입니다.
+			</div>
+			<div class="btn">
+				<a href="#none" onclick="mypage.altConfirm();"><img src="../images/btn/btn_ok.gif" alt="확인" /></a>
+			</div>
+		</div>
+	</div>
+	<!-- //알림 알럿 -->
+
+<!-- 나의 운동량 조회 -->
+<div class="LayPop" id="askInpPop">
+	<div class="popCon">
+		<div class="popBox">
+			<div class="askCon">
+				<div class="tit"><img src="../images/txt/tit_ask.gif" alt="나의 기초대사량 조회하기" /></div>
+				
+				<div class="box">
+					<table class="tbl">
+						<colgroup>
+							<col width="36">
+							<col width="82">
+							<col width="36">
+							<col width="86">
+							<col width="36">
+							<col width="*">
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>성별</th>
+								<td colspan="5">
+									<label><input type="radio" name="sex" value="M" checked/> 여성</label>
+									<label><input type="radio" name="sex" value="F"/> 남성</label>
+								</td>
+							</tr>
+							<tr>
+								<th>나이</th>
+								<td>
+									<input type="text" class="inp" name="age" value="" /> 세
+								</td>
+								<th>신장</th>
+								<td>
+									<input type="text" class="inp" name="height" value="" /> cm
+								</td>
+								<th>체중</th>
+								<td>
+									<input type="text" class="inp" name="weight" value="" /> kg
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="ckBtn">
+						<a href="#none" onclick="myBsmtlCalc();"><img src="../images/btn/btn_ok.gif" alt="확인" /></a>
+					</div>
+					<dl>
+						<dt>나의 기초대사량</dt>
+						<dd><span class="inp"><input type="text" name="myKcal" value="" /></span> Kcal</dd>
+					</dl>
+				</div>
+				<div class="btn">
+					<a href="#none" onclick="myMomtClickEvent();"><img src="../images/btn/btn_ask.gif" alt="나의 운동량 조회" /></a>
+				</div>
+
+				<dl class="txt">
+					<dt>기초대사량이란?</dt>
+					<dd>생명을 유지하는데 필요한 최소한의 에너지량을 말한다. 체온 유지나 호흡, 심장 박동 등 기초적인 생명 활동을 위한 신진대사에 쓰이는 에너지량으로 보통 휴식상태 또는 움직이지 않고 가만히 있을 때 기초대사량만큼의 에너지가 소모된다.</dd>
+				</dl>
+
+			</div>
+		</div>
+		<div class="close">
+			<a href="#none" onclick="pop.close();"><img src="../images/btn/btn_close.gif" alt="CLOSE" /></a>
+		</div>
+	</div>
+</div>
+<!-- //나의 운동량 조회 -->
+	
+	<!-- 나의 운동량 결과 -->
+	<div class="LayPop" id="resultPop">
+	
+		<div class="popCon">
+			<div class="popBox">
+				<div class="resultBox">
+					<span>"다음 항목 중 한가지의 신체활동이 필요합니다."</span>
+					<ul>
+						<li>
+							<dl>
+								<dt>걷기</dt>
+								<dd><strong id="rsWalk">1</strong>분</dd>
+							</dl>
+						</li>
+						<li>
+							<dl>
+								<dt>달리기</dt>
+								<dd><strong id="rsRun">1</strong>분</dd>
+							</dl>
+						</li>
+						<li>
+							<dl>
+								<dt>자전거</dt>
+								<dd><strong id="rsBicycle">1</strong>분</dd>
+							</dl>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="close">
+				<a href="#none" onclick="myMontClose()"><img src="../images/btn/btn_close.gif" alt="CLOSE" /></a>
+			</div>
+		</div>
+	</div>
+	<!-- //나의 운동량 결과 -->
+	
+</body>
+
+<!-- Mirrored from www.jungonenutri.com/user/mydiet/myDiet.do?dietCd=1160 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 31 May 2022 00:33:49 GMT -->
+</html>
