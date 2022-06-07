@@ -3,7 +3,7 @@ import cx_Oracle
 from pathlib import Path
 
 #오라클 클라우드 인스턴스 경로 적어주기
-cx_Oracle.init_oracle_client(lib_dir=r"C:/instantclient/instantclient_21_3/")
+cx_Oracle.init_oracle_client(lib_dir=r"/Users/jihyeon/instantclient_19_8")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
