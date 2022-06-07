@@ -1,0 +1,89 @@
+@charset "utf-8";
+/*
+ Filename:		glimw.js
+ Descript:		
+ Writer--:		glim
+ CreateDate :	20180828
+ LatestDate:	20180828
+*/
+
+
+.ani_arrow {
+  width: 100%;
+  transition: background 0.5s ease;
+}
+
+.ani_arrow i {
+  margin-left: 20px;
+}
+
+.ani_arrow .arrow1 {
+  animation: slide1 1s ease-in-out infinite;
+  margin-left: 3px;
+}
+
+
+@keyframes slide1 {
+	0%,
+	100% {
+		transform: translate(0, 0);
+	}
+	50% {
+		transform: translate(10px, 0);
+	}
+}
+
+/*PC 버전 에만 적용*/
+@media screen and (min-width:824px) {
+	
+	
+}
+
+/*모바일 defualt */
+@media screen and (max-width:823px ) {
+	
+	
+	/* HEADER *********************************************************************/
+	.header_box {
+		width:130px;
+		height:60px;
+		-webkit-transition:-webkit-transform .6s cubic-bezier(.39,.575,.28,.995);
+		transition:-webkit-transform .6s cubic-bezier(.39,.575,.28,.995);
+		transition:transform .6s cubic-bezier(.39,.575,.28,.995);
+		transition:transform .6s cubic-bezier(.39,.575,.28,.995),-webkit-transform .6s cubic-bezier(.39,.575,.28,.995);
+	}
+	
+	.pager-home {
+		transition:all .05s;
+		-webkit-transition:all .05s;
+		-moz-transition:all .05s;
+		-ms-transition:all .05s;
+	}
+	
+	
+	.pager-body .pager_wrap .pager_bar .current_bar {
+		
+		transform:all;
+		-webkit-transform:all;
+		-moz-transform:all;
+		-ms-transform:all;
+		transform-origin:left top;
+		-webkit-transform-origin:left top;
+		-moz-transform-origin:left top;
+		-ms-transform-origin:left top;
+		transition:all .2s ease-out;
+		-webkit-transition:all .2s ease-out;
+		-moz-transition:all .2s ease-out;
+	}
+}
+
+
+/*모바일 세로 버전 */
+@media screen and (max-width:567px ) {
+	
+	/* HEADER *********************************************************************/
+	.header_box { width:130px; height:60px; }
+	.header_box.open { height:289px; }
+	
+	
+}

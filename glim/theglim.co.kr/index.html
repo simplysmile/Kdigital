@@ -1,0 +1,901 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<!-- Mirrored from theglim.co.kr/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 31 May 2022 04:51:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <title>The Glim </title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
+
+    <meta name="description" content="크리에이티브한 아이디어와 최신 IT기술의 조화로 고객에게 새로운 방향성을 제시하는 디지털 컨버전스 기업입니다." />
+    <meta name="keywords" content="Glim,Theglim,글림,richscript,Creative,Studio,황세준,김제헌,웹에이전시,웹사이트,웹디자인,웹접근성,반응형웹,접근성,홈페이지,프로모션,스타일가이드,전시,홍보영상,모바일앱,어플리케이션,BI,CI,Website,Web design,Promotion,Microsite,Style guide,Exhibition,Mobile app,Mobile web,Application,UX, UX, UI, App, Application, Web, Agency, Research, Consulting, Design, Android, iOS, service, Convergence, Website, Accessibility" />
+
+    <meta name="author" content="Glim Tech">
+    <meta property="og:title" content="The Glim inc">
+    <meta property="og:site_name" content="Glim by @Glim Tech ">
+    <meta name="apple-mobile-app-title" content="The Glim">
+
+    <meta property="og:image" content="../www.theglim.co.kr/resource/front/images/favico/og-logo.png">
+    <link rel="image_src" href="../www.theglim.co.kr/resource/front/images/favico/og-logo.png">
+    <link rel="shortcut icon" type="image/x-icon" href="http://www.theglim.co.kr/resource/front/images/favico/favicon.ico">
+    <link rel="icon" type="image/png" href="../www.theglim.co.kr/resource/front/images/favico/favicon.png" />
+
+    <!-- Jquery Javascript/Css 20180802
+    ================================================== -->
+    <script type="text/javascript" src="resource/front/js/jquery/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="resource/front/js/jquery/jquery-ui.js"></script>
+    <link type="text/css" rel="stylesheet" href="resource/front/css/jquery/jquery-ui.min.css">
+    <script type="text/javascript" src="resource/front/js/jquery/jquery.easeScroll.js"></script>
+    <script type="text/javascript" src="../cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TweenMax.min.js"></script>
+    <script type="text/javascript" src="resource/front/js/motion/jquery.waypoints.js"></script>
+    <script type="text/javascript" src="resource/front/js/skrollr/skrollr.js"></script>
+    <script type="text/javascript" src="resource/front/js/swiper-4.3.5/js/swiper.js"></script>
+    <link type="text/css" rel="stylesheet" href="resource/front/js/swiper-4.3.5/css/swiper.min.css">
+    <link href="Scripts/plugins/loading/iosOverlay.css" rel="stylesheet"/>
+
+
+    <!-- Custom styles for this template
+    ================================================== -->
+    <link rel="stylesheet" type="text/css" href="../cdn.jsdelivr.net/gh/hiun/NanumSquare%40master/nanumsquare.css" />
+    <link rel="stylesheet" type="text/css" href="resource/front/css/glim.css" />
+
+    <!-- UI JavaScript
+    ================================================== -->
+    <script type="text/javascript" src="Scripts/common87ca.js?v=20220531135115"></script>
+    <script src="Scripts/plugins/loading/iosOverlay.js"></script>
+<script src="Scripts/plugins/loading/spin.min.js"></script>
+
+    <script type="text/javascript" src="resource/front/js/com.ui.helper87ca.js?v=20220531135115"></script>
+    <script type="text/javascript" src="resource/front/js/com.ui87ca.js?v=20220531135115"></script>
+    <script type="text/javascript" src="resource/front/js/animation87ca.js?v=20220531135115"></script>
+    <script type="text/javascript" src="resource/front/js/pager.responsive87ca.js?v=20220531135115"></script>
+    <script type="text/javascript" src="resource/front/js/swiper.responsive87ca.js?v=20220531135115"></script>
+    <script src="../developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '2050917525226784', // App ID
+                status: false,
+                version: 'v2.5',
+                cookie: true,
+                xfbml: false  // parse XFBML
+            });
+        };
+
+        // Load the SDK asynchronously
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "../connect.facebook.net/en_US/all.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <script>
+        var SNSUrl = "index.html";
+        var SNSTitle = "";
+        var SNSImage = "";
+        var MenuNoMoveChange = function (e, Page, AddParam) {
+            var url = "";
+            var reqInfo = new Common.RequestInfo();
+
+            if (typeof AddParam != "undefined") {
+                for (var keyName in AddParam) {
+                    reqInfo.AddParameter(keyName, AddParam[keyName]);
+                }
+            }
+            url = "/" + Page;
+            SNSUrl = 'http://theglim.co.kr' + url + "?" + reqInfo.GetParameter();
+
+            if (Common.Device.IOS || Common.Device.ANDROID) {
+                location.href = url + "?" + reqInfo.GetParameter();
+            } else {
+                Common.Ajax(url, reqInfo, function (html) {
+					$("html").removeAttr("style");//20180920 hanjeehye add
+                    $("body").removeClass("main-body");
+                    $("body").removeClass("about");
+                    $("body").removeClass("pager-body");
+                    $("body").removeClass("list-body");
+                    $("body").removeClass("details");
+                    $("body").removeClass("contact-body");
+
+                    $(".logo").removeClass("about");
+                    $(".logo").removeClass("portfolio");
+                    $(".logo").removeClass("story");
+                    $(".logo").removeClass("contact");
+
+                    $("#navi_index").removeClass("selected");
+                    $("#navi_about").removeClass("selected");
+                    $("#navi_portfolio").removeClass("selected");
+                    $("#navi_story").removeClass("selected");
+                    $("#navi_contact").removeClass("selected");
+
+                    if (Page == "") {
+                        $("body").addClass("main-body");
+                        $("#navi_index").addClass("selected");
+                    } else if (Page == "About") {
+                        $("body").addClass("about");
+                        $("body").addClass("pager-body");
+                        $(".logo").addClass("about");
+                        $("#navi_about").addClass("selected");
+                    } else if (Page == "Portfolio") {
+                        $("body").addClass("list-body");
+                        $(".logo").addClass("portfolio");
+                        $("#navi_portfolio").addClass("selected");
+                    } else if (Page == "PortfolioDetail") {
+                        $("body").addClass("pager-body");
+                        $("body").addClass("details");
+                        $(".logo").addClass("portfolio");
+                        $("#navi_portfolio").addClass("selected");
+                    } else if (Page == "Story") {
+                        $("body").addClass("list-body");
+                        $(".logo").addClass("story");
+                        $("#navi_story").addClass("selected");
+                    } else if (Page == "StoryDetail") {
+                        $("body").addClass("pager-body");
+                        $("body").addClass("details");
+                        $(".logo").addClass("story");
+                        $("#navi_story").addClass("selected");
+                    } else if (Page == "Contact") {
+                        $("body").addClass("contact-body");
+                        $(".logo").addClass("contact");
+                        $("#navi_contact").addClass("selected");
+                    }
+
+                    $("#LayoutContentsBody").html(html);
+                });
+
+                setTimeout(function () {
+                    PageLoad();
+                });
+
+                Common.EventCancelBubble(e);
+                Common.EventReturnValue(e);
+            }
+        }
+    </script>
+    <!-- s: 20200406 추가 -->
+    <script type="text/javascript">
+    (function(w, d, a){
+        w.__beusablerumclient__ = {
+            load : function(src){
+                var b = d.createElement("script");
+                b.src = src; b.async=true; b.type = "text/javascript";
+                d.getElementsByTagName("head")[0].appendChild(b);
+            }
+        };w.__beusablerumclient__.load(a);
+    })(window, document, "//rum.beusable.net/script/b200326e120120u602/0ac38cc6f1");
+    </script>
+    <!-- e: 20200406 추가 -->
+</head>
+<body class="main-body">
+    <div class="wrap">
+        <section class="header">
+            <div class="sec">
+                <div class="header-box header_box">
+
+                    <!-- Com: about/portfolio/story/contact class add-->
+                    <div class="logo "><i class="ico ilogo"></i></div>
+                    <div class="mo symbol"></div>
+                    <!-- <div class="logo about"></div> -->
+                    <div class="menu global-menu">
+                        <ul class="navi">
+                            <li id="navi_index" class='selected'><a href="#" onclick="MenuNoMoveChange(event, ''); return false;"><span class="hover"></span><span class="lb">Glim</span></a></li>
+                            <li id="navi_about" ><a href="#" onclick="MenuNoMoveChange(event, 'About'); return false;"><span class="hover"></span><span class="lb">About</span></a></li>
+                            <li id="navi_portfolio" ><a href="#" onclick="MenuNoMoveChange(event, 'Portfolio'); return false;"><span class="hover"></span><span class="lb">Portfolio</span></a></li>
+                            <li id="navi_story" ><a href="#" onclick="MenuNoMoveChange(event, 'Story'); return false;"><span class="hover"></span><span class="lb">Story</span></a></li>
+                            <li id="navi_contact" ><a href="#" onclick="MenuNoMoveChange(event, 'Contact'); return false;"><span class="hover"></span><span class="lb">Contact</span></a></li>
+                        </ul>
+                        <ul class="social mo">
+                            <li><a href="https://www.facebook.com/glim0619/" class="ibtn_facebook" target="_blank"><i class="ico ifacebook">facebook</i></a></li>
+                            <li><a href="https://instagram.com/the_glim/" class="ibtn_instagram" target="_blank"><i class="ico iinstar">instargram</i></a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!-- E:header -->
+        <!-- S:body -->
+        <section class="body">
+            <div id="LayoutContentsBody" class="sec">
+                
+
+<div class="swiper_wrap swiper-wrap contents-body" style="opacity:0">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 29, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(thumbnail188d.jpg?idx=29);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> WEB</span>
+                                <span class="portfolio_type"> MOBILE</span>
+                                <span class="portfolio_type"> APP</span>
+                            <span class="portfolio_name">케어비 공식 온라인 몰 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 28, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(%25ed%2592%2588%25ea%25b3%25a0_01_thumbnail_0338fe.jpg?idx=28);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> WEB</span>
+                                <span class="portfolio_type"> MOBILE</span>
+                            <span class="portfolio_name">POOMGO 브랜드사이트 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 27, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(thumbnail25d3.jpg?idx=27);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> MOBILE</span>
+                                <span class="portfolio_type"> APP</span>
+                            <span class="portfolio_name">금융정보플랫폼 아차 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 26, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(thumbnail_021a89.jpg?idx=26);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> WEB</span>
+                                <span class="portfolio_type"> MOBILE</span>
+                                <span class="portfolio_type"> APP</span>
+                                <span class="portfolio_type"> BRANDING</span>
+                            <span class="portfolio_name">ABC-MART 통합몰 A-RT 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 25, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(EQL_store_01_thumbnailb1f5.jpg?idx=25);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> WEB</span>
+                                <span class="portfolio_type"> MOBILE</span>
+                            <span class="portfolio_name">한섬 온라인 편집샵 EQL 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 24, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(shinhan_chatbot_moli_01_thumbnailbb98.jpg?idx=24);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> WEB</span>
+                                <span class="portfolio_type"> MOBILE</span>
+                            <span class="portfolio_name">신한 A.I 커뮤니케이션 시스템 MOLI 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 23, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(samsungSDS_chatbot_01_thumbnail6e19.jpg?idx=23);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> WEB</span>
+                                <span class="portfolio_type"> MOBILE</span>
+                            <span class="portfolio_name">삼성 스마트 도어록 챗봇 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 22, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(006b06.jpg?idx=22);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> WEB</span>
+                                <span class="portfolio_type"> MOBILE</span>
+                            <span class="portfolio_name">풀무원 녹즙 리뉴얼 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 21, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(00e266.jpg?idx=21);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> WEB</span>
+                                <span class="portfolio_type"> MOBILE</span>
+                            <span class="portfolio_name">OpenShop 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 18, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(Namyang_community_01_thumbnail_055634.jpg?idx=18);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> WEB</span>
+                                <span class="portfolio_type"> MOBILE</span>
+                            <span class="portfolio_name">남양몰 e-Commerce 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 19, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(Namyang_community_01_thumbnail6dfe.jpg?idx=19);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> WEB</span>
+                                <span class="portfolio_type"> MOBILE</span>
+                            <span class="portfolio_name">남양아이 커뮤니티 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 17, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(Shinhan_chatbot_01_thumbnail8696.jpg?idx=17);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> APP</span>
+                            <span class="portfolio_name">신한 챗봇 ORORA 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 12, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(RailPlus_01_thumbnailfc0d.jpg?idx=12);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> APP</span>
+                            <span class="portfolio_name">레일플러스 모바일 앱 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 9, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(kyoboeBook_01_thumbnailc6eb.jpg?idx=9);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> APP</span>
+                            <span class="portfolio_name">KYOBO eBook 모바일 앱 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 8, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(kt_blice_01_thumbnail31c1.jpg?idx=8);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> WEB</span>
+                                <span class="portfolio_type"> MOBILE</span>
+                            <span class="portfolio_name">KT 연재플랫폼 Blice 통합 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 3, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(Cj_hello_01_thumbnail3702.jpg?idx=3);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> WEB</span>
+                                <span class="portfolio_type"> MOBILE</span>
+                            <span class="portfolio_name">CJ 헬로 브랜드사이트 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 10, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(nepa_01_thumbnailc53f.jpg?idx=10);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> WEB</span>
+                                <span class="portfolio_type"> MOBILE</span>
+                            <span class="portfolio_name">NEPA 통합몰&amp;브랜드 사이트 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 7, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(koreanair_skyshop_01_thumbnaildd58.jpg?idx=7);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> WEB</span>
+                                <span class="portfolio_type"> MOBILE</span>
+                            <span class="portfolio_name">대한항공 기내면세점 통합 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 16, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(%25ec%2597%2590%25ec%258a%25a4%25ec%259b%2590%25eb%25a3%25a9%25ec%2595%25a4%25ed%2595%2584_01_thumbnailc542.jpg?idx=16);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> BRANDING</span>
+                            <span class="portfolio_name">에스원 Look&amp;Feel Guide</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 4, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(E-proposal_01_thumbnaild057.jpg?idx=4);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> APP</span>
+                            <span class="portfolio_name">에스원 E-PROPOSAL 앱 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 14, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(wooribank_01_thumbnail4f57.jpg?idx=14);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> APP</span>
+                            <span class="portfolio_name">우리은행 W-PAY 어플리케이션 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 13, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(skt_t_lens_01_thumbnail48ba.jpg?idx=13);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> APP</span>
+                            <span class="portfolio_name">SKT T-Lens 모바일 앱 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 5, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(hanwhacolud_01_thumbnailbe1c.jpg?idx=5);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> WEB</span>
+                            <span class="portfolio_name">한화 클라우드 웹사이트 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 15, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(%25ec%2597%2590%25ec%258a%25a4%25ec%259b%2590%25eb%25aa%25a8%25eb%25b0%2594%25ec%259d%25bc%25ec%25b9%25b4%25eb%2593%259c_01_thumbnail9315.jpg?idx=15);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> APP</span>
+                            <span class="portfolio_name">에스원 모바일카드 앱 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 11, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(olleh_01_thumbnail6529.jpg?idx=11);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> WEB</span>
+                            <span class="portfolio_name">올레닷컴 상품소개 웹 리뉴얼</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 6, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(hyundaigreenfood_01_thumbnailea79.jpg?idx=6);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> APP</span>
+                            <span class="portfolio_name">현대그린푸드 H-SMART 모바일 앱 구축</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" onclick="MenuNoMoveChange(event, 'PortfolioDetail', {idx : 2, Cate : ''}); return false;">
+                        <span class="img_wrap" style="background-image: url(DMZ_01_thumbnailf70c.jpg?idx=2);">
+                            <span class="line -right"></span><span class="line -top"></span><span class="line -left"></span><span class="line -bottom"></span>
+                        </span>
+                        <span class="portfolio_info_wrap">
+                                <span class="portfolio_type"> WEB</span>
+                            <span class="portfolio_name">DMZ 통합정보시스템 웹사이트 구축</span>
+                        </span>
+                    </a>
+                </div>
+        </div>
+
+        <div class="swiper-pagination"></div>
+    </div>
+</div>
+            </div>
+        </section>
+        <!-- E:body -->
+        <!-- S:footer -->
+        <section class="footer">
+            <div class="fl">
+                <a href="Glim_%25ed%259a%258c%25ec%2582%25ac%25ec%2586%258c%25ea%25b0%259c%25ec%2584%259c_200529-1.pdf" class="ibtn_intro_download btn_ani_up_full"><span class="hover"></span><i class="ico iintro_download"></i><span class="lb">Glim’s Brochure</span></a>
+                <a href="javascript:;" class="ibtn_intro_request btn_ani_up_full" onclick="ReqShow();"><span class="hover"></span><i class="ico irequest"></i><span class="lb">Request</span></a>
+            </div>
+            <div class="fr">
+                <div class="copy">
+                    Create a new
+                    <span class="mo br"></span>Glim's Space © 2018 Glim.
+                </div>
+                <ul class="foot_social tw">
+                    <li><a href="https://www.facebook.com/glim0619/" class="ibtn_facebook" target="_blank"><i class="ico ifacebook">facebook</i></a></li>
+                    <li><a href="https://instagram.com/the_glim/" class="ibtn_instagram" target="_blank"><i class="ico iinstar">instargram</i></a></li>
+                </ul>
+            </div>
+        </section>
+        <!-- E:footer -->
+
+    </div>
+    <!-- E:wrap -->
+    <!-- S:레이어팝업 share-->
+    <div class="lpop-share" data-role="dialog" data-width="440" style="display:none;">
+        <div class="dialog_title">
+            <h2 class="tit_share">Share.</h2>
+        </div>
+        <div class="dialog_content">
+            <!-- S:컨텐츠 -->
+            <div class="share_cont">
+                <ul class="ul_share">
+                    <li><a href="#" class="ibtn_share" onclick="kakaoSNS();return false;"><i class="ico ico_share_kakao">kakaotalk</i></a></li>
+                    <li><a href="#" class="ibtn_share" onclick="facebookSNS();return false;"><i class="ico ico_share_facebook">facebook</i></a></li>
+                    <li><a href="#" class="ibtn_share" onclick="twitterSNS();return false;"><i class="ico ico_share_twitter">twitter</i></a></li>
+                    <li><a href="#" class="ibtn_share" onclick="copyURL();return false;"><i class="ico ico_share_link">link copy</i></a></li>
+                </ul>
+
+            </div>
+            <!-- E:컨텐츠 -->
+        </div>
+    </div>
+
+    <!-- E:레이어팝업 share-->
+    <!-- S:레이어팝업 Request-->
+    <div class="lpop-request" data-role="dialog" data-width="762" style="display:none;">
+        <div class="dialog_title">
+            <h2 class="tit_request">Request.</h2>
+        </div>
+        <div class="dialog_content">
+            <!-- S:컨텐츠 -->
+            <div class="request_cont">
+                <ul class="tbl_ip">
+                    <li class="left title">
+                        <span class="th"><label class="lb" for="re_title">Title</label></span>
+                        <span class="td"><input type="text" name="title" class="req_ip" placeholder="제목을 입력하세요." /></span>
+                    </li>
+                    <li class="right category">
+                        <span class="td">
+                            <select name="cate_idx" class="req_sel">
+                                <option value="1">Web Service</option>
+                                <option value="2">Mobile Service</option>
+                                <option value="3">Operating</option>
+                                <option value="4">Etc</option>
+                            </select>
+                        </span>
+                    </li>
+                    <li class="left">
+                        <span class="th"><label class="lb" for="re_company">Company</label></span>
+                        <span class="td"><input type="text" name="company_name" class="req_ip" placeholder="회사명을 입력하세요." /></span>
+                    </li>
+                    <li class="right">
+                        <span class="th"><label class="lb" for="re_position">Position</label></span>
+                        <span class="td"><input type="text" name="position_name" class="req_ip" placeholder="직급을 입력하세요." /></span>
+                    </li>
+                    <li class="left">
+                        <span class="th"><label class="lb" for="re_name">Name</label></span>
+                        <span class="td"><input type="text" name="name" class="req_ip" placeholder="이름을 입력하세요." /></span>
+                    </li>
+                    <li class="right">
+                        <span class="th"><label class="lb" for="re_telephone">Telephone</label></span>
+                        <span class="td"><input type="text" name="phone" class="req_ip" placeholder="010-1234-5678" /></span>
+                    </li>
+                    <li class="left full email">
+                        <span class="th"><label class="lb" for="re_email">E-mail</label></span>
+                        <span class="td"><input type="text" name="email" class="req_ip" placeholder="이메일 주소를 입력하세요." /></span>
+                    </li>
+                    <li class="left full comment">
+                        <span class="th"><label class="lb" for="re_comment">Enter the contents</label></span>
+                        <span class="td" class="bd_top_no">
+                            <textarea name="body" class="req_ta" placeholder="내용을 입력하세요."></textarea>
+                        </span>
+                    </li>
+                    <li class="left full file only_desktop">
+                        <span class="th"><label class="lb" for="re_attach1">File</label></span>
+                        <span class="td">
+                            <!-- S: 파일 업로드 -->
+                            <!-- S:파일폼 repeat -->
+                            <div class="filebox">
+                                <span class="file_upload_wrap">
+                                    <span class="box_r_btn">
+                                        <input type="text" id="ip-attchfile1" readonly="readonly" />
+                                        <span class="fu_btn_group">
+                                            <input type="file" name="file1" class="file_input_hidden" id="uploadImage1" onchange="document.getElementById('ip-attchfile1').value = this.value.replace(/^.*[\\/]/, ''); deleteShow($(this));" />
+                                            <!-- DESC: X 버튼은 선택된 파일이 있을때만 넣어주세요 -->
+                                            <button type="button" id="uploadImageDelete1" class="btn_file_delete" style="display:none;" onclick="uploadImagesFileDelete($(this));"><i class="ico ico_file_delete"></i></button>
+                                            <label class="btn_fake" for="uploadImage1">Search</label>
+                                        </span>
+                                    </span>
+                                </span>
+                            </div>
+                            <!-- E:파일폼 repeat -->
+                            <!-- S:파일폼 repeat -->
+                            <div class="filebox">
+                                <span class="file_upload_wrap">
+                                    <span class="box_r_btn">
+                                        <input type="text" id="ip-attchfile2" readonly="readonly" />
+                                        <span class="fu_btn_group">
+                                            <input type="file" name="file2" class="file_input_hidden" id="uploadImage2" onchange="document.getElementById('ip-attchfile2').value = this.value.replace(/^.*[\\/]/, '');deleteShow($(this));" />
+                                            <!-- DESC: X 버튼은 선택된 파일이 있을때만 넣어주세요 -->
+                                            <button type="button" id="uploadImageDelete2" class="btn_file_delete" style="display:none;" onclick="uploadImagesFileDelete($(this));"><i class="ico ico_file_delete"></i></button>
+                                            <label class="btn_fake" for="uploadImage2">Search</label>
+                                        </span>
+                                    </span>
+                                </span>
+                            </div>
+                            <!-- E:파일폼 repeat -->
+                            <!-- S:파일폼 repeat -->
+                            <div class="filebox">
+                                <span class="file_upload_wrap">
+                                    <span class="box_r_btn">
+                                        <input type="text" id="ip-attchfile3" readonly="readonly" />
+                                        <span class="fu_btn_group">
+                                            <input type="file" name="file3" class="file_input_hidden" id="uploadImage3" onchange="document.getElementById('ip-attchfile3').value = this.value.replace(/^.*[\\/]/, '');deleteShow($(this));" />
+                                            <!-- DESC: X 버튼은 선택된 파일이 있을때만 넣어주세요 -->
+                                            <button type="button" id="uploadImageDelete3" class="btn_file_delete" style="display:none;" onclick="uploadImagesFileDelete($(this));"><i class="ico ico_file_delete"></i></button>
+                                            <label class="btn_fake" for="uploadImage3">Search</label>
+                                        </span>
+                                    </span>
+                                </span>
+                            </div>
+                            <!-- E:파일폼 repeat -->
+                            <!-- E:파일업로드 -->
+
+                            <span class="filebox_desc">* 파일 첨부는 3개까지 가능합니다. </span>
+                        </span>
+                    </li>
+                </ul>
+
+                <div class="automated">
+                    <label class="lb" for="desc">자동메일<span class="br pc"></span>발송방지</label>
+                    <div class="automated_div">
+                        <!-- 자동전송 방지-->
+                        <img id='kcaptcha_image' width="170" height="60" border='0' style="cursor:pointer; " onclick="NewCapcha();" />
+                        <input class="subject" type="text" size="10" name="CapchaValue">
+                        <br />
+                        <span class="desc">
+                            * 자동메일발송 방지를 위해 <span class="tc_red">이미지에 나타난 답을 입력</span>해주세요.
+                            <br />* 글자가 잘안보이는 경우 클릭하시면 새로운 글자가 나옵니다.
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!-- E:컨텐츠 -->
+        </div>
+        <div class="dialog_btn_wrap">
+            <div class="dialog_btn_wrap_inner">
+                <button type="button" onclick="ReqCancel();" class="btn_re btn_re_cancle btn_ani_up_full">
+                    <span class="hover"></span>
+                    <span class="lb">CANCEL</span>
+                </button>
+                <button type="button" onclick="ReqSave();" class="btn_re btn_re_send btn_ani_up_full">
+                    <span class="hover"></span>
+                    <span class="lb">SEND</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        var NewCapcha = function () {
+            Common.Ajax("/CapchaKey", null, function (key) {
+                $("#kcaptcha_image").attr("src", "/CapchaImage?capchakey=" + key);
+            });
+        }
+
+        var ReqShow = function () {
+            Common.Ajax("/CapchaKey", null, function (key) {
+                $("#kcaptcha_image").attr("src", "/CapchaImage?capchakey=" + key);
+            });
+
+            var reqObj = $(".request_cont");
+
+            reqObj.find("input[name=CapchaValue]").val("");
+            reqObj.find("input[name=title]").val("");
+            reqObj.find("input[name=name]").val("");
+            reqObj.find("input[name=phone]").val("");
+            reqObj.find("input[name=email]").val("");
+            reqObj.find("textarea[name=body]").val("");
+
+            reqObj.find("#uploadImage1").val("");
+            reqObj.find("#uploadImage2").val("");
+            reqObj.find("#uploadImage3").val("");
+
+            document.getElementById('ip-attchfile1').value = "";
+            document.getElementById('ip-attchfile2').value = "";
+            document.getElementById('ip-attchfile3').value = "";
+
+            $('.lpop-request').dialog('open');
+        }
+
+        var ReqSave = function () {
+            var reqObj = $(".request_cont");
+
+            if (reqObj.find("input[name=CapchaValue]").val() == "") {
+                alert("자동방지 답을 입력하세요.");
+                reqObj.find("input[name=CapchaValue]").focus();
+                return false;
+            }
+
+            Common.NumberKeyPress(reqObj.find("input[name=CapchaValue]"));
+
+            if (reqObj.find("input[name=CapchaValue]").val() == "") {
+                alert("자동메일 발송방지 숫자의 합을 입력해주세요.");
+                reqObj.find("input[name=CapchaValue]").focus();
+                return false;
+            }
+
+            if (reqObj.find("input[name=title]").val() == "") {
+                alert("제목을 입력하세요.");
+                reqObj.find("input[name=title]").focus();
+                return false;
+            }
+
+            if (reqObj.find("input[name=name]").val() == "") {
+                alert("이름을 입력하세요.");
+                reqObj.find("input[name=name]").focus();
+                return false;
+            }
+
+            if (reqObj.find("input[name=phone]").val() == "" && reqObj.find("input[name=email]").val() == "") {
+                alert("연락처를 입력하세요.");
+                reqObj.find("input[name=phone]").focus();
+                return false;
+            }
+
+            if (reqObj.find("textarea[name=body]").val() == "") {
+                alert("내용을 입력하세요.");
+                reqObj.find("textarea[name=body]").focus();
+                return false;
+            }
+
+            var ReqInfo = new Common.RequestInfo();
+            ReqInfo.formData = new FormData();
+            ReqInfo.AddParameter(reqObj)
+
+            Common.Loading.Show();
+            Common.Ajax("/ContactSave", ReqInfo, function () {
+                Common.Loading.Hide();
+                alert("요청이 저장 되었습니다.");
+                $('.lpop-request').dialog('close');
+            }, { async : true});
+        }
+
+        var ReqCancel = function () {
+            $('.lpop-request').dialog('close');
+        }
+
+        var deleteShow = function (obj) {
+            if (obj.attr("id") == "uploadImage1" && obj.val() != "") {
+                $("#uploadImageDelete1").show();
+            }
+            if (obj.attr("id") == "uploadImage2" && obj.val() != "") {
+                $("#uploadImageDelete2").show();
+            }
+            if (obj.attr("id") == "uploadImage3" && obj.val() != "") {
+                $("#uploadImageDelete3").show();
+            }
+        }
+
+        var uploadImagesFileDelete = function (obj) {
+            if (obj.attr("id") == "uploadImageDelete1") {
+                $("#uploadImage1").val("");
+                $("#ip-attchfile1").val("");
+            }
+            if (obj.attr("id") == "uploadImageDelete2") {
+                $("#uploadImage2").val("");
+                $("#ip-attchfile2").val("");
+            }
+            if (obj.attr("id") == "uploadImageDelete3") {
+                $("#uploadImage3").val("");
+                $("#ip-attchfile3").val("");
+            }
+            obj.hide();
+        }
+
+        Kakao.init('8b7ba62e15e8078070fd2af47958d17d');
+        var kakaoSNS = function () {
+            Kakao.Link.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: "글림",
+                    description: SNSTitle,
+                    imageUrl: SNSImage,
+                    link: {
+                        mobileWebUrl: SNSUrl,
+                        webUrl: SNSUrl
+                    }
+                }
+            });
+        }
+
+        var facebookSNS = function () {
+	/*
+            FB.ui(
+                {
+                    method: 'share',
+                    href: SNSUrl,
+                    hashtag: '#글림',
+                    quote: SNSTitle,
+                    picture: SNSImage
+                }
+            );
+        */
+
+	    FB.ui({
+		method: 'share_open_graph',
+                href: SNSUrl,
+                hashtag: '#글림',
+                quote: SNSTitle,
+		action_type: 'og.shares',
+		action_properties: JSON.stringify({
+		    object : {
+		       'og:title': "글림",
+		       'og:description': SNSTitle,
+		       'og:og:image:width': '1900',
+		       'og:image:height': '960',
+		       'og:image': SNSImage
+		    }
+		})
+	    });
+
+        }
+
+        var twitterSNS = function () {
+            var xurl = encodeURIComponent(SNSUrl);
+            var title = encodeURIComponent("글림");
+            var shareURL = "https://twitter.com/intent/tweet" + "?text=" + title + "&url=" + xurl;
+            window.open(shareURL, "_blank");
+        }
+
+        var copyURL = function () {
+            var t = $("<textarea style='opacity:0'></textarea>");
+            $(".lpop-share").append(t);
+
+            t.val(SNSUrl);
+            t.get(0).select();
+            document.execCommand('copy');
+            t.remove();
+
+            alert("복사되었습니다.");
+        }
+    </script>
+    <!-- E:레이어팝업 Request-->
+
+</body>
+
+<!-- Mirrored from theglim.co.kr/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 31 May 2022 04:53:32 GMT -->
+</html>
