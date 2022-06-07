@@ -26,6 +26,7 @@ class Dailydata(models.Model):
     user = models.ForeignKey(Members,on_delete=models.CASCADE)
     height = models.IntegerField(blank=True)
     cur_weight = models.IntegerField(blank=True)
+    cur_bmi=models.IntegerField(blank=True)
     cur_bodyfat = models.IntegerField(blank=True)
     cur_neck = models.IntegerField(blank=True)
     cur_waist = models.IntegerField(blank=True)
