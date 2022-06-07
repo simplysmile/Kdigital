@@ -6,7 +6,7 @@ const dateFormat = (date) => {
 const makeCalendar = (date) => {
     
 // 현재의 년도와 월 받아오기
-const [nowYear, nowMonth] = dateFormat(date);
+const [nowYear, nowMonth, nowDay] = dateFormat(date);
 
 // 지난달의 마지막 요일
 const prevDay = new Date(nowYear, nowMonth - 1, 1).getDay();
@@ -23,7 +23,23 @@ for (let i = 0; i < prevDay; i++) {
 
 // 현재 날짜 표시하기
 for (let i = 1; i <= lastDay; i++) {    
-    htmlDummy += `<div>${i}</div>`;
+    if (i == nowDay){
+        htmlDummy += `<div id="`+ nowMonth +`m`+ i +`" class="colToday" onclick="selectD()">${i}`
+        htmlDummy += `<li>식단</li>`
+        htmlDummy += `<li>운동</li>`
+        htmlDummy += `<li>`+dateFormat(date)+`</li>`
+        
+        
+        
+        htmlDummy += `</div>`;
+
+
+    }
+    else{
+
+        htmlDummy += `<div id="`+ nowMonth +`m`+ i +`" class="abc" onclick="selectD()">${i}</div>`;
+    }
+    
 }
 
 // 지금까지 추가한 날짜 박스
@@ -57,3 +73,5 @@ document.querySelector(`.prevDay`).onclick = () => {
 document.querySelector(`.nextDay`).onclick = () => {
     makeCalendar(new Date(date.setMonth(date.getMonth() + 1)));
 }
+
+
