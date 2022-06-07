@@ -10,6 +10,7 @@ class Members(models.Model):
     birth = models.DateField(blank=True)
     gender = models.CharField(max_length=10,blank=True)
     phone = models.CharField(max_length=13,blank=True)
+    email = models.CharField(max_length=1000,blank=True)
     zipcode = models.CharField(max_length=6,blank=True)
     addressd1=models.CharField(max_length=1000,blank=True)
     addressd2=models.CharField(max_length=1000,blank=True)
@@ -36,4 +37,5 @@ class Dailydata(models.Model):
     week_ex = models.IntegerField(default=0)
     day_ex = models.IntegerField(default=0)
     focus_ex = models.CharField(max_length=1000,blank=True)
+    add_date=models.DateTimeField(auto_now_add=True)
     
