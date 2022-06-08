@@ -24,6 +24,7 @@ class Members(models.Model):
     allergic_food = models.CharField(max_length=1000,blank=True)
     goal_wieght = models.IntegerField(default=55,blank=True)
     goal_bodyfat = models.IntegerField(default=25,blank=True)
+    goal_period = models.IntegerField(default=30,blank=True)
     createdate=models.DateTimeField(auto_now_add=True)
     modidate=models.DateTimeField(auto_now=True)
     
