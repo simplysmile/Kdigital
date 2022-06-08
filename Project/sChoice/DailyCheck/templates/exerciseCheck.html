@@ -38,15 +38,58 @@
                     </a>
                 
                 </td>
-                <td width=250 height=250 style='background-color:#eee;'><a href="#"><img width=50 height=50 src='/static/img/basic/plus.png'> </a></td>
+                <td width=250 height=250 style='background-color:#eee;'><img onclick="addExercise()" width=50 height=50 src='/static/img/basic/plus.png'></td>
             </tr>
             <tr>
-                <td width=250 height=250 style='background-color:#eee;'><a href="#"><img width=50 height=50 src='/static/img/basic/plus.png'> </a></td>
-                <td width=250 height=250 style='background-color:#eee;'><a href="#"><img width=50 height=50 src='/static/img/basic/plus.png'> </a></td>
+                <td width=250 height=250 style='background-color:#eee;'><img onclick="addExercise()" width=50 height=50 src='/static/img/basic/plus.png'></td>
+                <td width=250 height=250 style='background-color:#eee;'><img onclick="addExercise()" width=50 height=50 src='/static/img/basic/plus.png'></td>
 
             </tr>
         </table>
 	</div>
+
+      <!-- The Modal -->
+      <div id="myModal" class="modal">
+        
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <br>
+            <h2>여기에 입력하시면됩니다</h2>
+
+
+            
+        </div>
+        
+    </div>
+    <script>
+        // 모달
+        function addExercise(){
+            modal.style.display = "block";
+        }
+        // Get the modal
+        var modal = document.getElementById("myModal");
+ 
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+
+
+
+
+
+
 </main>
 
 {% endblock mycontent %}
