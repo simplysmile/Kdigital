@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900&display=swap&subset=korean" rel="stylesheet">
+    <link rel="stylesheet" href="css/mem_css">
+<title>unni's choice</title>
+</head>
+<body>
+     <!--id입력폼-->
+    <div id="header" class="join_membership" role="banner">
+        <h1>
+            <a href="#" class="unni_logo">
+                <span>UNNI'S CHOICE</span>
+            </a>
+
+        </h1>
+
+    </div>
+
+    <form id="all_form" method="post" action="#"> 
+        <div id="wrapper">
+            <!-- container -->
+            <div id="container" role="main">
+                <div id="content"> 
+                    <div class="join_content">
+                        
+                        <!--아이디 비밀번호 -->
+                        <div class="row_group">
+
+                            <div class="join_row">
+                                <h3>
+                                    <label for="id">아이디</label>
+    
+                                </h3>
+                                <span class=" ps_box int_id"> <!-- 20글자이상쓰면 에러-->
+                                    <input type="text" id='id' name="id" maxlength="20">
+                                    <span>@annischoice.com</span>
+                                    <span class="error_next_box"></span>
+                
+                                </span>
+                            </div>
+                            <div class="join_row">
+                                <h3>
+                                    <label for="pswd">비밀번호</label>
+    
+                                </h3>
+                                <span class="ps_box int_pswd" id="pswd"> 
+                                    <input type="text" id='pswd' name="pswd" maxlength="20">
+                                    <span id="pswdSpan">
+    
+                                    </span>
+    
+                                    
+                
+                                </span>
+                                <span class="error_next_box" id="pswdMsg" >
+                                    5~12자의 영문 소문자, 숫자와 특수기호(_)만 사용 가능합니다.</span>
+    
+                                
+                                <h3 >
+                                    <label for="pswd2">비밀번호 재확인</label>
+                                </h3>
+    
+                                <span class="ps_box int_pswd_check" >
+                                    <input type="password" id="pswd2" name="pswd2" class="int" title="비밀번호입력" maxlength="20">
+                                    <span id="pswd2Blind">설정하려는 비밀번호가 맞는지 확인하기 위해 다시 입력 해주세요.</span>
+    
+                                </span>
+                                <span class="error_next_box" >필수 정보입니다.</span>
+                            </div>
+
+
+
+                        </div><!--아이디 비밀번호 -->
+
+
+                        <!-- 이름,생년원일 입력-->
+                        <div class="row_group">
+
+                            <div class="join_row">
+                                <h3 >
+                                    <label for="name">이름</label>
+                                </h3>
+
+                                <span>
+                                    <input type="text" id="name" name="name" title="이름" maxlength="40">
+
+                                </span>
+                                <span class="error_next_box" id="nameMSg"></span>
+
+                            </div>
+
+                            <div class="join_row_birthday">
+                                <h3 class="join_title">
+                                    <label for="birth">생년원일</label>
+                                </h3>
+                                <div class="birth_wrap">
+                                    <div class="bir_yy">
+                                        <span>
+                                            <input type="text" id="yy" placeholder="년(4자)" aria-label="년(4자)" maxlength="4">
+                                        </span>
+
+                                    </div><!--년도-->
+                                    <div class="bir_mm">
+                                        <span>
+                                            <select id="mm" class="selec" aria-label="월">
+
+                                                <option value>월</option>
+                                                <option value="01">"1"</option>
+                                                <option value="02">"2"</option>
+                                                <option value="03">"3"</option>
+                                                <option value="04">"4"</option>
+                                                <option value="05">"5"</option>
+                                                <option value="06">"6"</option>
+                                                <option value="07">"7"</option>
+                                                <option value="08">"8"</option>
+                                                <option value="09">"9"</option>
+                                                <option value="09">"9"</option>
+                                                <option value="09">"9"</option>
+                                                <option value="10">"10"</option>
+                                                <option value="11">"11"</option>
+                                                <option value="12">"12"</option>
+                                                
+                                            </select>
+                                        </span>
+                                    </div><!--월-->
+
+
+                                    <div class="bir_dd">
+
+                                        <span>
+                                            <input type="text" id="dd" placeholder="일" aria-label="일" maxlength="2">
+                                            <label for="dd"></label>
+                                        </span>
+                                        
+                                    </div><!--일-->
+                                </div><!-- 생년원일 box 선택-->
+                                <span class="error_next_box" id="nameMSg"></span>
+                               
+
+                            </div><!--//생년원일 입력-->
+
+                        </span>
+                        <span class="error_next_box" id="birthdayMSg">
+                            태어난 년도 4자리를 정확하게 입력하세요.
+                        </span>
+
+                        </div><!-- //이름,생년원일 입력-->
+
+
+                        <!--성별선택-->
+                        <div class="join_row_sex">
+
+                            <h3 class="join_title">
+
+                                <label for="gender">성별</label>
+                            </h3>
+
+                            <div class="ps_box gender_selc">
+                                <select id="gender" name="gender" class="sel" aria-label="성별">
+                                    <option value selected>성별</option>
+                                    <option value="M">남자</option>
+                                    <option value="F">여자</option>
+                    
+                                </select>
+                            </div><!--성별선택-->
+                            <span class="error_next_box" id="genderMSg">
+                                태어난 년도 4자리를 정확하게 입력하세요.
+                            </span>
+
+
+                        </div><!--성별선택-->
+
+
+                        <!-- 이메일 -->
+                        <div class="join_row_email">
+                            <h3>
+                                <label for="email">
+                                    이메일
+                                </label>
+
+                            </h3>
+
+                            <div class="ps_box int_email"> 
+                                <input type="text">
+                                <select id="email_id" name="email_id" class="sel" aria-label="이메일">
+                                    <option value="#" selected="selected">직접입력</option>
+                                    <option value="naver.com">naver.com</option>
+                                    <option value="daum.net">daum.net</option>
+                                    <option value="hanmail.net">hanmail.net</option>
+                                    <option value="nate.com">nate.com</option>    
+                                    <option value="yahoo.co.kr">yahoo.co.kr</option>    
+                                    <option value="paran.com">paran.com</option>    
+                                    <option value="empal.com">empal.com</option>    
+                                    <option value="hotmail.com">hotmail.com</option>    
+                                    <option value="korea.com">korea.com</option>    
+                                    <option value="lycos.co.kr">lycos.co.kr</option>    
+                                    <option value="dreamwiz.com">dreamwiz.com</option>    
+                                    <option value="hanafos.com">hanafos.com</option>    
+                                    <option value="chol.com">chol.com</option>    
+                                    <option value="gmail.com">gmail.com</option>    
+                                    <option value="empas.com">empas.com</option>
+                                </div>
+
+                            </span>
+                            <span class="error_next_box" id="EmailMSg">
+                                이메일주소를 입력하세요.
+                            </span>
+                        </div><!-- 이메일선택 -->
+
+
+                           <!--서비스-->
+                        <div class="join_row_service">
+
+                            <h3 class="join_title">
+
+                                <label for="service">서비스</label>
+
+                            </h3>
+
+                            <div class="ps_box gender_selc">
+
+                                <select id="service" name="service" class="sel" aria-label="서비스">
+                                    
+                                    <option value selected>서비스</option>
+                                    <option value="meal">식단형</option>
+                                    <option value="balance">균형형</option>
+                                    <option value="excersize">운동형</option>
+                    
+                                </select>
+
+                            </div><!--서비스선택-->
+                            <span class="error_next_box" id="serviceMSg">
+                                원하는 서비스를 선택하세요.
+                            </span>
+
+
+                        </div><!--//서비스선택-->
+
+                        <!--휴대전화-->
+                        <div class="join_row_mobil">
+        
+                            <h3>
+                                <label for="phoneNo">
+                                    휴대전화</label>
+                            </h3>
+
+                            <div class="ps_box int_mobile">
+                                <input type="text" id="phoneNo" name="phoneNo" placeholder="전화번호입력" aria-label="전화번호입력" maxlength="16">
+
+
+                            </div>
+
+                        </div><!--휴대전화-->
+                        
+                        <span class="error_next_box" id="phoneNoMSg">
+                            필수 정보입니다.
+                        </span>
+
+                        
+
+                        <!--목적부위-->
+                        <div class="join_row_service">
+
+                            <h3 class="join_title">
+
+                                <label for="service">서비스</label>
+                            </h3>
+
+                            <div class="ps_box gender_selc">
+                                <select id="purpose" name="purpose" class="sel" aria-label="목적부위">
+                                    <option value selected>목적부위</option>
+                                    <option value="abs">복부</option>
+                                    <option value="shoulders">어깨</option>
+                                    <option value="arms">팔</option>
+                                    <option value="back">등</option>
+                                    <option value="chest">가슴</option>
+                                    <option value="legs">하체</option>
+                                    <option value="all">전신</option>
+                                </select>
+                            </div><!--서비스선택-->
+                            <span class="error_next_box" id="purposeMSg">
+                                원하는 목적부위를 선택하세요.
+                            </span>
+
+
+                        </div><!--//목적부위서선택-->
+
+                        <!--비건선택-->
+               
+                        <div class="join_row_vegan">
+
+                            <h3 class="join_title">
+
+                                <label for="vegan">비건여부</label>
+                            </h3>
+
+                            <div class="ps_box gender_selc">
+                                <select id="vegan" name="vegan" class="sel" aria-label="비건">
+                                    <option value selected>비건여부</option>
+                                    <option value="vegan">비건채식</option>
+                                    <option value="lacto">락토채식</option>
+                                    <option value="ovo">오보채식</option>
+                                    <option value="lactoovo">락토오보채식</option>
+                                    <option value="pollo">폴로채식</option>
+                                    <option value="pesco">페스코채식</option>
+                                    <option value="flexitarian">플렉시테리안</option>
+                                    <option value="notvegan">해당사항없음</option>
+                    
+                                </select>
+                            </div><!--비건선택-->
+                            <span class="error_next_box" id="veganMSg">
+                                해당되는 사항을 선택해주세요.
+                            </span>
+
+
+                        </div><!--비건선택-->
+
+                        <div class="butnarea">
+
+                            <h3 class="join_title">
+
+                                <label for="advancelevel">전문가여부</label>
+                            </h3>
+
+                            <ul class="butnarea2">
+                                <li>
+                                    <input type="radio" name="advance" id="advance" value=1 class="radio_t" /><label for="advance">전문가</label>
+                                </li>
+                                <li>
+                                    <input type="radio" name="notadvance" id="notadvance" value=0 class="radio_t" checked="checked"/><label for="notadvance">전문가x</label>
+                                </li>
+                            </ul>
+                        </li>
+                        </div>
+
+                        <div class="join_row_address">
+
+                            <h3 class="join_title">
+
+                                <label for="address">주소입력</label>
+                            </h3>
+
+                            <ul class="pta">
+                                <li>
+                                    <input type="text" class="w134" placeholder="주소입력" aria-label="주소입력" />&nbsp;
+                                </li>
+                                <li><a href="zip.html" class="addressBtn"><span>우편번호 찾기</span></a></li>
+                                <li class="pt5"><input type="text" class="addressType" /></li>
+                                <li class="cb">
+                                    <span class="mvalign">※ 상품 배송 시 받으실 주소입니다. 주소를 정확히 적어 주세요.</span>
+                                </li>
+                            </ul>
+
+
+
+
+
+
+
+                        </div>
+
+
+                        <!--현재몸무게-->
+                        <div class="join_row_curweigth">
+        
+                            <h3>
+                                <label for="avrweigth">
+                                    목표몸무게입력</label>
+                            </h3>
+
+                            <div class="ps_box int_curweigth">
+                                <input type="text" id="curweigth" name="curweigth" placeholder="현재몸무게입력" aria-label="현재몸무게입력" maxlength="16">
+
+
+                            </div>
+
+                        </div><!--현재몸무게-->
+                        
+                        <span class="error_next_box" id="curweigthMSg">
+                            필수 정보입니다.
+                        </span>
+
+                        <!--목표체지방률-->
+                        <div class="join_row_goalfat">
+        
+                            <h3>
+                                <label for="goalfat">
+                                    목표체지방률입력</label>
+                            </h3>
+
+                            <div class="ps_box int_goalfat">
+                                <input type="text" id="goalfat" name="goalfat" placeholder="목표체지방률" aria-label="목표체지방률" maxlength="16">
+
+
+                            </div>
+
+                        </div><!--목표체지방률-->
+                        
+                        <span class="error_next_box" id="curweigthMSg">
+                            필수 정보입니다.
+                        </span>
+
+               
+
+
+
+
+
+
+                        
+        
+                    </div> 
+
+                </div>
+    
+            </div>
+        </div>
+
+
+
+
+    </form>
+
+    
+</body>
+</html>
