@@ -39,9 +39,9 @@ class Dailydata(models.Model):
     cur_waist = models.IntegerField(blank=True)
     cur_hip = models.IntegerField(blank=True)
     day_img = models.ImageField(blank=True)
-    ex_level = models.CharField(max_length=100,blank=True)
+    level_Choice=(('2','저강도 운동'),('3','중강도 운동'),('6','고강도 운동')) # 운동강도
+    ex_level = models.CharField(max_length=100,choices=level_Choice,blank=True)
     week_ex = models.IntegerField(default=0,blank=True)
-    day_ex = models.IntegerField(default=0,blank=True)
-    focus_ex = models.CharField(max_length=1000,blank=True)
+    day_ex = models.IntegerField(default=0,blank=True)    
     add_date=models.DateTimeField(auto_now_add=True)
     
