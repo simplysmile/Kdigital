@@ -15,4 +15,3 @@ class Exercise(models.Model):
     muscle=models.CharField(max_length=1000,blank=True) # 자극되는 근육
     equipment=models.CharField(max_length=1000,blank=True) # 운동에 사용되는 운동기구
     imgUrl=models.ImageField(blank=True) # 이미지 주소
-    

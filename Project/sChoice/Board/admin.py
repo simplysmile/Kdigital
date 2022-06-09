@@ -1,16 +1,15 @@
 from django.contrib import admin
-# from Member.models import Members
-# from .models import MealBoard,ExerciseBoard
+from .models import MealBoard,ExerciseBoard
 
-# @admin.register(MealBoard)
-# class MealBoardAdmin(admin.ModelAdmin):
-#     list_display=[
-#         'b_No','b_Title','member','b_Createdate','b_Modidate'
-#     ]
+@admin.register(MealBoard)
+class MealBoardAdmin(admin.ModelAdmin):
+    list_display=[
+        'b_No','b_Title','member','b_Createdate','b_Modidate'
+    ]
 
-# @admin.register(ExerciseBoard)
-# class ExerciseBoardAdmin(admin.ModelAdmin):
-#     list_display=[
-#         'b_No','b_Title','member','b_Createdate','b_Modidate'
-#     ]
+@admin.register(ExerciseBoard)
+class ExerciseBoardAdmin(admin.ModelAdmin):
+    list_display=[
+        'b_No','b_Title','member','b_Createdate','b_Modidate'
+    ]
 
