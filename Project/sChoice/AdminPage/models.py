@@ -1,7 +1,7 @@
 from django.db import models
 
 class Exercise(models.Model):
-    ex_no=models.AutoField()
+    # ex_no=models.AutoField()
     ex_id=models.CharField(max_length=10,primary_key=True) # 운동아이디
     # activity_Choice=(('bicycling','자전거'),('conditioning',''),('healthclub','헬스'),('running','러닝'),('sports',''),('walking','걷기'),('water','수상운동'),('winter','설상운동'))
     activity=models.CharField(max_length=1000,blank=True) # 운동종류
