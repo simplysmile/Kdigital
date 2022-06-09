@@ -11,21 +11,23 @@ $(function(){
 
 
             // 달성일, 몸무게 차트 
-            const counter = {
-                id: 'counter',
+            const goal_txt = {
+                id: 'goal_txt',
                 beforeDraw(chart, args, options) {
                   const { ctx, chartArea: { top, right , bottom, left, width, height } } = chart;
                   ctx.save();
                   ctx.fillStyle = 'black';
                   ctx.fillRect(width / 2, top + (height / 2), 0, 0);
-                  ctx.font = '45px sans-serif';
+                  ctx.font = '50px sans-serif';
                   ctx.textAlign = 'center';     
-                  // w 변동 h 변동  l 70 r 변동 t 0 b 변동
-                  //console.log("width", width); 
-                  ctx.fillText('10/60 일', width / 2 +(left), top + (height / 2));
+                  console.log("width", width); 
+                  ctx.fillText('10/60 일', width / 2 +(left), top + (height / 2)+70);
+                  ctx.fillText('-5kg', width / 2 +(left), top + (height / 2)+120);
                 }
+
             };
 
+           
 
             const ctx_goal = document.getElementById('goalchart').getContext('2d');
             const goalchart = new Chart(ctx_goal, {
@@ -57,16 +59,7 @@ $(function(){
                     ],
                 },//data.
                 options: {
-                    elements: {
-                        center: {
-                          text: 'Red is 2/3 the total numbers',
-                          color: '#FF6384', // Default is #000000
-                          fontStyle: 'Arial', // Default is Arial
-                          sidePadding: 20, // Default is 20 (as a percentage)
-                          minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
-                          lineHeight: 25 // Default is 25 (in px), used for when text wraps
-                        }
-                    },
+                
                     plugins: {
                         
                     legend: {
@@ -79,7 +72,7 @@ $(function(){
                             
                 },
                   
-                plugins: [counter]
+               plugins: [goal_txt],
 
             }); // 달성일, 몸무게 차트 
             
@@ -137,13 +130,19 @@ $(function(){
 
 
 
-
-
-
-
-       
-
-
+        const textinsert = {
+            id: 'textinsert',
+            beforeDraw(chart, args, options) {
+              const { ctx, chartArea: { top, right , bottom, left, width, height } } = chart;
+              ctx.save();
+              ctx.fillStyle = 'black';
+              ctx.fillRect(width / 2, top + (height / 2), 0, 0);
+              ctx.font = '50px sans-serif';
+              ctx.textAlign = 'center';     
+              console.log("width", width); 
+              ctx.fillText('90%', width / 2 +(left), top + (height / 2));
+            }
+        };
             // doughnut chart 
             const ctx_meal = document.getElementById('mealChart').getContext('2d');
             const mealChart = new Chart(ctx_meal, {
@@ -158,9 +157,7 @@ $(function(){
                     }],
                 },//data.
                 options: {
-                    
                     aspectRatio: 1,
-                    
                     layout: {
                         padding: {
                             left: 70,
@@ -169,30 +166,19 @@ $(function(){
                             bottom: 10,
                         }
                     },
-                    
                     plugins: {
-                        legend: {
-                            
+                        legend: {                       
                             display: false,
-                        },
-                        
+                        },                        
                         title: {
                             display: false,
                         },
                         tooltips: {
                             enabled: false
                         },
-                        rotation: 1.5 * Math.PI,
-                        
-                        
-                        
-                        
-                        
-                       
-                        
-                    },
-                    
+                    }, 
                 },
+                plugins: [textinsert],
                 
             }); // doughnut chart 
             
@@ -307,7 +293,8 @@ $(function(){
 
 
                     
-                }
+                },
+                
             }); // doughnut chart 
 
 
@@ -316,6 +303,20 @@ $(function(){
         // --------------------------------------운동part----------------------------------------------------
         // --------------------------------------------------------------------------------------------------
         // --------------------------------------------------------------------------------------------------
+
+        const textinsert_exer = {
+            id: 'textinsert_exer',
+            beforeDraw(chart, args, options) {
+              const { ctx, chartArea: { top, right , bottom, left, width, height } } = chart;
+              ctx.save();
+              ctx.fillStyle = 'black';
+              ctx.fillRect(width / 2, top + (height / 2), 0, 0);
+              ctx.font = '50px sans-serif';
+              ctx.textAlign = 'center';     
+              console.log("width", width); 
+              ctx.fillText('100%', width / 2 +(left), top + (height / 2));
+            }
+        };
 
         // doughnut chart 
         const ctx_exer = document.getElementById('exerChart').getContext('2d');
@@ -356,7 +357,8 @@ $(function(){
                  },
                 rotation: 1.5 * Math.PI
             }
-            }
+            },
+            plugins: [textinsert_exer],
         }); // doughnut chart 
         
 
