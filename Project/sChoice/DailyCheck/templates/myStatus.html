@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block mycontent %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/mystatus.css" />
+<script src="/static/js/mystatus.js"></script>
+
+
+<main>	
+
+    <div id="topchart">
+
+        <canvas id="goalchart"></canvas> 
+        <p>
+            <p id="days">10/60 days</p>
+            <details>
+                <summary> - 5kg remain </summary>
+                <p><canvas id="weightchange"></canvas></p>
+            </details>
+        </p>
+    </div>
+
+
+
+    <div><h2>식단</h2></div>
+    <div id="box1">
+        <canvas id="mealChart"></canvas> 
+	</div>
+	<div id="box2">
+        <canvas id="weeklyBarChart_meal"></canvas> 
+	</div>
+
+    <div><h2>운동</h2> </div>
+    <div id="box3">   
+        <canvas id="exerChart"></canvas> 
+    </div>
+    <div id="box4">
+        <canvas id="weeklyBarChart_exer"></canvas> 
+
+    </div>
+    
+    
+    
+</main>
+
+{% endblock mycontent %}

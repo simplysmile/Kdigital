@@ -7,5 +7,11 @@ def calendar(request):
 
 def mealCheck(request):
     return render(request,'mealCheck.html')
+
+
 def exerciseCheck(request):
     return render(request,'exerciseCheck.html')
+
+
+def myStatus(request):
+    return render(request,'myStatus.html')

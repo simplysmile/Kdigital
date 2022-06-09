@@ -12,6 +12,22 @@ $(function(){
 
             $("#progressbars").html(note)
 
+            const counter = {
+                id: 'counter',
+                beforeDraw(chart, args, options) {
+                  const { ctx, chartArea: { top, right , bottom, left, width, height } } = chart;
+                  ctx.save();
+                  ctx.fillStyle = 'black';
+                  ctx.fillRect(width / 2, top + (height / 2), 0, 0);
+                  ctx.font = '45px sans-serif';
+                  ctx.textAlign = 'center';     
+                  // w 변동 h 변동  l 70 r 변동 t 0 b 변동
+                  //console.log("width", width); 
+                  ctx.fillText('1200kcal', width / 2 +(left), top + (height / 2));
+                }
+            };
+
+
             const ctx = document.getElementById('myChart').getContext('2d');
             const myChart = new Chart(ctx, {
                 type: 'doughnut', 
@@ -21,13 +37,15 @@ $(function(){
                         label: '칼로리',
                         data: [80,(100-80),0,0,0],
                         backgroundColor: ['#7CCAAE','#eee'],
-                        hoverOffset: 0
+                        hoverOffset: 0,
+                        cutout: "80%",
                     },
                     {
                         label: '탄단지',
                         data: [0,0,data[9].carb, data[9].protien, data[9].fat],
                         backgroundColor: ['white','white','#ECEC84','#FFB69B','#A299CA'],
-                        label: 'Doughnut 2'
+                        label: 'Doughnut 2',
+                        cutout: "80%",
                     },
                     
                     
@@ -46,19 +64,36 @@ $(function(){
                     },
                     responsive: true,
                     cutoutPercentage: 60,
-                    legend: {
-                        display: false,
+                    
+                   // rotation: 1.5 * Math.PI,
+                   // borderColor: false,
+                   //borderRadius: 10,
+                    plugins: {
+                        legend: {
+                            
+                            display: false,
+                        },
+                        
+                        title: {
+                            display: false,
+                        },
+                        tooltips: {
+                            enabled: false
+                        },
+                        rotation: 1.5 * Math.PI,
+                        
+                        
+                        
+                        
+                        
+                       
+                        
                     },
-                    title: {
-                        display: false,
-                    },
-                    rotation: 1.5 * Math.PI,
-                    borderColor: false,
-                    borderRadius: 10,
                     
 
                     
-                }
+                },
+                plugins: [counter]
             });//chart
             
             

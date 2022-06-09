@@ -1,0 +1,143 @@
+*{ 
+    margin: 0;
+    padding: 0;
+}
+#box1{
+
+    float: left;
+    width: 50%;
+    height: 700px;
+
+
+}
+#box2{
+    
+    width: 50%;
+    float: left;
+    height: 700px;
+    
+}
+#box3{
+
+    float: left;
+    width: 50%;
+
+
+}
+#box4{
+    
+    width: 50%;
+    float: left;
+    
+}
+
+a:link {
+    color: black;
+    text-decoration:none;
+}
+a:visited{
+    color:black;
+    text-decoration: none;
+}
+a:hover{
+    color:black;
+    text-decoration: none;
+}
+#inputsection{
+    margin: 0 auto;
+    margin-top: 10%;
+    width: 70%;
+    height: 500px;
+    
+    border-collapse: collapse;
+}
+#progressbars{
+    margin: 0 auto;
+    
+    width: 500px;
+    height: 50px;
+    
+    border-collapse: collapse;
+}
+#toptable{
+    margin: 0 auto;
+    border:1px solid red;
+    width: 100%;
+    height: 50px;
+    
+    border-collapse: collapse;
+
+}
+tr,td{
+    margin: 0 auto;
+    border-collapse: collapse;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 20px;
+
+}
+
+ul{
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;    
+}
+#weeklyBarChart_meal{
+    margin-top: 30%;
+}
+#weeklyBarChart_exer{
+    margin-top: 30%;
+}
+
+#goalchart{
+    
+    margin: 0 auto;
+    height: 500px;
+    width: 500px;
+}
+#weightchange{
+    
+    margin: 0 auto;
+    height: 1000px;
+    width: 1000px;
+}
+
+#days{
+    margin-top:7%; 
+    position: absolute; 
+    top: 0px; 
+    left: 320px; 
+    width: 50%; 
+    height: 60%; 
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    font-size: 50px;
+    padding-top: 1.5rem;
+}
+
+summary {
+    cursor: pointer;
+    list-style: none;
+
+    margin-top:9%; 
+    position: absolute; 
+    top: 90px; 
+    left: 320px; 
+    width: 50%; 
+    height: 60%; 
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 50px;
+    padding-top: 1.5rem;
+
+}
+summary::-webkit-details-marker {
+    display: none;
+}
+  
