@@ -11,17 +11,22 @@ $(function(){
 
 
             // 달성일, 몸무게 차트 
-            const centerText={
-                id:'centerTest',
-                beforeDraw(chart,args,options){
-                    const {ctx, chartArea:{left,right,top,bottom,width,height}} = chart;
-                    ctx.save()
-                    ctx.font='bolder 30px Arial';
-                    ctx.fillStyle='#8C5A76'
-                    ctx.fillText('TEXTESTES')
-                    
+            const counter = {
+                id: 'counter',
+                beforeDraw(chart, args, options) {
+                  const { ctx, chartArea: { top, right , bottom, left, width, height } } = chart;
+                  ctx.save();
+                  ctx.fillStyle = 'black';
+                  ctx.fillRect(width / 2, top + (height / 2), 0, 0);
+                  ctx.font = '45px sans-serif';
+                  ctx.textAlign = 'center';     
+                  // w 변동 h 변동  l 70 r 변동 t 0 b 변동
+                  //console.log("width", width); 
+                  ctx.fillText('10/60 일', width / 2 +(left), top + (height / 2));
                 }
-            }
+            };
+
+
             const ctx_goal = document.getElementById('goalchart').getContext('2d');
             const goalchart = new Chart(ctx_goal, {
                 type: 'doughnut', 
@@ -72,8 +77,9 @@ $(function(){
                     },
                 }
                             
-                   },
-                   //plugins: [centerText]
+                },
+                  
+                plugins: [counter]
 
             }); // 달성일, 몸무게 차트 
             
