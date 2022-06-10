@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.contrib.auth.hashers import make_password
 from Member.models import Members
@@ -45,4 +45,4 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
         
         user.save()
             
-        return render(request, 'signup.html')
+        return redirect('/')
