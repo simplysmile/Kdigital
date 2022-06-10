@@ -17,9 +17,9 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
         re_pw  = request.POST.get('re_password')
         pro = request.POST.get('re_password')
         
-        year  = request.POST.get('year')
-        month = request.POST.get('month')
-        day  = request.POST.get('day')
+        year  = int(request.POST.get('year'))
+        month = int(request.POST.get('month'))
+        day  = int(request.POST.get('day'))
         
         birth = datetime.date(year,month,day)
         
@@ -50,7 +50,7 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
             res_data['error'] = '입력한 비밀번호가 일치하지 않습니다.'
         
         else :
-            user = Members(birth= birth, user_id =user_id, user_pw =make_password(user_pw),user_name=username,pro=pro,birth=birth,gender=gender,phone=phone,email=email,zipcode=zipcode,addressd1=addressd1,\
+            user = Members(user_id =user_id, user_pw =make_password(user_pw),user_name=username,pro=pro,birth=birth,gender=gender,phone=phone,email=email,zipcode=zipcode,addressd1=addressd1,\
                 addressd2 = addressd2, addressd3 = addressd3, service=service,purpose=purpose,vegan=vegan, allergic_food=allergic_food, goal_weight=goal_weight,goal_bodyfat=goal_bodyfat,goal_period= goal_period)
             
             user.save()
