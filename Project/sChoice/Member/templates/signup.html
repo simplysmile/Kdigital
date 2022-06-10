@@ -19,14 +19,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script>
-    new daum.Postcode({
-        oncomplete: function(data) {
-            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
-        }
-    }).open();
-</script>  
+ 
 <script>
     // 우편번호 찾기 찾기 화면을 넣을 element
     var element_wrap = document.getElementById('wrap');
@@ -35,7 +28,6 @@
         // iframe을 넣은 element를 안보이게 한다.
         element_wrap.style.display = 'none';
     }
-
     function sample3_execDaumPostcode() {
         // 현재 scroll 위치를 저장해놓는다.
         var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
@@ -110,12 +102,12 @@
     <div class = "col-12 ">
     <div class = "row mt-5">
     <div class = "col-12 ">
+        
     <form method = "POST" action = "{% url 'Member:signup' %}">  
     {% csrf_token %} 
-
     <div class="form-group">
     <label for="re_password">사용자이름</label>
-    <input type= "text" class="form-control" id="user_name" placeholder="사용자이름" name = "username">
+    <input type= "text" class="form-control" id="user_name" placeholder="사용자이름" name ="username">
     </div>
 
     <div class="form-group">
@@ -126,7 +118,7 @@
 
     <div class="form-group">
       <label for="password">비밀번호</label>
-      <input type="password" class="form-control" id="password" placeholder="비밀번호" name= "password">
+      <input type="password" class="form-control" id="password" placeholder="비밀번호" name= "user_pw'">
     </div>
     
     <div class="form-group">
@@ -208,7 +200,7 @@
     <div class="form-group">
         <label for="purpose">목적</label>
     
-        <select id="target" name="target"  class="form-control"  aria-label="목적">
+        <select id="purpose" name="purpose"  class="form-control"  aria-label="목적">
             <option disabled selected>목적</option>
             <option value="weightlose">체중감소</option>
             <option value="maintain">체중유지</option>
@@ -219,9 +211,9 @@
 
 
     <div class="form-group">
-        <label for="purpose">타겟부위</label>
+        <label for="target">타겟부위</label>
     
-        <select id="purpose" name="purpose"  class="form-control" aira-label='타겟부위'>
+        <select id="target" name="target" class="form-control" aira-label='타겟부위'>
             <option disabled selected>타겟부위</option>
             <option value="abs">복부</option>
             <option value="shoulders">어깨</option>
@@ -265,7 +257,7 @@
 
     <div class="form-group">
         <label for="goalweigth">목표몸무게</label>
-        <input type="text" class="form-control"  id="goalweigth" placeholder="목표몸무게 ex) 50 " name="goalweigth">   
+        <input type="text" class="form-control"  id="goalweigth" placeholder="목표몸무게 ex) 50 " name="goal_weigth">   
        
     </div>
 
