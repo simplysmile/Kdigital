@@ -1,0 +1,110 @@
+{%extends 'base.html' %}
+{% load static %}
+{% block all_content %}
+  <link rel="stylesheet" href="{% static 'css/style.css'%}">
+  <link rel="stylesheet" href="{% static 'css/write.css'%}">
+
+  <script>
+
+    function cancelBtn(){
+
+      location.href="{% url 'fboard:fList' searchword category nowpage %}"
+    }
+
+    function writeBtn(){
+      if($('#food_name').val()==''){
+        alert('이름을 입력하셔야 등록가능합니다.')
+        $('#food_name').focus()
+        return false 
+      }
+      $("#write").submit()
+
+
+    }
+
+  </script>
+</head>
+
+  <section>
+    <h1>식단페이지수정 </h1>
+    <hr>
+
+    <form action="{% url 'fboard:fWrite' searchword category nowpage %}" id="write" name="write" method="post">
+      {% csrf_token %}
+      <table>
+        <colgroup>
+          <col width="15%">
+          <col width="85%">
+        </colgroup>
+        <tr>
+          <th>분류</th>
+          <td>
+            <div class="category-wrapper">
+              <select name="category" id="category">
+                <option value="notice">공지</option>
+                <option value="event">이벤트</option>
+              </select>  
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>음식이름</th>
+          <td>
+            <input type="text" id='food_name' name="food_name">
+          </td>
+        </tr>
+        <tr>
+          <th>아이디</th>
+          <td>{{request.session.s_id}}
+            <input type="hidden" name='id' value="{{request.session.s_id}}">
+          </td>
+        </tr>
+        <tr>
+          <th>제조사</th>
+          <td>
+            <input type="text" id='manufac' name="manufac">
+          </td>
+        </tr>
+        <tr>
+          <th>1회제공량</th>
+          <td>
+            <input type="text" id='portion' name="portion">
+          </td>
+        </tr>
+        <tr>
+          <th>탄수화물</th>
+          <td>
+            <input type="text" id='carb' name="carb">
+          </td>
+        </tr>
+        <tr>
+          <th>단백질</th>
+          <td>
+            <input type="text" id='protein' name="protein">
+          </td>
+        </tr>
+        <tr>
+          <th>지방</th>
+          <td>
+            <input type="text" id='fat' name="fat">
+          </td>
+        </tr>
+        <tr>
+          <th>이미지 표시</th>
+          <td>
+            <input type="file" name="file" id="file">
+          </td>
+        </tr>
+      </table>
+      
+      <div class="button-wrapper">
+        <button type="button" onclick='writeBtn()' class="write">작성완료</button>
+        <button type="button" onclick= 'cancelBtn()' class="cancel">취소</button>
+      </div>
+    </form>
+
+  </section>
+  
+{% endblock all_content %}
+
+ 
