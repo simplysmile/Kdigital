@@ -5,43 +5,24 @@
   <link rel="stylesheet" href="{% static 'css/style.css'%}">
   <link rel="stylesheet" href="{% static 'css/notice_list.css'%}">
 
-  <script>
-    function writeBtn(){
-
-      location.href="{% url 'fboard:fWrite' searchword category nowpage %}"
-    }
-
-    function searchBtn(){
-      if($('#searchword').val().length<1){
-        alert('글자를 입력해야 검색하실 수 있습니다')
-        $('#searchword').focus()
-        return false 
-      }
-    
-      $('#searchfrm').submit()
-
-    }
-
-  </script>
-
 
   <section>
     <h1>NOTICE</h1>
     <div class="wrapper">
-      <form action="{% url 'fboard:fList' searchword='searchword' category='category' nowpage=1 %}" name="searchfrm" id='searchfrm' method="post">
+      <form action="#" name="searchfrm" id='searchfrm' method="post">
         {% csrf_token %} <!-- 이거 이렇게 써야하나?? 첫번째 보여지는 페이지라서 ?? searchword='SW' category='first' nowpage=1-->
         
         <select name="category" id="category">
-          <option value="all">전체</option>
-          <option value="foodname">음식이름</option>
-          <option value="manu">제조사</option>
+          <option value="user_name">회원이름</option>
+          <option value="user_id">회원아이디</option>
+          <option value="pro">전문가여부</option>
         </select>
 
         <div class="title">
           <input type="text" name='searchword' id='searchword' size="16">
         </div>
   
-        <button type="button" onclick='searchBtn()'><i class="fas fa-search"></i></button>
+        <button type="button"><i class="fas fa-search"></i></button>
       </form>
     </div>
 
@@ -54,15 +35,14 @@
         <col width="18%">
       </colgroup>
       <tr>
-        <th>음식이름</th>
-        <th>1회제공량</th>
-        <th>탄수화물</th>
-        <th>단백질</th>
-        <th>지방</th>
+        <th>회원이름</th>
+        <th>회원아이디</th>
+        <th>생년월일</th>
+        <th>회원이메일</th>
+        <th>수정날짜</th>
       </tr>
      
-      {% if foodList %}
-      {% for board in foodList %}
+      
       <tr>
         <td class="table-title"><a href="{% url 'fboard:fView'  searchword category nowpage  board.food_name %}">{{board.food_name}}</a></td>
         <td>{{board.food_portion}}g</td>
@@ -70,43 +50,40 @@
         <td>{{board.food_protein}}g</td>
         <td>{{board.food_fat}}g</td>
       </tr>
-      {% endfor %}
-      {% endif %}
+     
     </table>
   <!-- 이전페이지처리 -->
     <ul class="page-num">
-      {% if foodList.has_previos %}
+   
 
-      <a href="{% url 'fboard:fList' searchword=searchword category=category nowpage=1 %}"><li class="first"></li></a>
-      <a href="{% url 'fboard:fList' searchword=searchword category=category nowpage=foodList.previous_page_number %}"><li class="prev"></li></a>
+      <a href="#"><li class="first"></li></a>
+      <a href="#"><li class="prev"></li></a>
 
-      {% else %}
+ 
       <li class='first'></li>
       <li class='prev'></li>
-      {% endif %}
+   
       <!-- 페이지처리 -->
 
-      {% for page in foodList.paginator.page_range %}
-      {% if page != nowpage %}
-      <a href="{% url 'fboard:fList' searchword=searchword category=category nowpage=page %}">
+     
+      <a href="#">
         <li class="num"><div>{{page}}</div></li>
       </a>
-      {% else %}
+      
       <li class="num"><div>{{page}}</div></li>
-      {% endif %}
-      {% endfor %}
+     
 
       <!-- 마지막페이지처리 -->
-      {% if foodList.has_next %}
-      <a href="{% url 'fboard:fList' searchword=searchword category=category nowpage=foodList.next_page_number %}"><li class="next"></li></a>
-      <a href="{% url 'fboard:fList' searchword=searchword category=category nowpage=foodList.paginator.num_pages %}"><li class="last"></li></a>
-      {% else %}
+
+      <a href="#"><li class="next"></li></a>
+      <a href="#"><li class="last"></li></a>
+
       <li class="next"></li>
       <li class="last"></li>
-      {% endif %}
+     
     </ul>
 
-    <div class="write" onclick='writeBtn()'>쓰기</div>
+    <div class="write">쓰기</div>
   </section>
 
 
