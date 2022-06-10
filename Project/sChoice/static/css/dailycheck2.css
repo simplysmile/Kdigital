@@ -12,7 +12,7 @@
 #box2{
     
 	width: 50%;
-    float: left;
+  float: left;
     
 }
 
@@ -44,15 +44,26 @@ a:hover{
     
     border-collapse: collapse;
 }
+
 #inputsection tr,td{
+  margin: 0 auto;
+  height:250px;
+  border-collapse: collapse;
+  text-align: center;
+  border: 1px solid white;
+  border-radius: 20px;
+  
+}
+
+#modalcontent3>.sel_box>.savecontent #savetable tr,td{
     margin: 0 auto;
-    
+    height: 50px;
     border-collapse: collapse;
     text-align: center;
     border: 1px solid white;
-    border-radius: 20px;
 
 }
+
 
 #box2 ul{
   font-size: 30px;
@@ -105,35 +116,27 @@ a:hover{
   overflow: auto;
 }
 
+/* Modal save Content */
+.modal-save-content {
+  background-color: #fefefe;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%;
+  font-size: 20px;
+  overflow: auto;
+}
+
 
 #des{
   font-size: 12px;
 }
-.activitysel{
-  margin: 0 auto;
-  width:50%;
-}
-.activitysel ul{
-  padding: 20px;
-  text-decoration: none;
-  margin: 0 auto;
-  border-collapse: collapse;
-  text-align: center;
-}
-.activitysel ul:hover,
-.activitysel ul:focus{
-  text-decoration: underline;
-  cursor: pointer;
-
-}
-.activitysel ul:active{
-  color: red;
-}
-
+.activitysel,
 .exerciseysel{
   margin: 0 auto;
   width:50%;
 }
+.activitysel ul,
 .exerciseysel ul{
   padding: 20px;
   text-decoration: none;
@@ -141,38 +144,48 @@ a:hover{
   border-collapse: collapse;
   text-align: center;
 }
-.exerciseysel ul:hover,
-.exerciseysel ul:focus{
+.activitysel ul:hover,
+.exerciseysel ul:hover{
   text-decoration: underline;
   cursor: pointer;
 
 }
-.exerciseysel ul:active{
+.activitysel ul:active,
+.activitysel ul:focus,
+.exerciseysel ul:active,
+.exerciseysel ul:focus{
   color: red;
+}
+
+.labelname{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 100px;
+}
+
+
+.savecontent{
+  margin: 0 ;
+  padding-top: 20px;
+}
+.savecontent2{
+  font-size: 15px;
 }
 
 
 /* The Close Button */
-.close {
+.close,
+.close2,
+.close3 {
   color: #aaaaaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
 }
 .close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-/* The Close Button */
-.close2 {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
+.close:focus,
+.close3:hover,
+.close3:focus,
 .close2:hover,
 .close2:focus {
   color: #000;
@@ -181,7 +194,9 @@ a:hover{
 }
 
 
-.nextBtn{
+.nextBtn,
+.nextBtn2,
+.saveBtn{
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -191,19 +206,11 @@ a:hover{
 }
 
 .nextBtn:hover,
-.nextBtn:focus{
-  cursor: pointer;
-}
-.nextBtn2{
-  float: right;
-  font-size: 28px;
-  border: 1px solid white;
-  font-weight: bold;border-collapse: collapse;
-
-}
-
+.nextBtn:focus,
 .nextBtn2:hover,
-.nextBtn2:focus{
+.nextBtn2:focus,
+.saveBtn:hover,
+.saveBtn:focus{
   cursor: pointer;
 }
 

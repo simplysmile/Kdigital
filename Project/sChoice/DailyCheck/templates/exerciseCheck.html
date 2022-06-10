@@ -64,14 +64,14 @@
                     <p id='des'>원하는 운동항목을 선택하세요.</p>
                 </h3>
                 <div class = "activitysel">
-                    <ul id="bicycling" name="activity" value="bicycling">자전거</ul>
-                    <ul id="conditioning" name="activity" value="conditioning">체형교정운동</ul>
-                    <ul id="healthclub" name="activity" value="healthclub">헬스</ul>
-                    <ul id="running" name="activity" value="running">러닝</ul>
-                    <ul id="sports" name="activity" value="sports">스포츠</ul>
-                    <ul id="walking" name="activity" value="walking">걷기</ul>
-                    <ul id="water" name="activity" value="water">수상운동</ul>
-                    <ul id="winter" name="activity" value="winter">설상운동</ul>
+                    <ul id="bicycling" class="activity" name="activity" value="bicycling">자전거</ul>
+                    <ul id="conditioning" class="activity" name="activity" value="conditioning">체형교정운동</ul>
+                    <ul id="healthclub" class="activity" name="activity" value="healthclub">헬스</ul>
+                    <ul id="running" class="activity" name="activity" value="running">러닝</ul>
+                    <ul id="sports" class="activity" name="activity" value="sports">스포츠</ul>
+                    <ul id="walking" class="activity" name="activity" value="walking">걷기</ul>
+                    <ul id="water" class="activity" name="activity" value="water">수상운동</ul>
+                    <ul id="winter" class="activity" name="activity" value="winter">설상운동</ul>
                 </div>
                 <br>
                 <button class="nextBtn" id='nextBtn' onclick="nextBtn()">Next</button>
@@ -95,16 +95,16 @@
                     <p id='des'>원하는 운동을 선택하세요.</p>
                 </h3>
                 <div class = "exerciseysel">
-                    <ul id="ex1" name="exercise" value="ex1">풀업</ul>
-                    <ul id="ex2" name="exercise" value="ex2">레그프레스</ul>
-                    <ul id="ex3" name="exercise" value="ex3">아웃타이</ul>
-                    <ul id="ex4" name="exercise" value="ex4">이너타이</ul>
-                    <ul id="ex5" name="exercise" value="ex5">익스텐션</ul>
-                    <ul id="ex6" name="exercise" value="ex6">브이스쿼트</ul>
-                    <ul id="ex7" name="exercise" value="ex7">바벨스쿼트</ul>
-                    <ul id="ex8" name="exercise" value="ex8">스플릿런지</ul>
-                    <ul id="ex9" name="exercise" value="ex9">바벨런지</ul>
-                    <ul id="ex10" name="exercise" value="ex10">스미스런지</ul>
+                    <ul id="ex1" class="exercise" name="exercise" value="ex1">풀업</ul>
+                    <ul id="ex2" class="exercise" name="exercise" value="ex2">레그프레스</ul>
+                    <ul id="ex3" class="exercise" name="exercise" value="ex3">아웃타이</ul>
+                    <ul id="ex4" class="exercise" name="exercise" value="ex4">이너타이</ul>
+                    <ul id="ex5" class="exercise" name="exercise" value="ex5">익스텐션</ul>
+                    <ul id="ex6" class="exercise" name="exercise" value="ex6">브이스쿼트</ul>
+                    <ul id="ex7" class="exercise" name="exercise" value="ex7">바벨스쿼트</ul>
+                    <ul id="ex8" class="exercise" name="exercise" value="ex8">스플릿런지</ul>
+                    <ul id="ex9" class="exercise" name="exercise" value="ex9">바벨런지</ul>
+                    <ul id="ex10" class="exercise" name="exercise" value="ex10">스미스런지</ul>
                 </div>
                 <br>
                 <button class="nextBtn2" id='nextBtn2' onclick="nextBtn2()">Next</button>
@@ -114,9 +114,130 @@
         
         </div>
     </div>
+
+
+    <div id="myModal3" class="modal">
+        <!-- Modal content3 -->
+        <div id='modalcontent3' class="modal-save-content">
+            
+            <span class="close3">&times;</span>
+            <br>
+            <!--activity 고르기-->
+            <form method = "POST" action = "" id="wExercise">
+                {% csrf_token %}
+                <div class='sel_box' name='savebox'>
+                    <h3 class="join_title">
+                        <label>운동기록</label>
+                        <br>
+                        <p id='des'>운동을 기록하세요.</p>
+                    </h3>
+                    <div class = "savecontent">
+                        <table id="savetable" class="savetable">
+                            <tr id="datetable">
+                                <td>
+                                    <label>운동 날짜</label>
+                                </td>
+                                <td>
+                                    <input type="text" class="inputbox"  id="date" name="date" value="2022-06-10">
+                                </td>
+                            </tr>
+                            <tr id="nametable">
+                                <td>
+                                    <label>운동이름</label>
+                                </td>
+                                <td>
+                                    <input type="text" class="inputbox"  id="saveexercise" name="saveexercise"><br>
+                                </td>
+                            </tr>
+                            <tr id="leveltable">
+                                <td>
+                                    <label>운동강도</label>
+                                </td>
+                                <td>
+                                    <select id="savelevel" name="savelevel" aria-label="운동강도"><br>
+                                        <option disabled selected>운동강도</option>
+                                        <option value="2">저강도</option>
+                                        <option value="3">중강도</option>
+                                        <option value="6">고강도</option>
+                                    </select>
+
+                                </td>
+                            </tr>
+                            <tr id="contenttable">
+                                <td colsspan="2">
+                                    <label>운동기록</label>                                
+                                </td>
+                            </tr>
+                            <div class="savecontent2">
+                                <tr>
+                                    <td>
+                                        <label for="write1">세트 수</label>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="inputbox"  id="write1" name="write1" value="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="write2">횟수/한 세트 당</label>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="inputbox"  id="write2" name="write2" value=""><br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="write3">시간/한 세트 당(초)</label>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="inputbox"  id="write3" name="write3" value=""><br>
+                                    </td>
+                                </tr>
+                            </div>
+                            
+                        </table>
+                    </div>
+                    <br>
+                    <button class="saveBtn" id='saveBtn' onclick="saveBtn()">Save</button>
+
+                </div>
+                <br>
+            </form>
+        </div>
+    </div>
     
     <script>
         // 모달
+        $(function(){
+            var activity
+            var exerciseName
+            var exercisenumber
+            $(document).on("click",".activity",function(){
+                activityName = $(this).text();
+                alert(activityName)
+            })
+            $(document).on("click",".exercise",function(){
+                exerciseName = $(this).text();
+                alert(exerciseName)
+            })
+            $('#nextBtn').click(function(){
+                alert(activityName)
+            })
+            $('#nextBtn2').click(function(){
+                $('#saveexercise').attr('value',exerciseName); 
+            })
+            $('#saveBtn').click(function(){
+                exercisenumber=$('#write2').text()
+                alert('저장!')
+                var ultext=''
+                ultext+='<ul>'+exercisenumber+'</ul>'
+                $('#saveexercise').attr('value',ultext); 
+
+
+                
+            })
+        })
+
         function addExercise(){
             modal.style.display = "block";
             labeltext.style.display = "none";
@@ -125,15 +246,25 @@
             modal.style.display = "none";
             modal2.style.display = "block";
         }
+        function nextBtn2(){
+            modal2.style.display = "none";
+            modal3.style.display = "block";
+        }
 
+        function saveBtn(){
+            modal3.style.display="none";
+
+        }
         // Get the modal
         var modal = document.getElementById("myModal");
         var modal2 = document.getElementById("myModal2");
+        var modal3 = document.getElementById("myModal3");
         var labeltext = document.getElementById("labeltext");
  
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
         var span2 = document.getElementsByClassName("close2")[0];
+        var span3 = document.getElementsByClassName("close3")[0];
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
             modal.style.display = "none";
@@ -141,6 +272,10 @@
         }
         span2.onclick = function() {
             modal2.style.display = "none";
+            labeltext.style.display = "flex";
+        }
+        span3.onclick = function() {
+            modal3.style.display = "none";
             labeltext.style.display = "flex";
         }
 
@@ -152,6 +287,10 @@
             }
             if (event.target == modal2) {
                 modal2.style.display = "none";
+                labeltext.style.display = "flex";
+            }
+            if (event.target == modal3) {
+                modal3.style.display = "none";
                 labeltext.style.display = "flex";
             }
         }
