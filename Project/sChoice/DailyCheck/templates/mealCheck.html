@@ -13,10 +13,10 @@
 <style>
     #mealbox1{
         float: left;
-        width: 50%;
+        width: 65%;
     }
     #mealbox2{
-        width: 50%;
+        width: 35%;
         float: left;
     }
     .mealdbtb{
@@ -25,20 +25,30 @@
         border-collapse: collapse;
     }
     #mealdb{
-        border: 1px solid black;
+        border: 0px solid black;
         border-collapse: collapse;
-        width: 50%;
+        width: 90%;
         text-align: center;
 
 
     }
     #mealdb_input{
         margin: 0 auto;
+        
 
     }
     #meal_input{
         margin: 0 auto;
+        width: 100%;
+        
+        border-collapse: collapse;
+
+    }
+
+    tr.m_in_tb, td.m_in_tb, th.m_in_tb{
         border: 1px solid black;
+        
+        padding: 10px;
 
     }
 
@@ -88,9 +98,10 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <br>
-            <h4>식단입력</h4>
+            <br>
             <div id = "mealbox1">
-                <form id="mealdb_input">                
+                <form id="mealdb_input">  
+                    <br>              
                     <select name="meal_time">
                         <option value="">선택해주세요</option>
                         <option value="breakfast">아침</option>
@@ -99,27 +110,41 @@
                         <option value="snack">간식</option>
                     </select>
 
-                    <table id="meal_input" class="m_in_tb">
-                        <tr>
-                            <th>음식명</th>
-                            <th>그람</th>
-                            <th>칼로리</th>
-                            <th>탄수화물</th>
-                            <th>단백질</th>
-                            <th>지방</th>
-                            <th>삭제</th>
-                        </tr>
+                    <br><br>
 
-                        <tr>
-                            <td>사과</td>
-                            <td>100g</td>
-                            <td>57kcal</td>
-                            <td>14.4</td>
-                            <td>0.2</td>
-                        </tr>
+                    <table id="meal_input" >
+                        <thead class="m_in_tb">
+                            <tr class="m_in_tb">
+                                <th class="m_in_tb">음식명</th>
+                                <th class="m_in_tb"></th>
+                                <th class="m_in_tb">무게(g)</th>
+                                <th class="m_in_tb"></th>
+                                <th class="m_in_tb">칼로리(kcal)</th>
+                                <th class="m_in_tb">탄수화물(g)</th>
+                                <th class="m_in_tb">단백질(g)</th>
+                                <th class="m_in_tb">지방(g)</th>
+                                <th class="m_in_tb">삭제</th>
+                            </tr>
+                        </thead>
+                        <tbody class="m_in_tb">
+                            <tr class="m_in_tb">
+                                <td class="m_in_tb">사과</td>
+                                <td class="m_in_tb"><button> - </button> </td>
+                                <td class="m_in_tb"><input type="text" name="foodweight" size="5" value='100'></td>
+                                <td class="m_in_tb"><button> + </button> </td>
+                                <td class="m_in_tb">57</td>
+                                <td class="m_in_tb">14.4</td>
+                                <td class="m_in_tb">0.2</td>
+                                <td class="m_in_tb">0</td>
+                                <td class="m_in_tb"><button> 삭제 </button></td>
+                            </tr>
+                        </tbody>
 
 
                     </table>
+
+                    <button> 추가 </button> 
+                    <button> 취소 </button> 
 
 
 
@@ -127,16 +152,20 @@
             </div>
             <div id = "mealbox2">
                 <table id="mealdb" class="mealdbtb">
-                    <tr class="mealdbtb">
-                        <td  class="mealdbtb">검색어</td>
-                        <td  class="mealdbtb" colspan='3'>검색</td>
-                    </tr>
-                    <tr class="mealdbtb">
-                        <td class="mealdbtb">사과</td>
-                        <td class="mealdbtb">100g</td>
-                        <td class="mealdbtb">50kcal</td>
-                        <td class="mealdbtb">추가</td>
-                    </tr>
+                    <thead class="mealdbtb">
+                        <tr class="mealdbtb">
+                            <td  class="mealdbtb" colspan='3'><input type="text" name="serDB" size="20"></td>
+                            <td  class="mealdbtb"><button> 검색 </button> </td>
+                        </tr>
+                    </thead>
+                    <tbody class="mealdbtb">
+                        <tr class="mealdbtb">
+                            <td class="mealdbtb">사과</td>
+                            <td class="mealdbtb">100g</td>
+                            <td class="mealdbtb">50kcal</td>
+                            <td class="mealdbtb"><button> + </button></td>
+                        </tr>
+                    </tbody>
 
                 </table>
             </div>
