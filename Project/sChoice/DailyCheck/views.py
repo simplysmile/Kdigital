@@ -15,3 +15,5 @@ def exerciseCheck(request):
 
 def myStatus(request):
     return render(request,'myStatus.html')
+def selfCheck(request):
+    return render(request,'selfCheck.html')
