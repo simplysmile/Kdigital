@@ -1,0 +1,294 @@
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    </head>
+    <body>
+        <div class= "container">
+            <div class = "row mt-5">
+                <div class = "col-12 text-center">
+                    <h1>UNNI'S CHOICE/h1>
+                </div>
+            </div>
+        </div>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+        }
+    }).open();
+</script>  
+<script>
+    // 우편번호 찾기 찾기 화면을 넣을 element
+    var element_wrap = document.getElementById('wrap');
+
+    function foldDaumPostcode() {
+        // iframe을 넣은 element를 안보이게 한다.
+        element_wrap.style.display = 'none';
+    }
+
+    function sample3_execDaumPostcode() {
+        // 현재 scroll 위치를 저장해놓는다.
+        var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("extraAddress").value = extraAddr;
+                
+                } else {
+                    document.getElementById("extraAddress").value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('postcode').value = data.zonecode;
+                document.getElementById("address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("detailAddress").focus();
+
+                // iframe을 넣은 element를 안보이게 한다.
+                // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
+                element_wrap.style.display = 'none';
+
+                // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
+                document.body.scrollTop = currentScroll;
+            },
+            // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
+            onresize : function(size) {
+                element_wrap.style.height = size.height+'px';
+            },
+            width : '100%',
+            height : '100%'
+        }).embed(element_wrap);
+
+        // iframe을 넣은 element를 보이게 한다.
+        element_wrap.style.display = 'block';
+    }
+</script>
+
+        
+    <div class= "container">
+    <div class = "row mt-5">
+                    {{error}}
+    <div class = "col-12 ">
+    <div class = "row mt-5">
+    <div class = "col-12 ">
+    <form method = "POST" action = "{% url 'account:signup' %}">  
+    {% csrf_token %} 
+
+    <div class="form-group">
+    <label for="re_password">사용자이름</label>
+    <input type= "text" class="form-control" id="user_name" placeholder="사용자이름" name = "username">
+    </div>
+
+    <div class="form-group">
+      <label for="user_id">아이디</label>
+      <input type="text" class="form-control" id="user_id" placeholder="아이디" name="user_id">   
+      <!-- 이 name 값으로 정보가 전달된다 -->
+    </div>
+
+    <div class="form-group">
+      <label for="password">비밀번호</label>
+      <input type="password" class="form-control" id="password" placeholder="비밀번호" name= "password">
+    </div>
+    
+    <div class="form-group">
+      <label for="re_password">비밀번호 확인</label>
+      <input type= "password" class="form-control" id="re_password" placeholder="비밀번호 확인" name = "re_password">
+    </div>
+   
+
+    <div class="form-group"> 
+        <label for="birthday">생년월일</label><br>
+        <input type="text" id="year" placeholder="ex)1999" aria-label="년(4자)" maxlength="4" name="year">
+        <select id="month"  aria-label="월" name="month">
+            <option disabled selected>월</option>
+            <option value="01">1월</option>
+            <option value="02">2월</option>
+            <option value="03">3월</option>
+            <option value="04">4월</option>
+            <option value="05">5월</option>
+            <option value="06">6월</option>
+            <option value="07">7월</option>
+            <option value="08">8월</option>
+            <option value="09">9월</option>
+            <option value="09">10월</option>
+            <option value="09">11월</option>
+            <option value="10">12월</option>
+
+        </select> 
+        <input type="text" id="day" placeholder="일" aria-label="일" maxlength="2" name="day">
+    </div>
+
+    <div class="form-group">
+      <label for="gender">성별</label><br>
+        <select id="gender" name="gender" aria-label="성별">
+            <option disabled selected>성별</option>
+            <option value="M">남자</option>
+            <option value="F">여자</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+      <label for="tel">전화</label>
+      <input type= "text" class="form-control" id="tel" placeholder="'-'를 제외하고 입력해주세요." name = "tel">
+    </div>
+
+
+
+    <div class="form-group">
+      <label for="email">이메일</label>
+      <input type= "text" class="form-control" id="email" placeholder="abcd@unnischoice.com" name = "email">
+    </div>
+
+
+    <div class="form-group">
+      <label for="address">주소</label>
+      <input type="text" class="form-control" id="postcode" name="postcode" placeholder="우편번호">
+      <input type="button" onclick="sample3_execDaumPostcode()" value="우편번호 찾기"><br>
+      <input type="text"  class="form-control" id="address" name="address" placeholder="주소"><br>
+      <input type="text"  class="form-control" id="detailAddress" name="detailAddress" placeholder="상세주소">
+      <input type="text" class="form-control" id="extraAddress" name="extraAddress"  placeholder="참고항목">
+      <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+      <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+      </div>
+    </div>
+
+    <div class="form-group">
+        <label for="service">서비스</label>
+    
+            <select id="service" class="form-control"  name="service" class="sel" aria-label="서비스">
+                
+                <option disabled selected>서비스</option>
+                <option value="meal">식단형</option>
+                <option value="balance">균형형</option>
+                <option value="excersize">운동형</option>
+            </select>
+    </div>
+
+
+ 
+    <div class="form-group">
+        <label for="purpose">목적</label>
+    
+        <select id="target" name="target"  class="form-control"  aria-label="목적">
+            <option disabled selected>목적</option>
+            <option value="weightlose">체중감소</option>
+            <option value="maintain">체중유지</option>
+            <option value="weightgain">체중증가</option>
+        </select>
+
+    </div>
+
+
+    <div class="form-group">
+        <label for="purpose">타겟부위</label>
+    
+        <select id="purpose" name="purpose"  class="form-control" aira-label='타겟부위'>
+            <option disabled selected>타겟부위</option>
+            <option value="abs">복부</option>
+            <option value="shoulders">어깨</option>
+            <option value="arms">팔</option>
+            <option value="back">등</option>
+            <option value="chest">가슴</option>
+            <option value="legs">하체</option>
+            <option value="all">전신</option>
+        </select>
+
+    </div>
+
+
+    <div class="form-group">
+        <label for="vegan">비건여부</label>
+    
+        <select id="vegan" name="vegan" class="form-control" aria-label="비건">
+            <option disabled selected>비건여부</option>
+            <option value="vegan">비건채식</option>
+            <option value="lacto">락토채식</option>
+            <option value="ovo">오보채식</option>
+            <option value="lactoovo">락토오보채식</option>
+            <option value="pollo">폴로채식</option>
+            <option value="pesco">페스코채식</option>
+            <option value="flexitarian">플렉시테리안</option>
+            <option value="notvegan">해당사항없음</option>
+        </select>
+
+    </div>
+
+
+    <div class="form-group">
+        <label for="advancelevel">전문가여부</label><br>
+          <select id="advancelevel" name="advancelevel" aria-label="전문가여부">
+              <option disabled selected>전문가여부</option>
+              <option value="advance">전문가</option>
+              <option value="notadvance">비전문가</option>
+          </select>
+    </div>
+
+
+    <div class="form-group">
+        <label for="goalweigth">목표몸무게</label>
+        <input type="text" class="form-control"  id="goalweigth" placeholder="목표몸무게 ex) 50 " name="goalweigth">   
+       
+    </div>
+
+    <div class="form-group">
+        <label for="goal_bodyfat">목표체지방률</label>
+        <input type="text" class="form-control"  id="goal_bodyfat" placeholder="목표체지방률" name="goal_bodyfat">   
+       
+    </div>
+
+    <div class="form-group">
+        <label for="goal_period">목표기간</label>
+        <input type="text" class="form-control"  id="goal_period" placeholder="목표기간" name="goal_period">   
+    </div>
+
+    <div class="form-group">
+        <label for="allergic_food">알레르기음식</label>
+        <input type="text" class="form-control"  id="allergic_food" placeholder="알레르기음식" name="allergic_food">   
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">회원가입</button>
+    </form>    
+
+
+</body>
+</html>
