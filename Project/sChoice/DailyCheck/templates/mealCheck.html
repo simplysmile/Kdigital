@@ -19,38 +19,53 @@
         width: 35%;
         float: left;
     }
-    .mealdbtb{
-        margin: 0 auto;
-        border: 1px solid black;
-        border-collapse: collapse;
+    #m_select{
+        width:120px;
+        height:40px;
+        text-align: center;
+        font-size: 15px;
+
     }
     #mealdb{
         border: 0px solid black;
         border-collapse: collapse;
         width: 90%;
         text-align: center;
-
-
     }
     #mealdb_input{
         margin: 0 auto;
-        
-
     }
     #meal_input{
         margin: 0 auto;
         width: 100%;
-        
         border-collapse: collapse;
-
     }
-
-    tr.m_in_tb, td.m_in_tb, th.m_in_tb{
-        border: 1px solid black;
-        
+    .m_in_tb thead tr th{
+        border-bottom: 2px solid gray;
+        border-top: 2px solid gray;
         padding: 10px;
-
     }
+    .m_in_tb tbody tr td{
+        border-bottom: 1px solid black;
+        padding: 10px;
+    }
+    
+    .mealdbtb{
+        margin: 0 auto;
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align:center;
+    }
+    .mealdbtb tbody tr td{
+        border-bottom: 1px solid black;
+        border-top: 1px solid black;
+        padding: 10px;
+    }
+    #searchbox{
+        margin:0 auto;
+        margin-left: 50px;
+    }
+    
 
 </style>
 
@@ -81,11 +96,11 @@
                     </a>
                 
                 </td>
-                <td width=250 height=250 style='background-color:#eee;'><a href="#"><img onclick="addMeal()" width=50 height=50 src='/static/img/basic/plus.png'> </a></td>
+                <td width=250 height=250 style='background-color:#eee;'><img onclick="addMeal()" width=50 height=50 src='/static/img/basic/plus.png'></td>
             </tr>
             <tr>
-                <td width=250 height=250 style='background-color:#eee;'><a href="#"><img onclick="addMeal()" width=50 height=50 src='/static/img/basic/plus.png'> </a></td>
-                <td width=250 height=250 style='background-color:#eee;'><a href="#"><img onclick="addMeal()" width=50 height=50 src='/static/img/basic/plus.png'> </a></td>
+                <td width=250 height=250 style='background-color:#eee;'><img onclick="addMeal()" width=50 height=50 src='/static/img/basic/plus.png'></td>
+                <td width=250 height=250 style='background-color:#eee;'><img onclick="addMeal()" width=50 height=50 src='/static/img/basic/plus.png'></td>
                 
             </tr>
         </table>
@@ -97,53 +112,49 @@
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>
-            <br>
-            <br>
+        
+
             <div id = "mealbox1">
-                <form id="mealdb_input">  
-                    <br>              
-                    <select name="meal_time">
+                <form id="mealdb_input" onsubmit="return false" >  
+                    <br>   
+                   
+                    <select id="m_select" name="meal_time" >
                         <option value="">선택해주세요</option>
                         <option value="breakfast">아침</option>
                         <option value="lunch">점심</option>
                         <option value="dinner">저녁</option>
                         <option value="snack">간식</option>
                     </select>
-
-                    <br><br>
-
-                    <table id="meal_input" >
-                        <thead class="m_in_tb">
-                            <tr class="m_in_tb">
-                                <th class="m_in_tb">음식명</th>
-                                <th class="m_in_tb"></th>
-                                <th class="m_in_tb">무게(g)</th>
-                                <th class="m_in_tb"></th>
-                                <th class="m_in_tb">칼로리(kcal)</th>
-                                <th class="m_in_tb">탄수화물(g)</th>
-                                <th class="m_in_tb">단백질(g)</th>
-                                <th class="m_in_tb">지방(g)</th>
-                                <th class="m_in_tb">삭제</th>
+                    <br>
+                    <br>
+                    <table id="meal_input" class="m_in_tb" >
+                        <colgroup>
+                            <col width="19%">
+                            <col width="15%">
+                            <col width="16%">
+                            <col width="14%">
+                            <col width="14%">
+                            <col width="14%">
+                            <col width="8%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>이름</th>
+                                <th>무게(g)</th>
+                                <th>칼로리(kcal)</th>
+                                <th>탄수화물(g)</th>
+                                <th>단백질(g)</th>
+                                <th>지방(g)</th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tbody class="m_in_tb">
-                            <tr class="m_in_tb">
-                                <td class="m_in_tb">사과</td>
-                                <td class="m_in_tb"><button> - </button> </td>
-                                <td class="m_in_tb"><input type="text" name="foodweight" size="5" value='100'></td>
-                                <td class="m_in_tb"><button> + </button> </td>
-                                <td class="m_in_tb">57</td>
-                                <td class="m_in_tb">14.4</td>
-                                <td class="m_in_tb">0.2</td>
-                                <td class="m_in_tb">0</td>
-                                <td class="m_in_tb"><button> 삭제 </button></td>
-                            </tr>
+                        <tbody id="meal_input_tbody">
                         </tbody>
 
 
                     </table>
 
-                    <button> 추가 </button> 
+                    <button> 등록 </button> 
                     <button> 취소 </button> 
 
 
@@ -151,20 +162,28 @@
                 </form>           
             </div>
             <div id = "mealbox2">
+                <div id="searchbox">
+                    <input type="text" id="serDB" name="serDB" size="20" style="height:35px;" >
+                    <button type="button" onclick="searchDB()">검색</button>
+                </div>
+                <br>
                 <table id="mealdb" class="mealdbtb">
-                    <thead class="mealdbtb">
-                        <tr class="mealdbtb">
-                            <td  class="mealdbtb" colspan='3'><input type="text" name="serDB" size="20"></td>
-                            <td  class="mealdbtb"><button> 검색 </button> </td>
+                    <colgroup>
+                        <col width="30%">
+                        <col width="30%">
+                        <col width="30%">
+                        <col width="10%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>이름</th>
+                            <th>무게</th>
+                            <th>칼로리</th>
+                            <th></th>
                         </tr>
                     </thead>
-                    <tbody class="mealdbtb">
-                        <tr class="mealdbtb">
-                            <td class="mealdbtb">사과</td>
-                            <td class="mealdbtb">100g</td>
-                            <td class="mealdbtb">50kcal</td>
-                            <td class="mealdbtb"><button> + </button></td>
-                        </tr>
+                    <tbody id="mealdb_tbody">
+
                     </tbody>
 
                 </table>
@@ -192,6 +211,126 @@
             if (event.target == modal) {
                 modal.style.display = "none";
             }
+        }
+
+
+        //var t = document.getElementById('foodweight');
+        //t.addEventListener('keydown', function(e){ if(e.code === 'Enter'){ testtest()}  })
+
+
+      
+
+
+        //const searchname = document.getElementById('serDB')
+        const weightgram ='o....'
+        
+
+       //document.addEventListener('keydown',function(e){
+
+        document.addEventListener('keydown',function(e){
+            if(e.code === 'Enter'){
+                 
+                //weightgram = document.getElementById('foodweight').value;
+                alert(weightgram)
+            }
+        })
+
+      
+
+
+
+
+        function testtest(){
+            alert('test')
+
+        }
+
+
+
+        dummydata1=[
+        {'id':1,'name':'사과','weight':100,'kcal':57,'carb':14.4,'prot':0.2, 'fat':0},
+        {'id':2,'name':'사과즙','weight':120,'kcal':59,'carb':14.5,'prot':0.1, 'fat':0.1},
+        {'id':3,'name':'사과식초','weight':10,'kcal':2,'carb':0.2,'prot':0, 'fat':0}
+        ]
+        dummydata2=[
+        {'id':4,'name':'고구마','weight':75,'kcal':98,'carb':23.4,'prot':1.0, 'fat':0.2},
+        {'id':5,'name':'고구마말랭이','weight':60,'kcal':172,'carb':38.0,'prot':4.0, 'fat':0.4},
+        {'id':6,'name':'고구마맛탕','weight':100,'kcal':245,'carb':47.3,'prot':1.6, 'fat':5.5}
+        ]
+
+        function searchDB()
+        {
+            const searchname = document.getElementById('serDB').value;
+
+            if(searchname=='사과'){
+                
+                dummydata=dummydata1
+
+            }
+            else if(searchname=='고구마'){
+                dummydata=dummydata2
+            }
+            
+            
+
+
+
+            dblist = ''
+
+            for (var i = 0; i < dummydata.length; i++) {
+
+                dblist += '<tr><td>'+ dummydata[i].name + '</td>'
+                dblist += '<td>'+ dummydata[i].weight + '</td>'
+                dblist += '<td>'+ dummydata[i].kcal + '</td>'
+                dblist += '<td><img width=20 height=20 src="/static/img/basic/plus_data.png" onclick="add_meal('+dummydata[i].id+')"></td></tr>'
+            }
+
+            $('#mealdb_tbody').html(dblist)
+
+        }
+
+        function del_meal(num)
+        {
+            //var rmtxt = 5
+            rmtxt = '.foodid'+num
+            $(rmtxt).remove()
+            
+            
+            
+
+        }
+        function add_meal(num)
+        {
+            
+            for (var i = 0; i < dummydata.length; i++) {
+                if (num == dummydata[i].id){
+
+                    var adddata = dummydata[i]
+                }
+
+            }
+
+            var insertdata=''
+
+            insertdata += '<tr class="foodid'+adddata.id+'"><td>'+adddata.name +'</td>'
+            insertdata += '<td><input id="foodweight" class="foodweight" type="text" name="foodweight" size="5" value="'+adddata.weight +'" style="text-align:center;"></td>'
+            insertdata += '<td>'+adddata.kcal+'</td>'
+            insertdata += '<td>'+adddata.carb+'</td>'
+            insertdata += '<td>'+adddata.prot+'</td>'
+            insertdata += '<td>'+adddata.fat+'</td>'
+            insertdata += '<td><img width=20 height=20 src="/static/img/basic/minus_data.png" onclick="del_meal('+adddata.id+')"></td></tr>'
+
+
+
+            
+
+
+            
+            $('#meal_input_tbody').append(insertdata)
+
+
+            
+
         }
     </script>
 
