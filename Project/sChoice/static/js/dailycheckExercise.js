@@ -1,14 +1,16 @@
 $(function(){
     $.ajax({
-        url:"/static/test.json",
+        url:"/static/exercisetest.json",
         dataType:"json",
         success:function(data){
             let note = ''
-            note+='<tr><td><progress  id="carbB" value="'+ data[9].carb +'" max="100"></progress></td>'
-            note+='<td><progress id="proteinB" value="'+ data[9].protien +'" max="100"></progress></td>'
-            note+='<td><progress id="fatB" value="'+ data[9].fat +'" max="100"></progress></td></tr>'
-            note+='<tr><td>탄수화물 : '+ data[9].carb+'g</td><td>단백질 : '+ data[9].protien+'g</td><td>지방 : '+data[9].fat+'g</td></tr>'
-            
+            note+='<tr><td><progress  id="ex1B" value="'+ data[9].ex1 +'" max="100"></progress></td>'
+            note+='<td><progress id="ex2B" value="'+ data[9].ex2 +'" max="100"></progress></td>'
+            note+='<td><progress id="ex3B" value="'+ data[9].ex3 +'" max="100"></progress></td></tr>'
+            note+='<tr><td>운동1 : '+ data[9].ex1+'kcal</td><td>운동2 : '+ data[9].ex2+'kcal</td><td>운동3 : '+data[9].ex3+'kcal</td></tr>'
+            note+='<tr style="height:50px"><td></td><td></td><td></td></tr>'
+            note+='<tr><td style="color:#ff0000">0분</td><td style="color:#419e46">0분</td><td style="color:#43419e">0분</td></tr>'
+            note+='<tr><td>총 운동 시간</td><td>운동 횟수</td><td>1회 평균 운동 시간</td></tr>'
 
             $("#progressbars").html(note)
 
@@ -23,36 +25,41 @@ $(function(){
                   ctx.textAlign = 'center';     
                   // w 변동 h 변동  l 70 r 변동 t 0 b 변동
                   //console.log("width", width); 
-                  ctx.fillText('1200kcal', width / 2 +(left), top + (height / 2));
-                  ctx.fillText('remains', width / 2 +(left), top + (height / 2)+50);
+                  ctx.fillText('태운 칼로리', width / 2 +(left), top + (height / 2));
+                  ctx.fillText('680kcal', width / 2 +(left), top + (height / 2)+50);
                 }
             };
-
-
 
             const ctx = document.getElementById('myChart').getContext('2d');
             const myChart = new Chart(ctx, {
                 type: 'doughnut', 
                 data: {
-                    
                     datasets: [{
-                        label: '칼로리',
+                        label: '총 운동 칼로리',
                         data: [80,(100-80)],
                         backgroundColor: ['#7CCAAE','#eee'],
                         hoverOffset: 0,
-                        cutout: "80%",
+                        cutout: "50%",
                     },
                     {
-                        label: '탄단지',
-                        data: [10,90],
-                        backgroundColor: ['#FFB69B','#A299CA'],
-                        label: 'Doughnut 2',
-                        cutout: "80%",
+                        label: '운동1 이름',
+                        data: [data[9].ex1,(100-data[9].ex1)],
+                        backgroundColor: ['#ECEC84','#eee'],
+                        hoverOffset: 0
                     },
-                    
-                    
+                    {
+                        label: '운동2 이름',
+                        data: [data[9].ex2,(100-data[9].ex2)],
+                        backgroundColor: ['#FFB69B','#eee'],
+                        hoverOffset: 0
+                    },
+                    {
+                        label: '운동3 이름',
+                        data: [data[9].ex3,(100-data[9].ex3)],
+                        backgroundColor: ['#A299CA','#eee']
+                    },
                 ],
-                    labels: ['intake','remain','Carbonate','Protein', 'Fat']
+                    labels: ['burned','remain']
                 },//data.
                 options: {
                     aspectRatio: 1,
@@ -65,8 +72,8 @@ $(function(){
                         }
                     },
                     responsive: true,
-                    cutoutPercentage: 60,
-                    
+                    cutoutPercentage: 40,
+
                    // rotation: 1.5 * Math.PI,
                    // borderColor: false,
                    //borderRadius: 10,
@@ -84,19 +91,12 @@ $(function(){
                         },
                         rotation: 1.5 * Math.PI,
                         
-                        
-                        
-                        
-                        
-                       
-                        
-                    },
-                    
 
-                    
+                    },
                 },
                 plugins: [counter]
             });//chart
+            
             
             
         },
@@ -107,4 +107,3 @@ $(function(){
     })//ajax
 
 })//function
-
