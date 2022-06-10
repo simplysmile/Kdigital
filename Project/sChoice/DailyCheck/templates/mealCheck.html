@@ -222,29 +222,27 @@
 
 
         //const searchname = document.getElementById('serDB')
-        const weightgram ='o....'
+        var weightgram ='o....'
         
 
+        var dummydata=[]
        //document.addEventListener('keydown',function(e){
 
-        document.addEventListener('keydown',function(e){
+        document.getElementById('serDB').addEventListener('keydown',function(e){
             if(e.code === 'Enter'){
                  
-                //weightgram = document.getElementById('foodweight').value;
-                alert(weightgram)
+                searchDB()
             }
         })
+
+     
 
       
 
 
 
 
-        function testtest(){
-            alert('test')
-
-        }
-
+      
 
 
         dummydata1=[
@@ -328,10 +326,54 @@
             
             $('#meal_input_tbody').append(insertdata)
 
+            document.getElementById('foodweight').addEventListener('keydown',function(e){
+                if(e.code === 'Enter'){
+                    
+                    testtest(adddata.id)
+                }
+            })
+
+
 
             
 
         }
+
+        function testtest(num){
+            alert('enter')
+            weightgram = document.getElementById('foodweight').value;
+            alert(weightgram)
+
+            rmtxt = '.foodid'+num
+
+            var test1 = document.getElementsByClassName(rmtxt).value;
+
+            console.log(test1)
+            //$(rmtxt).remove()
+
+          //  insertdata=''
+
+          //  insertdata += '<tr class="foodid'+num+'"><td>'+'수정' +'</td>'
+          //  insertdata += '<td><input id="foodweight" class="foodweight" type="text" name="foodweight" size="5" value="'+'999' +'" style="text-align:center;"></td>'
+          //  insertdata += '<td>'+'1000000'+'</td>'
+           // insertdata += '<td>'+'1000000'+'</td>'
+           // insertdata += '<td>'+'1000000'+'</td>'
+           // insertdata += '<td>'+'1000000'+'</td>'
+           // insertdata += '<td><img width=20 height=20 src="/static/img/basic/minus_data.png" onclick="del_meal('+adddata.id+')"></td></tr>'
+
+            //'#meal_input_tbody').append(insertdata)
+
+
+    
+
+                
+
+            
+
+        }
+
+
+
     </script>
 
 
