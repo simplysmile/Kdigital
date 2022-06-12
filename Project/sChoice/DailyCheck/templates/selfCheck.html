@@ -1,13 +1,316 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-   자가진단 페이지입니다. 
+{% extends 'base.html' %}
+{% block mycontent %}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <style>
+        #box1{
+
+            float: left;
+            width: 50%;
+
+
+        }
+        #box2{
+
+            width: 50%;
+            float: left;
+
+        }
+        table{
+            margin: 0 auto;
+        }
+    </style>
+    <script>
+
+        var user_data=[0,0,0,0,0];
+        var avg_data=[0,0,0,0,0];
+
+        function calculator(birth,gender,height,weight,activity,isuser){
+
+            // bmi 계산
+            var len = height/100
+            var result = parseFloat(weight)/parseFloat(len*len);
+            if(result<18.5){
+                resultText = "저체중";
+            } else if(result<23){
+                resultText = "정상";
+            } else if(result<25){
+                resultText = "과체중";
+            } else{
+                resultText = "비만";
+            }
     
-</body>
-</html>
+            resultText += " 입니다.";
+            result=result.toString().match(/^.*\.\d{2}/);
+    
+            // 기초대사량 계산기 (bmr)
+            // 1 헤리스- 베네딕트 식 
+            // 남: BMR = 88.362 + (13.397*weight) + (4.799*height) - (5.677*age )
+            // 여: BMR = 447.593 + (9.247*weight) + (3.098*height) - (4.330*age)
+    
+            // men: BMR = 66.5 + (13.75 * weight in kg) + (5.003 * height in cm) - (6.75 * age)
+            //      BMR = 88.362 + (13.397 × weight in kg) + (4.799 × height in cm) - (5.677 × age in years)
+            // women: BMR = 655.1 + (9.563 * weight in kg) + (1.850 * height in cm) - (4.676 * age)
+            //      BMR = 447.593 + (9.247 × weight in kg) + (3.098 × height in cm) - (4.330 × age in years)
+    
+    
+    
+            // 2 미플린식 
+            // 남: BMR = (10 × weight) + (6.25 × height) - (5 × age) + 5
+            // 여: BMR = (10 × weight) + (6.25 × height) - (5 × age) - 161
+    
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+            var todaydate = yyyy+mm+dd
+            
+            var age = parseInt((Number(todaydate)-Number(birth))*0.0001)
+    
+            var BMR1 = 0
+            if(gender=='male'){
+                BMR1 =  88.362 + (13.397*weight) + (4.799*height) - (5.677*age )
+            }
+            else{
+                BMR1 = 447.593 + (9.247*weight) + (3.098*height) - (4.330*age)
+    
+            }
+            var BMR2 = 0
+            if(gender=='male'){
+                BMR2 = (10*weight) + (6.25*eight) - (5*age) + 5
+            }
+            else{
+                BMR2 = (10*weight) + (6.25*height) - (5*age) - 161
+    
+            }
+    
+            var BMR = BMR2
+            
+    
+            
+    
+    
+            // 칼로리 소비량 기초대사량 + 활동대사량
+            var EERlist = [BMR * 1.2,BMR * 1.375,BMR * 1.55,BMR * 1.725,BMR * 1.9]
+            var amrlist = []
+            EERlist.forEach(function(item) {
+                amrlist.push(item-BMR)
+            });
+            // 활동 대사량 AMR
+            
+            var AMR = amrlist[Number(activity)]
+            var EER = EERlist[Number(activity)]
+
+
+            AMR=AMR.toString().match(/^.*\.\d{2}/);
+    
+            // 일주일 동안 살빼기위해 필요한 열량 
+            EER = Math.round(EER)
+            var needcal = [EER,EER-250,EER-500,EER-1000]
+
+
+
+            if (isuser==0){
+                user_data=[Number(height)-100, Number(weight), Number(result[0]),Number(BMR)/100,Number(AMR[0])/10]
+
+            }
+            else{
+                avg_data=[Number(height)-100, Number(weight), Number(result[0]),Number(BMR)/100,Number(AMR[0])/10]
+            }
+
+    
+            
+    
+        
+    
+    
+            // 결과 업데이트
+            var resultstr = ''
+            resultstr+='<tr><td>비만도결과 : </td><td>' + resultText +'</td></tr>'
+            resultstr+='<tr><td>BMI 지수 : </td><td>'+ result +'</td></tr>'
+            resultstr+='<tr><td>기초대사량(BMR) : </td><td>'+ BMR +'</td></tr>'
+            resultstr+='<tr><td>활동대사량(AMR) : </td><td>'+ AMR +'</td></tr>'
+            $('#bmiresult').html(resultstr)
+
+            var needcalstr = ''
+            needcalstr+='<tr><td colspan="2"> 사용해야하는 칼로리 </td></tr>'
+            needcalstr+='<tr><td>Maintain weight </td><td>' + needcal[0] +'</td></tr>'
+            needcalstr+='<tr><td>Mild weight loss </td><td>'+ needcal[1] +'</td></tr>'
+            needcalstr+='<tr><td>Weight loss </td><td>'+ needcal[2] +'</td></tr>'
+            needcalstr+='<tr><td>Extreme weight loss </td><td>'+ needcal[3] +'</td></tr>'
+            $('#needcalresult').html(needcalstr)
+
+            
+
+
+        }  
+        function resetBtn(){
+            window.location.reload()
+            
+        }  
+        function submitBtn(){
+
+            var birth=document.getElementById("birth").value
+            var gender=document.querySelector("input[name=gender]:checked").value
+            var height=document.getElementById("height").value
+            var weight=document.getElementById("weight").value
+            var activity=document.getElementById("activity").value //stringtype
+
+            
+
+            
+
+            calculator(birth,gender,height,weight,activity,0)
+
+            calculator(birth,gender,161.4,57,2,1)
+           
+
+            console.log(user_data)
+            console.log(avg_data)
+            
+
+            $("#dummyimg").remove()
+
+            draw_chart()
+
+
+        }
+        function draw_chart(){
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            $.ajax({
+                url:"/static/test.json",
+                dataType:"json",
+                success:function(data){
+                    const ctx = document.getElementById('myChart').getContext('2d');
+                    const myChart = new Chart(ctx, {
+                        type: 'radar', 
+
+                        data: {
+                            labels: ['height','weight','BMI','BMR','AMR'],
+                            datasets: [
+                                {
+                                    label: '사용자 입력',
+                                    data: user_data,
+                                    fill: true,
+                                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                    borderColor: 'rgb(255, 99, 132)',
+                                    pointBackgroundColor: 'rgb(255, 99, 132)',
+                                    pointBorderColor: '#fff',
+                                    pointHoverBackgroundColor: '#fff',
+                                    pointHoverBorderColor: 'rgb(255, 99, 132)'
+                                },{
+                                    label: '20대 평균여성',
+                                    data: avg_data,
+                                    fill: true,
+                                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                    borderColor: 'rgb(54, 162, 235)',
+                                    pointBackgroundColor: 'rgb(54, 162, 235)',
+                                    pointBorderColor: '#fff',
+                                    pointHoverBackgroundColor: '#fff',
+                                    pointHoverBorderColor: 'rgb(54, 162, 235)'
+                            }]
+
+                            
+                        },//data.
+                        options: {
+                            
+                            plugins: {
+                                legend: {
+                                    isplay: false,
+                                },
+                                title: {
+                                    display: false,
+                                },
+                                tooltips: {
+                                    enabled: false
+                                },                       
+                            },
+                        }
+                    });//chart
+                }
+            })
+            
+                            
+
+
+
+            
+
+        }
+    </script>
+
+
+    <div id="box1"> 
+
+        <form>
+            <table>
+                <tr>
+                    <td>생일</td>
+                    <td><input type="text" id="birth" class="birth" value="19970101"></td>
+                </tr>
+                <tr>
+                    <td>성별</td>
+                    <td>
+                        <input type="radio" name="gender" value="male"> 남성
+                        <input type="radio" name="gender" value="female" checked> 여성
+                    </td>
+                </tr>
+                <tr>
+                    <td>키</td>
+                    <td><input type="text" id="height" class="height" value="165"></td>
+                </tr>
+                <tr>
+                    <td>몸무게</td>
+                    <td><input type="text" id="weight" class="weight" value="55"></td>
+                </tr>
+                <tr>
+                    <td>활동량</td>
+                    <td>
+                        <select id="activity">
+                            <option value="0">운동하지 않음</option>
+                            <option value="1">가벼운 활동 (운동: 1~3일)</option>
+                            <option value="2">보통 활동 (운동: 3~5일)</option>
+                            <option value="3">많은 활동 (운동: 6~7일)</option>
+                            <option value="4">격렬한 활동</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button id="submitbtn" type="button" onclick="submitBtn()">입력</button>  
+                        <button id="reset" type="button" onclick="resetBtn()">리셋</button>  
+                    </td>
+                </tr>
+                
+                
+                
+            </table>  
+                   
+        </form>
+<br>
+        <table id="bmiresult"></table>
+        <br>
+        <table id="needcalresult"></table>
+    </div>
+    <div id="box2">
+        <img id="dummyimg" width="500" src = "https://www.squareboxfitness.com/wp-content/uploads/2017/05/balance-1080x675.jpg">
+        <canvas id="myChart" ></canvas> 
+    </div>
+
+    {% endblock mycontent %}

@@ -115,7 +115,7 @@
         
 
             <div id = "mealbox1">
-                <form id="mealdb_input" onsubmit="return false" >  
+                <form id="mealdb_input"  onsubmit="return false;">  
                     <br>   
                    
                     <select id="m_select" name="meal_time" >
@@ -129,8 +129,8 @@
                     <br>
                     <table id="meal_input" class="m_in_tb" >
                         <colgroup>
-                            <col width="19%">
                             <col width="15%">
+                            <col width="19%">
                             <col width="16%">
                             <col width="14%">
                             <col width="14%">
@@ -163,7 +163,7 @@
             </div>
             <div id = "mealbox2">
                 <div id="searchbox">
-                    <input type="text" id="serDB" name="serDB" size="20" style="height:35px;" >
+                    <input type="text" id="serDB" name="serDB" size="10" style="height:35px;" value="사과">
                     <button type="button" onclick="searchDB()">검색</button>
                 </div>
                 <br>
@@ -311,7 +311,7 @@
             var insertdata=''
 
             insertdata += '<tr class="foodid'+adddata.id+'"><td>'+adddata.name +'</td>'
-            insertdata += '<td><input id="foodweight" class="foodweight" type="text" name="foodweight" size="5" value="'+adddata.weight +'" style="text-align:center;"></td>'
+            insertdata += '<td><input id="foodweight'+adddata.id+'" class="foodweight" type="text" name="foodweight" size="5" value="'+adddata.weight +'" style="text-align:center;"><img width=20 height=20 src="/static/img/basic/chevron.png" onclick="modi_meal('+adddata.id+')"></td>'
             insertdata += '<td>'+adddata.kcal+'</td>'
             insertdata += '<td>'+adddata.carb+'</td>'
             insertdata += '<td>'+adddata.prot+'</td>'
@@ -339,30 +339,49 @@
 
         }
 
-        function testtest(num){
-            alert('enter')
-            weightgram = document.getElementById('foodweight').value;
-            alert(weightgram)
-
+        function modi_meal(num){
+            
+            // 수정 전 데이터 저장  
+            for (var i = 0; i < dummydata1.length; i++) {
+                if (num == dummydata1[i].id){
+                    
+                    var modidata = dummydata1[i]
+                }
+                
+            }
+            
+            
             rmtxt = '.foodid'+num
-
-            var test1 = document.getElementsByClassName(rmtxt).value;
-
-            console.log(test1)
-            //$(rmtxt).remove()
-
-          //  insertdata=''
-
-          //  insertdata += '<tr class="foodid'+num+'"><td>'+'수정' +'</td>'
-          //  insertdata += '<td><input id="foodweight" class="foodweight" type="text" name="foodweight" size="5" value="'+'999' +'" style="text-align:center;"></td>'
-          //  insertdata += '<td>'+'1000000'+'</td>'
-           // insertdata += '<td>'+'1000000'+'</td>'
-           // insertdata += '<td>'+'1000000'+'</td>'
-           // insertdata += '<td>'+'1000000'+'</td>'
-           // insertdata += '<td><img width=20 height=20 src="/static/img/basic/minus_data.png" onclick="del_meal('+adddata.id+')"></td></tr>'
-
-            //'#meal_input_tbody').append(insertdata)
-
+            
+            //alert(modidata.name)
+            
+            
+            var change_gram = document.getElementById('foodweight'+ modidata.id ).value;
+            var new_ratio = change_gram/Number(modidata.weight)
+            new_ratio=new_ratio.toFixed(2)
+            
+            
+            
+            
+            var modi_cal =Number(modidata.kcal)*new_ratio
+            var modi_carb =Number(modidata.carb)*new_ratio
+            var modi_prot =Number(modidata.prot)*new_ratio
+            var modi_fat =Number(modidata.fat)*new_ratio
+            
+            
+            
+            var updated_data = ''
+            updated_data += '<tr class="foodid'+modidata.id+'"><td class="foodid'+modidata.id+'">'+ modidata.name +'</td>'
+            updated_data += '<td><input id="foodweight'+modidata.id+'" class="foodweight" type="text" name="foodweight" size="5" value="'+change_gram +'" style="text-align:center;"><img width=20 height=20 src="/static/img/basic/chevron.png" onclick="modi_meal('+modidata.id+')"></td>'
+            updated_data += '<td>'+modi_cal+'</td>'
+            updated_data += '<td>'+modi_carb+'</td>'
+            updated_data += '<td>'+modi_prot+'</td>'
+            updated_data += '<td>'+modi_fat+'</td>'
+            updated_data += '<td><img width=20 height=20 src="/static/img/basic/minus_data.png" onclick="del_meal('+modidata.id+')"></td></tr>'
+            $(rmtxt).remove()
+            $('#meal_input_tbody').append(updated_data)
+            
+          
 
     
 
