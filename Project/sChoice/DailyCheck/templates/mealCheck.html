@@ -312,10 +312,10 @@
 
             insertdata += '<tr class="foodid'+adddata.id+'"><td>'+adddata.name +'</td>'
             insertdata += '<td><input id="foodweight'+adddata.id+'" class="foodweight" type="text" name="foodweight" size="5" value="'+adddata.weight +'" style="text-align:center;"><img width=20 height=20 src="/static/img/basic/chevron.png" onclick="modi_meal('+adddata.id+')"></td>'
-            insertdata += '<td>'+adddata.kcal+'</td>'
-            insertdata += '<td>'+adddata.carb+'</td>'
-            insertdata += '<td>'+adddata.prot+'</td>'
-            insertdata += '<td>'+adddata.fat+'</td>'
+            insertdata += '<td id="eat_cal'+adddata.id+'">'+adddata.kcal+'</td>'
+            insertdata += '<td id="eat_carb'+adddata.id+'">'+adddata.carb+'</td>'
+            insertdata += '<td id="eat_prot'+adddata.id+'">'+adddata.prot+'</td>'
+            insertdata += '<td id="eat_fat'+adddata.id+'">'+adddata.fat+'</td>'
             insertdata += '<td><img width=20 height=20 src="/static/img/basic/minus_data.png" onclick="del_meal('+adddata.id+')"></td></tr>'
 
 
@@ -373,13 +373,31 @@
             var updated_data = ''
             updated_data += '<tr class="foodid'+modidata.id+'"><td class="foodid'+modidata.id+'">'+ modidata.name +'</td>'
             updated_data += '<td><input id="foodweight'+modidata.id+'" class="foodweight" type="text" name="foodweight" size="5" value="'+change_gram +'" style="text-align:center;"><img width=20 height=20 src="/static/img/basic/chevron.png" onclick="modi_meal('+modidata.id+')"></td>'
-            updated_data += '<td>'+modi_cal+'</td>'
-            updated_data += '<td>'+modi_carb+'</td>'
-            updated_data += '<td>'+modi_prot+'</td>'
-            updated_data += '<td>'+modi_fat+'</td>'
-            updated_data += '<td><img width=20 height=20 src="/static/img/basic/minus_data.png" onclick="del_meal('+modidata.id+')"></td></tr>'
-            $(rmtxt).remove()
-            $('#meal_input_tbody').append(updated_data)
+            
+            var updated_data_cal = '<td id="eat_cal'+modidata.id+'">'+modi_cal+'</td>'
+            var updated_data_carb = '<td id="eat_carb'+modidata.id+'">'+modi_carb+'</td>'
+            var updated_data_prot = '<td id="eat_prot'+modidata.id+'">'+modi_prot+'</td>'
+            var updated_data_fat = '<td id="eat_fat'+modidata.id+'">'+modi_fat+'</td>'
+
+            var txt1 = '#eat_cal'+modidata.id
+            var txt2 = '#eat_carb'+modidata.id
+            var txt3 = '#eat_prot'+modidata.id
+            var txt4 = '#eat_fat'+modidata.id
+
+            $(txt1).html(updated_data_cal)
+            $(txt2).html(updated_data_carb)
+            $(txt3).html(updated_data_prot)
+            $(txt4).html(updated_data_fat)
+            
+            
+            //updated_data += '<td id="eat_cal'+modidata.id+'">'+modi_cal+'</td>'
+            //updated_data += '<td id="eat_carb'+modidata.id+'">'+modi_carb+'</td>'
+            //updated_data += '<td id="eat_prot'+modidata.id+'">'+modi_prot+'</td>'
+            //updated_data += '<td id="eat_fat'+modidata.id+'">'+modi_fat+'</td>'
+            //updated_data += '<td><img width=20 height=20 src="/static/img/basic/minus_data.png" onclick="del_meal('+modidata.id+')"></td></tr>'
+
+            // $(rmtxt).remove()
+            // $('#meal_input_tbody').append(updated_data)
             
           
 
