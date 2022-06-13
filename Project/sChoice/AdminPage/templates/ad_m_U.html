@@ -7,7 +7,7 @@
 
     function cancelBtn(){
 
-      location.href="{% url 'fboard:fList' searchword=searchword category=category nowpage %}"
+      location.href="#"
     }
 
   </script>
@@ -17,7 +17,7 @@
     <h1>음식정보추가</h1>
     <hr>
 
-    <form action="{% url 'fboard:fUpdate' searchword=searchword category=category nowpage food.food_name  %}" name="write" method="post">
+    <form action="#" name="write" method="post">
       {% csrf_token %}
       <table>
         <colgroup>

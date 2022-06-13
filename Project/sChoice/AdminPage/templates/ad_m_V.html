@@ -1,56 +1,40 @@
 {%extends 'base.html' %}
+{% block mycontent %}
 {% load static %}
-{% block all_content %}
 
-  <link rel="stylesheet" href="{% static 'css/style.css'%}">
-  <link rel="stylesheet" href="{% static 'css/read.css'%}">
+  <link rel="stylesheet" href="{% static 'css/admin_view.css'%}">
   
-  <script>
-
-    function deleteBtn(){
-      if(confirm('삭제하시겠습니까?')){
-        location.href="{% url 'fboard:fDelete' searchword category nowpage food.food_name  %}"
-
-      }else{
-
-        return false
-      }
-
-
-    }
-  </script>
 </head>
 
 
   <section>
     <h1>상세페이지</h1>
+    
 
     <table>
+    {% if admin_List %}
+    {% for board in admin_List %}
       <tr>
-        <th>{{food.food_no}}</th>
+        <th>{{board.user_id}}</th>
       </tr>
       <tr>
-        <td>{{food.food_updatedate|date:'Y-M-d H:i'}}</td>
+        <td>{{board.modidate|date:'Y-M-d H:i'}}</td>
       </tr>
       <tr>
-        <td>음식이름: {{food.food_name}}</td>
+        <td>회원이름:{{board.user_name}}</td>
       </tr>
       <tr>
-        <td>제조지역: {{food.food_manufacturer}}</td>
+        <td>이메일:{{board.email}}</td>
       </tr>
-    
-      <tr>
-        <td><strong>다음글</strong> <span class="separator">|</span> 더덕구이</td>
-      </tr>
-      <tr>
-        <td><strong>이전글</strong> <span class="separator">|</span> 꿩불고기
-        </td>
-      </tr>
+    {% endfor %}
+    {% endif %}
     </table>
 
-    <a href="{% url 'fboard:fList' searchword category nowpage %}"><div class="list">목록</div></a>
+    
+
+    <a href="#"><div class="list">목록</div></a>
     <div class="list" onclick='deleteBtn()'>삭제</div>
-    <a href="{% url 'fboard:fUpdate' searchword category nowpage food.food_name  %}"><div class="list">수정</div></a>
+    <a href="#"><div class="list">수정</div></a>
   </section>
 
-{% endblock all_content %}
+  {% endblock mycontent %}

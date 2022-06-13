@@ -1,92 +1,99 @@
-{%extends 'base.html' %}
-{% load static %}
-{% block all_content %}
+{% extends 'base.html' %}
+{% block mycontent %}
+{%load static %}
 
-  <link rel="stylesheet" href="{% static 'css/style.css'%}">
-  <link rel="stylesheet" href="{% static 'css/notice_list.css'%}">
+  <link rel="stylesheet" href="{% static 'css/admin_list.css'%}">
+
+
+
+
+  <script>
+    
+  
+
+    function searchBtn(){
+
+      if($('#searchword').val()==''){
+
+        alert('검색어를 입력하세요.')
+        $('#searchword').focus()
+        return false 
+        
+      } 
+
+      $('#searchfrm').submit()
+
+    }
+
+
+  </script> 
+
+
 
 
   <section>
-    <h1>NOTICE</h1>
+    <h1>회원관리</h1>
     <div class="wrapper">
-      <form action="#" name="searchfrm" id='searchfrm' method="post">
-        {% csrf_token %} <!-- 이거 이렇게 써야하나?? 첫번째 보여지는 페이지라서 ?? searchword='SW' category='first' nowpage=1-->
+      <form action="{% url 'AdminPage:ad_m_L' searchword category %}" name="searchfrm" id='searchfrm' method="post">
+        {% csrf_token %} 
         
         <select name="category" id="category">
           <option value="user_name">회원이름</option>
           <option value="user_id">회원아이디</option>
-          <option value="pro">전문가여부</option>
+          <option value="emil">이메일</option>
+          <option value="all">전체</option>
         </select>
 
         <div class="title">
           <input type="text" name='searchword' id='searchword' size="16">
+       
+        <div>
+          <button type="button" onclick='searchBtn()'><span>search</span></button>
         </div>
-  
-        <button type="button"><i class="fas fa-search"></i></button>
       </form>
     </div>
 
     <table>
       <colgroup>
-        <col width="18%">
+        <col width="15%">
         <col width="15%">
         <col width="18%">
         <col width="18%">
         <col width="18%">
       </colgroup>
+      <thead>
+        <tr>
+          <th>회원이름</th>
+          <th>회원아이디</th>
+          <th>생년월일</th>
+          <th>회원이메일</th>
+          <th>수정날짜</th>
+        </tr>
+      </thead>
+      {% if admin_List %}
+      {% for board in admin_List%}
+      <tbody>
+        <tr>
+          <td>{{board.user_name}}</td>
+          <td><a href="{% url 'AdminPage:ad_m_V' searchword category board.user_id %}">{{board.user_id}}</a></td>
+          <td>{{board.birth|date:'Y-m-d'}}</td>
+          <td>{{board.email}}</td>
+          <td>{{board.modidate}}</td>
+        </tr>
+      </tbody>
+      {% endfor %}
+      {%else%}
       <tr>
-        <th>회원이름</th>
-        <th>회원아이디</th>
-        <th>생년월일</th>
-        <th>회원이메일</th>
-        <th>수정날짜</th>
+        <td colspan='5'>데이터가 없습니다</td>
       </tr>
-     
-      
-      <tr>
-        <td class="table-title"><a href="#">{{board.food_name}}</a></td>
-        <td>{{board.food_portion}}</td>
-        <td>{{board.food_carb}}</td>
-        <td>{{board.food_protein}}</td>
-        <td>{{board.food_fat}}</td>
-      </tr>
+      {% endif %}
      
     </table>
-  <!-- 이전페이지처리 -->
-    <ul class="page-num">
-   
-
-      <a href="#"><li class="first"></li></a>
-      <a href="#"><li class="prev"></li></a>
-
  
-      <li class='first'></li>
-      <li class='prev'></li>
-   
-      <!-- 페이지처리 -->
 
-     
-      <a href="#">
-        <li class="num"><div>{{page}}</div></li>
-      </a>
-      
-      <li class="num"><div>{{page}}</div></li>
-     
-
-      <!-- 마지막페이지처리 -->
-
-      <a href="#"><li class="next"></li></a>
-      <a href="#"><li class="last"></li></a>
-
-      <li class="next"></li>
-      <li class="last"></li>
-     
-    </ul>
-
-    <div class="write">쓰기</div>
+    <div>
+      <button type="button" onclick='writeBtn()'><span>쓰기</span></button>
+    </div>
   </section>
 
-
-
-  
-{% endblock all_content %}
+{% endblock mycontent %}
