@@ -21,6 +21,31 @@
         table{
             margin: 0 auto;
         }
+        input{
+
+            display: inline;
+            
+         
+         }
+        input[type="radio"]{
+            -webkit-appearance: radio;
+            width: 100px;
+        }
+        .form-group label {
+            position: relative;
+        }
+        .form-checkbox input[type=radio] {
+            float: left;
+        }
+        input[type=”checkbox”]{
+            -webkit-appearance: checkbox;
+            }
+            
+            input[type=”radio”]{
+            
+            -webkit-appearance: radio;
+        
+        }
     </style>
     <script>
 
@@ -153,7 +178,8 @@
         function submitBtn(){
 
             var birth=document.getElementById("birth").value
-            var gender=document.querySelector("input[name=gender]:checked").value
+            var gender=document.getElementById("gender").value
+            //var gender=document.querySelector("input[name=gender]:checked").value
             var height=document.getElementById("height").value
             var weight=document.getElementById("weight").value
             var activity=document.getElementById("activity").value //stringtype
@@ -258,7 +284,7 @@
 
     <div id="box1"> 
 
-        <form action="#" method="post">
+        <form name="frm" action="#" method="post">
             <table>
                 <tr>
                     <td>생일</td>
@@ -267,8 +293,16 @@
                 <tr>
                     <td>성별</td>
                     <td>
-                        <input type="radio" name="gender" value="male"> 남성
-                        <input type="radio" name="gender" value="female" checked> 여성
+                        <select id="gender", name="gender">
+                            <option value="male">남성</option>
+                            <option value="female">여성</option>
+
+                        </select>
+                       <!-- <input type="radio" name="gender" value="male"> 
+                        <label for="male">남성</label>
+                        <input type="radio" name="gender" value="female" checked> 
+                        <label for="female">여성</label>-->
+
                     </td>
                 </tr>
                 <tr>
