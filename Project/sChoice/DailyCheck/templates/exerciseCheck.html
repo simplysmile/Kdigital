@@ -222,7 +222,22 @@
             })
             $('#nextBtn').click(function(){
                 alert(activityName)
-            })
+
+                $.ajax({
+                    url:'{%url "DailyCheck:exercise1"%}'
+                    dataType:'json'
+                    success:function(data){
+                        alert('성공')
+                    },
+                    error:function(){
+                        alert('실패')
+                    }
+                })//ajax
+
+
+
+
+            })//nextBtn function
             $('#nextBtn2').click(function(){
                 $('#saveexercise').attr('value',exerciseName); 
             })

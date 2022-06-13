@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from django.http import JsonResponse
 # Create your views here.
 
 def calendar(request):
@@ -11,6 +11,9 @@ def mealCheck(request):
 
 def exerciseCheck(request):
     return render(request,'exerciseCheck.html')
+
+def exercise1(request):
+    return JsonResponse()
 
 
 def myStatus(request):
