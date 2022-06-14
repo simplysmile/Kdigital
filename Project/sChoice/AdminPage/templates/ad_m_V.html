@@ -12,27 +12,30 @@
 
     <table>
     {% if admin_List %}
-    {% for board in admin_List %}
+    
       <tr>
-        <th>{{board.user_id}}</th>
+        <th>아이디: {{admin_List.user_id}}</th>
       </tr>
+
       <tr>
-        <td>{{board.modidate|date:'Y-M-d H:i'}}</td>
+        <td>수정날짜: {{admin_List.modidate|date:'Y-M-d H:i'}}</td>
       </tr>
+
       <tr>
-        <td>회원이름:{{board.user_name}}</td>
+        <td>회원이름: {{admin_List.user_name}}</td>
       </tr>
+
       <tr>
-        <td>이메일:{{board.email}}</td>
+        <td>이메일: {{admin_List.email}}</td>
       </tr>
-    {% endfor %}
+   
     {% endif %}
     </table>
 
     
 
-    <a href="#"><div class="list">목록</div></a>
+    <div class="list"><a href="{% url 'AdminPage:ad_m_L' searchword category %}">목록</a></div>
     <div class="list" onclick='deleteBtn()'>삭제</div>
-    <a href="#"><div class="list">수정</div></a>
+    <div class="list"><a href="{% url 'AdminPage:ad_m_U' searchword category admin_List.user_id %}">수정</a></div>
   </section>
 
