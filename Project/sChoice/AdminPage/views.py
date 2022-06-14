@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 from django.shortcuts import render,redirect
 from Member.models import Members
 from django.db.models import Q
@@ -58,7 +58,8 @@ def ad_m_U(request,user_id,searchword,category):
     
     if request.method == 'GET':
         qs = Members.objects.get(user_id=user_id)
-        context = {'ad_List':qs,'searchword':searchword,'category':category}
+        
+        context = {'ad_List':qs,'searchword':searchword,'category':category,'user_id':user_id}
         
         return render(request,'ad_m_U.html',context)
     
