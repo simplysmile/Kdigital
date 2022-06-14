@@ -46,8 +46,7 @@ def mDelete(request):
     return redirect('/')
 
 # 회원 읽기 함수
-def mView(request):
-    user_id = "zuba"
+def mView(request,user_id):
     qs = Members.objects.get(user_id=user_id)
     qs.save()
     context={'view':qs}
