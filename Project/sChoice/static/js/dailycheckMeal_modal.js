@@ -28,128 +28,75 @@ document.getElementById('serDB').addEventListener('keydown',function(e){
     }
 })
 
-
-
-dummydata1=[
-{'id':1,'name':'사과','weight':100,'kcal':57,'carb':14.4,'prot':0.2, 'fat':0},
-{'id':2,'name':'사과즙','weight':120,'kcal':59,'carb':14.5,'prot':0.1, 'fat':0.1},
-{'id':3,'name':'사과식초','weight':10,'kcal':2,'carb':0.2,'prot':0, 'fat':0}
-]
-dummydata2=[
-{'id':4,'name':'고구마','weight':75,'kcal':98,'carb':23.4,'prot':1.0, 'fat':0.2},
-{'id':5,'name':'고구마말랭이','weight':60,'kcal':172,'carb':38.0,'prot':4.0, 'fat':0.4},
-{'id':6,'name':'고구마맛탕','weight':100,'kcal':245,'carb':47.3,'prot':1.6, 'fat':5.5}
-]
-
+var DBlist_data={} // 사용자가 검색한 db 전체 데이터 저장
+var userdata=[] // 사용자가 식단으로 추가한 데이터를 저장
+// db에 있는 
 function searchDB()
 {
-    //if($("#serDB").val().length<=1){
-    //    alert('2글자 이상 입력하셔야 검색이 가능합니다.')
-    //    $("#serDB").focus()
-    //    return false
-    //}
-
+    // 검색어
     var kword = document.getElementById('serDB').value;
+
+    if($("#serDB").val().length<=1){
+        alert('2글자 이상 입력하셔야 검색이 가능합니다.')
+        $("#serDB").focus()
+        return false
+    }
+    
     $.ajax({
         type: "GET",
-        //url:"/static/js/oracle.py",
         url:"/dailycheck/searchMeal/",
         data: {"keyword":kword},
-        dataType:"json",
-        
+        dataType:"json",   
         success: function (data) {
-            console.log(typeof(data));
-            console.log(data.data.length);
-
+            DBlist_data = data
             var dblist = ''
-
-            for (var i = 0; i < 3; i++) {
+            for (var i = 0; i < data.data.length ; i++) {
                 dblist += '<tr><td>'+ data.data[i].f_name + '</td>'
                 dblist += '<td>'+ data.data[i].f_weight + '</td>'
                 dblist += '<td>'+ data.data[i].f_cal + '</td>'
                 dblist += '<td><img width=20 height=20 src="/static/img/basic/plus_data.png" onclick="add_meal('+data.data[i].f_id+')"></td></tr>'
             }
             $('#mealdb_tbody').html(dblist)
-
-
-
-
-
         },
         error: function () {
             console.log('error');
         }
      });
- 
-    
-
-    //document.search.submit()
-
-    // const searchname = document.getElementById('serDB').value;
-
-    //if(searchname=='사과'){ dummydata=dummydata1 }
-    //else if(searchname=='고구마'){dummydata=dummydata2 }
-    
-    
-
-
-
-    //dblist = ''
-
-    //for (var i = 0; i < dummydata.length; i++) {
-
-    //    dblist += '<tr><td>'+ dummydata[i].name + '</td>'
-    //    dblist += '<td>'+ dummydata[i].weight + '</td>'
-    //    dblist += '<td>'+ dummydata[i].kcal + '</td>'
-    //    dblist += '<td><img width=20 height=20 src="/static/img/basic/plus_data.png" onclick="add_meal('+dummydata[i].id+')"></td></tr>'
-   // }
-
-    //$('#mealdb_tbody').html(dblist)
-
 }
 
+// 식단 등록 테이블에서 해당 row 삭제
 function del_meal(num)
-{
-    //var rmtxt = 5
+{   
     rmtxt = '.foodid'+num
     $(rmtxt).remove()
-    
-    
-    
-
 }
+
+// 검색한 db 데이터를 식단 등록 테이블에 추가 
 function add_meal(num)
 {
     
-    for (var i = 0; i < dummydata.length; i++) {
-        if (num == dummydata[i].id){
+    for (var i = 0; i < DBlist_data.data.length; i++) {
+        if (num == DBlist_data.data[i].f_id){
 
-            var adddata = dummydata[i]
+            var adddata = DBlist_data.data[i]
         }
 
     }
+    userdata.push(adddata)
 
     var insertdata=''
 
-    insertdata += '<tr class="foodid'+adddata.id+'"><td>'+adddata.name +'</td>'
-    insertdata += '<td><input id="foodweight'+adddata.id+'" class="foodweight" type="text" name="foodweight" size="5" value="'+adddata.weight +'" style="text-align:center;"><img width=20 height=20 src="/static/img/basic/chevron.png" onclick="modi_meal('+adddata.id+')"></td>'
-    insertdata += '<td id="eat_cal'+adddata.id+'">'+adddata.kcal+'</td>'
-    insertdata += '<td id="eat_carb'+adddata.id+'">'+adddata.carb+'</td>'
-    insertdata += '<td id="eat_prot'+adddata.id+'">'+adddata.prot+'</td>'
-    insertdata += '<td id="eat_fat'+adddata.id+'">'+adddata.fat+'</td>'
-    insertdata += '<td><img width=20 height=20 src="/static/img/basic/minus_data.png" onclick="del_meal('+adddata.id+')"></td></tr>'
-
-
-
-    
-
-
-    
+    insertdata += '<tr class="foodid'+adddata.f_id+'"><td>'+adddata.f_name +'</td>'
+    insertdata += '<td><input id="foodweight'+adddata.f_id+'" class="foodweight" type="text" name="foodweight" size="5" value="'+adddata.f_weight +'" style="text-align:center;"><img width=20 height=20 src="/static/img/basic/chevron.png" onclick="modi_meal('+adddata.f_id+')"></td>'
+    insertdata += '<td id="eat_cal'+adddata.f_id+'">'+adddata.f_cal+'</td>'
+    insertdata += '<td id="eat_carb'+adddata.f_id+'">'+adddata.f_carb+'</td>'
+    insertdata += '<td id="eat_prot'+adddata.f_id+'">'+adddata.f_prot+'</td>'
+    insertdata += '<td id="eat_fat'+adddata.f_id+'">'+adddata.f_fat+'</td>'
+    insertdata += '<td><img width=20 height=20 src="/static/img/basic/minus_data.png" onclick="del_meal('+adddata.f_id+')"></td></tr>'
+ 
     $('#meal_input_tbody').append(insertdata)
-
     document.getElementById('foodweight').addEventListener('keydown',function(e){
         if(e.code === 'Enter'){
-            
             testtest(adddata.id)
         }
     })
@@ -160,72 +107,53 @@ function add_meal(num)
 
 }
 
+// 식단에 저장한 데이터의 무게를 조절 
 function modi_meal(num){
     
     // 수정 전 데이터 저장  
-    for (var i = 0; i < dummydata1.length; i++) {
-        if (num == dummydata1[i].id){
+    // 사용자가 식단리스트에 추가한 데이터 중에서 수정하고싶은 데이터를 찾아 modidata에 저장
+    for (var i = 0; i < userdata.length; i++) {
+        if (num == userdata[i].f_id){
             
-            var modidata = dummydata1[i]
+            var modidata = userdata[i]
         }
         
     }
-    
-    
+
     rmtxt = '.foodid'+num
     
-    //alert(modidata.name)
-    
-    
-    var change_gram = document.getElementById('foodweight'+ modidata.id ).value;
-    var new_ratio = change_gram/Number(modidata.weight)
+    // 무게를 통해 칼로리 및 탄단지 수정을 위한 비율 계산
+    var change_gram = document.getElementById('foodweight'+ modidata.f_id ).value;
+    var new_ratio = change_gram/Number(modidata.f_weight)
     new_ratio=new_ratio.toFixed(2)
+        
     
-    
-    
-    
-    var modi_cal =Number(modidata.kcal)*new_ratio
-    var modi_carb =Number(modidata.carb)*new_ratio
-    var modi_prot =Number(modidata.prot)*new_ratio
-    var modi_fat =Number(modidata.fat)*new_ratio
+    var modi_cal =Number(modidata.f_cal)*new_ratio
+    var modi_carb =Number(modidata.f_carb)*new_ratio
+    var modi_prot =Number(modidata.f_prot)*new_ratio
+    var modi_fat =Number(modidata.f_fat)*new_ratio
     
     
     
     var updated_data = ''
-    updated_data += '<tr class="foodid'+modidata.id+'"><td class="foodid'+modidata.id+'">'+ modidata.name +'</td>'
-    updated_data += '<td><input id="foodweight'+modidata.id+'" class="foodweight" type="text" name="foodweight" size="5" value="'+change_gram +'" style="text-align:center;"><img width=20 height=20 src="/static/img/basic/chevron.png" onclick="modi_meal('+modidata.id+')"></td>'
+    updated_data += '<tr class="foodid'+modidata.f_id+'"><td class="foodid'+modidata.f_id+'">'+ modidata.f_name +'</td>'
+    updated_data += '<td><input id="foodweight'+modidata.f_id+'" class="foodweight" type="text" name="foodweight" size="5" value="'+change_gram +'" style="text-align:center;"><img width=20 height=20 src="/static/img/basic/chevron.png" onclick="modi_meal('+modidata.f_id+')"></td>'
     
-    var updated_data_cal = '<td id="eat_cal'+modidata.id+'">'+modi_cal+'</td>'
-    var updated_data_carb = '<td id="eat_carb'+modidata.id+'">'+modi_carb+'</td>'
-    var updated_data_prot = '<td id="eat_prot'+modidata.id+'">'+modi_prot+'</td>'
-    var updated_data_fat = '<td id="eat_fat'+modidata.id+'">'+modi_fat+'</td>'
+    var updated_data_cal = '<td id="eat_cal'+modidata.f_id+'">'+modi_cal+'</td>'
+    var updated_data_carb = '<td id="eat_carb'+modidata.f_id+'">'+modi_carb+'</td>'
+    var updated_data_prot = '<td id="eat_prot'+modidata.f_id+'">'+modi_prot+'</td>'
+    var updated_data_fat = '<td id="eat_fat'+modidata.f_id+'">'+modi_fat+'</td>'
 
-    var txt1 = '#eat_cal'+modidata.id
-    var txt2 = '#eat_carb'+modidata.id
-    var txt3 = '#eat_prot'+modidata.id
-    var txt4 = '#eat_fat'+modidata.id
+    var txt1 = '#eat_cal'+modidata.f_id
+    var txt2 = '#eat_carb'+modidata.f_id
+    var txt3 = '#eat_prot'+modidata.f_id
+    var txt4 = '#eat_fat'+modidata.f_id
 
     $(txt1).html(updated_data_cal)
     $(txt2).html(updated_data_carb)
     $(txt3).html(updated_data_prot)
     $(txt4).html(updated_data_fat)
     
-    
-    //updated_data += '<td id="eat_cal'+modidata.id+'">'+modi_cal+'</td>'
-    //updated_data += '<td id="eat_carb'+modidata.id+'">'+modi_carb+'</td>'
-    //updated_data += '<td id="eat_prot'+modidata.id+'">'+modi_prot+'</td>'
-    //updated_data += '<td id="eat_fat'+modidata.id+'">'+modi_fat+'</td>'
-    //updated_data += '<td><img width=20 height=20 src="/static/img/basic/minus_data.png" onclick="del_meal('+modidata.id+')"></td></tr>'
 
-    // $(rmtxt).remove()
-    // $('#meal_input_tbody').append(updated_data)
-    
-  
-
-
-
-        
-
-    
 
 }

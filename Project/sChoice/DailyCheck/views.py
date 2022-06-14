@@ -113,22 +113,16 @@ def selfCheck(request):
 
 
 @csrf_exempt
-def searchMeal(request):
-    
+def searchMeal(request):   # food db에서 검색된 자료를 가져오는 함수
     if 'keyword' in request.GET:
         searchword = request.GET['keyword']
-    
-    print(searchword)
-    
+    # print(searchword)
     my_conn=Oracles.oraconn()
     my_cursor=Oracles.oracs(my_conn)
     mySQL="select * from adminpage_food where f_name like '%"+searchword+"%'"
-    
     rows=my_cursor.execute(mySQL)
-    
     data_list = []
     data_dic={}
-    
     for row in rows:
         data_dic={}
         data_dic['f_id'] = row[0]
@@ -137,18 +131,11 @@ def searchMeal(request):
         data_dic['f_carb'] = row[5]
         data_dic['f_prot'] = row[6]
         data_dic['f_fat'] = row[7]
-        data_dic['f_cal'] = row[5]*4+row[6]*4+row[7]*9
-        data_list.append(data_dic)
-        
-    print(data_list)
-    
-     
+        data_dic['f_cal'] = round(row[5]*4+row[6]*4+row[7]*9,2)
+        data_list.append(data_dic)     
+    # print(data_list)
     context={'data':data_list}
     Oracles.oraclose(my_cursor,my_conn)
-    
-    
-    # print(context)
-    # return HttpResponse(status=204)
     return JsonResponse(context)
     
     
