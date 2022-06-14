@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse, JsonResponse,HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
 import cx_Oracle
 # import jaydebeapi
@@ -51,11 +52,55 @@ def mealCheck(request):
     return render(request,'mealCheck.html')
 
 
+
 def exerciseCheck(request):
-    return render(request,'exerciseCheck.html')
+    data=[{'user': 'gong111', 'exercise': 'wa_3','ex_time':80,'burned':780,'goal':1000,'content':''},
+          {'user': 'gong111', 'exercise': 'wa_4','ex_time':80,'burned':780,'goal':1000,'content':''},
+          {'user': 'gong111', 'exercise': 'wa_5','ex_time':80,'burned':780,'goal':1000,'content':''}]
+    # qs=Exercise.objects.all()
+    content={'exerciseList':data}
+    return render(request,'exerciseCheck.html',content)
 
 def exercise1(request):
-    return JsonResponse()
+    data = [{'activity': 'bicycling', 'ex_name': '자전거','level':2},
+            {'activity': 'running', 'ex_name': '조깅','level':3},
+            {'activity': 'running', 'ex_name': '달리기','level':3},
+            {'activity': 'walking', 'ex_name': '걷기','level':3},
+            {'activity': 'walking', 'ex_name': '걷기','level':6},
+            {'activity': 'sports', 'ex_name': '야구','level':6},
+            {'activity': 'sports', 'ex_name': '농구','level':6},
+            {'activity': 'health club exercise', 'ex_name': '풀업','level':6},
+            {'activity': 'health club exercise', 'ex_name': '행잉레그레이즈','level':6},
+            {'activity': 'health club exercise', 'ex_name': '레그프레스','level':6},
+            {'activity': 'sports', 'ex_name': '축구','level':6}]
+    
+    data1=list({v['ex_name']:v for v in data}.values()) # ex_name이 같은데 level이 다르면 같은 이름을 여러번 프린트하게 되어서 중복제거를 해줘야함
+    return JsonResponse(data1,safe=False)
+
+def exercise2(request):
+    data = [{'activity': 'bicycling', 'ex_name': '자전거','level':2},
+            {'activity': 'running', 'ex_name': '조깅','level':3},
+            {'activity': 'running', 'ex_name': '달리기','level':3},
+            {'activity': 'walking', 'ex_name': '걷기','level':3},
+            {'activity': 'walking', 'ex_name': '걷기','level':6},
+            {'activity': 'sports', 'ex_name': '야구','level':6},
+            {'activity': 'sports', 'ex_name': '농구','level':6},
+            {'activity': 'health club exercise', 'ex_name': '풀업','level':6},
+            {'activity': 'health club exercise', 'ex_name': '행잉레그레이즈','level':6},
+            {'activity': 'health club exercise', 'ex_name': '레그프레스','level':6},
+            {'activity': 'sports', 'ex_name': '축구','level':6}]
+    
+    # 입력한 날짜 자동으로 적용되는 코드 짜야함
+    
+    return JsonResponse(data,safe=False)
+
+def saveBtn(request):
+    # 칼로리등등 계산해서 저장해야함
+    # 데일리 운동 화면에서 총 운동 시간/운동 횟수/1회 평균 운동 시간 연동해야함
+    
+    
+    return redirect("/dailycheck/exerciseCheck/")
+    
 
 
 def myStatus(request):

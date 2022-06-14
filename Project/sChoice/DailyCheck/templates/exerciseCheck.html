@@ -15,7 +15,6 @@
                
             </canvas> 
             <div id='labeltext' class="label-text">
-
             </div>
         
        
@@ -29,16 +28,22 @@
 	
 	<div id="box2">
 		<table id = "inputsection">
+            
+            
             <tr>                
-                <td width=250 height=250 style='background-color:#A0DDE0;'> 
-                    <a href="#">
-                    <ul>스쿼트</ul>
-                    <ul>200개</ul>               
-                    <ul>150kcal</ul>               
-                    </a>
-                
-                </td>
-                <td width=250 height=250 style='background-color:#eee;'><img onclick="addExercise()" width=50 height=50 src='/static/img/basic/plus.png'></td>
+                {%if exerciseList%}
+                {%for exer in exerciseList%}
+                    <td width=250 height=250 style='background-color:#A0DDE0;'> 
+                        <a href="#">
+                        <ul>{{exer.exercise}}</ul>
+                        <ul>200개</ul>               
+                        <ul>150kcal</ul>               
+                        </a>
+                    
+                    </td>
+
+                {%endfor%}
+                {%endif%}
             </tr>
             <tr>
                 <td width=250 height=250 style='background-color:#eee;'><img onclick="addExercise()" width=50 height=50 src='/static/img/basic/plus.png'></td>
@@ -64,14 +69,14 @@
                     <p id='des'>원하는 운동항목을 선택하세요.</p>
                 </h3>
                 <div class = "activitysel">
-                    <ul id="bicycling" class="activity" name="activity" value="bicycling">자전거</ul>
-                    <ul id="conditioning" class="activity" name="activity" value="conditioning">체형교정운동</ul>
-                    <ul id="healthclub" class="activity" name="activity" value="healthclub">헬스</ul>
-                    <ul id="running" class="activity" name="activity" value="running">러닝</ul>
-                    <ul id="sports" class="activity" name="activity" value="sports">스포츠</ul>
-                    <ul id="walking" class="activity" name="activity" value="walking">걷기</ul>
-                    <ul id="water" class="activity" name="activity" value="water">수상운동</ul>
-                    <ul id="winter" class="activity" name="activity" value="winter">설상운동</ul>
+                    <ul class="" name="activity" value="bicycling"><img class='imgtt' width=25 height=25 src='/static/img/basic/check2.png'>bicycling</ul>
+                    <ul class="" name="activity" value="conditioning"><img class='imgtt' width=25 height=25 src='/static/img/basic/check2.png'>conditioning exercise</ul>
+                    <ul class="" name="activity" value="healthclub"><img class='imgtt' width=25 height=25 src='/static/img/basic/check2.png'>health club exercise</ul>
+                    <ul class="" name="activity" value="running"><img class='imgtt' width=25 height=25 src='/static/img/basic/check2.png'>running</ul>
+                    <ul class="" name="activity" value="sports"><img class='imgtt' width=25 height=25 src='/static/img/basic/check2.png'>sports</ul>
+                    <ul class="" name="activity" value="walking"><img class='imgtt' width=25 height=25 src='/static/img/basic/check2.png'>walking</ul>
+                    <ul class="" name="activity" value="water"><img class='imgtt' width=25 height=25 src='/static/img/basic/check2.png'>water activities</ul>
+                    <ul class="" name="activity" value="winter"><img class='imgtt' width=25 height=25 src='/static/img/basic/check2.png'>winter activities</ul>
                 </div>
                 <br>
                 <button class="nextBtn" id='nextBtn' onclick="nextBtn()">Next</button>
@@ -94,17 +99,8 @@
                     <br>
                     <p id='des'>원하는 운동을 선택하세요.</p>
                 </h3>
-                <div class = "exerciseysel">
-                    <ul id="ex1" class="exercise" name="exercise" value="ex1">풀업</ul>
-                    <ul id="ex2" class="exercise" name="exercise" value="ex2">레그프레스</ul>
-                    <ul id="ex3" class="exercise" name="exercise" value="ex3">아웃타이</ul>
-                    <ul id="ex4" class="exercise" name="exercise" value="ex4">이너타이</ul>
-                    <ul id="ex5" class="exercise" name="exercise" value="ex5">익스텐션</ul>
-                    <ul id="ex6" class="exercise" name="exercise" value="ex6">브이스쿼트</ul>
-                    <ul id="ex7" class="exercise" name="exercise" value="ex7">바벨스쿼트</ul>
-                    <ul id="ex8" class="exercise" name="exercise" value="ex8">스플릿런지</ul>
-                    <ul id="ex9" class="exercise" name="exercise" value="ex9">바벨런지</ul>
-                    <ul id="ex10" class="exercise" name="exercise" value="ex10">스미스런지</ul>
+                <div id="exerciseysel" class = "exerciseysel">
+
                 </div>
                 <br>
                 <button class="nextBtn2" id='nextBtn2' onclick="nextBtn2()">Next</button>
@@ -123,7 +119,7 @@
             <span class="close3">&times;</span>
             <br>
             <!--activity 고르기-->
-            <form method = "POST" action = "" id="wExercise">
+            <form method = "POST" action = "{%url 'DailyCheck:saveBtn'%}" id="wExercise">
                 {% csrf_token %}
                 <div class='sel_box' name='savebox'>
                     <h3 class="join_title">
@@ -198,7 +194,7 @@
                         </table>
                     </div>
                     <br>
-                    <button class="saveBtn" id='saveBtn' onclick="saveBtn()">Save</button>
+                    <button type="submit" class="saveBtn" id='saveBtn' onclick="saveBtn()">Save</button>
 
                 </div>
                 <br>
@@ -212,34 +208,75 @@
             var activity
             var exerciseName
             var exercisenumber
-            $(document).on("click",".activity",function(){
+            $(document).on("click","ul",function(){
                 activityName = $(this).text();
-                alert(activityName)
+                $(this).toggleClass("on")
+
+
             })
             $(document).on("click",".exercise",function(){
                 exerciseName = $(this).text();
-                alert(exerciseName)
+                $(this).toggleClass("on")
             })
             $('#nextBtn').click(function(){
-                alert(activityName)
-
                 $.ajax({
-                    url:'{%url "DailyCheck:exercise1"%}'
-                    dataType:'json'
+                    url:'{%url "DailyCheck:exercise1"%}',
+                    dataType:'json',
                     success:function(data){
-                        alert('성공')
+                        console.log(activityName)
+                        var str=''
+                        let ex=[]
+                        for(let i=0;i<data.length;i++){
+                            if(data[i].activity==activityName){
+                                str+='<ul class="exercise" name="exercise">'+data[i].ex_name+'</ul>'
+                            }
+                        }
+                        $('#exerciseysel').html(str)
                     },
                     error:function(){
                         alert('실패')
                     }
-                })//ajax
-
-
-
+                })//ajax 
+            
 
             })//nextBtn function
             $('#nextBtn2').click(function(){
                 $('#saveexercise').attr('value',exerciseName); 
+                $.ajax({
+                    url:'{%url "DailyCheck:exercise2"%}',
+                    dataType:'json',
+                    success:function(data){
+                        console.log(exerciseName)
+                        str=''
+                        str+='<td>'
+                        str+='<label>운동강도</label>'
+                        str+='</td>'
+                        str+='<td>'
+                        str+='<select id="savelevel" name="savelevel" aria-label="운동강도"><br>'
+                        str+='<option disabled selected>운동강도</option>'
+                        for(let i=0;i<data.length;i++){
+                            if(data[i].ex_name==exerciseName){
+                                if(data[i].level==2){
+                                    str+='<option value="2">저강도</option>'
+                                }
+                                else if(data[i].level==3){
+                                    str+='<option value="3">중강도</option>'
+                                }
+                                else if(data[i].level==6){
+                                    str+='<option value="6">고강도</option>'
+                                }
+                            }
+                        }
+                        str+='</select>'
+                        str+='</td>'
+                        $('#leveltable').html(str)
+                    },
+                    error:function(){
+                        alert('실패')
+                    }
+                })//ajax 
+            
+
             })
             $('#saveBtn').click(function(){
                 exercisenumber=$('#write2').text()
@@ -247,7 +284,6 @@
                 var ultext=''
                 ultext+='<ul>'+exercisenumber+'</ul>'
                 $('#saveexercise').attr('value',ultext); 
-
 
                 
             })
@@ -260,10 +296,13 @@
         function nextBtn(){
             modal.style.display = "none";
             modal2.style.display = "block";
+
+            
         }
         function nextBtn2(){
             modal2.style.display = "none";
             modal3.style.display = "block";
+            
         }
 
         function saveBtn(){
