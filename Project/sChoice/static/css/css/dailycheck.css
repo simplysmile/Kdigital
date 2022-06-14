@@ -1,0 +1,248 @@
+*{ 
+	margin: 0;
+	padding: 0;
+}
+#box1{
+
+	float: left;
+	width: 50%;
+
+
+}
+#box2{
+    
+	width: 50%;
+    float: left;
+    
+}
+
+a:link {
+    color: black;
+    text-decoration:none;
+}
+a:visited{
+    color:black;
+    text-decoration: none;
+}
+a:hover{
+    color:black;
+    text-decoration: none;
+}
+#inputsection{
+    margin: 0 auto;
+    margin-top: 10%;
+    width: 70%;
+    height: 500px;
+    
+    border-collapse: collapse;
+}
+#progressbars{
+    margin: 0 auto;
+    
+    width: 500px;
+    height: 50px;
+    
+    border-collapse: collapse;
+}
+tr,td{
+    margin: 0 auto;
+    
+    border-collapse: collapse;
+    text-align: center;
+    border: 1px solid white;
+    border-radius: 20px;
+
+}
+
+ul{
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;    
+}
+
+
+.label-text {
+    margin-top:10%; 
+    position: absolute; 
+    top: 0px; 
+    left: 0px; 
+    width: 50%; 
+    height: 60%; 
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    font-size: 1.5rem;
+    padding-top: 1.5rem;
+}
+
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  height: 500px
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+/* PROGRESSBAR */
+
+.progress-value {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: justify;
+    -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    font-size: .875rem;
+    padding-bottom: .25rem;
+  }
+  
+  progress {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    color: #273238;
+  }
+  
+  progress::-webkit-progress-bar {
+    background-color: #eee;
+    border-radius: 8px;
+  }
+  
+  progress::-webkit-progress-value {
+    background-color: #273238;
+    border-radius: 8px;
+  }
+  
+  progress::-moz-progress-bar {
+    background-color: #eee;
+    border-radius: 8px;
+  }
+
+
+  #carbB{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    color: #ECEC84;
+  }
+  
+  #carbB::-webkit-progress-bar {
+    background-color: #eee;
+    border-radius: 8px;
+  }
+  
+  #carbB::-webkit-progress-value {
+    background-color: #ECEC84;
+    border-radius: 8px;
+  }
+  
+  #carbB::-moz-progress-bar {
+    background-color: #eee;
+    border-radius: 8px;
+  }
+
+  #proteinB{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    color: #FFB69B;
+  }
+  
+  #proteinB::-webkit-progress-bar {
+    background-color: #eee;
+    border-radius: 8px;
+  }
+  
+  #proteinB::-webkit-progress-value {
+    background-color: #FFB69B;
+    border-radius: 8px;
+  }
+  
+  #proteinB::-moz-progress-bar {
+    background-color: #eee;
+    border-radius: 8px;
+  }
+
+  #fatB{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    color: #A299CA;
+  }
+  
+  #fatB::-webkit-progress-bar {
+    background-color: #eee;
+    border-radius: 8px;
+  }
+  
+  #fatB::-webkit-progress-value {
+    background-color: #A299CA;
+    border-radius: 8px;
+  }
+  
+  #fatB::-moz-progress-bar {
+    background-color: #eee;
+    border-radius: 8px;
+  }
+
+

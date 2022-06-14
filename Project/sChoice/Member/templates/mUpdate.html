@@ -1,0 +1,73 @@
+{% load static %}
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900&display=swap&subset=korean" rel="stylesheet">
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/read.css' %}">
+    <title>My Info Update</title>
+    <script>
+      function cancelBtn(){
+        if (confirm('수정을 취소하시겠습니까?')){
+          location.href="#"
+        }
+  
+      }
+    </script>
+</head>
+<body>
+  <section>
+    <h1>나의 정보 수정하기 </h1>
+    <hr>
+
+    <form action="{% url 'Member:mUpdate' %}" name="write" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <table>
+        <colgroup>
+          <col width="30%">
+          <col width="70%">
+      </colgroup>
+        <tr>
+          <th>사용자이름 :</th>
+          <td>{{request.session.session_user_name}}</td>
+          <input type='text' name='user_name' value="{{request.session.session_user_name}}">
+        </tr>
+        <tr>
+          <th>아이디 :</th>
+          <td>{{request.session.session_user_id}}</td>
+          <input type='text' name='user_id' value="{{request.session.session_user_id}}">
+        </tr>
+        <tr>
+          <th>비밀번호 :</th>
+          <td>{{request.session.session_user_pw}}</td>
+          <input type='text' name='user_pw' value="{{request.session.session_user_pw}}">
+        </tr>
+        <tr>
+          <th>생년월일 :</th>
+          <td>{{request.session.session_birth}}</td>
+          <input type='text' name='birth' value="{{request.session.session_birth}}">
+        </tr>
+        <tr>
+          <th>성별 :</th>
+          <td>{{request.session.session_gender}}</td>
+          <input type='text' name='gender' value="{{request.session.session_gender}}">
+        </tr>
+        <tr>
+          <th>전화 :</th>
+          <td>{{request.session.session_phone}}</td>
+          <input type='text' name='phone' value="{{request.session.session_phone}}">
+        </tr>
+      </table>
+
+      <hr>
+      <div class="button-wrapper">
+        <button type="submit" class="write">수정완료</button>
+        <button type="button" onclick="cancelBtn()" class="cancel">취소</button>
+      </div>
+    </form>
+    </section>
+</body>
+</html>

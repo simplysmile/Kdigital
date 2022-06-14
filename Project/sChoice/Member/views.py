@@ -4,7 +4,85 @@ from django.contrib.auth.hashers import make_password
 from Member.models import Members
 import datetime 
 
-# Create your views here.
+# 내 정보수정 함수
+def mUpdate(request):
+    user_id='zuba'
+    if request.method =="GET":
+        qs = Members.objects.get(user_id=user_id)
+        context = {'update':qs}
+        return render (request,'mUpdate.html',context)
+    else:
+        # 수정form에서 데이터 전달
+        user_name = request.POST.get('user_name')
+        user_id = request.POST.get('user_id')
+        user_pw = request.POST.get('user_pw')
+        birth = request.POST.get('birth')
+        gender = request.POST.get('gender')
+        phone = request.POST.get('phone')
+        email = request.POST.get('email')
+        # db에 수정저장
+        qs = Members.objects.get(user_id=user_id)
+        qs.user_name =  user_name
+        qs.user_pw =  user_pw
+        qs.birth =  birth
+        qs.gender = gender
+        qs.phone =  phone
+        qs.email =  email
+        qs.save()
+        return redirect('Member:mView')
+
+
+
+        
+        
+
+        
+
+
+# 회원 삭제 함수
+def mDelete(request):
+    user_id="zuba"
+    qs = Members.objects.get(user_id=user_id)
+    qs.delete()
+    return redirect('/')
+
+# 회원 읽기 함수
+def mView(request):
+    user_id = "zuba"
+    qs = Members.objects.get(user_id=user_id)
+    qs.save()
+    context={'view':qs}
+    return render(request,'mView.html',context)
+
+
+## 로그인 함수
+def login(request):
+    if request.method=='GET':
+        return render(request,'login.html')
+    else: 
+        user_id = request.POST.get('user_id')
+        user_pw = request.POST.get('user_pw')
+
+        # DB에서 id,pw 검색
+        try:
+            qs = Members.objects.get(user_id=user_id,user_pw=user_pw)
+        except Members.DoesNotExist: 
+            qs = None 
+        if qs:
+            request.session['session_user_id']=qs.user_id
+            request.session['session_user_name']=qs.user_name
+            return redirect('/')
+        else:
+            #user_id,user_pw 존재하지 않을 때
+            msg="아이디 또는 패스워드가 일치하지 않습니다. \\n 다시 로그인해주세요.!!"
+            return render(request, 'login.html',{'msg':msg})
+    
+# logout 함수        
+def logout(request):
+    request.session.clear()
+    return redirect('/')    
+#######################################################
+
 def signup(request):   #회원가입 페이지를 보여주기 위한 함수
     
     
