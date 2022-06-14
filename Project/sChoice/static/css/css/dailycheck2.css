@@ -136,19 +136,6 @@ a:hover{
   margin: 0 auto;
   width:50%;
 }
-
-.imgtt{
-  display: none;
-}
-.on .imgtt{
-  display: inline-block;
-  line-height: 0px;
-  font-size: 0px;
-
-}
-#addExercise:hover{
-  cursor: pointer;
-}
 .activitysel ul,
 .exerciseysel ul{
   padding: 20px;
@@ -283,22 +270,22 @@ a:hover{
     color: #ECEC84;
   }
   
-  #exB1::-webkit-progress-bar {
+  #ex1B::-webkit-progress-bar {
     background-color: #eee;
     border-radius: 8px;
   }
   
-  #exB1::-webkit-progress-value {
+  #ex1B::-webkit-progress-value {
     background-color: #ECEC84;
     border-radius: 8px;
   }
   
-  #exB1::-moz-progress-bar {
+  #ex1B::-moz-progress-bar {
     background-color: #eee;
     border-radius: 8px;
   }
 
-  #exB2{
+  #ex2B{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -309,22 +296,22 @@ a:hover{
     color: #FFB69B;
   }
   
-  #exB2::-webkit-progress-bar {
+  #ex2B::-webkit-progress-bar {
     background-color: #eee;
     border-radius: 8px;
   }
   
-  #exB2::-webkit-progress-value {
+  #ex2B::-webkit-progress-value {
     background-color: #FFB69B;
     border-radius: 8px;
   }
   
-  #exB2::-moz-progress-bar {
+  #ex2B::-moz-progress-bar {
     background-color: #eee;
     border-radius: 8px;
   }
 
-  #exB3{
+  #ex3B{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -335,17 +322,17 @@ a:hover{
     color: #A299CA;
   }
   
-  #exB3::-webkit-progress-bar {
+  #ex3B::-webkit-progress-bar {
     background-color: #eee;
     border-radius: 8px;
   }
   
-  #exB3::-webkit-progress-value {
+  #ex3B::-webkit-progress-value {
     background-color: #A299CA;
     border-radius: 8px;
   }
   
-  #exB3::-moz-progress-bar {
+  #ex3B::-moz-progress-bar {
     background-color: #eee;
     border-radius: 8px;
   }

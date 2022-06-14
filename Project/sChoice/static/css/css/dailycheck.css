@@ -12,7 +12,7 @@
 #box2{
     
 	width: 50%;
-  float: left;
+    float: left;
     
 }
 
@@ -44,28 +44,17 @@ a:hover{
     
     border-collapse: collapse;
 }
-
-#inputsection tr,td{
-  margin: 0 auto;
-  height:250px;
-  border-collapse: collapse;
-  text-align: center;
-  border: 1px solid white;
-  border-radius: 20px;
-  
-}
-
-#modalcontent3>.sel_box>.savecontent #savetable tr,td{
+tr,td{
     margin: 0 auto;
-    height: 50px;
+    
     border-collapse: collapse;
     text-align: center;
     border: 1px solid white;
+    border-radius: 20px;
 
 }
 
-
-#box2 ul{
+ul{
   font-size: 30px;
   font-weight: bold;
   text-align: center;    
@@ -82,11 +71,10 @@ a:hover{
     z-index: 5;
     display: flex;
     justify-content: center;
-    text-align: center; 
     align-items: center;
     pointer-events: none;
     font-size: 1.5rem;
-    padding-top: 0;
+    padding-top: 1.5rem;
 }
 
 
@@ -112,120 +100,27 @@ a:hover{
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
-  font-size: 20px;
-  overflow: auto;
+  height: 500px
 }
-
-/* Modal save Content */
-.modal-save-content {
-  background-color: #fefefe;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 40%;
-  font-size: 20px;
-  overflow: auto;
-}
-
-
-#des{
-  font-size: 12px;
-}
-.activitysel,
-.exerciseysel{
-  margin: 0 auto;
-  width:50%;
-}
-
-.imgtt{
-  display: none;
-}
-.on .imgtt{
-  display: inline-block;
-  line-height: 0px;
-  font-size: 0px;
-
-}
-#addExercise:hover{
-  cursor: pointer;
-}
-.activitysel ul,
-.exerciseysel ul{
-  padding: 20px;
-  text-decoration: none;
-  margin: 0 auto;
-  border-collapse: collapse;
-  text-align: center;
-}
-.activitysel ul:hover,
-.exerciseysel ul:hover{
-  text-decoration: underline;
-  cursor: pointer;
-
-}
-.activitysel ul:active,
-.activitysel ul:focus,
-.exerciseysel ul:active,
-.exerciseysel ul:focus{
-  color: red;
-}
-
-.labelname{
-  margin-top: 10px;
-  margin-bottom: 10px;
-  height: 100px;
-}
-
-
-.savecontent{
-  margin: 0 ;
-  padding-top: 20px;
-}
-.savecontent2{
-  font-size: 15px;
-}
-
 
 /* The Close Button */
-.close,
-.close2,
-.close3 {
+.close {
   color: #aaaaaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
 }
 .close:hover,
-.close:focus,
-.close3:hover,
-.close3:focus,
-.close2:hover,
-.close2:focus {
+.close:focus {
   color: #000;
   text-decoration: none;
   cursor: pointer;
 }
 
 
-.nextBtn,
-.nextBtn2,
-.saveBtn{
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  border: 1px solid white;
-  border-collapse: collapse;
 
-}
 
-.nextBtn:hover,
-.nextBtn:focus,
-.nextBtn2:hover,
-.nextBtn2:focus,
-.saveBtn:hover,
-.saveBtn:focus{
-  cursor: pointer;
-}
+
 
 
 /* PROGRESSBAR */
@@ -272,7 +167,7 @@ a:hover{
   }
 
 
-  #ex1B{
+  #carbB{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -283,22 +178,22 @@ a:hover{
     color: #ECEC84;
   }
   
-  #exB1::-webkit-progress-bar {
+  #carbB::-webkit-progress-bar {
     background-color: #eee;
     border-radius: 8px;
   }
   
-  #exB1::-webkit-progress-value {
+  #carbB::-webkit-progress-value {
     background-color: #ECEC84;
     border-radius: 8px;
   }
   
-  #exB1::-moz-progress-bar {
+  #carbB::-moz-progress-bar {
     background-color: #eee;
     border-radius: 8px;
   }
 
-  #exB2{
+  #proteinB{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -309,22 +204,22 @@ a:hover{
     color: #FFB69B;
   }
   
-  #exB2::-webkit-progress-bar {
+  #proteinB::-webkit-progress-bar {
     background-color: #eee;
     border-radius: 8px;
   }
   
-  #exB2::-webkit-progress-value {
+  #proteinB::-webkit-progress-value {
     background-color: #FFB69B;
     border-radius: 8px;
   }
   
-  #exB2::-moz-progress-bar {
+  #proteinB::-moz-progress-bar {
     background-color: #eee;
     border-radius: 8px;
   }
 
-  #exB3{
+  #fatB{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -335,17 +230,17 @@ a:hover{
     color: #A299CA;
   }
   
-  #exB3::-webkit-progress-bar {
+  #fatB::-webkit-progress-bar {
     background-color: #eee;
     border-radius: 8px;
   }
   
-  #exB3::-webkit-progress-value {
+  #fatB::-webkit-progress-value {
     background-color: #A299CA;
     border-radius: 8px;
   }
   
-  #exB3::-moz-progress-bar {
+  #fatB::-moz-progress-bar {
     background-color: #eee;
     border-radius: 8px;
   }
