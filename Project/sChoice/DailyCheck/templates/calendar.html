@@ -32,8 +32,9 @@
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>
-            <br><br>
+            <br>
             <p>
+                <ul><p id='clickeddate'></p></ul>
                 <ul><a href="/dailycheck/mealCheck/">식단</a></ul>
                 <ul><a href="/dailycheck/exerciseCheck/">운동</a></ul>
                 <ul><a href="#">사진</a></ul>
@@ -48,8 +49,13 @@
     
     <script>
         // 모달
-        function selectD(){
-            modal.style.display = "block";
+        function selectD(date){
+            const dateToArray = date.split(',')
+
+            
+            modal.style.display = "block";            
+            var dateinsert = '<p> '+dateToArray[0]+'-'+dateToArray[1]+'-'+dateToArray[2]+' </p>'
+            $("#clickeddate").html(dateinsert)
         }
         // Get the modal
         var modal = document.getElementById("myModal");

@@ -67,7 +67,8 @@ function searchDB()
 // 식단 등록 테이블에서 해당 row 삭제
 function del_meal(num)
 {   
-    rmtxt = '.foodid'+num
+    //rmtxt = '.foodid'+num
+    rmtxt = '.'+num
     $(rmtxt).remove()
 }
 
@@ -86,7 +87,7 @@ function add_meal(num)
 
     var insertdata=''
 
-    insertdata += '<tr class="foodid'+adddata.f_id+'"><td>'+adddata.f_name +'</td>'
+    insertdata += '<tr class="'+adddata.f_id+'"><td>'+adddata.f_name +'</td>'
     insertdata += '<td><input id="foodweight'+adddata.f_id+'" class="foodweight" type="text" name="foodweight" size="5" value="'+adddata.f_weight +'" style="text-align:center;"><img width=20 height=20 src="/static/img/basic/chevron.png" onclick="modi_meal('+adddata.f_id+')"></td>'
     insertdata += '<td id="eat_cal'+adddata.f_id+'">'+adddata.f_cal+'</td>'
     insertdata += '<td id="eat_carb'+adddata.f_id+'">'+adddata.f_carb+'</td>'
@@ -100,11 +101,6 @@ function add_meal(num)
             testtest(adddata.id)
         }
     })
-
-
-
-    
-
 }
 
 // 식단에 저장한 데이터의 무게를 조절 
@@ -120,8 +116,6 @@ function modi_meal(num){
         
     }
 
-    rmtxt = '.foodid'+num
-    
     // 무게를 통해 칼로리 및 탄단지 수정을 위한 비율 계산
     var change_gram = document.getElementById('foodweight'+ modidata.f_id ).value;
     var new_ratio = change_gram/Number(modidata.f_weight)
@@ -136,7 +130,7 @@ function modi_meal(num){
     
     
     var updated_data = ''
-    updated_data += '<tr class="foodid'+modidata.f_id+'"><td class="foodid'+modidata.f_id+'">'+ modidata.f_name +'</td>'
+    updated_data += '<tr class="'+modidata.f_id+'"><td class="'+modidata.f_id+'">'+ modidata.f_name +'</td>'
     updated_data += '<td><input id="foodweight'+modidata.f_id+'" class="foodweight" type="text" name="foodweight" size="5" value="'+change_gram +'" style="text-align:center;"><img width=20 height=20 src="/static/img/basic/chevron.png" onclick="modi_meal('+modidata.f_id+')"></td>'
     
     var updated_data_cal = '<td id="eat_cal'+modidata.f_id+'">'+modi_cal+'</td>'
@@ -154,6 +148,80 @@ function modi_meal(num){
     $(txt3).html(updated_data_prot)
     $(txt4).html(updated_data_fat)
     
+
+
+}
+function canceldBtnb()
+{
+    if (confirm('등록을 취소하시겠습니까?')){
+        modal.style.display = "none";   
+    }
+}
+function registerdbBtn()
+{
+    if($("#m_select").val()==''){
+        alert('식사 시간을 선택하셔야 입력이 가능합니다.')
+        $("#m_select").focus()
+        return false
+    }
+
+    var mealtime=$("#m_select").val()
+
+    
+
+
+
+
+    var mtbody = document.getElementById('meal_input_tbody');
+
+    console.log(mtbody)
+  
+    console.log(mtbody.rows[0].cells[0].innerText)
+
+   
+    var realwet = document.getElementById('foodweight'+mtbody.rows[0].className).value;
+    console.log(realwet)
+    
+
+    
+    // alert(mtbody.rows[0].className)
+
+
+    var mymeallist=[]
+    for (var i = 0 ;i < mtbody.rows.length; i++){
+        var mymeal = {'f_id':mtbody.rows[i].className,'f_name':mtbody.rows[i].cells[0].innerText,
+        'f_weight': document.getElementById('foodweight'+mtbody.rows[i].className).value,
+        'f_cal': mtbody.rows[i].cells[2].innerText,
+        'f_carb': mtbody.rows[i].cells[3].innerText,
+        'f_prot': mtbody.rows[i].cells[4].innerText,
+        'f_fat': mtbody.rows[i].cells[5].innerText}
+
+        mymeallist.push(mymeal);
+        
+
+    }
+
+    //console.log(mymeallist)
+
+    mymeallistDic = {'d':mymeallist, 'len': mymeallist.length,'mealtime':mealtime }
+
+    // data: JSON.stringify(mymeallistDic),
+
+    
+
+    $.ajax({
+        type: "GET",
+        url:"/dailycheck/addMealData/",
+        data: mymeallistDic,
+        dataType:"json",   
+        success: function (data) {
+           
+            
+        },
+        error: function () {
+            console.log('error');
+        }
+     });
 
 
 }

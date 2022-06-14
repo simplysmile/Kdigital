@@ -214,3 +214,30 @@ def searchMeal(request):   # food db에서 검색된 자료를 가져오는 함�
     
     
    
+    
+def addMealData(request):
+    
+    response_body = request.GET  
+    meallist = dict(response_body.items())
+    print(meallist)
+    
+    datalen = int(meallist['len'])
+    mealtime = meallist['mealtime']
+    
+    i = 0
+    
+    for i in range(datalen):
+        m_id = meallist['d['+str(i)+'][f_id]']
+        m_name = meallist['d['+str(i)+'][f_name]']
+        m_weight = meallist['d['+str(i)+'][f_weight]']
+        m_cal = meallist['d['+str(i)+'][f_cal]']
+        m_carb = meallist['d['+str(i)+'][f_carb]']
+        m_prot = meallist['d['+str(i)+'][f_prot]']
+        m_fat = meallist['d['+str(i)+'][f_fat]']
+        arr =    [mealtime,m_id,m_name,m_weight,m_cal,m_carb,m_prot,m_fat]
+        print(arr)
+    data_list = []
+    context={'data':data_list}
+    
+    return JsonResponse(context)
+

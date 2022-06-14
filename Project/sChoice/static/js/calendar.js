@@ -1,6 +1,10 @@
 const dateFormat = (date) => {
     return date.toLocaleDateString().replace(/\./g, "").split(" ");
 }
+const dateFormat_send = (date) => {
+    return date.toISOString().slice(0,10);
+    //return date.toLocaleDateString().replace(/\D/g , "");
+}
 
 // 달력 생성
 const makeCalendar = (date) => {
@@ -24,10 +28,10 @@ for (let i = 0; i < prevDay; i++) {
 // 현재 날짜 표시하기
 for (let i = 1; i <= lastDay; i++) {    
     if (i == nowDay){
-        htmlDummy += `<div id="`+ nowMonth +`m`+ i +`" class="colToday" onclick="selectD()">${i}`
-        htmlDummy += `<li>식단</li>`
-        htmlDummy += `<li>운동</li>`
-        htmlDummy += `<li>`+dateFormat(date)+`</li>`
+        htmlDummy += `<div id="`+ nowMonth +`m`+ i +`" class="colToday" onclick="selectD('`+ [nowYear,nowMonth,i] +`')">${i}`
+        htmlDummy += `<li></li>`
+        htmlDummy += `<li></li>`
+        htmlDummy += `<li></li>`
         
         
         
@@ -37,7 +41,7 @@ for (let i = 1; i <= lastDay; i++) {
     }
     else{
 
-        htmlDummy += `<div id="`+ nowMonth +`m`+ i +`" class="abc" onclick="selectD()">${i}</div>`;
+        htmlDummy += `<div id="`+ nowMonth +`m`+ i +`" class="abc" onclick="selectD('`+ [nowYear,nowMonth,i] +`')">${i}</div>`;
     }
     
 }

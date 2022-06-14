@@ -12,5 +12,6 @@ urlpatterns = [
     path('myStatus/',views.myStatus,name='myStatus'),
     path('selfCheck/',views.selfCheck,name='selfCheck'),
     path('searchMeal/',views.searchMeal,name='searchMeal'),
+    path('addMealData/',views.addMealData,name='addMealData'),
     
 ]

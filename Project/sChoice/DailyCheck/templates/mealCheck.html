@@ -140,7 +140,7 @@
             <!-- 모달 창의 왼쪽 창 !!  -->
             <!-- 선택된 음식을 보여주고, 무게에따라 칼로리 계산해서 개인 식단 db에 저장  -->
             <div id = "mealbox1">
-                <form id="mealdb_input"  onsubmit="return false;">  
+                <form name="frm" method="POST" id="mealdb_input"  onsubmit="return false;">  
                     <br>  
                     <!-- 아침, 점심, 저녁, 간식 선택  --> 
                     <select id="m_select" name="meal_time" >
@@ -176,8 +176,8 @@
                         <tbody id="meal_input_tbody">
                         </tbody>
                     </table>
-                    <button> 등록 </button> 
-                    <button> 취소 </button> 
+                    <button type="button" id="registerdb" onclick="registerdbBtn()" > 등록 </button> 
+                    <button type="button" id="canceldb" onclick="canceldBtnb()" > 취소 </button> 
                 </form>           
             </div>
 
