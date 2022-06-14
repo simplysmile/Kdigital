@@ -30,23 +30,17 @@ def mUpdate(request):
         qs.save()
         return redirect('Member:mView')
 
-
-
-        
-        
-
-        
-
-
 # 회원 삭제 함수
-def mDelete(request):
-    user_id="zuba"
+def mDelete(request,user_id):
+    user_id = request.session['session_user_id']
     qs = Members.objects.get(user_id=user_id)
     qs.delete()
     return redirect('/')
 
 # 회원 읽기 함수
-def mView(request,user_id):
+def mView(request):
+    user_id = request.session['session_user_id']
+    print(user_id)
     qs = Members.objects.get(user_id=user_id)
     qs.save()
     context={'view':qs}
