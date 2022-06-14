@@ -1,3 +1,4 @@
 from django.shortcuts import render
 
-# Create your views here.
+def exboard(request):
+    return render(request,'infoTable.html')
