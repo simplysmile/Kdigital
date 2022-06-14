@@ -1,0 +1,65 @@
+/* IE */
+
+select::-ms-expand {
+    display: none;
+
+}
+
+.admin_select {
+
+    appearance: none;
+    width: 150px;
+    height: 35px;
+    background: url('https://freepikpsd.com/media/2019/10/down-arrow-icon-png-7-Transparent-Images.png') calc(100% - 5px) center no-repeat;
+    background-size: 20px;
+    padding: 5px 30px 5px 10px;
+    border-radius: 4px;
+    outline: 0 none;
+
+}
+
+
+
+.admin_select option {
+background: black;
+color: #fff;
+padding: 3px 0;
+}
+
+
+
+
+
+.nav_container { 
+
+    display: flex;
+    flex-direction: row; /** 이거 뭔지 검색:) **/
+    width: 100%;
+    margin: 0; /* 쓸데 없는 공백제거 */
+    padding: 0; /* 쓸데 없는 공백제거 */
+    background-color: lightskyblue;
+    list-style-type:none; 
+    
+    
+
+
+}
+
+.nav_item {
+
+    padding: 15px;
+    cursor: pointer; /* 마우스 커서를 pointer모양으로 함 */
+
+
+} 
+
+.nav_item a {
+
+    text-align: center;
+    text-decoration: none;
+    color: white;
+
+
+
+
+}

@@ -1,49 +1,63 @@
-{% extends 'base.html' %}
-{% block mycontent %}
-{%load static %}
-
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{% static 'css/admin_list.css'%}">
-
-
-
-
+  <title>AdminPage</title>
   <script>
     
   
-
     function searchBtn(){
-
+  
       if($('#searchword').val()==''){
-
+  
         alert('검색어를 입력하세요.')
         $('#searchword').focus()
         return false 
         
       } 
-
+  
       $('#searchfrm').submit()
-
+  
     }
-
-
+  
+  
   </script> 
+</head>
+<body>
 
 
+  <nav>
+  
+    <ul class='nav_container'>
+      <li class='nav_item'><a href="">회원관리</a></li>
+      <li class='nav_item'><a href="">음식DB관리</a></li>
+      <li class='nav_item'><a href="">운동DB관리</a></li>
+      <li class='nav_item'><a href="">게시판관리</a></li>
+      <li class='nav_item'><a href="">Contact-Us</a></li>
+    </ul>
+  
+  </nav>
+  
+  
 
-
+  
   <section>
     <h1>회원관리</h1>
     <div class="wrapper">
       <form action="{% url 'AdminPage:ad_m_L' searchword category %}" name="searchfrm" id='searchfrm' method="post">
         {% csrf_token %} 
         
-        <select name="category" id="category">
+        <select class='admin_select' name="category" id="category">
           <option value="user_name">회원이름</option>
           <option value="user_id">회원아이디</option>
           <option value="emil">이메일</option>
           <option value="all">전체</option>
         </select>
-
+  
         <div class="title">
           <input type="text" name='searchword' id='searchword' size="16">
        
@@ -52,7 +66,7 @@
         </div>
       </form>
     </div>
-
+  
     <table>
       <colgroup>
         <col width="15%">
@@ -89,11 +103,22 @@
       {% endif %}
      
     </table>
- 
-
+  
+  
     <div>
       <button type="button" onclick='writeBtn()'><span>쓰기</span></button>
     </div>
   </section>
 
-{% endblock mycontent %}
+
+
+
+
+
+  
+</body>  
+</html>
+
+
+
+

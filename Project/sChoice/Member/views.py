@@ -19,6 +19,7 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
         user_pw  = request.POST.get('user_pw')
         re_pw  = request.POST.get('re_password')
         pro = request.POST.get('advancelevel')
+        print('전문가여부:',pro)
         year  = int(request.POST.get('year'))
         month = int(request.POST.get('month'))
         day  = int(request.POST.get('day'))
