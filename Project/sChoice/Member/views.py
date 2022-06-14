@@ -1,6 +1,5 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from django.contrib.auth.hashers import make_password
 from Member.models import Members
 import datetime 
 
@@ -41,7 +40,7 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
         goal_period = request.POST.get('goal_period')
         
         
-        user = Members(user_id =user_id, user_pw =make_password(user_pw),user_name=user_name,pro=pro,birth=birth,gender=gender,phone=phone,email=email,zipcode=zipcode,addressd1=addressd1,\
+        user = Members(user_id =user_id, user_pw =user_pw,user_name=user_name,pro=pro,birth=birth,gender=gender,phone=phone,email=email,zipcode=zipcode,addressd1=addressd1,\
             addressd2 = addressd2, addressd3 = addressd3, service=service,user_purpose=user_purpose, user_target=user_target, vegan=vegan, allergic_food=allergic_food, goal_weight=goal_weight, goal_bodyfat=goal_bodyfat, goal_period= goal_period)
         
         user.save()
