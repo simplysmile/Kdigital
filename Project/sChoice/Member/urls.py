@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 app_name='Member'
 urlpatterns = [
+    path('cancel_signup/',views.cancel_signup,name='cancel_signup'),
+    #로그인입력취소
     path('signup/',views.signup,name='signup'),
     #로그인 페이지 연결
     path('login/',views.login,name='login'),

@@ -1,7 +1,6 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from Member.models import Members,Dailydata
-from django.contrib.auth.hashers import make_password
 import datetime 
 
 # 내 정보수정 함수
@@ -76,6 +75,11 @@ def logout(request):
     return redirect('/')    
 #######################################################
 
+
+def cancel_signup():
+    
+    return redirect('Member:signup')
+
 def signup(request):   #회원가입 페이지를 보여주기 위한 함수
     
     
@@ -108,18 +112,17 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
         vegan = request.POST.get('vegan',None)
         allergic_food  = request.POST.get('allergic_food',None)
         goal_weight = request.POST.get('goal_weight',None)
-        print('goal_weight:',goal_weight)
         goal_bodyfat= request.POST.get('goal_bodyfat',None)
         goal_period = request.POST.get('goal_period',None)
         height = request.POST.get('height',None)
         cur_weight = request.POST.get('weight',None)
         
         
-        
-        user = Members(user_id =user_id, user_pw = make_password(user_pw), user_name=user_name,pro=pro,birth=birth,gender=gender,phone=phone,email=email,zipcode=zipcode,addressd1=addressd1,\
+        user = Members(user_id =user_id, user_pw =user_pw,user_name=user_name,pro=pro,birth=birth,gender=gender,phone=phone,email=email,zipcode=zipcode,addressd1=addressd1,\
             addressd2 = addressd2, addressd3 = addressd3, service=service,user_purpose=user_purpose, user_target=user_target, vegan=vegan, allergic_food=allergic_food, goal_weight=goal_weight, goal_bodyfat=goal_bodyfat, goal_period= goal_period)
         
         user2 = Dailydata(height = height,cur_weight=cur_weight)
+        
         user.save()
         user2.save()
         

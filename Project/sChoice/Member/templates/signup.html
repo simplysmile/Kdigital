@@ -1,10 +1,11 @@
 <html>
+    {% load static %}
     
     <head>
         <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+        <link rel="stylesheet" href="{% static 'css/signup.css'%}">
     </head>
     <body>
         <div class= "container">
@@ -19,7 +20,100 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
- 
+<script>
+
+
+
+
+</script>
+
+<script>
+
+    function check_pw(){
+
+        let p1 = document.getElementById('password').value;
+        let p2 = document.getElementById('re_password').value;
+
+        if (p1!=p2) { 
+            document.getElementById('pw_check_msg').innerHTML = "비밀번호가 다릅니다. 다시 확인해 주세요."; 
+        } 
+        else { 
+              document.getElementById('pw_check_msg').innerHTML = ""; 
+          } 
+
+        if (p2==' '){
+            document.getElementById('pw_check_msg').innerHTML = "";
+        }
+       } //비밀번호 확인
+
+
+    
+    function check_email(){
+
+        let email1= document.getElementById('email').value;
+
+        if (email1==''){
+
+            document.getElementById('email_check_msg').innerHTML = '필수 입력사항입니다.';
+
+        }
+        else{
+
+            document.getElementById('email_check_msg').innerHTML = '';
+
+
+        }
+        
+    }
+    
+
+    function check_tel(){
+
+        let tel = document.getElementById('tel').value;
+
+        if (tel==''){
+
+            document.getElementById('tel_check_msg').innerHTML = '필수 입력사항입니다.'
+            
+
+        }
+        else{
+
+            document.getElementById('tel_check_msg').innerHTML = '';
+
+
+        }
+    }
+
+    function check_gender(){
+
+        let female = document.getElementById('F').value;
+        let male = document.getElementById('M').value;
+
+        if (!female.checked && !male.checked){
+
+            document.getElementById('gender_check_msg').innerHTML = '필수 입력사항입니다.'
+            
+
+        }
+        else{
+
+            document.getElementById('gender_check_msg').innerHTML = '';
+
+
+        }
+    }
+    
+
+
+    function cancelBtn(){
+
+
+        location.href="{% url 'Member:cancel_signup' %}"
+
+    }//로그인 입력 취소 
+
+</script>
 <script>
     // 우편번호 찾기 찾기 화면을 넣을 element
     var element_wrap = document.getElementById('wrap');
@@ -118,12 +212,14 @@
 
     <div class="form-group">
       <label for="password">비밀번호</label>
-      <input type="password" class="form-control" id="password" placeholder="비밀번호" name= "user_pw'">
+      <input type="password" class="form-control" id="password"  placeholder="비밀번호" name= "user_pw'">
+      
     </div>
     
     <div class="form-group">
       <label for="re_password">비밀번호 확인</label>
-      <input type= "password" class="form-control" id="re_password" placeholder="비밀번호 확인" name = "re_password">
+      <input type= "password" class="form-control" id="re_password"  onkeyup="check_pw()" placeholder="비밀번호 확인" name = "re_password">
+      <span id="pw_check_msg"></span> 
     </div>
    
 
@@ -151,23 +247,26 @@
 
     <div class="form-group">
       <label for="gender">성별</label><br>
-        <select id="gender" name="gender" aria-label="성별">
+        <select id="gender" name="gender" onkeyup="check_gender()" aria-label="성별">
             <option disabled selected>성별</option>
             <option value="M">남자</option>
             <option value="F">여자</option>
         </select>
+        <span id="gender_check_msg"></span>
     </div>
 
     <div class="form-group">
       <label for="tel">전화</label>
-      <input type= "text" class="form-control" id="tel" placeholder="'-'를 제외하고 입력해주세요." name = "tel">
+      <input type= "text" class="form-control" id="tel" onkeyup="check_tel()" placeholder="'-'를 제외하고 입력해주세요." name = "tel">
+      <span id="tel_check_msg"></span> 
     </div>
-
 
 
     <div class="form-group">
       <label for="email">이메일</label>
-      <input type= "text" class="form-control" id="email" placeholder="abcd@unnischoice.com" name = "email">
+      <input type= "text" class="form-control" id="email" onkeyup="check_email()" placeholder="abcd@unnischoice.com" name = "email">
+      <span id="email_check_msg"></span> 
+
     </div>
 
 
@@ -303,6 +402,8 @@
 
 
     <button type="submit" class="btn btn-primary">회원가입</button>
+    <button type="button" onclick="cancelBtn()" class="btn btn-primary">다시입력</button>
+
     </form>    
 
 
