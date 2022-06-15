@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse,HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from AdminPage.models import Exercise
 from Member.models import Members,Dailydata
+from DailyCheck.models import Dailyexercise,DailyMeal
 import json,datetime
 import cx_Oracle
 # import jaydebeapi
@@ -43,6 +44,14 @@ class Oracles():
 # Create your views here.
 
 def calendar(request):
+    
+    u_id = request.session['session_user_id']
+    qs = Members.objects.get(user_id=u_id)
+    qs_ex = Dailyexercise.objects.get(user=u_id)
+    qs_m = DailyMeal.objects.get(d_member=u_id)
+
+    print(qs_ex.burned_kcal)
+    print(qs_m.d_kcal)
     return render(request,'calendar.html')
 
 def mealCheck(request,sdate):
