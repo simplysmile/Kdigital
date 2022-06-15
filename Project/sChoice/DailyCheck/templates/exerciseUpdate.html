@@ -184,11 +184,11 @@
 
         function saveBtn(){
             modal3.style.display="none";
-            location.href="{% url 'DailyCheck:exerciseCheck'%}"
+            location.href="{%url 'DailyCheck:exerciseCheck' 'sdate' %}"
         }
         function cancelBtn(){
             if (confirm('수정을 취소하시겠습니까?')){
-              location.href="{% url 'DailyCheck:exerciseCheck'%}"
+              location.href="{%url 'DailyCheck:exerciseCheck' 'sdate' %}"
             }
           }
         // Get the modal
@@ -201,7 +201,7 @@
         span3.onclick = function() {
             modal3.style.display = "none";
             labeltext.style.display = "flex";
-            location.href="{%url 'DailyCheck:exerciseCheck'%}"
+            location.href="{%url 'DailyCheck:exerciseCheck' 'sdate' %}"
         }
 
         // When the user clicks anywhere outside of the modal, close it
@@ -209,7 +209,7 @@
             if (event.target == modal3) {
                 modal3.style.display = "none";
                 labeltext.style.display = "flex";
-                location.href="{%url 'DailyCheck:exerciseCheck'%}"
+                location.href="{%url 'DailyCheck:exerciseCheck' 'sdate' %}"
             }
         }
     </script>

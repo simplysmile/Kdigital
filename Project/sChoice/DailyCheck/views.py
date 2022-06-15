@@ -45,10 +45,10 @@ class Oracles():
 def calendar(request):
     return render(request,'calendar.html')
 
-def mealCheck(request):
+def mealCheck(request,sdate):
     
     
-    
+    print(sdate)
     
     return render(request,'mealCheck.html')
 
@@ -63,7 +63,7 @@ def exerciseUpdate(request):
         return render(request,'exerciseUpdate.html')
 
 
-def exerciseCheck(request):
+def exerciseCheck(request,sdate):
     my_conn=Oracles.oraconn()
     my_cursor=Oracles.oracs(my_conn)
     mySQL="select * from dailycheck_dailyexercise"
