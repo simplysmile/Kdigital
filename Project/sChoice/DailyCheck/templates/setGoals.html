@@ -109,6 +109,7 @@
 
                 // 현재몸무게 - 목표몸무게 => 목표기간 : - kcal 
 
+                
                 datas = '운동형'
 
                 var ex_ratio = 1
@@ -160,6 +161,25 @@
                 $('#goal_meal_cal').html(text5)
                 var text6 = '<td> 1일 식사 칼로리 </td><td>'+ shouldeatcal +'</td>'
                 $('#meal_cal').html(text6)
+
+
+                user_goal_data = {'dummy':0,'ubmi':result, 'ubmr': BMR ,'uexgoal':ex_cal,'umgoal':shouldeatcal }
+
+                
+
+                $.ajax({
+                    type: "GET",
+                    url:"/dailycheck/setGoals/",
+                    data: user_goal_data,
+                    dataType:"json",   
+                    success: function (data) {
+                    
+                        
+                    },
+                    error: function () {
+                        console.log('error');
+                    }
+                });
         
 
                 

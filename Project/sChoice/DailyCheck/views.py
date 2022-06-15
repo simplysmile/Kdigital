@@ -351,28 +351,29 @@ def addMealData(request, sdate):
 
 
 def setGoals(request):
+
+    #  세션을 통해서 사용자의 아이디를 가져온다
+    u_id = request.session['session_user_id']
+    #  사용자의 아이디를 이용해서 멤버내의 회원정보를 가져온다. 
+    user = Members.objects.get(user_id=u_id)
+
+    # dailydata db에서 키, 현재 몸무게 데이터를 가져온다
+    user_data = Dailydata.objects.get(user=u_id, add_date=user.createdate)
+
+    # print(user_data.cur_weight)
+
+
     
-    user_id= 'gong1111'
-    qs = Members.objects.get(user_id=user_id)
-    
-    
-    
-    # my_conn=Oracles.oraconn()
-    # my_cursor=Oracles.oracs(my_conn)
-    # mySQL="select * from MEMBER_MEMBERS where user_id='"+user_id+"'"
-    # rows=my_cursor.execute(mySQL)
-    # for row in rows:
-    #     rowlist = list(row)
-    #     print(row) # 튜플 형식 
-        
-    
-    # print(rowlist)
+    userdataitems = dict(request.GET.items() )
+
+    print(userdataitems)
+
 
     
     
-    qs2={'height':167, 'cur_weight': 55}
     
-    context = {"user":qs, "duser":qs2}
+    
+    context = {"user":user, "duser":user_data}
     
     
 
