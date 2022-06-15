@@ -69,11 +69,13 @@
 
     function check_tel(){
 
+        let tel_reg = /[^0-9]+/g;
+
         let tel = document.getElementById('tel').value;
 
-        if (tel==''){
+        if (!tel_reg.test(tel)){
 
-            document.getElementById('tel_check_msg').innerHTML = '필수 입력사항입니다.'
+            document.getElementById('tel_check_msg').innerHTML = '숫자만 입력해주세요'
             
 
         }
@@ -103,6 +105,8 @@
 
         }
     }
+
+    
     
 
 
@@ -362,7 +366,7 @@
 
     <div class="form-group">
         <label for="weigth">몸무게</label>
-        <input type="text" class="form-control"  id="weight" placeholder="몸무게 ex) 50 " name="weigth">   
+        <input type="text" class="form-control"  id="weight" placeholder="몸무게 ex) 50 " name="weight">   
        
     </div>
 

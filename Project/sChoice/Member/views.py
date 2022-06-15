@@ -76,7 +76,7 @@ def logout(request):
 #######################################################
 
 
-def cancel_signup():
+def cancel_signup(request):
     
     return redirect('Member:signup')
 
@@ -94,7 +94,6 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
         user_pw  = request.POST.get('user_pw',None)
         re_pw  = request.POST.get('re_password',None)
         pro = request.POST.get('advancelevel',None)
-        print('전문가여부:',pro)
         year  = int(request.POST.get('year'))
         month = int(request.POST.get('month'))
         day  = int(request.POST.get('day'))
@@ -121,9 +120,10 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
         user = Members(user_id =user_id, user_pw =user_pw,user_name=user_name,pro=pro,birth=birth,gender=gender,phone=phone,email=email,zipcode=zipcode,addressd1=addressd1,\
             addressd2 = addressd2, addressd3 = addressd3, service=service,user_purpose=user_purpose, user_target=user_target, vegan=vegan, allergic_food=allergic_food, goal_weight=goal_weight, goal_bodyfat=goal_bodyfat, goal_period= goal_period)
         
-        user2 = Dailydata(height = height,cur_weight=cur_weight)
-        
         user.save()
+        
+        user2 = Dailydata(user=user, height = height, cur_weight=cur_weight)
+        
         user2.save()
         
         
