@@ -199,6 +199,13 @@ def saveBtn(request):
     
 
 def myStatus(request):
+    my_conn=Oracles.oraconn()
+    my_cursor=Oracles.oracs(my_conn)
+    mySQL="select * from MEMBER_DAILYDATA where user_id='gong1111'"
+    rows=my_cursor.execute(mySQL)
+    for row in rows:
+        print(row)
+    
     return render(request,'myStatus.html')
 
 
@@ -264,3 +271,34 @@ def addMealData(request):
     
     return JsonResponse(context)
 
+
+
+
+
+def setGoals(request):
+    
+    user_id= 'gong1111'
+    qs = Members.objects.get(user_id=user_id)
+    
+    
+    # my_conn=Oracles.oraconn()
+    # my_cursor=Oracles.oracs(my_conn)
+    # mySQL="select * from MEMBER_MEMBERS where user_id='"+user_id+"'"
+    # rows=my_cursor.execute(mySQL)
+    # for row in rows:
+    #     rowlist = list(row)
+    #     print(row) # 튜플 형식 
+        
+    
+    # print(rowlist)
+
+    
+    
+    qs2={'height':167, 'cur_weight': 55}
+    
+    context = {"user":qs, "duser":qs2}
+    
+    
+
+    
+    return render(request,'setGoals.html',context)

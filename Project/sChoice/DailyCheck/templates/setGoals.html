@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+    
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+        
+        <script>
+    
+            var user_data=[0,0,0,0,0];
+            var avg_data=[0,0,0,0,0];
+    
+            function calculator(birth,gender,height,weight,activity,isuser){
+
+                // alert('call cal func')
+    
+                // bmi 계산
+                var len = height/100
+                var result = parseFloat(weight)/parseFloat(len*len);
+                if(result<18.5){
+                    resultText = "저체중";
+                } else if(result<23){
+                    resultText = "정상";
+                } else if(result<25){
+                    resultText = "과체중";
+                } else{
+                    resultText = "비만";
+                }
+        
+                resultText += " 입니다.";
+                result=result.toString().match(/^.*\.\d{2}/);
+        
+                // 기초대사량 계산기 (bmr)
+                // 1 헤리스- 베네딕트 식 
+                // 남: BMR = 88.362 + (13.397*weight) + (4.799*height) - (5.677*age )
+                // 여: BMR = 447.593 + (9.247*weight) + (3.098*height) - (4.330*age)
+        
+                // men: BMR = 66.5 + (13.75 * weight in kg) + (5.003 * height in cm) - (6.75 * age)
+                //      BMR = 88.362 + (13.397 × weight in kg) + (4.799 × height in cm) - (5.677 × age in years)
+                // women: BMR = 655.1 + (9.563 * weight in kg) + (1.850 * height in cm) - (4.676 * age)
+                //      BMR = 447.593 + (9.247 × weight in kg) + (3.098 × height in cm) - (4.330 × age in years)
+        
+        
+        
+                // 2 미플린식 
+                // 남: BMR = (10 × weight) + (6.25 × height) - (5 × age) + 5
+                // 여: BMR = (10 × weight) + (6.25 × height) - (5 × age) - 161
+        
+                var today = new Date();
+                var dd = String(today.getDate()).padStart(2, '0');
+                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                var yyyy = today.getFullYear();
+                var todaydate = yyyy+mm+dd
+                
+                var age = parseInt((Number(todaydate)-Number(birth))*0.0001)
+        
+                var BMR1 = 0
+                if(gender=='male'){
+                    BMR1 =  88.362 + (13.397*weight) + (4.799*height) - (5.677*age )
+                }
+                else{
+                    BMR1 = 447.593 + (9.247*weight) + (3.098*height) - (4.330*age)
+        
+                }
+                var BMR2 = 0
+                if(gender=='male'){
+                    BMR2 = (10*weight) + (6.25*eight) - (5*age) + 5
+                }
+                else{
+                    BMR2 = (10*weight) + (6.25*height) - (5*age) - 161
+        
+                }
+        
+                var BMR = BMR2
+                
+        
+                
+        
+        
+                // 칼로리 소비량 기초대사량 + 활동대사량
+                var EERlist = [BMR * 1.2,BMR * 1.375,BMR * 1.55,BMR * 1.725,BMR * 1.9]
+                var amrlist = []
+                EERlist.forEach(function(item) {
+                    amrlist.push(item-BMR)
+                });
+                // 활동 대사량 AMR
+                
+                var AMR = amrlist[Number(activity)]
+                var EER = EERlist[Number(activity)]
+    
+    
+                AMR=AMR.toString().match(/^.*\.\d{2}/);
+        
+                // 일주일 동안 살빼기위해 필요한 열량 
+                EER = Math.round(EER)
+                var needcal = [EER,EER-250,EER-500,EER-1000]
+    
+    
+    
+                if (isuser==0){
+                    user_data=[Number(height)-100, Number(weight), Number(result[0]),Number(BMR)/100,Number(AMR[0])/10]
+    
+                }
+                else{
+                    avg_data=[Number(height)-100, Number(weight), Number(result[0]),Number(BMR)/100,Number(AMR[0])/10]
+                }
+
+
+                // 현재몸무게 - 목표몸무게 => 목표기간 : - kcal 
+
+                datas = '운동형'
+
+                var ex_ratio = 1
+               
+                if ( datas =='식단형'){
+                    ex_ratio = 0.7 
+
+                }
+                else if( datas =='균형형'){
+                    ex_ratio = 0.5 
+                }
+                else if( datas =='운동형'){
+                    ex_ratio = 0.3
+                }
+
+
+                var cut_weight = {{ duser.cur_weight }} - {{ user.goal_weight }}
+                var total_cal = (7200 * cut_weight) / {{ user.goal_period }}
+
+                var meal_cal = total_cal * ex_ratio
+                var ex_cal = total_cal * (1-ex_ratio)
+    
+
+
+                var shouldeatcal = needcal[0] - meal_cal
+
+
+
+                //<tr id="total_cal"></tr>
+                //<tr id="goal_meal_cal"></tr>
+                //<tr id="goal_ex_cal"></tr>
+
+
+                
+        
+
+                // 결과를 표에 보여준다. 
+            
+
+                var text1 = '<td>BMI 지수</td><td>'+result+'</td>'
+                $('#bmi_t').html(text1)
+                var text2 = '<td>기초대사량(BMR)</td><td>'+ BMR +'</td>'
+                $('#bmr_t').html(text2)
+                var text3 = '<td> 1일 목표 소모 칼로리 </td><td>'+ total_cal +'</td>'
+                $('#total_cal').html(text3)
+                var text4 = '<td> 1일 운동 소모 칼로리 </td><td>'+ ex_cal +'</td>'
+                $('#goal_ex_cal').html(text4)
+                var text5 = '<td> 1일 식사 소모 칼로리 </td><td>'+ meal_cal +'</td>'
+                $('#goal_meal_cal').html(text5)
+                var text6 = '<td> 1일 식사 칼로리 </td><td>'+ shouldeatcal +'</td>'
+                $('#meal_cal').html(text6)
+        
+
+                
+    
+    
+            }  
+            function resetBtn(){
+                window.location.reload()
+                
+            }  
+
+            $(document).ready(function() {
+                // alert('Page is loaded');
+
+                
+    
+                calculator(19970101,'female',{{ duser.height }},{{ duser.cur_weight }},1,0)
+
+
+            });
+
+        </script>
+    
+
+       
+        <table>
+            <tr>
+                <td>사용자 이름 </td>
+                <td>{{ user.user_name }} 님 </td>
+            </tr>
+            <tr>
+                <td>키</td>
+                <td>{{ duser.height }}</td>
+            </tr>
+            <tr>
+                <td>몸무게</td>
+                <td>{{ duser.cur_weight }}</td>
+            </tr>
+            <tr>
+                <td>목표몸무게</td>
+                <td>{{ user.goal_weight }}</td>
+            </tr>
+            <tr>
+                <td>목표기간</td>
+                <td>{{ user.goal_period }}</td>
+            </tr>
+            <tr id="service_t">
+                <td>서비스</td>
+                <td>{{ user.service }}</td>
+            </tr>
+            <tr id="bmi_t"></tr>
+            <tr id="bmr_t"></tr>
+            <tr id="total_cal"></tr>
+            <tr id="goal_ex_cal"></tr>
+            <tr id="goal_meal_cal"></tr>
+            <tr id="meal_cal"></tr>
+
+            
+            
+        </table>  
+                
+
+            <table></table>
+
+
+            <br>
+            <table id="needcalresult"></table>
+
+    
+
+</html>
