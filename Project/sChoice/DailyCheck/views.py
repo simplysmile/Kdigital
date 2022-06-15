@@ -54,13 +54,64 @@ def mealCheck(request,sdate):
 
 
 
-def exerciseView(request):
-    
-    
-    return render(request,'exerciseUpdate.html')
 def exerciseUpdate(request):
     
-        return render(request,'exerciseUpdate.html')
+    return render(request,'exerciseUpdate.html')
+
+
+# 수정 모달페이지를 불러오기위한 빌드업
+def exerciseView(request,sdate):
+    my_conn=Oracles.oraconn()
+    my_cursor=Oracles.oracs(my_conn)
+    mySQL="select * from dailycheck_dailyexercise"
+    
+    rows=my_cursor.execute(mySQL)
+    print(rows)    
+    data_list = []
+    daily_list=[]
+    count=0
+    for row in rows:
+        data_dic={}
+        daily_dic={}
+        data_dic['user_id'] = row[7]
+        qs=Exercise.objects.get(ex_id=row[6])
+        data_dic['ex_name'] = qs.ex_name
+        data_dic['createdate'] = row[5]
+        data_dic['goal_kcal'] = row[3]
+        data_dic['burned_kcal'] = row[2]
+        data_dic['ex_time'] = row[1]
+        num = ''.join(row[4].read())
+        nums=num.split(',')
+        data_dic['ex_counts']=int(nums[0])*int(nums[1])
+        data_list.append(data_dic)
+        
+        count+=1
+        no='exB'+str(count)
+        daily_dic['ex_no']=no
+        daily_dic['ex_name'] = qs.ex_name
+        daily_dic['ex_time'] = row[1]
+        daily_dic['goal_kcal'] = row[3]
+        daily_dic['burned_kcal'] = row[2]
+        
+        if ((int(row[2])/int(row[3]))*100)>=100:
+            daily_dic['kcal_per']=100
+        else:
+            daily_dic['kcal_per'] = (int(row[2])/int(row[3]))*100
+        
+        daily_list.append(daily_dic)
+        
+    daily_list2 = sorted(daily_list, key = lambda item : (-item['kcal_per']))
+        
+    Oracles.oraclose(my_cursor,my_conn)
+        
+        
+    with open('static/exercisetest.json','w') as f:
+        json.dump(daily_list2,f)
+    print(daily_list2)
+    
+    content={'exerciseList':data_list,'sdate':sdate}
+    
+    return render(request,'exerciseUpdate.html',content)
 
 
 def exerciseCheck(request,sdate):
@@ -112,7 +163,7 @@ def exerciseCheck(request,sdate):
         json.dump(daily_list2,f)
     print(daily_list2)
     
-    content={'exerciseList':data_list}
+    content={'exerciseList':data_list,'sdate':sdate}
     return render(request,'exerciseCheck.html',content)
 
 def exercise1(request):

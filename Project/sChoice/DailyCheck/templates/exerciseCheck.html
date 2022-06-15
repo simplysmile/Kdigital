@@ -35,10 +35,12 @@
             {%for exer in exerciseList%}
             <tr>                
                     <td width=250 height=250 style='background-color:#A0DDE0;'> 
-                        <a href="{%url 'DailyCheck:exerciseView'%}">
+                        <a href='{%url "DailyCheck:exerciseView" sdate%}'>
+                        {% comment %} <button class="viewBtn" id='viewBtn'  onclick="viewBtn()"> {% endcomment %}
                         <ul>{{exer.ex_name}}</ul>
                         <ul>{{exer.ex_counts}}회</ul>               
                         <ul>{{exer.burned_kcal}}kcal</ul>               
+                        {% comment %} </button> {% endcomment %}
                         </a>
                     
                     </td>
@@ -254,6 +256,7 @@
             </form>
         </div>
     </div>
+
     <script>
         // 모달
         $(function(){
@@ -430,6 +433,10 @@
             modal.style.display = "block";
             labeltext.style.display = "none";
         }
+        function viewBtn(){
+            modal4.style.display = "block";
+            labeltext.style.display = "none";
+        }
 
         function prevBtn(){
             modal.style.display = "block";
@@ -468,22 +475,22 @@
         span.onclick = function() {
             modal.style.display = "none";
             labeltext.style.display = "flex";
-            location.href="{%url 'DailyCheck:exerciseCheck' 'sdate' %}"
+            location.href="{%url 'DailyCheck:exerciseCheck' sdate %}"
         }
         span2.onclick = function() {
             modal2.style.display = "none";
             labeltext.style.display = "flex";
-            location.href="{%url 'DailyCheck:exerciseCheck' 'sdate' %}"
+            location.href="{%url 'DailyCheck:exerciseCheck' sdate %}"
         }
         span2_1.onclick = function() {
             modal2_1.style.display = "none";
             labeltext.style.display = "flex";
-            location.href="{%url 'DailyCheck:exerciseCheck' 'sdate' %}"
+            location.href="{%url 'DailyCheck:exerciseCheck' sdate %}"
         }
         span3.onclick = function() {
             modal3.style.display = "none";
             labeltext.style.display = "flex";
-            location.href="{%url 'DailyCheck:exerciseCheck' 'sdate' %}"
+            location.href="{%url 'DailyCheck:exerciseCheck' sdate %}"
         }
 
         // When the user clicks anywhere outside of the modal, close it
@@ -491,17 +498,17 @@
             if (event.target == modal) {
                 modal.style.display = "none";
                 labeltext.style.display = "flex";
-                location.href="{%url 'DailyCheck:exerciseCheck' 'sdate'%}"
+                location.href="{%url 'DailyCheck:exerciseCheck' sdate %}"
             }
             if (event.target == modal2) {
                 modal2.style.display = "none";
                 labeltext.style.display = "flex";
-                location.href="{%url 'DailyCheck:exerciseCheck' 'sdate'%}"
+                location.href="{%url 'DailyCheck:exerciseCheck' sdate %}"
             }
             if (event.target == modal3) {
                 modal3.style.display = "none";
                 labeltext.style.display = "flex";
-                location.href="{%url 'DailyCheck:exerciseCheck' 'sdate'%}"
+                location.href="{%url 'DailyCheck:exerciseCheck' sdate %}"
             }
         }
     </script>

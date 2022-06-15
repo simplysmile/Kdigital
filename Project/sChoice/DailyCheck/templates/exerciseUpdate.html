@@ -4,7 +4,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/static/css/dailycheck2.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/dailycheck2_update.css" />
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/static/js/dailycheckExercise.js"></script>
 <script src="/static/js/dailycheckExercise_modal.js"></script>
@@ -64,9 +64,9 @@
                 <div class='sel_box' name='savebox'>
                     <h3 class="join_title">
                         {% comment %} <input type='hidden' name='id' value="{{request.session.session_id}}"> {% endcomment %}
-                        <label>운동기록</label>
+                        <label>기록수정</label>
                         <br>
-                        <p id='des'>운동을 기록하세요.</p>
+                        <p id='des'>운동을 수정하세요.</p>
                     </h3>
                     <div class = "savecontent">
                         <table id="savetable" class="savetable">
@@ -180,17 +180,19 @@
 
                 
             })
+            $('#cancelBtn').click(function(){
+                if (confirm('수정을 취소하시겠습니까?')){
+                    location.href="{% url 'DailyCheck:exerciseCheck' sdate %}"
+                }
+            })
         })
 
         function saveBtn(){
             modal3.style.display="none";
-            location.href="{%url 'DailyCheck:exerciseCheck' 'sdate' %}"
+            location.href="{% url 'DailyCheck:exerciseCheck' sdate %}"
         }
-        function cancelBtn(){
-            if (confirm('수정을 취소하시겠습니까?')){
-              location.href="{%url 'DailyCheck:exerciseCheck' 'sdate' %}"
-            }
-          }
+
+        
         // Get the modal
         var modal3 = document.getElementById("myModal3");
         var labeltext = document.getElementById("labeltext");
@@ -201,7 +203,7 @@
         span3.onclick = function() {
             modal3.style.display = "none";
             labeltext.style.display = "flex";
-            location.href="{%url 'DailyCheck:exerciseCheck' 'sdate' %}"
+            location.href="{% url 'DailyCheck:exerciseCheck' sdate %}"
         }
 
         // When the user clicks anywhere outside of the modal, close it
@@ -209,7 +211,7 @@
             if (event.target == modal3) {
                 modal3.style.display = "none";
                 labeltext.style.display = "flex";
-                location.href="{%url 'DailyCheck:exerciseCheck' 'sdate' %}"
+                location.href="{% url 'DailyCheck:exerciseCheck' sdate %}"
             }
         }
     </script>
