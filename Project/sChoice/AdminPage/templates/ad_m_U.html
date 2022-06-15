@@ -114,24 +114,25 @@
 {% if ad_List%}
     <div class="form-group">
       <label for="re_password">사용자이름</label>
-      <input type= "text" class="form-control" id="user_name" placeholder="{{ad_List.user_name}}" name ="username">
+      <input type= "text" class="form-control" id="user_name" value="{{ad_List.user_name}}" name ="username">
       </div>
 
       <div class="form-group">
         <label for="user_id">아이디</label>
-        <input type="text" class="form-control" id="user_id" placeholder="{{ad_List.user_id}}" name="user_id" readonly>   
+        <input type="text" class="form-control" id="user_id" value="{{ad_List.user_id}}" name="user_id" readonly>   
         <!-- 이 name 값으로 정보가 전달된다 -->
       </div>
 
       <div class="form-group">
         <label for="password">비밀번호</label>
-        <input type="password" class="form-control" id="password" placeholder="{{ad_List.user_pw}}" name= "user_pw'" readonly>
+        <input type="password" class="form-control" id="password" value="{{ad_List.user_pw}}" name= "user_pw'" readonly>
       </div>
       
       <div class="form-group"> 
           <label for="birthday">생년월일</label><br>
-          <input type="text" id="year" placeholder="{{ad_List.birth.year}}" aria-label="년(4자)" maxlength="4" name="year">
+          <input type="text" id="year" value="{{ad_List.birth.year}}" aria-label="년(4자)" maxlength="4" name="year">
           <select id="month"  aria-label="월" name="month">
+
               <option disabled selected>{{ad_List.birth.month}}월</option>
               <option value="01">1월</option>
               <option value="02">2월</option>
@@ -147,7 +148,7 @@
               <option value="10">12월</option>
 
           </select> 
-          <input type="text" id="day" placeholder="{{ad_List.birth.day}}" aria-label="일" maxlength="2" name="day">
+          <input type="text" id="day" value="{{ad_List.birth.day}}" aria-label="일" maxlength="2" name="day">
       </div>
 
       <div class="form-group">
@@ -161,24 +162,24 @@
 
       <div class="form-group">
         <label for="tel">전화</label>
-        <input type= "text" class="form-control" id="tel" placeholder="{{ad_List.phone}}"  name = "tel">
+        <input type= "text" class="form-control" id="tel" value="{{ad_List.phone}}"  name = "tel">
       </div>
 
 
 
       <div class="form-group">
         <label for="email">이메일</label>
-        <input type= "text" class="form-control" id="email" placeholder="{{ad_List.email}}" name = "email">
+        <input type= "text" class="form-control" id="email" value="{{ad_List.email}}" name = "email">
       </div>
 
 
       <div class="form-group">
         <label for="address">주소</label>
-        <input type="text" class="form-control" id="postcode" name="postcode" placeholder="{{ad_List.zipcode}}">
+        <input type="text" class="form-control" id="postcode" name="postcode" value="{{ad_List.zipcode}}">
         <input type="button" onclick="sample3_execDaumPostcode()" value="우편번호 찾기"><br>
-        <input type="text"  class="form-control" id="address" name="address" placeholder="{{ad_List.addressd1}}"><br>
-        <input type="text"  class="form-control" id="detailAddress" name="detailAddress" placeholder="{{ad_List.addressd2}}">
-        <input type="text" class="form-control" id="extraAddress" name="extraAddress"  placeholder="{{ad_List.addressd3}}">
+        <input type="text"  class="form-control" id="address" name="address" value="{{ad_List.addressd1}}"><br>
+        <input type="text"  class="form-control" id="detailAddress" name="detailAddress" value="{{ad_List.addressd2}}">
+        <input type="text" class="form-control" id="extraAddress" name="extraAddress"  value="{{ad_List.addressd3}}">
         <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
         <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
         </div>
@@ -258,24 +259,24 @@
 
       <div class="form-group">
           <label for="goalweigth">목표몸무게</label>
-          <input type="text" class="form-control"  id="goalweigth" placeholder="{{ad_List.goal_weight}}" name="goal_weigth">   
+          <input type="text" class="form-control"  id="goalweigth" value="{{ad_List.goal_weight}}" name="goal_weigth">   
         
       </div>
 
       <div class="form-group">
           <label for="goal_bodyfat">목표체지방률</label>
-          <input type="text" class="form-control"  id="goal_bodyfat" placeholder="{{ad_List.goal_bodyfat}}" name="goal_bodyfat">   
+          <input type="text" class="form-control"  id="goal_bodyfat" value="{{ad_List.goal_bodyfat}}" name="goal_bodyfat">   
         
       </div>
 
       <div class="form-group">
           <label for="goal_period">목표기간</label>
-          <input type="text" class="form-control"  id="goal_period" placeholder="{{ad_List.goal_period}}" name="goal_period">   
+          <input type="text" class="form-control"  id="goal_period" value="{{ad_List.goal_period}}" name="goal_period">   
       </div>
 
       <div class="form-group">
           <label for="allergic_food">알레르기음식</label>
-          <input type="text" class="form-control"  id="allergic_food" placeholder="{{ad_List.allergic_food}}" name="allergic_food">   
+          <input type="text" class="form-control"  id="allergic_food" value="{{ad_List.allergic_food}}" name="allergic_food">   
       </div>
       </table>
           
