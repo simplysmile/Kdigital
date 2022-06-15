@@ -1,12 +1,12 @@
+{% extends 'base.html' %}
 {% load static %}
-<html lang="ko">
+{% block mycontent %}
 <head>
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900&display=swap&subset=korean" rel="stylesheet">
-    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    
     <link rel="stylesheet" href="{% static 'css/read.css' %}">
     
     <title>My Info</title>
@@ -20,7 +20,7 @@
         }
     </script>
 </head>
-<body>
+
     <section>
         <h1>나의 정보</h1>
         <table>
@@ -46,7 +46,7 @@
             </tr>
             <tr>
                 <td>성별 :</td>
-                <td>{{view.gender}}</td>
+                <td>{{view.get_gender_display}}</td>
             </tr>
             <tr>
                 <td>전화 :</td>
@@ -70,23 +70,23 @@
             </tr>
             <tr>
                 <td>서비스 :</td>
-                <td>{{view.service}}</td>
+                <td>{{view.get_service_display}}</td>
             </tr>
             <tr>
                 <td>목적 :</td>
-                <td>{{view.user_purpose}}</td>
+                <td>{{view.get_user_purpose_display}}</td>
             </tr>
             <tr>
                 <td>타겟부위 :</td>
-                <td>{{view.user_target}}</td>
+                <td>{{view.get_user_target_display}}</td>
             </tr>
             <tr>
                 <td>비건여부 :</td>
-                <td>{{view.vegan}}</td>
+                <td>{{view.get_vegan_display}}</td>
             </tr>
             <tr>
                 <td>전문가여부 :</td>
-                <td>{{view.pro}}</td>
+                <td>{{view.get_pro_display}}</td>
             </tr>
             <tr>
                 <td>목표몸무게 :</td>
@@ -115,5 +115,4 @@
             <div class="list" onclick="deleteBtn()">삭제</div>
         </div>
         </section>
-</body>
-</html>
+{%endblock mycontent%}
