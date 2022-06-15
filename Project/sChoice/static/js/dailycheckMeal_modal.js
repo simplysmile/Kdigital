@@ -157,7 +157,7 @@ function canceldBtnb()
         modal.style.display = "none";   
     }
 }
-function registerdbBtn()
+function registerdbBtn(sdate)
 {
     if($("#m_select").val()==''){
         alert('식사 시간을 선택하셔야 입력이 가능합니다.')
@@ -166,7 +166,9 @@ function registerdbBtn()
     }
 
     var mealtime=$("#m_select").val()
+    
 
+    
     
 
 
@@ -191,7 +193,7 @@ function registerdbBtn()
     for (var i = 0 ;i < mtbody.rows.length; i++){
         var mymeal = {'f_id':mtbody.rows[i].className,'f_name':mtbody.rows[i].cells[0].innerText,
         'f_weight': document.getElementById('foodweight'+mtbody.rows[i].className).value,
-        'f_cal': mtbody.rows[i].cells[2].innerText,
+        'f_cal': Math.round(mtbody.rows[i].cells[2].innerText),
         'f_carb': mtbody.rows[i].cells[3].innerText,
         'f_prot': mtbody.rows[i].cells[4].innerText,
         'f_fat': mtbody.rows[i].cells[5].innerText}
@@ -207,11 +209,12 @@ function registerdbBtn()
 
     // data: JSON.stringify(mymeallistDic),
 
+    alert(sdate)
     
 
     $.ajax({
         type: "GET",
-        url:"/dailycheck/addMealData/",
+        url:"/dailycheck/"+ sdate +"/addMealData/",
         data: mymeallistDic,
         dataType:"json",   
         success: function (data) {

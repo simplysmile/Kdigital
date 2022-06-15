@@ -44,20 +44,27 @@ class Oracles():
 # Create your views here.
 
 def calendar(request):
-    
+    # 세션을 통해 아이디 
     u_id = request.session['session_user_id']
-    qs = Members.objects.get(user_id=u_id)
-    qs_ex = Dailyexercise.objects.get(user=u_id)
-    qs_m = DailyMeal.objects.get(d_member=u_id)
+    # 아이디를 사용해서 정보를 얻는다. 
+    user = Members.objects.get(user_id=u_id) # 멤버테이블
+    qs_ex = Dailyexercise.objects.get(user=u_id) # 데일리 운동 테이블
+    qs_m = DailyMeal.objects.get(d_member=u_id) # 데일리 식사 테이블 
 
     print(qs_ex.burned_kcal)
     print(qs_m.d_kcal)
     return render(request,'calendar.html')
 
 def mealCheck(request,sdate):
+    # 세션을 통해 아이디 
+    u_id = request.session['session_user_id']
+    # 사용자의 아이디와, 입력을 위해 클릭한 날짜 정보를 사용해서 쿼리를 얻는다. 
+    # 사용자가, 그 날짜에 먹은 모든 식품을 가져온다. 
+    qs_m = DailyMeal.objects.filter(d_member=u_id, d_meal_date=sdate)
+    for i in range(qs_m.count()):
+        print(qs_m[i].d_food_name)
     
-    
-    print(sdate)
+ 
     
     return render(request,'mealCheck.html')
 
@@ -305,17 +312,21 @@ def searchMeal(request):   # food db에서 검색된 자료를 가져오는 함�
     
    
     
-def addMealData(request):
-    
+def addMealData(request, sdate):
+    #  세션을 통해서 사용자의 아이디를 가져온다
+    u_id = request.session['session_user_id']
+    #  사용자의 아이디를 이용해서 멤버내의 회원정보를 가져온다. 
+    user = Members.objects.get(user_id=u_id)
+    # json 에서 가져온 입력 정보     
     response_body = request.GET  
     meallist = dict(response_body.items())
-    print(meallist)
-    
-    datalen = int(meallist['len'])
+
+    # 총 입력 데이터 길이 (식품 몇개를 입력하는지 나타냄)
+    datalen = int(meallist['len']) 
+    # 현재 입력하고 있는 식사 시간(아침, 점심, 저녁, 간식)
     mealtime = meallist['mealtime']
-    
-    i = 0
-    
+
+    # 총 데이터의 길이만큼 db에 데이터를 넣어준다
     for i in range(datalen):
         m_id = meallist['d['+str(i)+'][f_id]']
         m_name = meallist['d['+str(i)+'][f_name]']
@@ -324,12 +335,16 @@ def addMealData(request):
         m_carb = meallist['d['+str(i)+'][f_carb]']
         m_prot = meallist['d['+str(i)+'][f_prot]']
         m_fat = meallist['d['+str(i)+'][f_fat]']
-        arr =    [mealtime,m_id,m_name,m_weight,m_cal,m_carb,m_prot,m_fat]
-        print(arr)
-    data_list = []
-    context={'data':data_list}
+        # arr =    [mealtime,m_id,m_name,m_weight,m_cal,m_carb,m_prot,m_fat]
+        # print(arr)
+
+        dmeal = DailyMeal(d_member = user, d_meal_date = sdate, d_meal_time=mealtime,d_food=m_id,d_food_name=m_name,d_por=m_weight,d_carb=m_carb,d_fat=m_fat,d_kcal=m_cal)
+        dmeal.save()
+
+
+
     
-    return JsonResponse(context)
+    return redirect('/')
 
 
 
@@ -339,6 +354,7 @@ def setGoals(request):
     
     user_id= 'gong1111'
     qs = Members.objects.get(user_id=user_id)
+    
     
     
     # my_conn=Oracles.oraconn()

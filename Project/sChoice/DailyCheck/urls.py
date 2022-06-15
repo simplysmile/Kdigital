@@ -13,7 +13,7 @@ urlpatterns = [
     path('myStatus/',views.myStatus,name='myStatus'),
     path('selfCheck/',views.selfCheck,name='selfCheck'),
     path('searchMeal/',views.searchMeal,name='searchMeal'),
-    path('addMealData/',views.addMealData,name='addMealData'),
+    path('<str:sdate>/addMealData/',views.addMealData,name='addMealData'),
     path('setGoals/',views.setGoals,name='setGoals'),
     
 ]
