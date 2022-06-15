@@ -54,6 +54,15 @@ def mealCheck(request):
 
 
 
+def exerciseView(request):
+    
+    
+    return render(request,'exerciseUpdate.html')
+def exerciseUpdate(request):
+    
+        return render(request,'exerciseUpdate.html')
+
+
 def exerciseCheck(request):
     my_conn=Oracles.oraconn()
     my_cursor=Oracles.oracs(my_conn)
@@ -62,21 +71,19 @@ def exerciseCheck(request):
     rows=my_cursor.execute(mySQL)
     print(rows)    
     data_list = []
-    data_dic={}
     daily_list=[]
-    daily_dic={}
     count=0
     for row in rows:
         data_dic={}
         daily_dic={}
-        data_dic['user_id'] = row[6]
-        qs=Exercise.objects.get(ex_id=row[5])
+        data_dic['user_id'] = row[7]
+        qs=Exercise.objects.get(ex_id=row[6])
         data_dic['ex_name'] = qs.ex_name
-        data_dic['createdate'] = row[4]
-        data_dic['goal_kcal'] = row[2]
-        data_dic['burned_kcal'] = row[1]
-        data_dic['ex_time'] = row[0]
-        num = ''.join(row[3].read())
+        data_dic['createdate'] = row[5]
+        data_dic['goal_kcal'] = row[3]
+        data_dic['burned_kcal'] = row[2]
+        data_dic['ex_time'] = row[1]
+        num = ''.join(row[4].read())
         nums=num.split(',')
         data_dic['ex_counts']=int(nums[0])*int(nums[1])
         data_list.append(data_dic)
@@ -85,22 +92,25 @@ def exerciseCheck(request):
         no='exB'+str(count)
         daily_dic['ex_no']=no
         daily_dic['ex_name'] = qs.ex_name
-        daily_dic['ex_time'] = row[0]
-        daily_dic['goal_kcal'] = row[2]
-        daily_dic['burned_kcal'] = row[1]
+        daily_dic['ex_time'] = row[1]
+        daily_dic['goal_kcal'] = row[3]
+        daily_dic['burned_kcal'] = row[2]
         
-        if ((int(row[1])/int(row[2]))*100)>=100:
+        if ((int(row[2])/int(row[3]))*100)>=100:
             daily_dic['kcal_per']=100
         else:
-            daily_dic['kcal_per'] = (int(row[1])/int(row[2]))*100
+            daily_dic['kcal_per'] = (int(row[2])/int(row[3]))*100
         
         daily_list.append(daily_dic)
+        
+    daily_list2 = sorted(daily_list, key = lambda item : (-item['kcal_per']))
+        
     Oracles.oraclose(my_cursor,my_conn)
         
         
     with open('static/exercisetest.json','w') as f:
-        json.dump(daily_list,f)
-    print(daily_list)
+        json.dump(daily_list2,f)
+    print(daily_list2)
     
     content={'exerciseList':data_list}
     return render(request,'exerciseCheck.html',content)
@@ -109,14 +119,15 @@ def exercise1(request):
     my_conn=Oracles.oraconn()
     my_cursor=Oracles.oracs(my_conn)
     mySQL="select * from adminpage_exercise"
+                                    
     
     rows=my_cursor.execute(mySQL)
     data_list = []
-    data_dic={}
     for row in rows:
         data_dic={}
         data_dic['ex_name'] = row[5]
         data_dic['activity'] = row[1]
+        data_dic['target_category']=row[6]
         data_list.append(data_dic)
     
     data_relist=list({v['ex_name']:v for v in data_list}.values())
@@ -133,8 +144,6 @@ def exercise2(request):
     rows=my_cursor.execute(mySQL)
     print(rows)    
     data_list = []
-    data_dic={}
-    
     for row in rows:
         data_dic={}
         data_dic['ex_id'] = row[0]
@@ -154,7 +163,23 @@ def saveBtn(request):
     # 칼로리등등 계산해서 저장해야함
     # 데일리 운동 화면에서 총 운동 시간/운동 횟수/1회 평균 운동 시간 연동해야함
     if request.method=='GET':
-        return render(request,'exerciseCheck.html')
+        my_conn=Oracles.oraconn()
+        my_cursor=Oracles.oracs(my_conn)
+        mySQL="select * from adminpage_exercise"
+        
+        rows=my_cursor.execute(mySQL)
+        data_list = []
+        for row in rows:
+            data_dic={}
+            data_dic['ex_name'] = row[5]
+            data_dic['activity'] = row[1]
+            data_list.append(data_dic)
+        
+        data_relist=list({v['ex_name']:v for v in data_list}.values())
+        Oracles.oraclose(my_cursor,my_conn)
+        # data=Exercise.objects.all()
+        # data_list=list(data.values())
+        return JsonResponse(data_relist,safe=False)
     else:
         id=request.POST.get('id')
         member=Members.objects.get(user_id=id)
@@ -170,12 +195,17 @@ def saveBtn(request):
     
         # burned_kcal=Exercise.met*time*(변화추이db.weight/60)
     
-    return redirect("/dailycheck/exerciseCheck/")    
-def reBtn(request):
-    return redirect("/dailycheck/exerciseCheck/")
-
+        return redirect("/dailycheck/exerciseCheck/")    
+    
 
 def myStatus(request):
+    my_conn=Oracles.oraconn()
+    my_cursor=Oracles.oracs(my_conn)
+    mySQL="select * from MEMBER_DAILYDATA where user_id='gong1111'"
+    rows=my_cursor.execute(mySQL)
+    for row in rows:
+        print(row)
+    
     return render(request,'myStatus.html')
 
 
@@ -241,3 +271,34 @@ def addMealData(request):
     
     return JsonResponse(context)
 
+
+
+
+
+def setGoals(request):
+    
+    user_id= 'gong1111'
+    qs = Members.objects.get(user_id=user_id)
+    
+    
+    # my_conn=Oracles.oraconn()
+    # my_cursor=Oracles.oracs(my_conn)
+    # mySQL="select * from MEMBER_MEMBERS where user_id='"+user_id+"'"
+    # rows=my_cursor.execute(mySQL)
+    # for row in rows:
+    #     rowlist = list(row)
+    #     print(row) # 튜플 형식 
+        
+    
+    # print(rowlist)
+
+    
+    
+    qs2={'height':167, 'cur_weight': 55}
+    
+    context = {"user":qs, "duser":qs2}
+    
+    
+
+    
+    return render(request,'setGoals.html',context)

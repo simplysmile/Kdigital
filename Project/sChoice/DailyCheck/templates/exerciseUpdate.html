@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+{% block mycontent %}
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/dailycheck2.css" />
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="/static/js/dailycheckExercise.js"></script>
+<script src="/static/js/dailycheckExercise_modal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+<main>	
+	<div id="box1">
+        
+            <canvas id="myChart" >
+               
+            </canvas> 
+            <div id='labeltext' class="label-text">
+            </div>
+        
+       
+
+        <table id="progressbars">
+
+        </table>
+
+
+	</div>
+	
+	<div id="box2">
+		<table id = "inputsection">
+            
+            
+            {%if exerciseList%}
+            {%for exer in exerciseList%}
+            <tr>                
+                    <td width=250 height=250 style='background-color:#A0DDE0;'> 
+                        <a href="#">
+                        <ul>{{exer.ex_name}}</ul>
+                        <ul>{{exer.ex_counts}}회</ul>               
+                        <ul>{{exer.burned_kcal}}kcal</ul>               
+                        </a>
+                    
+                    </td>
+                    
+            </tr>
+            {%endfor%}
+            {%endif%}
+            <tr>
+                <td id='addExercise' width=250 height=250 style='background-color:#eee;'><img onclick="addExercise()" width=50 height=50 src='/static/img/basic/plus.png'></td>
+            </tr>
+        </table>
+	</div>
+
+    <div id="myModal3" class="modal">
+        <!-- Modal content3 -->
+        <div id='modalcontent3' class="modal-save-content">
+            
+            <span class="close3">&times;</span>
+            <br>
+            <!--activity 고르기-->
+            <form method = "POST" action = "{%url 'DailyCheck:saveBtn'%}" id="wExercise">
+                {% csrf_token %}
+                <div class='sel_box' name='savebox'>
+                    <h3 class="join_title">
+                        {% comment %} <input type='hidden' name='id' value="{{request.session.session_id}}"> {% endcomment %}
+                        <label>운동기록</label>
+                        <br>
+                        <p id='des'>운동을 기록하세요.</p>
+                    </h3>
+                    <div class = "savecontent">
+                        <table id="savetable" class="savetable">
+                            <tr id="datetable">
+                                <td>
+                                    <label>운동 날짜</label>
+                                </td>
+                                <td>
+                                    <input type="text" class="inputbox"  id="date" name="date">
+                                </td>
+                            </tr>
+                            <tr id="nametable">
+                                <td>
+                                    <label>운동이름</label>
+                                </td>
+                                <td>
+                                    <input type="text" class="inputbox"  id="saveexercise" name="saveexercise"><br>
+                                </td>
+                            </tr>
+                            <tr id="leveltable">
+                                <td>
+                                    <label>운동강도</label>
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                            <tr id="contenttable">
+                                <td colsspan="2">
+                                    <label>운동목표</label>                                
+                                </td>
+                            </tr>
+                            <div class="savecontent2">
+                                <tr>
+                                    <td>
+                                        <label for="write1">세트 수</label>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="inputbox"  id="write1" name="write1" value="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="write2">횟수/한 세트 당</label>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="inputbox"  id="write2" name="write2" value=""><br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="write3">시간/한 세트 당(분)</label>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="inputbox"  id="write3" name="write3" value=""><br>
+                                    </td>
+                                </tr>
+                            </div>
+                            <tr id="contenttable2">
+                                <td colsspan="2">
+                                    <label>운동기록</label>                                
+                                </td>
+                            </tr>
+                            <div class="savecontent2_2">
+                                <tr>
+                                    <td>
+                                        <label for="write2_1">세트 수</label>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="inputbox"  id="write2_1" name="write2_1" value="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="write2_2">횟수/한 세트 당</label>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="inputbox"  id="write2_2" name="write2_2" value=""><br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="write2_3">시간/한 세트 당(분)</label>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="inputbox"  id="write2_3" name="write2_3" value=""><br>
+                                    </td>
+                                </tr>
+                            </div>
+                            
+                        </table>
+                    </div>
+                    <br>
+                    <button type="button" class="cancelBtn" id='cancelBtn' onclick="cancelBtn()">Cancel</button>
+                    <button type="submit" class="saveBtn" id='saveBtn' onclick="saveBtn()">Save</button>
+
+                </div>
+                <br>
+            </form>
+        </div>
+    </div>
+    <script>
+        // 모달
+        $(function(){
+            $('#saveBtn').click(function(){
+                exercisenumber=$('#write2').text() //새로받아와야함
+
+                alert('수정완료!')
+                var ultext=''
+                ultext+='<ul>'+exercisenumber+'</ul>'
+                $('#saveexercise').attr('value',ultext); 
+
+                
+            })
+        })
+
+        function saveBtn(){
+            modal3.style.display="none";
+            location.href="{% url 'DailyCheck:exerciseCheck'%}"
+        }
+        function cancelBtn(){
+            if (confirm('수정을 취소하시겠습니까?')){
+              location.href="{% url 'DailyCheck:exerciseCheck'%}"
+            }
+          }
+        // Get the modal
+        var modal3 = document.getElementById("myModal3");
+        var labeltext = document.getElementById("labeltext");
+
+        // Get the <span> element that closes the modal
+        var span3 = document.getElementsByClassName("close3")[0];
+        // When the user clicks on <span> (x), close the modal
+        span3.onclick = function() {
+            modal3.style.display = "none";
+            labeltext.style.display = "flex";
+            location.href="{%url 'DailyCheck:exerciseCheck'%}"
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal3) {
+                modal3.style.display = "none";
+                labeltext.style.display = "flex";
+                location.href="{%url 'DailyCheck:exerciseCheck'%}"
+            }
+        }
+    </script>
+</main>
+
+{% endblock mycontent %}

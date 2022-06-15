@@ -189,6 +189,7 @@ a:hover{
 /* The Close Button */
 .close,
 .close2,
+.close2_1,
 .close3 {
   color: #aaaaaa;
   float: right;
@@ -199,6 +200,8 @@ a:hover{
 .close:focus,
 .close3:hover,
 .close3:focus,
+.close2_1:hover,
+.close2_1:focus,
 .close2:hover,
 .close2:focus {
   color: #000;
@@ -206,9 +209,22 @@ a:hover{
   cursor: pointer;
 }
 
+.prevBtn,
+.prevBtn2,
+.prevBtn22{
+  float: left;
+  font-size: 28px;
+  font-weight: bold;
+  border: 1px solid white;
+  border-collapse: collapse;
+
+}
+
 
 .nextBtn,
 .nextBtn2,
+.okBtn,
+.noBtn,
 .saveBtn{
   float: right;
   font-size: 28px;
@@ -217,11 +233,25 @@ a:hover{
   border-collapse: collapse;
 
 }
+.noBtn{
+  padding-right: 10px;
 
+}
+
+.prevBtn:hover,
+.prevBtn:focus,
+.prevBtn2:hover,
+.prevBtn2:focus,
+.prevBtn22:hover,
+.prevBtn22:focus,
 .nextBtn:hover,
 .nextBtn:focus,
 .nextBtn2:hover,
 .nextBtn2:focus,
+.noBtn:hover,
+.noBtn:focus,
+.okBtn:hover,
+.okBtn:focus,
 .saveBtn:hover,
 .saveBtn:focus{
   cursor: pointer;

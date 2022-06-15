@@ -3,7 +3,7 @@ from DailyCheck.models import Dailyexercise,DailyMeal
 
 @admin.register(Dailyexercise)
 class DailyexerciseAdmin(admin.ModelAdmin):
-    list_display=['user','exercise','createdate']
+    list_display=['ex_No','user','exercise','createdate']
     
     
 @admin.register(DailyMeal)
