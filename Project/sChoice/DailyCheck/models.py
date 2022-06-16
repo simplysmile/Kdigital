@@ -12,7 +12,7 @@ class Dailyexercise(models.Model):
     burned_kcal=models.IntegerField(default=0,blank=True) # 운동해서 태운 칼로리
     goal_kcal=models.IntegerField(default=1000,blank=True) # 내 운동 목표 칼로리
     content=models.TextField(blank=True)
-    createdate=models.DateTimeField(default=now,editable=False) # 운동한 날짜
+    createdate=models.DateTimeField(default=now,editable=True) # 운동한 날짜
     
 class DailyMeal(models.Model):
     d_No=models.AutoField(primary_key=True)
