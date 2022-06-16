@@ -391,19 +391,23 @@
     </div>
 
     
-
     <div class="form-group">
         <label for="goal_period">목표기간</label>
         <input type="text" class="form-control"  id="goal_period" placeholder="목표기간" name="goal_period">   
     </div>
 
- 
 
     <div class="form-group">
-        <label for="allergic_food">알레르기음식</label>
-        <input type="text" class="form-control"  id="allergic_food" placeholder="알레르기음식" name="allergic_food">   
+        <label for="activity">활동량</label><br>
+          <select id="activity" name="activity" aria-label="목표체지방률">
+              <option disabled selected>운동하지않음</option>
+                <option value="0">운동하지 않음</option>
+                <option value="1">가벼운 활동 (운동: 1~3일)</option>
+                <option value="2">보통 활동 (운동: 3~5일)</option>
+                <option value="3">많은 활동 (운동: 6~7일)</option>
+                <option value="4">격렬한 활동</option>
+           
     </div>
-
 
     <button type="submit" class="btn btn-primary">회원가입</button>
     <button type="button" onclick="cancelBtn()" class="btn btn-primary">다시입력</button>

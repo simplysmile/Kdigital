@@ -109,7 +109,7 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
         user_purpose = request.POST.get('purpose',None)
         user_target = request.POST.get('target',None)
         vegan = request.POST.get('vegan',None)
-        allergic_food  = request.POST.get('allergic_food',None)
+        activity  = request.POST.get('activity',None)
         goal_weight = request.POST.get('goal_weight',None)
         goal_bodyfat= request.POST.get('goal_bodyfat',None)
         goal_period = request.POST.get('goal_period',None)
@@ -118,7 +118,7 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
         
         
         user = Members(user_id =user_id, user_pw = user_pw, user_name=user_name,pro=pro,birth=birth,gender=gender,phone=phone,email=email,zipcode=zipcode,addressd1=addressd1,\
-            addressd2 = addressd2, addressd3 = addressd3, service=service,user_purpose=user_purpose, user_target=user_target, vegan=vegan, allergic_food=allergic_food, goal_weight=goal_weight, goal_bodyfat=goal_bodyfat, goal_period= goal_period)
+            addressd2 = addressd2, addressd3 = addressd3, service=service,user_purpose=user_purpose, user_target=user_target, vegan=vegan, allergic_food=activity, goal_weight=goal_weight, goal_bodyfat=goal_bodyfat, goal_period= goal_period)
         
         user.save()
         
