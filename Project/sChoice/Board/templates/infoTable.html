@@ -36,49 +36,6 @@
 						    </tr>
 						  </thead>
 						  <tbody>
-						    <tr class="alert" role="alert">
-								<!--번호-->
-						    	<td>
-						    		<label class="checkbox-wrap checkbox-primary">
-											<input type="checkbox" checked>
-											<span class="checkmark"></span>
-										</label>
-						    	</td>
-								<!--제목-->
-						        <td class="d-flex align-items-center">
-									<div class="img" style="background-image: url(images/person_1.jpg);"></div>
-									<div class="pl-3 email">
-										<span>markotto@email.com</span>
-										<span>Added: 01/03/2020</span>
-									</div>
-								</td>
-								<!--작성자-->
-								<td>Markotto89</td>
-								<!--전문가여부:전문가-->
-								<td class="status"><span class="active">전문가</span></td>
-								<!--작성일-->
-								<td>
-									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-										<span aria-hidden="true"><i class="fa fa-close"></i></span>
-									</button>
-								</td>
-						    </tr>
-
-						    <tr class="alert" role="alert">
-								<!--번호-->
-						    	<td>1</td>
-								<!--제목-->
-						        <td class="d-flex align-items-center">
-									<div class="img" style="background-image: url(images/person_2.jpg);"></div>
-									<div class="pl-3 email">첫번째 글 제목</div>
-								</td>
-								<!--작성자-->
-								<td>길동이</td>
-								<!--전문가여부:비전문가-->
-								<td class="status"><span class="waiting">비전문가</span></td>
-								<!--작성일-->
-								<td>2022-06-14 09:34</td>
-						    </tr>
 							{%if board_list%}
 							{%for board in board_list%}
 							<tr class="alert" role="alert">
@@ -92,7 +49,11 @@
 								<!--작성자-->
 								<td>{{board.member.user_name}}</td>
 								<!--전문가여부:비전문가-->
-								<td class="status"><span class="waiting">{{board.m_Pro}}</span></td>
+								{%if board.member.pro == 'advance' %}
+								<td class="status"><span class="active">전문가</span></td>
+								{%else%}
+								<td class="status"><span class="waiting">비전문가</span></td>
+								{%endif%}
 								<!--작성일-->
 								<td>{{board.Modidate}}</td>
 						    </tr>

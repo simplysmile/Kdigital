@@ -35,7 +35,7 @@ def exwrite(request):
     if request.method=="GET":
         return render(request,'boardWrite.html')
     
-    u_id=request.session.seession_id
+    u_id=request.session['session_user_id']
     bmem=Members.objects.get(user_id=u_id)
     bispro=bmem.pro
     btitle=request.POST.get('title')
