@@ -154,8 +154,6 @@ def mealCheck(request,sdate):
     return render(request,'mealCheck.html',context)
 
 
-
-
 def exerciseUpdate(request,sdate,ex_no):
     if request.method=='POST':
         u_id=request.session['session_user_id']
@@ -236,10 +234,14 @@ def exerciseView(request,sdate,ex_no):
 def exerciseCheck(request,sdate):
     u_id = request.session['session_user_id']
     qs_m = Dailyexercise.objects.filter(user=u_id, createdate=sdate)
+    daily=Dailydata.objects.filter(user=u_id).order_by('-add_date')[0]
+    goal_burn_kcal=daily.goal_burn_kcal #
+    
     # 블럭에 뿌려주기랑 차트그리기로 만들기
     b_list = []
     daily_list = []
     count=0
+    total_burn_kcal=0
     for i in range(qs_m.count()):
         b_dic={}
         daily_dic={}
@@ -266,15 +268,20 @@ def exerciseCheck(request,sdate):
         no='exB'+str(count)
         daily_dic['ex_no']=no
         daily_dic['ex_name'] = qs.ex_name
-        daily_dic['ex_time'] = qs_m[i].ex_time
+        daily_dic['ex_time'] = int(qs_m[i].ex_time)*int(nums[0])
         daily_dic['goal_kcal'] = qs_m[i].goal_kcal
-        daily_dic['burned_kcal'] = qs_m[i].burned_kcal
+        daily_dic['burned_kcal'] = qs_m[i].burned_kcal #
+        total_burn_kcal+=qs_m[i].burned_kcal #
+        
         
         if ((int(qs_m[i].burned_kcal)/int(qs_m[i].goal_kcal))*100)>=100:
             daily_dic['kcal_per']=100
         else:
             daily_dic['kcal_per'] = (int(qs_m[i].burned_kcal)/int(qs_m[i].goal_kcal))*100
+            
+        
         daily_list.append(daily_dic)
+        
     daily_list2 = sorted(daily_list, key = lambda item : (-item['kcal_per']))
     with open('static/exercisetest.json','w') as f:
         json.dump(daily_list2,f)

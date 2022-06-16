@@ -8,6 +8,7 @@ $(function(){
             let total_kcal=0
             let total_time=0
             let avg_time=0
+
             ex_count=data.length
             if(data.length>3){
                 for(let i=0;i<3;i++){
@@ -40,10 +41,10 @@ $(function(){
             note+='</tr>'
             note+='<tr style="height:50px"><td></td><td></td><td></td></tr>'
             note+='<tr><td style="color:#ff0000">'+total_time+'분</td><td style="color:#419e46">'+ex_count+'회</td><td style="color:#43419e">'+avg_time+'분</td></tr>'
-            note+='<tr><td>총 운동 시간</td><td>운동 횟수</td><td>평균 운동 시간</td></tr>'
+            note+='<tr><td>총 운동 시간</td><td>운동 개수</td><td>평균 운동 시간</td></tr>'
 
             $("#progressbars").html(note)
-
+            
             const counter = {
                 id: 'counter',
                 beforeDraw(chart, args, options) {
@@ -66,7 +67,7 @@ $(function(){
                 data: {
                     datasets: [{
                         label: '총 운동 칼로리',
-                        data: [80,(100-80)],
+                        data: [data[0].goal_burn_kcal,(100-80)],
                         backgroundColor: ['#7CCAAE','#eee'],
                         hoverOffset: 0,
                         cutout: "60%",

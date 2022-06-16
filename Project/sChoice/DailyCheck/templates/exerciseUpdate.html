@@ -31,14 +31,14 @@
 		<table id = "inputsection">
             
             
-            {%if exerciseList%}
-            {%for exer in exerciseList%}
+            {%if b_list%}
+            {%for bexer in b_list%}
             <tr>                
                     <td width=250 height=250 style='background-color:#A0DDE0;'> 
                         <a href="#">
-                        <ul>{{exer.ex_name}}</ul>
-                        <ul>{{exer.ex_counts}}회</ul>               
-                        <ul>{{exer.burned_kcal}}kcal</ul>               
+                        <ul>{{bexer.ex_name}}</ul>
+                        <ul>{{bexer.ex_counts}}회</ul>               
+                        <ul>{{bexer.burned_kcal}}kcal</ul>               
                         </a>
                     
                     </td>
@@ -59,9 +59,10 @@
             <span class="close3">&times;</span>
             <br>
             <!--activity 고르기-->
-            <form method = "POST" action = "{%url 'DailyCheck:saveBtn'%}" id="wExercise">
+            <form method = "POST" action = "{%url 'DailyCheck:exerciseUpdate' sdate ex_no%}" id="wExercise">
                 {% csrf_token %}
                 <div class='sel_box' name='savebox'>
+                    
                     <h3 class="join_title">
                         {% comment %} <input type='hidden' name='id' value="{{request.session.session_id}}"> {% endcomment %}
                         <label>기록수정</label>
@@ -75,15 +76,18 @@
                                     <label>운동 날짜</label>
                                 </td>
                                 <td>
-                                    <input type="text" class="inputbox"  id="date" name="date">
+                                    {%if sdate%}
+                                    <input type="text" class="inputbox"  id="date" name="date" value="{{sdate}}" readonly>
+                                    {%endif%}
                                 </td>
                             </tr>
+                            {%if myList%}
                             <tr id="nametable">
                                 <td>
                                     <label>운동이름</label>
                                 </td>
                                 <td>
-                                    <input type="text" class="inputbox"  id="saveexercise" name="saveexercise"><br>
+                                    <input type="text" class="inputbox"  id="saveexercise" name="saveexercise" value="{{ex_name}}" readonly><br>
                                 </td>
                             </tr>
                             <tr id="leveltable">
@@ -91,8 +95,17 @@
                                     <label>운동강도</label>
                                 </td>
                                 <td>
+                                    <select id="savelevel" name="savelevel" aria-label="운동강도"><br>
+                                        {%if level == 2%}
+                                            <option value="2">저강도</option>
+                                        {%elif level == 3%}
+                                            <option value="3">중강도</option>
+                                        {%elif level == 6%}
+                                            <option value="6">고강도</option>
+                                        {%endif%}
                                 </td>
                             </tr>
+                            
                             <tr id="contenttable">
                                 <td colsspan="2">
                                     <label>운동목표</label>                                
@@ -101,26 +114,10 @@
                             <div class="savecontent2">
                                 <tr>
                                     <td>
-                                        <label for="write1">세트 수</label>
+                                        <label for="goal_kcal">칼로리</label>
                                     </td>
                                     <td>
-                                        <input type="text" class="inputbox"  id="write1" name="write1" value="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label for="write2">횟수/한 세트 당</label>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="inputbox"  id="write2" name="write2" value=""><br>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label for="write3">시간/한 세트 당(분)</label>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="inputbox"  id="write3" name="write3" value=""><br>
+                                        <input type="text" class="inputbox"  id="goal_kcal" name="goal_kcal" value="{{myList.goal_kcal}}">
                                     </td>
                                 </tr>
                             </div>
@@ -132,32 +129,33 @@
                             <div class="savecontent2_2">
                                 <tr>
                                     <td>
-                                        <label for="write2_1">세트 수</label>
+                                        <label for="sets2">세트 수</label>
                                     </td>
                                     <td>
-                                        <input type="text" class="inputbox"  id="write2_1" name="write2_1" value="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label for="write2_2">횟수/한 세트 당</label>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="inputbox"  id="write2_2" name="write2_2" value=""><br>
+                                        <input type="text" class="inputbox"  id="sets2" name="sets2" value="{{ex_set}}">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label for="write2_3">시간/한 세트 당(분)</label>
+                                        <label for="counts2">횟수/한 세트 당</label>
                                     </td>
                                     <td>
-                                        <input type="text" class="inputbox"  id="write2_3" name="write2_3" value=""><br>
+                                        <input type="text" class="inputbox"  id="counts2" name="counts2" value="{{ex_count}}"><br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="ex_time2">시간/한 세트 당(분)</label>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="inputbox"  id="ex_time2" name="ex_time2" value="{{myList.ex_time}}"><br>
                                     </td>
                                 </tr>
                             </div>
                             
                         </table>
                     </div>
+                    {%endif%}
                     <br>
                     <button type="button" class="cancelBtn" id='cancelBtn' onclick="cancelBtn()">Cancel</button>
                     <button type="submit" class="saveBtn" id='saveBtn' onclick="saveBtn()">Save</button>
@@ -170,16 +168,6 @@
     <script>
         // 모달
         $(function(){
-            $('#saveBtn').click(function(){
-                exercisenumber=$('#write2').text() //새로받아와야함
-
-                alert('수정완료!')
-                var ultext=''
-                ultext+='<ul>'+exercisenumber+'</ul>'
-                $('#saveexercise').attr('value',ultext); 
-
-                
-            })
             $('#cancelBtn').click(function(){
                 if (confirm('수정을 취소하시겠습니까?')){
                     location.href="{% url 'DailyCheck:exerciseCheck' sdate %}"
@@ -189,7 +177,6 @@
 
         function saveBtn(){
             modal3.style.display="none";
-            location.href="{% url 'DailyCheck:exerciseCheck' sdate %}"
         }
 
         
