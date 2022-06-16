@@ -35,7 +35,7 @@ $(function(){
                     total_time+=data[i-1].ex_time
                 }
             }
-            avg_time=total_time/data.length
+            avg_time= parseInt(total_time/data.length)
 
             note+='</tr>'
             note+='<tr style="height:50px"><td></td><td></td><td></td></tr>'
