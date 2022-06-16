@@ -142,86 +142,21 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
         user_target = request.POST.get('target',None)
         vegan = request.POST.get('vegan',None)
         activity  = request.POST.get('activity',None)
-        goal_weight = int(request.POST.get('goal_weight',None))
-        goal_bodyfat= int(request.POST.get('goal_bodyfat',None))
-        goal_period = int(request.POST.get('goal_period',None))
-        height = int(request.POST.get('height',None))
-        cur_weight = int(request.POST.get('weight',None))
+        goal_weight = request.POST.get('goal_weight',None)
+        goal_bodyfat= request.POST.get('goal_bodyfat',None)
+        goal_period = request.POST.get('goal_period',None)
+        height = request.POST.get('height',None)
+        cur_weight = request.POST.get('weight',None)
         
-        #회원기본정보
+        
         user = Members(user_id =user_id, user_pw = user_pw, user_name=user_name,pro=pro,birth=birth,gender=gender,phone=phone,email=email,zipcode=zipcode,addressd1=addressd1,\
             addressd2 = addressd2, addressd3 = addressd3, service=service,user_purpose=user_purpose, user_target=user_target, vegan=vegan, allergic_food=activity, goal_weight=goal_weight, goal_bodyfat=goal_bodyfat, goal_period= goal_period)
         
         user.save()
         
-        
-        
-        ##BMI계산
-        
-        today = datetime.date.today()
-    
-        age = today.year-birth.year 
-        age_month = today.month-birth.month 
-        age_day = today.day-birth.day 
-        
-        if age_day<0:
-            age_month -= 1
-        if age_month<0:
-            age -= 1
-            
-        
-        
-        # bmi 계산
-        len = height/100
-        bmi = float(cur_weight)/float(len*len);
-        
-        # bmr
-        bmr = 0
-        if gender=='male':
-            bmr = (10*cur_weight) + (6.25*height) - (5*age) + 5
-        else:
-            bmr = (10*cur_weight) + (6.25*height) - (5*age) - 161
-
-        
-        activity = 1 # int(user.allergic_food)
-        EERlist = [bmr * 1.2,bmr * 1.375,bmr * 1.55,bmr * 1.725,bmr * 1.9]
-        amrlist = [EERlist[0]-bmr,EERlist[1]-bmr,EERlist[2]-bmr,EERlist[3]-bmr,EERlist[4]-bmr ]
-        amr = round(amrlist[activity])
-        eer = round(EERlist[activity])
-        
-        needcal = [eer,eer-250,eer-500,eer-1000]
-        
-        
-        
-        ch = user.service
-        # ch = 'exercise'
-        ex_ratio = 1     
-        if ( ch =='exercise'):
-            ex_ratio = 0.7 
-        elif( ch =='blanace'):
-            ex_ratio = 0.5 
-        elif( ch =='meal'):
-            ex_ratio = 0.3
-        
-
-    
-        cut_weight = cur_weight - goal_weight
-        total_cal = (7200 * cut_weight) / goal_period
-        meal_cal = round(total_cal * (1-ex_ratio))
-        ex_cal = round(total_cal * ex_ratio)
-        
-        
-        shouldeatcal = needcal[0] - meal_cal
-        
-        ##BMI계산
-        
-        user2 = Dailydata(user=user, height = height, cur_weight=cur_weight,cur_bmi=bmi,goal_eat_kcal=shouldeatcal,goal_burn_kcal=ex_cal)
+        user2 = Dailydata(user=user, height = height, cur_weight=cur_weight)
         
         user2.save()
-        
-        
-        
-        
         
         
             
