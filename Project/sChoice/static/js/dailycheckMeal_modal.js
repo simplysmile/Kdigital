@@ -209,7 +209,7 @@ function registerdbBtn(sdate)
 
     // data: JSON.stringify(mymeallistDic),
 
-    alert(sdate)
+    // alert(sdate)
     
 
     $.ajax({
@@ -218,6 +218,10 @@ function registerdbBtn(sdate)
         data: mymeallistDic,
         dataType:"json",   
         success: function (data) {
+
+            alert(data.msg)
+            window.location.reload()
+
            
             
         },

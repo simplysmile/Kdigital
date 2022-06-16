@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse, JsonResponse,HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
+from matplotlib.style import context
 from AdminPage.models import Exercise
 from Member.models import Members,Dailydata
 from DailyCheck.models import Dailyexercise,DailyMeal
@@ -65,8 +66,9 @@ def mealCheck(request,sdate):
         print(qs_m[i].d_food_name)
     
  
+    context = {'sdate':sdate}
     
-    return render(request,'mealCheck.html')
+    return render(request,'mealCheck.html',context)
 
 
 
@@ -344,7 +346,9 @@ def addMealData(request, sdate):
 
 
     
-    return redirect('/')
+
+    context={'msg': '성공적으로 저장되었습니다'}
+    return JsonResponse(context)
 
 
 
