@@ -42,7 +42,7 @@
             </tr>
             <tr>
                 <td>생년월일 :</td>
-                <td>{{view.birth}}</td>
+                <td>{{view.birth|date:'Y-m-d'}}</td>
             </tr>
             <tr>
                 <td>성별 :</td>
@@ -58,7 +58,7 @@
             </tr>
             <tr>
                 <td rowspan="3">주소 :</td>
-                <td>({{view.zipcode}})</td>
+                <td>{{view.zipcode}}</td>
             </tr>
             <tr>
                 
@@ -105,13 +105,12 @@
                 <td>{{view.allergic_food}}</td>
             </tr>
             <tr>
-                <td>오늘 날짜 :</td>
-                <td>{{view.modidate|date:'Y-m-d H:i'}}</td>
+                <td>가입 날짜 :</td>
+                <td>{{view.createdate|date:'Y-m-d H:i'}}</td>
             </tr>
         </table>
         <div class="btn">
-            <div class="list"><a href="{% url 'Member:mUpdate' %}">내 정보수정</a></div>
-            <div class="list"><a href="#">목표재설정</a></div>
+            <div class="list"><a href="{% url 'Member:mUpdate' %}">정보수정</a></div>
             <div class="list" onclick="deleteBtn()">삭제</div>
         </div>
         </section>

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block mycontent %}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900&display=swap&subset=korean" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/shop.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/read.css' %}">
+    
+    <title>My Info</title>
+    <script>
+        function deleteBtn(){
+        if(confirm("데이터를 삭제하시겠습니까?")){
+            location.href="{% url 'Member:mDelete' %}"
+        }else{
+            return false
+        }
+        }
+    </script>
+</head>
+
+    <section>
+        <div class="main_body">
+            <div class="items_box_title" style="z-index:0">
+                <div class="items_box_title" style="z-index:0">지금 많이 찾는 BEST ITEMS</div>
+            </div>
+            <div class="items_list">
+                <ul class="each_items_nlist">
+                    <li class="list_li" id="one">
+                        <div class="list_div">
+                            <a href="https://www.google.com/" onclick="linkBtn">
+                                <p class="item_img">
+                                    <img scr="/static/img/shop_img/best_item_01.jpg" width="20" height="30" alt="Best_01"/>
+                                </p>
+                            </a>
+                            <div class="item_info_box">
+                                <p class="item_title">오늘은 현미 주먹밥 3종</p>
+                                <p class="item_price">4,950원</p>
+                                <p class="item_review">4,097</p>
+                            </div>
+                        </div>
+                    </li>
+                    <ul class="each_items_nlist">
+                        <li class="list_li" id="one">
+                            <div class="list_div">
+                                <a href="https://www.google.com/" onclick="linkBtn">
+                                    <p class="item_img">
+                                        <img scr="/static/img/shop_img/best_item_01.jpg" width="20" height="30" alt="Best_01"/>
+                                    </p>
+                                </a>
+                                <div class="item_info_box">
+                                    <p class="item_title">TEST</p>
+                                    <p class="item_price">00,000원</p>
+                                    <p class="item_review">0</p>
+                                </div>
+                            </div>
+                        </li>
+                   
+                </ul>
+
+            </div>
+        </div>
+
+     
+    </section>
+{%endblock mycontent%}

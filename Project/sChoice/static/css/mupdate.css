@@ -1,0 +1,63 @@
+section {
+  text-align: center;
+}
+
+h1 {
+  margin-top: 50px;
+  margin-bottom: 0;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+table {
+  width: 40%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  margin-left: 400px;
+  margin-right: 400px;
+  line-height: 25px;
+  border: 1px solid silver;
+  border-top: 2px solid black;
+}
+th {
+  padding: 10px 0 10px 20px;
+  border: 1px solid silver;
+  border-left: hidden;
+  border-right: hidden;
+  
+}
+  
+
+td{
+  text-align: left;
+  border: 1px solid silver;
+  border-left: hidden;
+  border-right: hidden;
+}
+
+input{
+  width: 300px;
+  border-collapse: collapse;
+  line-height: 25px;
+  border: 1px solid silver;
+  
+}
+.btn {
+  margin-top: 0px;
+  margin-left: 400px;
+  margin-right: 400px;
+}
+button {
+  width: 100px;
+  height: 40px;
+
+  background: #ccc;
+  color: black;
+
+  font-size: 14px;
+  font-weight: bold;
+
+  border: none;
+}
+
+

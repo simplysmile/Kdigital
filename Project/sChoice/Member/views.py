@@ -5,7 +5,7 @@ import datetime
 
 # 내 정보수정 함수
 def mUpdate(request):
-    user_id='zuba'
+    user_id = request.session['session_user_id']
     if request.method =="GET":
         qs = Members.objects.get(user_id=user_id)
         context = {'update':qs}
@@ -19,6 +19,23 @@ def mUpdate(request):
         gender = request.POST.get('gender')
         phone = request.POST.get('phone')
         email = request.POST.get('email')
+        zipcode = request.POST.get('zipcode')
+        addressd1 = request.POST.get('addressd1')
+        addressd2 = request.POST.get('addressd2')
+        service = request.POST.get('service')
+        user_purpose = request.POST.get('user_purpose')
+        user_target = request.POST.get('user_target')
+        vegan= request.POST.get('vegan')
+        pro = request.POST.get('pro')
+        goal_weight = request.POST.get('goal_weight')
+        goal_bodyfat = request.POST.get('goal_bodyfat')
+        goal_period = request.POST.get('goal_period')
+        allergic_food = request.POST.get('allergic_food')
+        modidate = request.POST.get('modidate')
+        print(user_name)
+        print(birth)
+        print(allergic_food)
+
         # db에 수정저장
         qs = Members.objects.get(user_id=user_id)
         qs.user_name =  user_name
@@ -27,14 +44,29 @@ def mUpdate(request):
         qs.gender = gender
         qs.phone =  phone
         qs.email =  email
+        qs.zipcode = zipcode
+        qs.addressd1 =  addressd1
+        qs.addressd2 =  addressd2
+        qs.service =  service
+        qs.user_purpose =  user_purpose
+        qs.user_target =  user_target
+        qs.vegan =  vegan
+        qs.pro =  pro
+        qs.goal_weight =  goal_weight
+        qs.goal_bodyfat =  goal_bodyfat
+        qs.goal_period =  goal_period
+        qs.allergic_food =  allergic_food
+        qs.modidate =  modidate
         qs.save()
         return redirect('Member:mView')
 
 # 회원 삭제 함수
-def mDelete(request,user_id):
+def mDelete(request):
     user_id = request.session['session_user_id']
     qs = Members.objects.get(user_id=user_id)
     qs.delete()
+    request.session.clear()
+    
     return redirect('/')
 
 # 회원 읽기 함수
