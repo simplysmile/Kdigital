@@ -3,6 +3,7 @@
 <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
     <style>
       html, body {
       min-height: 100%;
@@ -140,41 +141,47 @@
       }
       }
     </style>
+    <script>
+      function bWbtn(){
+        alert('글을 등록합니다')
+        $('#frm').submit()
+      }
+    </script>
   </head>
     <div class="testbox">
-      <form action="/">
+      <form action="{% url 'Board:exwrite' %}" id='frm' enctype="multipart/form-data">
         <div class="banner">
           <h1>운동 정보 게시판 글 작성</h1>
         </div>
         <div class="item">
-          <label for="name">제목<span>*</span></label>
+          <label for="title">제목<span>*</span></label>
           <div class="item">
-            <input id="name" type="text" name="name" placeholder="제목을 입력하세요" required/>
+            <input id="title" type="text" name="title" placeholder="제목을 입력하세요" required/>
           </div>
 
-          <div class="item">
-          <div class="name-item">
-            <div>
-              <label for="user">작성자</label>
-              <input id="user" type="text" name="user" />
+          {% comment %} <div class="item">
+            <div class="name-item">
+              <div>
+                <label for="user">작성자</label>
+                <input id="user" type="text" name="user" />
+              </div>
+              <div>
+                <label for="job">작성일</label>
+                <input id="day" type="text" name="day" />
+              </div>
             </div>
-            <div>
-              <label for="job">작성일</label>
-              <input id="day" type="text" name="day" />
-            </div>
-          </div>
-        </div>
+          </div> {% endcomment %}
         <div class="item">
-          <label for="apply">내용</label>
-          <input id="apply" type="textarea" name="text"/>
+          <label for="content">내용</label>
+          <input id="content" type="textarea" name="content"/>
         </div>
         
         <div class="item">
-          <label for="video">파일</label>
-          <input  id="video" type="file"/>
+          <label for="multim">파일</label>
+          <input  id="multim" name='multim' type="file"/>
         </div>
         <div class="btn-block">
-          <button type="submit" href="/">작성완료</button>
+          <button type="button" onclick="bWbtn()" >작성완료</button>
         </div>
       </form>
     </div>

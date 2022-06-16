@@ -63,6 +63,7 @@
 									</button>
 								</td>
 						    </tr>
+
 						    <tr class="alert" role="alert">
 								<!--번호-->
 						    	<td>1</td>
@@ -78,6 +79,29 @@
 								<!--작성일-->
 								<td>2022-06-14 09:34</td>
 						    </tr>
+							{%if board_list%}
+							{%for board in board_list%}
+							<tr class="alert" role="alert">
+								<!--번호-->
+						    	<td>{{board.b_No}}</td>
+								<!--제목-->
+						        <td class="d-flex align-items-center">
+									<div class="img" style="background-image: url(images/person_2.jpg);"></div>
+									<div class="pl-3 email">{{board.b_Title}}</div>
+								</td>
+								<!--작성자-->
+								<td>{{board.member.user_name}}</td>
+								<!--전문가여부:비전문가-->
+								<td class="status"><span class="waiting">{{board.m_Pro}}</span></td>
+								<!--작성일-->
+								<td>{{board.Modidate}}</td>
+						    </tr>
+							{%endfor%}
+							{%else%}
+							<tr>
+								<td colspan=5>글이 없습니다</td>
+							</tr>
+							{%endif%}
 
 						  </tbody>
 						</table>
