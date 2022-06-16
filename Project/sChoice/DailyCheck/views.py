@@ -155,6 +155,28 @@ def mealCheck(request,sdate):
 
 def imgCheck(request,sdate):
     content={'sdate':sdate}
+    if request.method=='POST':
+        u_id=request.session['session_user_id']
+        user = Members.objects.get(user_id=u_id)
+        cur_weight=request.POST.get('weight')
+        user_data = Dailydata.objects.filter(user=u_id).order_by('-add_date')[0]
+        cur_height=user_data.height
+        cur_bmi=cur_weight/((cur_height*0.01)^2)
+        cur_bodyfat=0
+        cur_neck=0
+        cur_waist=0
+        cur_hip=0
+        ex_level=''
+        week_ex=0
+        day_ex=0
+        
+        if request.POST.get('file'):
+            imgName= request.FILES.get('file',None)
+        else:
+            imgName='../static/img/mem01.png'
+            
+        qs=Dailydata(user=u_id,add_date=sdate,height=cur_height,cur_weight=cur_weight,day_img=imgName)
+        qs.save()
     return render(request,'imgCheck.html',content)
 
 

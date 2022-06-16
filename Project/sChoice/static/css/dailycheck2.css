@@ -203,7 +203,8 @@ ul.on .imgtt{
 
 .prevBtn,
 .prevBtn2,
-.prevBtn22{
+.prevBtn22,
+.cancelBtn{
   float: left;
   font-size: 28px;
   font-weight: bold;
@@ -245,9 +246,13 @@ ul.on .imgtt{
 .okBtn:hover,
 .okBtn:focus,
 .saveBtn:hover,
-.saveBtn:focus{
+.saveBtn:focus,
+.cancelBtn:hover,
+.cancelBtn:focus{
   cursor: pointer;
 }
+
+
 
 
 /* PROGRESSBAR */
