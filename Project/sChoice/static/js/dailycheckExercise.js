@@ -8,12 +8,24 @@ $(function(){
             let total_kcal=0
             let total_time=0
             let avg_time=0
+            var alist=[]
+            var strlist={label: '총 운동 칼로리', data: [80,(100-80)], backgroundColor: ['#7CCAAE','#eee'], hoverOffset: 0,  cutout: "80%" }
+            var bColor=['#ECEC84','#FFB69B','#A299CA']
+            alist.push(strlist)
 
             ex_count=data.length
+            
             if(data.length>3){
                 for(let i=0;i<3;i++){
-                    note+='<td><progress  id="'+data[i].ex_no+'" value="'+ data[i].kcal_per +'" max="100"></progress></td>'
-
+                    note+='<td><progress  id="exB'+(i+1)+'" value="'+ data[i].kcal_per +'" max="100"></progress></td>'
+                    var strlist1 = {
+                        label: '칼로리',
+                        data: [data[i].kcal_per,(100-data[i].kcal_per)],
+                        backgroundColor: [bColor[i],'#eee'],
+                        hoverOffset: 0,
+                        cutout: "60%",
+                    }
+                    alist.push(strlist1)
                 }
                 note+='</tr>'
                 note+='<tr>'
@@ -27,6 +39,15 @@ $(function(){
             else{
                 for(let i=0;i<data.length;i++){
                     note+='<td><progress  id="'+data[i].ex_no+'" value="'+ data[i].kcal_per +'" max="100"></progress></td>'
+                    
+                    var strlist1 = {
+                        label: '칼로리',
+                        data: [data[i].kcal_per,(100-data[i].kcal_per)],
+                        backgroundColor: [bColor[i],'#eee'],
+                        hoverOffset: 0,
+                        cutout: "60%",
+                    }
+                    alist.push(strlist1)
                 }
                 note+='</tr>'
                 note+='<tr>'
@@ -40,7 +61,7 @@ $(function(){
 
             note+='</tr>'
             note+='<tr style="height:50px"><td></td><td></td><td></td></tr>'
-            note+='<tr><td style="color:#ff0000">'+total_time+'분</td><td style="color:#419e46">'+ex_count+'회</td><td style="color:#43419e">'+avg_time+'분</td></tr>'
+            note+='<tr><td style="color:#ff0000">'+total_time+'분</td><td style="color:#419e46">'+ex_count+'번</td><td style="color:#43419e">'+avg_time+'분</td></tr>'
             note+='<tr><td>총 운동 시간</td><td>운동 개수</td><td>평균 운동 시간</td></tr>'
 
             $("#progressbars").html(note)
@@ -65,31 +86,7 @@ $(function(){
             const myChart = new Chart(ctx, {
                 type: 'doughnut', 
                 data: {
-                    datasets: [{
-                        label: '총 운동 칼로리',
-                        data: [data[0].goal_burn_kcal,(100-80)],
-                        backgroundColor: ['#7CCAAE','#eee'],
-                        hoverOffset: 0,
-                        cutout: "60%",
-                    },
-                    {
-                        label: data[0].ex_name,
-                        data: [data[0].burned_kcal,(100-data[0].burned_kcal)],
-                        backgroundColor: ['#ECEC84','#eee'],
-                        hoverOffset: 0
-                    },
-                    {
-                        label: data[1].ex_name,
-                        data: [data[1].burned_kcal,(100-data[1].burned_kcal)],
-                        backgroundColor: ['#FFB69B','#eee'],
-                        hoverOffset: 0
-                    },
-                    // {
-                    //     label: '운동3 이름',
-                    //     data: [data[3].kcal,(100-data[3].kcal)],
-                    //     backgroundColor: ['#A299CA','#eee']
-                    // },
-                ],
+                    datasets: alist,
                     labels: ['burned','remain']
                 },//data.
                 options: {

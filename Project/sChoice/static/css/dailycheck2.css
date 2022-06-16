@@ -140,7 +140,7 @@ a:hover{
 .imgtt{
   display: none;
 }
-.on .imgtt{
+ul.on .imgtt{
   display: inline-block;
   line-height: 0px;
   font-size: 0px;

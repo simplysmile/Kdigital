@@ -153,6 +153,12 @@ def mealCheck(request,sdate):
     
     return render(request,'mealCheck.html',context)
 
+def imgCheck(request,sdate):
+    content={'sdate':sdate}
+    return render(request,'imgCheck.html',content)
+
+
+
 
 def exerciseUpdate(request,sdate,ex_no):
     if request.method=='POST':
