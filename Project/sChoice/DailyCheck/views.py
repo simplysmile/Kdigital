@@ -59,14 +59,97 @@ def calendar(request):
 def mealCheck(request,sdate):
     # 세션을 통해 아이디 
     u_id = request.session['session_user_id']
+    user = Members.objects.get(user_id=u_id)
+    user_data = Dailydata.objects.get(user=user)
+    # print(user_data.goal_eat_kcal)
+    
+    
     # 사용자의 아이디와, 입력을 위해 클릭한 날짜 정보를 사용해서 쿼리를 얻는다. 
     # 사용자가, 그 날짜에 먹은 모든 식품을 가져온다. 
+    breakfast_cal = [0]
+    breakfast_c = [0]
+    breakfast_p = [0]
+    breakfast_f = [0]
+    lunch_cal = [0]
+    lunch_c = [0]
+    lunch_p = [0]
+    lunch_f = [0]
+    dinner_cal = [0]
+    dinner_c = [0]
+    dinner_p = [0]
+    dinner_f = [0]
+    snack_cal = [0]
+    snack_c = [0]
+    snack_p = [0]
+    snack_f = [0]
+    b_cnt = 0
+    l_cnt = 0
+    d_cnt = 0
+    s_cnt = 0
     qs_m = DailyMeal.objects.filter(d_member=u_id, d_meal_date=sdate)
     for i in range(qs_m.count()):
-        print(qs_m[i].d_food_name)
+        print(qs_m[i])
+        mtime = qs_m[i].d_meal_time
+        # 아침 총 칼로리 (탄단지)
+        if mtime=='B':
+            breakfast_cal.append(qs_m[i].d_kcal)
+            breakfast_c.append(qs_m[i].d_carb)
+            breakfast_p.append(qs_m[i].d_protein)
+            breakfast_f.append(qs_m[i].d_fat)
+            b_cnt += 1
+        # 점심 총 칼로리 (탄단지)
+        if mtime=='L':
+            lunch_cal.append(qs_m[i].d_kcal)
+            lunch_c.append(qs_m[i].d_carb)
+            lunch_p.append(qs_m[i].d_protein)
+            lunch_f.append(qs_m[i].d_fat)
+            l_cnt+=1
+        # 저녁 총 칼로리 (탄단지)
+        if mtime=='D':
+            dinner_cal.append(qs_m[i].d_kcal)
+            dinner_c.append(qs_m[i].d_carb)
+            dinner_p.append(qs_m[i].d_protein)
+            dinner_f.append(qs_m[i].d_fat)
+            d_cnt += 1
+        # 간식 총 칼로리 (탄단지)
+        if mtime=='S':
+            snack_cal.append(qs_m[i].d_kcal)
+            snack_c.append(qs_m[i].d_carb)
+            snack_p.append(qs_m[i].d_protein)
+            snack_f.append(qs_m[i].d_fat)
+            s_cnt += 1
+            
+            
     
- 
-    context = {'sdate':sdate}
+    print('아침칼로리',sum(breakfast_cal))
+    context = {'sdate':sdate,
+               'b_k':sum(breakfast_cal),
+               'b_c':sum(breakfast_c),
+               'b_p':sum(breakfast_p),
+               'b_f':sum(breakfast_f),
+               'l_k':sum(lunch_cal),
+               'l_c':sum(lunch_c),
+               'l_p':sum(lunch_p),
+               'l_f':sum(lunch_f),
+               'd_k':sum(dinner_cal),
+               'd_c':sum(dinner_c),
+               'd_p':sum(dinner_p),
+               'd_f':sum(dinner_f),
+               's_k':sum(snack_cal),
+               's_c':sum(snack_c),
+               's_p':sum(snack_p),
+               's_f':sum(snack_f),
+               'bcnt':b_cnt, 'lcnt':l_cnt, 'dcnt':d_cnt, 'scnt':s_cnt
+    }
+    
+    print(context)
+               
+               
+               
+               
+               
+               
+               
     
     return render(request,'mealCheck.html',context)
 
@@ -344,9 +427,8 @@ def searchMeal(request):   # food db에서 검색된 자료를 가져오는 함�
     
     
    
-    
 def addMealData(request, sdate):
-    #  세션을 통해서 사용자의 아이디를 가져온다
+        #  세션을 통해서 사용자의 아이디를 가져온다
     u_id = request.session['session_user_id']
     #  사용자의 아이디를 이용해서 멤버내의 회원정보를 가져온다. 
     user = Members.objects.get(user_id=u_id)
@@ -395,19 +477,94 @@ def setGoals(request):
     # dailydata db에서 키, 현재 몸무게 데이터를 가져온다
     user_data = Dailydata.objects.get(user=u_id, add_date=user.createdate)
 
-    # print(user_data.cur_weight)
-
-
-    # searchword = request.GET['bmr']
     
-    userdataitems = dict(request.GET)
+    u_bmi=0
+    u_bmr=0
+    u_ex=0
+    u_m=0
+    # bmi = items['u_bmi']
+    if 'u_bmi' in request.GET:
+        u_bmi = float(request.GET['u_bmi'])
+        u_bmr = float(request.GET['u_bmr'])
+        u_ex = int(request.GET['u_ex_goal'])
+        u_m = int(request.GET['u_m_goal'])
+        
     
     
-    items =dict( request.GET.items())
+    
+    print(u_bmi,u_bmr,u_ex,u_m)
+   
+    
+    # --------------------------------------------------------------
+    height = 165
+    weight = 55
+    goal_weight = 50
+    gender = 'female'
+    birth=user.birth
 
+    today = datetime.date.today()
+    
+    age = today.year-birth.year 
+    age_month = today.month-birth.month 
+    age_day = today.day-birth.day 
+    
+    if age_day<0:
+        age_month -= 1
+    if age_month<0:
+        age -= 1
+        
+    
+    
+    # bmi 계산
+    len = height/100
+    bmi = float(weight)/float(len*len);
+    
+    bmr = 0
+    if gender=='male':
+        bmr = (10*weight) + (6.25*height) - (5*age) + 5
+    else:
+        bmr = (10*weight) + (6.25*height) - (5*age) - 161
 
     
-    print(items)
+    activity = 1 # int(user.allergic_food)
+    EERlist = [bmr * 1.2,bmr * 1.375,bmr * 1.55,bmr * 1.725,bmr * 1.9]
+    amrlist = [EERlist[0]-bmr,EERlist[1]-bmr,EERlist[2]-bmr,EERlist[3]-bmr,EERlist[4]-bmr ]
+    amr = round(amrlist[activity])
+    eer = round(EERlist[activity])
+    
+    needcal = [eer,eer-250,eer-500,eer-1000]
+    
+    
+    
+    ch = user.service
+    # ch = 'exercise'
+    ex_ratio = 1     
+    if ( ch =='exercise'):
+        ex_ratio = 0.7 
+    elif( ch =='blanace'):
+        ex_ratio = 0.5 
+    elif( ch =='meal'):
+        ex_ratio = 0.3
+    
+
+    
+    
+    cut_weight = user_data.cur_weight - user.goal_weight
+    total_cal = (7200 * cut_weight) / user.goal_period
+    meal_cal = round(total_cal * (1-ex_ratio))
+    ex_cal = round(total_cal * ex_ratio)
+    
+    
+    shouldeatcal = needcal[0] - meal_cal
+    
+                
+    
+    # -----------------------------------------------------------------
+    
+    
+    
+    
+    
 
 
     

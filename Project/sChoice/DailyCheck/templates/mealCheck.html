@@ -112,20 +112,63 @@
 	<div id="box2">
 		<table id = "inputsection">
             <tr>                
+                {% if bcnt %}
                 <td width=250 height=250 style='background-color:#A0DDE0;'> 
                     <a href="#">
-                    <ul>아침 200kcal</ul>
-                    <ul>탄수화물: 30g</ul>
-                    <ul>단백질: 10g</ul>
-                    <ul>지방: 5g</ul>                 
+                    <ul>아침</ul>
+                    <ul>{{ b_k }} kcal</ul>
+                    <ul><p style="font-size:17px;">탄수화물: {{ b_c }}g</p></ul>
+                    <ul><p style="font-size:17px;">단백질: {{ b_p }}g </p></ul>
+                    <ul><p style="font-size:17px;">지방: {{ b_f }}g</p></ul>                 
+                    </a>
+                </td>
+                {% else %}
+                <td width=250 height=250 style='background-color:#eee;'><img onclick="addMeal()" width=50 height=50 src='/static/img/basic/plus.png'></td>
+                {% endif %}
+                {% if lcnt %}
+                <td width=250 height=250 style='background-color:#A0DDE0;'> 
+                    <a href="#">
+                    <ul>점심</ul>
+                    <ul>{{ l_k }} kcal</ul>
+                    <ul><p style="font-size:17px;">탄수화물: {{ l_c }}g</p></ul>
+                    <ul><p style="font-size:17px;">단백질: {{ l_p }}g </p></ul>
+                    <ul><p style="font-size:17px;">지방: {{ l_f }}g</p></ul>                 
                     </a>
                 
                 </td>
+                {% else %}
                 <td width=250 height=250 style='background-color:#eee;'><img onclick="addMeal()" width=50 height=50 src='/static/img/basic/plus.png'></td>
+                {% endif %}
+                
             </tr>
-            <tr>
+            <tr>                
+                {% if dcnt %}
+                <td width=250 height=250 style='background-color:#A0DDE0;'> 
+                    <a href="#">
+                    <ul>저녁</ul>
+                    <ul>{{ d_k }} kcal</ul>
+                    <ul><p style="font-size:17px;">탄수화물: {{ d_c }}g</p></ul>
+                    <ul><p style="font-size:17px;">단백질: {{ d_p }}g </p></ul>
+                    <ul><p style="font-size:17px;">지방: {{ d_f }}g</p></ul>                 
+                    </a>
+                </td>
+                {% else %}
                 <td width=250 height=250 style='background-color:#eee;'><img onclick="addMeal()" width=50 height=50 src='/static/img/basic/plus.png'></td>
+                {% endif %}
+                {% if scnt %}
+                <td width=250 height=250 style='background-color:#A0DDE0;'> 
+                    <a href="#">
+                    <ul>간식</ul>
+                    <ul>{{ s_k }} kcal</ul>
+                    <ul><p style="font-size:17px;">탄수화물: {{ s_c }}g</p></ul>
+                    <ul><p style="font-size:17px;">단백질: {{ s_p }}g </p></ul>
+                    <ul><p style="font-size:17px;">지방: {{ s_f }}g</p></ul>                 
+                    </a>
+                
+                </td>
+                {% else %}
                 <td width=250 height=250 style='background-color:#eee;'><img onclick="addMeal()" width=50 height=50 src='/static/img/basic/plus.png'></td>
+                {% endif %}
                 
             </tr>
         </table>

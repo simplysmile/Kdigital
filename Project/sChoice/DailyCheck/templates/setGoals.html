@@ -164,9 +164,10 @@
 
 
 
-                user_goal_data_list = [result, BMR , ex_cal, shouldeatcal ]
-                alert(user_goal_data_list)
-                user_goal_data = {'data':user_goal_data_list}
+                user_goal_data_list = [Number(result), Number(BMR) , Number(ex_cal), Number(shouldeatcal) ]
+                user_goal_data = {'u_bmi':user_goal_data_list[0], 'u_bmr':user_goal_data_list[1], 'u_ex_goal':user_goal_data_list[2],'u_m_goal':user_goal_data_list[3]}
+                // alert(user_goal_data_list)
+                // user_goal_data = {'data':user_goal_data_list}
 
                 
 
