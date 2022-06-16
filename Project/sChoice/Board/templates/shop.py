@@ -53,19 +53,6 @@ for page in range(1,5):
 
         writer.writerow(data)
 f.close()
-################################################################################
 
-import pandas as pd 
-import json
-import numpy as np
-import matplotlib.pyplot as plt
 
-def bestItems(request): 
-    df = pd.read_csv("BEST_100.csv")
-    # print(df)
-    js_item={}
-    js = df.to_json()
-    js_item['json_data'] = json.loads(js)
-    print(js_item['json_data'])
-    context = {'js_item':js_item}
-    return JsonResponse(context,safe=False)
+

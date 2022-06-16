@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700,900&display=swap" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/shop.css' %}">
+	</head>
+	<body>
+	 	<section>
+	 	
+	 		<div id="best">
+	 			<h2>실시간 베스트</h2>
+                 <ul>
+					
+						<li>
+							<a href="https://dshop.dietshin.com/goods/view.asp?g=13748">
+								<span id="best_top">BEST_01<br>/span>
+								<img src="/static/img/mehr.png">
+							</a>
+							<a href="https://dshop.dietshin.com/goods/view.asp?g=13748">
+								<span>제품명 ITEM</span>
+								<span>할인가격 00,000원 </span>
+								<span>리뷰 000 </span>
+							</a>
+							<a href="http://dshop.dietshin.com/goods/goods_best.asp"></a>
+						</li>
+				
+	 			</ul>
+	 			<!-- <ul>
+					{% if pList %}
+					{% for product in pList %}
+						<li>
+							<a href="#">
+								<img alt="{{product.p_name}}" src="{{product.p_fileName.url}}">
+								<span id="best_top">BEST<br>{{product.p_no}}</span>
+							</a>
+							<a href="#">
+								<span>{{product.p_name}}</span>
+								<span>
+									00,000원
+									<span>/{{product.p_servings}}</span>
+								</span>
+							</a>
+							<a href="#"></a>
+						</li>
+					{% endfor %}
+					{% endif %}
+	 			</ul> -->
+	 		</div>
+			
+	</body>
+</html>
