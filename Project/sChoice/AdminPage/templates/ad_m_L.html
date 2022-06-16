@@ -38,9 +38,9 @@
   <nav>
   
     <ul class='nav_container'>
-      <li class='nav_item'><a href="">회원관리</a></li>
-      <li class='nav_item'><a href="">음식DB관리</a></li>
-      <li class='nav_item'><a href="">운동DB관리</a></li>
+      <li class='nav_item'><a href="{% url 'AdminPage:ad_m_L' searchword='searchword' category='user_name' %}">회원관리</a></li>
+      <li class='nav_item'><a href="{% url 'AdminPage:ad_f_L' searchword2='searchword2' category2='f_NO' %}">음식DB관리</a></li>
+      <li class='nav_item'><a href="{% url 'AdminPage:ad_e_L' searchword3='searchword3' category3='category3' %}">운동DB관리</a></li>
       <li class='nav_item'><a href="">게시판관리</a></li>
       <li class='nav_item'><a href="">Contact-Us</a></li>
     </ul>
@@ -53,7 +53,7 @@
   <section>
     <h1>회원관리</h1>
     <div class="wrapper">
-      <form action="{% url 'AdminPage:ad_m_L' searchword category %}" name="searchfrm" id='searchfrm' method="post">
+      <form action="{% url 'AdminPage:ad_m_L' searchword='searchword' category='category' %}" name="searchfrm" id='searchfrm' method="post">
         {% csrf_token %} 
         
         <select class='admin_select' name="category" id="category">
@@ -121,7 +121,3 @@
   
 </body>  
 </html>
-
-
-
-

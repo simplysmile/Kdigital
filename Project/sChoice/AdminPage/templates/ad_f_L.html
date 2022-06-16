@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--최신제이쿼리 이용-->
+	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <link rel="stylesheet" href="{% static 'css/admin_list.css'%}">
+  <title>AdminPage</title>
+  <script>
+    
+  
+    function searchBtn(){
+  
+      if($('#searchword2').val()==''){
+  
+        alert('검색어를 입력하세요.')
+        $('#searchword2').focus()
+        return false 
+        
+      } 
+  
+      $('#searchfrm2').submit()
+  
+    }
+
+
+ 
+  
+  
+  </script> 
+</head>
+<body>
+
+
+  <nav>
+  
+    <ul class='nav_container'>
+      <li class='nav_item'><a href="{% url 'AdminPage:ad_m_L' searchword='searchword' category='category' %}">회원관리</a></li>
+      <li class='nav_item'><a href="{% url 'AdminPage:ad_f_L' searchword2='searchword2' category2='category2' %}">음식DB관리</a></li>
+      <li class='nav_item'><a href="{% url 'AdminPage:ad_e_L' searchword3='searchword3' category3='category3' %}">운동DB관리</a></li>
+      <li class='nav_item'><a href="">게시판관리</a></li>
+      <li class='nav_item'><a href="">Contact-Us</a></li>
+    </ul>
+  
+  </nav>
+  
+  
+
+  
+  <section>
+    <h1>음식DB관리</h1>
+    <div class="wrapper">
+      <form action="{% url 'AdminPage:ad_f_L' searchword2='searchword2'  category2='category2' %}" name="searchfrm2" id='searchfrm2' method="post">
+        {% csrf_token %} 
+        
+        <select class='admin_select' name="category2" id="category2">
+          <option value="f_NO">음식번호</option>
+          <option value="f_name">음식이름</option>
+          <option value="f_DB">음식DB군</option>
+          <option value="all">전체</option>
+        </select>
+  
+        <div class="title">
+          <input type="text" name='searchword2' id='searchword2' size="16">
+       
+        <div>
+          <button type="button" onclick='searchBtn()'><span>search</span></button>
+        </div>
+      </form>
+    </div>
+  
+    <table>
+      <colgroup>
+        <col width="10%">
+        <col width="20%">
+        <col width="12%">
+        <col width="12%">
+        <col width="12%">
+        <col width="12%">
+        <col width="12%">
+      </colgroup>
+      
+        <tr>
+          <th>음식번호</th>
+          <th>음식이름</th>
+          <th>음식DB군</th>
+          <th>g당</th>
+          <th>탄수화물</th>
+          <th>단백질</th>
+          <th>지방</th>
+        </tr>
+      
+      {% if food_List %}
+      {% for board in food_List%}
+      
+        <tr>
+          <td>{{board.f_NO}}</td>
+          <td><a href="#">{{board.f_name}}</a></td>
+          <td>{{board.f_DB}}</td>
+          <td>{{board.f_por}}</td>
+          <td>{{board.f_carb}}</td>
+          <td>{{board.f_protein}}</td>
+          <td>{{board.f_fat}}</td>
+        </tr>
+      
+      {% endfor %}
+      {%else%}
+      <tr>
+        <td colspan='7'>데이터가 없습니다</td>
+      </tr>
+      {% endif %}
+     
+    </table>
+  
+  
+   
+  </section>
+
+
+
+
+
+
+  
+</body>  
+</html>
+

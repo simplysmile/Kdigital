@@ -1,6 +1,7 @@
 import datetime
 from django.shortcuts import render,redirect
 from Member.models import Members
+from AdminPage.models import Food,Exercise
 from django.db.models import Q
 
 
@@ -8,7 +9,7 @@ from django.db.models import Q
 def aboutus(request):
     return render(request,'aboutus.html')
 
-#어드민페이지
+#Admin MEMBER List
 def ad_m_L(request,searchword,category):
     
     if request.method == 'POST':
@@ -40,7 +41,7 @@ def ad_m_L(request,searchword,category):
 
 
 
-#어드민 뷰페이지
+#Admin MEMBER View
 def ad_m_V(request,user_id,searchword,category):
     
     qs = Members.objects.get(user_id=user_id)
@@ -53,7 +54,7 @@ def ad_m_V(request,user_id,searchword,category):
     return render(request,'ad_m_V.html',context)
 
 
-#어드민 write페이지
+#Admin MEMEBER Update
 def ad_m_U(request,user_id,searchword,category):
     
     if request.method == 'GET':
@@ -93,8 +94,64 @@ def ad_m_U(request,user_id,searchword,category):
         qs.save()
         
         return redirect('AdminPage:ad_m_L',searchword,category)
-       
+    
+###################################################################################
+#admin FOOD List
+def ad_f_L(request,searchword2,category2):
+    
+    if request.method == 'POST':
+        category2 = request.POST.get('category2')
+        searchword2 = request.POST.get('searchword2')
         
+
+    if category2 == 'f_NO':
+        qs = Food.objects.filter(f_NO__contains=searchword2).order_by('-f_NO')
+        
+          
+    elif category2 == 'f_name':
+        qs = Food.objects.filter(f_name__contains=searchword2).order_by('-f_NO')
+        
+        
+        
+    elif category2 == 'f_DB':
+        qs = Food.objects.filter(f_DB__contains=searchword2).order_by('-f_NO')
+        
+        
+    else:
+        qs = Food.objects.filter(Q(f_NO__contains=searchword2)|Q(f_name__contains=searchword2)|Q(f_DB__contains=searchword2)).order_by('-f_NO')
+        
+        
+    context ={'food_List':qs,'searchword2':searchword2,'category2':category2}
     
+    return render(request,'ad_f_L.html',context)
+
+
+###################################################################################
+#admin EX List
+def ad_e_L(request,searchword3,category3):
     
+    if request.method == 'POST':
+        category3 = request.POST.get('category3')
+        searchword3 = request.POST.get('searchword3')
+        
+
+    if category3 == 'ex_id':
+        qs = Exercise.objects.filter(ex_id__contains=searchword3).order_by('-ex_id')
+        
+          
+    elif category3 == 'ex_name':
+        qs = Exercise.objects.filter(ex_name__contains=searchword3).order_by('-ex_id')
+        
+        
+        
+    elif category3 == 'level':
+        qs = Exercise.objects.filter(level__contains=searchword3).order_by('-ex_id')
+        
+        
+    else:
+        qs = Exercise.objects.filter(Q(ex_id__contains=searchword3)|Q(ex_name__contains=searchword3)|Q(level__contains=searchword3)).order_by('-ex_id')
+        
+        
+    context ={'ex_List':qs,'searchword3':searchword3,'category3':category3}
     
+    return render(request,'ad_e_L.html',context)
