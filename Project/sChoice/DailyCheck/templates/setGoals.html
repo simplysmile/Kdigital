@@ -163,7 +163,10 @@
                 $('#meal_cal').html(text6)
 
 
-                user_goal_data = {'dummy':0,'ubmi':result, 'ubmr': BMR ,'uexgoal':ex_cal,'umgoal':shouldeatcal }
+
+                user_goal_data_list = [result, BMR , ex_cal, shouldeatcal ]
+                alert(user_goal_data_list)
+                user_goal_data = {'data':user_goal_data_list}
 
                 
 

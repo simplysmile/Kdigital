@@ -48,11 +48,11 @@ def calendar(request):
     u_id = request.session['session_user_id']
     # 아이디를 사용해서 정보를 얻는다. 
     user = Members.objects.get(user_id=u_id) # 멤버테이블
-    qs_ex = Dailyexercise.objects.get(user=u_id) # 데일리 운동 테이블
-    qs_m = DailyMeal.objects.get(d_member=u_id) # 데일리 식사 테이블 
+    # qs_ex = Dailyexercise.objects.get(user=u_id) # 데일리 운동 테이블
+    # qs_m = DailyMeal.objects.get(d_member=u_id) # 데일리 식사 테이블 
 
-    print(qs_ex.burned_kcal)
-    print(qs_m.d_kcal)
+    # print(qs_ex.burned_kcal)
+    # print(qs_m.d_kcal)
     return render(request,'calendar.html')
 
 def mealCheck(request,sdate):
@@ -363,10 +363,16 @@ def setGoals(request):
     # print(user_data.cur_weight)
 
 
+    # searchword = request.GET['bmr']
     
-    userdataitems = dict(request.GET.items() )
+    userdataitems = dict(request.GET)
+    
+    
+    items =dict( request.GET.items())
 
-    print(userdataitems)
+
+    
+    print(items)
 
 
     
