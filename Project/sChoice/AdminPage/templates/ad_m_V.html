@@ -1,8 +1,25 @@
 {% load static %}
 
   <link rel="stylesheet" href="{% static 'css/admin_view.css'%}">
-  
-</head>
+  <script>
+
+   function deleteBtn(){
+
+    if(confirm('삭제하시겠습니까?')){
+
+      location.href="{% url 'AdminPage:ad_m_D' searchword category admin_List.user_id %}"
+
+
+    }else{
+
+      return false
+    }
+
+   
+   }
+
+  </script>
+
 
 
   <section>

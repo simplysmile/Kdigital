@@ -98,7 +98,7 @@
       
         <tr>
           <td>{{board.ex_id}}</td>
-          <td><a href="#">{{board.ex_name}}</a></td>
+          <td><a href="{% url 'AdminPage:ad_e_V' searchword3 category3 board.ex_id %}">{{board.ex_name}}</a></td>
           <td>{{board.level}}</td>
           <td>{{board.activity}}</td>
           <td>{{board.aerobic}}</td>

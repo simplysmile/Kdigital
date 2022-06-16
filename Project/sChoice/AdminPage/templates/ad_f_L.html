@@ -98,7 +98,7 @@
       
         <tr>
           <td>{{board.f_NO}}</td>
-          <td><a href="#">{{board.f_name}}</a></td>
+          <td><a href="{% url 'AdminPage:ad_f_V' searchword2 category2 board.f_NO %}">{{board.f_name}}</a></td>
           <td>{{board.f_DB}}</td>
           <td>{{board.f_por}}</td>
           <td>{{board.f_carb}}</td>

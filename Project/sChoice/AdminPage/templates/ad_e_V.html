@@ -1,0 +1,77 @@
+{% load static %}
+
+  <link rel="stylesheet" href="{% static 'css/admin_view.css'%}">
+  
+<script>
+
+
+  function deleteBtn(){
+
+    if(confirm('삭제하시겠습니까?')){
+
+      location.href="{% url 'AdminPage:ad_e_D' searchword3 category3 ex_List.ex_id %}"
+
+
+    }else{
+
+      return false
+    }
+
+   
+   }
+
+
+
+</script>
+
+
+  <section>
+    <h1>운동상세페이지</h1>
+
+    <table>
+    {% if ex_List %}
+    
+      <tr>
+        <th>운동번호: {{ex_List.ex_no}}</th>
+      </tr>
+
+      <tr>
+        <td>운동아이디: {{ex_List.ex_id}}</td>
+      </tr>
+
+      <tr>
+        <td>운동이름: {{ex_List.ex_name}}</td>
+      </tr>
+
+      <tr>
+        <td>운동종류: {{ex_List.activity}}</td>
+      </tr>
+      <tr>
+        <td>유,무산소: {{ex_List.aerobic}}</td>
+      </tr>
+      <tr>
+        <td>운동강도: {{ex_List.level}}</td>
+      </tr>
+      <tr>
+        <td>타겟카테고리: {{ex_List.target_category}}</td>
+      </tr>
+      <tr>
+        <td>자극되는 근육: {{ex_List.muscle}}</td>
+      </tr>
+      <tr>
+        <td>운동장비: {{ex_List.equipment}}</td>
+      </tr>
+      <tr>
+        <td>운동자세 이미지: {{ex_List.imgUrl}}</td>
+      </tr>
+   
+    {% endif %}
+    </table>
+
+    
+
+    <div class="list"><a href="{% url 'AdminPage:ad_e_L' searchword3='searchword3' category3='category3' %}">목록</a></div>
+    <div class="list" onclick='deleteBtn()'>삭제</div>
+    <div class="list"><a href="#">수정</a></div>
+  </section>
+

@@ -47,11 +47,22 @@ def ad_m_V(request,user_id,searchword,category):
     qs = Members.objects.get(user_id=user_id)
     
     
-    context ={'admin_List':qs,'searchword':searchword,'category':category}
-    print('ccccccccccccccontext:',context)
+    context ={'admin_List':qs,'searchword':searchword,'category':category,'user_id':user_id}
+  
     
 
     return render(request,'ad_m_V.html',context)
+
+
+#Admin MEMBER Delete
+def ad_m_D(request,user_id,searchword,category):
+    
+    qs = Members.objects.get(user_id=user_id)
+    qs.delete()
+    return redirect('AdminPage:ad_m_L',searchword,category)
+    
+    
+
 
 
 #Admin MEMEBER Update
@@ -126,6 +137,54 @@ def ad_f_L(request,searchword2,category2):
     return render(request,'ad_f_L.html',context)
 
 
+
+#Admin Food View
+def ad_f_V(request,f_NO,searchword2,category2):
+    
+    qs = Food.objects.get(f_NO=f_NO)
+    
+    
+    context ={'Food_List':qs,'searchword2':searchword2,'category2':category2,'f_NO':f_NO}
+    
+
+    return render(request,'ad_f_V.html',context)
+
+
+
+#Admin Food Update
+def ad_f_U(request,f_NO,searchword2,category2):
+    
+    if request.method == 'GET':
+        qs = Food.objects.get(f_NO=f_NO)
+        
+        context = {'ad_List':qs,'searchword2':searchword2,'category2':category2,'f_NO':f_NO}
+        
+        return render(request,'ad_m_U.html',context)
+    
+    else:
+        qs = Food.objects.get(f_NO=f_NO)
+        
+        qs.f_id = request.POST.get('f_id')
+        qs.f_DB = request.POST.get('f_DB')
+        qs.f_name  = request.POST.get('f_name')
+        qs.f_por = request.POST.get('f_por')
+        qs.f_carb  = request.POST.get('f_carb')
+        qs.f_protein = request.POST.get('f_protein')
+        qs.f_fat = request.POST.get('f_fat')
+        
+        qs.save()
+        
+        return redirect('AdminPage:ad_f_L',searchword2,category2)
+
+
+#Admin Food Delete
+def ad_f_D(request,f_NO,searchword,category):
+    
+    qs = Food.objects.get(f_NO=f_NO)
+    qs.delete()
+    return redirect('AdminPage:ad_f_L',searchword,category)   
+    
+
 ###################################################################################
 #admin EX List
 def ad_e_L(request,searchword3,category3):
@@ -155,3 +214,29 @@ def ad_e_L(request,searchword3,category3):
     context ={'ex_List':qs,'searchword3':searchword3,'category3':category3}
     
     return render(request,'ad_e_L.html',context)
+
+
+#Admin EX View
+def ad_e_V(request,ex_id,searchword3,category3):
+    
+    qs = Exercise.objects.get(ex_id=ex_id)
+    
+    
+    context ={'ex_List':qs,'searchword3':searchword3,'category3':category3,'ex_id':ex_id}
+    
+
+    return render(request,'ad_e_V.html',context)
+
+
+
+#Admin EX Delete
+def ad_e_D(request,ex_id,searchword,category):
+    
+    qs = Exercise.objects.get(ex_id=ex_id)
+    qs.delete()
+    return redirect('AdminPage:ad_e_L',searchword,category)   
+
+
+
+
+

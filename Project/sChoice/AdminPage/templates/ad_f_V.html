@@ -1,0 +1,68 @@
+{% load static %}
+
+  <link rel="stylesheet" href="{% static 'css/admin_view.css'%}">
+  
+<script>
+
+  
+  function deleteBtn(){
+
+    if(confirm('삭제하시겠습니까?')){
+
+      location.href="{% url 'AdminPage:ad_f_D' searchword2 category2 Food_List.f_NO %}"
+
+
+    }else{
+
+      return false
+    }
+
+   
+   }
+</script>
+
+  <section>
+    <h1>음식상세페이지</h1>
+    
+
+    <table>
+    {% if Food_List %}
+    
+      <tr>
+        <th>음식번호: {{Food_List.f_NO}}</th>
+      </tr>
+
+      <tr>
+        <td>음식아이디: {{Food_List.f_id}}</td>
+      </tr>
+
+      <tr>
+        <td>음식이름: {{Food_List.f_name}}</td>
+      </tr>
+
+      <tr>
+        <td>음식DB군: {{Food_List.f_DB}}</td>
+      </tr>
+      <tr>
+        <td>g당: {{Food_List.f_por}}</td>
+      </tr>
+      <tr>
+        <td>탄수화물: {{Food_List.f_carb}}</td>
+      </tr>
+      <tr>
+        <td>단백질: {{Food_List.f_protein}}</td>
+      </tr>
+      <tr>
+        <td>지방: {{Food_List.f_fat}}</td>
+      </tr>
+   
+    {% endif %}
+    </table>
+
+    
+
+    <div class="list"><a href="{% url 'AdminPage:ad_f_L' searchword2='searchword2' category2='category2' %}">목록</a></div>
+    <div class="list" onclick='deleteBtn()'>삭제</div>
+    <div class="list"><a href="#">수정</a></div>
+  </section>
+
