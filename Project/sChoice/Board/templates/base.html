@@ -216,21 +216,33 @@
 											</ul>
 										</li>
 										<li class="menu-brand"><a href="brand" class=""><span
-													class="ico- brand-"></span> <span class="title">쇼핑추천</span></a></li>
+													class="ico- brand-"></span> <span class="title">게시판</span>
+													<ul class="">
+														<li class="first  menu-shop-category-217"><a href="#"
+																class=""><span class="title">쇼핑추천</span></a></li>
+														<li class="first  menu-shop-category-217"><a href="{% url 'Board:exboard'%}"
+																class=""><span class="title">운동정보공유</span></a></li>
+														<li class=" menu-shop-category-96"><a href="#"
+																class=""><span class="title">식단정보공유</span></a></li>
+														<li class=" menu-shop-category-96"><a href="#"
+																class=""><span class="title">데이터분석</span></a></li>
+		
+		
+													</ul>
 										<li class="has-children"><span class="has-children"><span
 													class="ico- shop-"></span> <span class="title">달성 기록</span></span>
 											<ul class="">
 												<li class="first  menu-shop-category-217"><a href="{% url 'DailyCheck:calendar' %}"
 														class=""><span class="title">달력 보기</span></a></li>
-												<li class="first  menu-shop-category-217"><a href="{% url 'DailyCheck:exerciseCheck' %}"
+												<li class="first  menu-shop-category-217"><a href="{% url 'DailyCheck:exerciseCheck' sdate=0 %}"
 														class=""><span class="title">운동 달성현황</span></a></li>
-												<li class=" menu-shop-category-96"><a href="{% url 'DailyCheck:mealCheck' %}"
+												<li class=" menu-shop-category-96"><a href="{% url 'DailyCheck:mealCheck' sdate=0 %}"
 														class=""><span class="title">식단 달성현황</span></a></li>
 												<li class=" menu-shop-category-96"><a href="{% url 'DailyCheck:myStatus' %}"
 														class=""><span class="title">일주일 달성현황</span></a></li>
 
 
-											</ul>
+											</ul></a></li>
 										</li>
 										<li class="active home menu-"><a href="/"
 												class="home active current-"><span class="ico- home-"></span> <span
@@ -239,18 +251,33 @@
 												href="{% url 'DailyCheck:selfCheck' %}" class="product-search-trigger no-pjax"><span
 													class="ico- search-"></span> <span class="title">자가진단</span></a>
 										</li>
+										{% if not request.session.session_user_id%} 
 										<li class="has-children"><span class="has-children"><span
 													class="ico- user-"></span> <span
 													class="title">가입정보</span></span>
 											<ul class="">
 												<li class="first menu-user-login"><a
-														href="https://www.collectluxe.com/user/login" class=""><span
+														href="{% url 'Member:login' %}" class=""><span
 															class="title">로그인</span></a></li>
 												<li class="menu-user-signup"><a
 														href="{% url 'Member:signup' %}" class=""><span
 															class="title">회원가입</span></a></li>
 											</ul>
 										</li>
+										{% else %}
+										<li class="has-children"><span class="has-children"><span
+													class="ico- user-"></span> <span
+													class="title">Hello {{request.session.session_user_name}}님</span></span>
+											<ul class="">
+												<li class="first menu-user-login"><a
+														href="{% url 'Member:logout' %}" class=""><span
+															class="title">로그아웃</span></a></li>
+										<li class="menu-user-signup"><a
+													href="{% url 'Member:mView' %}" class=""><span
+														class="title">나의 정보</span></a></li>
+											</ul>
+										</li>
+										{% endif %}
 										<li class="menu-user-cart dcore-cart-count-outer"><a
 												href="https://www.collectluxe.com/user/cart" class=""><span
 													class="ico- cart-"></span> <span class="title">CART</span></a></li>
