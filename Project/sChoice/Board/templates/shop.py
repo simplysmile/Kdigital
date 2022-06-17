@@ -44,7 +44,6 @@ for page in range(1,5):
         item_link = "https://dshop.dietshin.com"+item_link
         # print('item_link : ',item_link)
 
-
         # print("*"*50)
         data.append(item_title)
         data.append(item_price)
@@ -52,6 +51,20 @@ for page in range(1,5):
         data.append(item_link)
 
         writer.writerow(data)
+        
+        #사진 가지고 오기
+        item_img = item.find("img",{"class":"tb_m"})["src"]
+        print("item_image{}_0{}: {}".format(page,i+1,item_img))
+        # if item_img.startswith("//"):
+            # item_img = "https:"+item_img
+        item_img_res = requests.get(item_img)
+        # item_img.raise_for_status() # 사진 없을 시 종료
+                
+        #사진저장
+        with open("item_image{}_{}.jpg".format(page,i+1),"wb") as f:
+            f. write(item_img_res.content)
+
+
 f.close()
 
 
