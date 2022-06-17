@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from Member.models import Members
 from Board.models import ExerciseBoard,MealBoard
 from django.core.paginator import Paginator
+from django.db.models import F
 import pandas as pd 
 import json
 import numpy as np
@@ -94,3 +95,110 @@ def fdView(request,bNo,nowpage):
     qs=MealBoard.objects.get(b_No=bNo)
     context={'bNo':bNo,'nowpage':nowpage,'bitem':qs}
     return render(request,'fdView.html',context)
+
+##########
+#글 수정
+#운동
+def exBUP(request,bNo,nowpage):
+    if request.method=="GET":
+        qs=ExerciseBoard.objects.get(b_No=bNo)
+        context={'exitem':qs,'bNo':bNo,'nowpage':nowpage}
+        return render(request,'exUP.html',context)
+
+    qs=ExerciseBoard.objects.get(b_No=bNo)
+    btitle=request.POST.get('title')
+    bcontent=request.POST.get('content')
+    bfile=request.FILES.get('multim',None)
+    qs.b_Title=btitle
+    qs.b_Content=bcontent
+    if bfile:
+        qs.b_File=bfile
+    qs.save()
+
+    return redirect('Board:exboard',nowpage)
+
+#식단
+def fdBUP(request,bNo,nowpage):
+    if request.method=="GET":
+        qs=MealBoard.objects.get(b_No=bNo)
+        context={'exitem':qs,'bNo':bNo,'nowpage':nowpage}
+        return render(request,'fdUP.html',context)
+
+    qs=MealBoard.objects.get(b_No=bNo)
+    btitle=request.POST.get('title')
+    bcontent=request.POST.get('content')
+    bfile=request.FILES.get('multim',None)
+    qs.b_Title=btitle
+    qs.b_Content=bcontent
+    if bfile:
+        qs.b_File=bfile
+    qs.save()
+
+    return redirect('Board:fdboard',nowpage)
+
+
+##########
+#글삭제
+#운동
+def exDel(request,bNo,nowpage):
+    qs=ExerciseBoard.objects.get(b_No=bNo)
+    qs.delete()
+    return redirect('Board:exboard',nowpage)
+
+#식단
+def fdDel(request,bNo,nowpage):
+    qs=MealBoard.objects.get(b_No=bNo)
+    qs.delete()
+    return redirect('Board:fdboard',nowpage)
+
+#########
+#답글달기
+#운동
+def exReply(request,bNo,nowpage):
+    if request.method=="GET":
+        qs=ExerciseBoard.objects.get(b_No=bNo)
+        context={'item':qs,'nowpage':nowpage}
+        return render(request,'exReply.html',context)
+    
+    else:
+        tId=request.session['session_user_id']
+        tTitle=request.POST.get('title')
+        tContent=request.POST.get('content')
+        tFile=request.FILES.get('file',None)
+        tGroup=request.POST.get('group')
+        tStep=int(request.POST.get('step'))+1
+        tIndent=int(request.POST.get('indent'))+1
+        tMember=Members.objects.get(user_id=tId)
+        
+        step_qs=ExerciseBoard.objects.filter(b_Group=tGroup,b_Step__gte=tStep)
+        step_qs.update(fStep=F('b_Step')+1)
+        
+        qs=ExerciseBoard(member=tMember,b_Title=tTitle,b_Content=tContent,b_File=tFile,b_Group=tGroup,b_Step=tStep,b_Indent=tIndent)
+        qs.save()
+        
+        return redirect('Board:exboard',nowpage)
+
+#식단
+def fdReply(request,bNo,nowpage):
+    if request.method=="GET":
+        qs=MealBoard.objects.get(b_No=bNo)
+        context={'item':qs,'nowpage':nowpage}
+        return render(request,'fdReply.html',context)
+    
+    else:
+        tId=request.session['session_user_id']
+        tTitle=request.POST.get('title')
+        tContent=request.POST.get('content')
+        tFile=request.FILES.get('file',None)
+        tGroup=request.POST.get('group')
+        tStep=int(request.POST.get('step'))+1
+        tIndent=int(request.POST.get('indent'))+1
+        tMember=Members.objects.get(user_id=tId)
+        
+        step_qs=MealBoard.objects.filter(b_Group=tGroup,b_Step__gte=tStep)
+        step_qs.update(fStep=F('b_Step')+1)
+        
+        qs=MealBoard(member=tMember,b_Title=tTitle,b_Content=tContent,b_File=tFile,b_Group=tGroup,b_Step=tStep,b_Indent=tIndent)
+        qs.save()
+        
+        return redirect('Board:fdboard',nowpage)
