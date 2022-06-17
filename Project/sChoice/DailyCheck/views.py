@@ -605,7 +605,7 @@ def addMealData(request, sdate):
         # arr =    [mealtime,m_id,m_name,m_weight,m_cal,m_carb,m_prot,m_fat]
         # print(arr)
 
-        dmeal = DailyMeal(d_member = user, d_meal_date = sdate, d_meal_time=mealtime,d_food=m_id,d_food_name=m_name,d_por=m_weight,d_carb=m_carb,d_fat=m_fat,d_kcal=m_cal)
+        dmeal = DailyMeal(d_member = user, d_meal_date = sdate, d_meal_time=mealtime,d_food=m_id,d_food_name=m_name,d_por=m_weight,d_protein=m_prot,d_carb=m_carb,d_fat=m_fat,d_kcal=m_cal)
         dmeal.save()
 
 
