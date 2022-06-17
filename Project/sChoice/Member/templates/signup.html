@@ -31,7 +31,7 @@
 
     function check_pw(){
 
-        let p1 = document.getElementById('password').value;
+        let p1 = document.getElementById('user_pw').value;
         let p2 = document.getElementById('re_password').value;
 
         if (p1!=p2) { 
@@ -200,7 +200,7 @@
     
     <div class="form-group">
       <label for="re_password">비밀번호 확인</label>
-      <input type= "text" class="form-control" id="re_password"  onkeyup="check_pw()" placeholder="비밀번호 확인" name = "re_password">
+      <input type= "text" class="form-control" id="re_password"  onkeyup="check_pw()" placeholder="비밀번호 확인" name ="re_password">
       <span id="pw_check_msg"></span> 
     </div>
    
