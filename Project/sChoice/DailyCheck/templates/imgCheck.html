@@ -14,13 +14,20 @@
 	<div id="box2">
 		<table id = "inputsection">
             <tr>                
-                    <td width=250 height=250 style='background-color:#A0DDE0;'> 
-                        <a href="#">
-                        <ul>이미지</ul>
-                        <ul>현재몸무게</ul>               
-                        </a>
-                    </td>
-                    <td id='addImg' width=250 height=250 style='background-color:#eee;'><img onclick="addImg()" width=50 height=50 src='/static/img/basic/plus.png'></td>
+                {%if b_list%}
+                {%for bexer in b_list%}
+                <td width=400 height=400 style='background-color:#A0DDE0;'> 
+                    <a href="#">
+                    <ul><img width=200 height=200 src='{{bexer.imgName}}'></ul>               
+                    <ul>현재 몸무게</ul>
+                    <ul>{{bexer.cur_weight}}</ul>
+                    </a>
+                </td>
+                {%endfor%}
+                {%endif%}
+                <td id='addImg' width=400 height=400 style='background-color:#eee;'>
+                    <img onclick="addImg()" width=50 height=50 src='/static/img/basic/plus.png'>
+                </td>
             </tr>
         </table>
 	</div>

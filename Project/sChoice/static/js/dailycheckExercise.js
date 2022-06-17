@@ -9,12 +9,18 @@ $(function(){
             let total_time=0
             let avg_time=0
             var alist=[]
-            var strlist={label: '총 운동 칼로리', data: [80,(100-80)], backgroundColor: ['#7CCAAE','#eee'], hoverOffset: 0,  cutout: "80%" }
             var bColor=['#ECEC84','#FFB69B','#A299CA']
-            alist.push(strlist)
-
+            
             ex_count=data.length
             
+            for(let j=0;j<data.length;j++){
+                total_kcal+=data[j].burned_kcal
+                total_time+=data[j].ex_time
+            }
+            avg_time= total_time/ex_count
+            
+            var strlist={label: '총 운동 칼로리', data: [total_kcal,(data.total_burn_kcal-total_kcal)], backgroundColor: ['#7CCAAE','#eee'], hoverOffset: 0,  cutout: "70%" }
+            alist.push(strlist)
             if(data.length>3){
                 for(let i=0;i<3;i++){
                     note+='<td><progress  id="exB'+(i+1)+'" value="'+ data[i].kcal_per +'" max="100"></progress></td>'
@@ -31,9 +37,6 @@ $(function(){
                 note+='<tr>'
                 for(let i=1;i<4;i++){
                     note+='<td>'+data[i-1].ex_name+' : '+ data[i-1].burned_kcal+'kcal</td>'
-                    total_kcal+=data[i-1].burned_kcal
-                    total_time+=data[i-1].ex_time
-                    
                 }
             }
             else{
@@ -53,11 +56,8 @@ $(function(){
                 note+='<tr>'
                 for(let i=1;i<(data.length)+1;i++){
                     note+='<td>'+data[i-1].ex_name+' : '+ data[i-1].burned_kcal+'kcal</td>'
-                    total_kcal+=data[i-1].burned_kcal
-                    total_time+=data[i-1].ex_time
                 }
             }
-            avg_time= parseInt(total_time/data.length)
 
             note+='</tr>'
             note+='<tr style="height:50px"><td></td><td></td><td></td></tr>'

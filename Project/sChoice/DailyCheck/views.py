@@ -154,30 +154,53 @@ def mealCheck(request,sdate):
     return render(request,'mealCheck.html',context)
 
 def imgCheck(request,sdate):
-    content={'sdate':sdate}
-    if request.method=='POST':
+    if request.method=='GET':
+        u_id = request.session['session_user_id']
+        daily=Dailydata.objects.filter(user=u_id,add_date=sdate)
+        print(daily)
+    
+        b_list = []
+        for i in range(daily.count()):
+            b_dic={}
+            b_dic['imgName'] = daily[i].day_img
+            b_dic['cur_weight'] = daily[i].cur_weight
+            print(daily[i].day_img)
+            b_list.append(b_dic)
+        content={'b_list':b_list,'sdate':sdate}
+        
+        return render(request,'imgCheck.html',content)
+        
+        
+    else:
         u_id=request.session['session_user_id']
         user = Members.objects.get(user_id=u_id)
         cur_weight=request.POST.get('weight')
-        user_data = Dailydata.objects.filter(user=u_id).order_by('-add_date')[0]
+        user_data = Dailydata.objects.filter(user=u_id).order_by('-day_no')[0]
+        # 목표칼로리 가져오기 위해서(가입할때 자동으로 들어가서 제일 처음에 기입한 데이터 넣어야함)
+        user_data2 = Dailydata.objects.filter(user=u_id).order_by('day_no')[0]
+        print(user_data2)
         cur_height=user_data.height
-        cur_bmi=cur_weight/((cur_height*0.01)^2)
+        cur_bmi=int(int(cur_weight)//((int(cur_height)*0.01)**2))
+        
+        print(cur_weight)
+        print(cur_height)
+        print(cur_bmi)
+        
         cur_bodyfat=0
         cur_neck=0
         cur_waist=0
         cur_hip=0
-        ex_level=''
-        week_ex=0
-        day_ex=0
+        ex_level=user_data2.ex_level
+        goal_eat_kcal=user_data2.goal_eat_kcal
+        goal_burn_kcal=goal_eat_kcal
         
-        if request.POST.get('file'):
-            imgName= request.FILES.get('file',None)
-        else:
-            imgName='../static/img/mem01.png'
+        imgName= request.FILES.get('file',None)
             
-        qs=Dailydata(user=u_id,add_date=sdate,height=cur_height,cur_weight=cur_weight,day_img=imgName)
+        qs=Dailydata(user=user,goal_eat_kcal=goal_eat_kcal,goal_burn_kcal=goal_burn_kcal,cur_bmi=cur_bmi,ex_level=ex_level,cur_bodyfat=cur_bodyfat,cur_neck=cur_neck,cur_waist=cur_waist,cur_hip=cur_hip,add_date=sdate,height=cur_height,cur_weight=cur_weight,day_img=imgName)
         qs.save()
-    return render(request,'imgCheck.html',content)
+        
+        url='/dailycheck/'+sdate+'/imgCheck/'
+        return redirect(url)
 
 
 
@@ -194,7 +217,8 @@ def exerciseUpdate(request,sdate,ex_no):
         exercise=Exercise.objects.get(ex_name=ex_name,level=level)
         
         ex_id=exercise.ex_id
-        Daily=Dailydata.objects.filter(user=u_id).order_by('-add_date')[0]
+        # 제일 최신 데이터를 쓰기 위해서 -day_no여야함
+        Daily=Dailydata.objects.filter(user=u_id).order_by('-day_no')[0]
         
         ex_time2=request.POST.get('ex_time2') 
         ex_set2=request.POST.get('sets2') 
@@ -240,7 +264,6 @@ def exerciseView(request,sdate,ex_no):
         b_dic['ex_time'] = qs_m[i].ex_time
         
         b_dic['createdate'] = sdate
-        print(qs_m[i].content)
         num=qs_m[i].content
         nums=num.split(',')
         b_dic['ex_counts']=int(nums[0])*int(nums[1])
@@ -262,8 +285,9 @@ def exerciseView(request,sdate,ex_no):
 def exerciseCheck(request,sdate):
     u_id = request.session['session_user_id']
     qs_m = Dailyexercise.objects.filter(user=u_id, createdate=sdate)
-    daily=Dailydata.objects.filter(user=u_id).order_by('-add_date')[0]
-    goal_burn_kcal=daily.goal_burn_kcal #
+    daily=Dailydata.objects.filter(user=u_id).order_by('day_no')[0]
+        
+    goal_burn_kcal=daily.goal_burn_kcal
     
     # 블럭에 뿌려주기랑 차트그리기로 만들기
     b_list = []
@@ -284,13 +308,12 @@ def exerciseCheck(request,sdate):
         b_dic['burned_kcal'] = qs_m[i].burned_kcal
         b_dic['ex_time'] = qs_m[i].ex_time
         
+        
         b_dic['createdate'] = sdate
-        print(qs_m[i].content)
         num=qs_m[i].content
         nums=num.split(',')
         b_dic['ex_counts']=int(nums[0])*int(nums[1])
         b_list.append(b_dic)
-        
         # 차트그리기
         count+=1
         no='exB'+str(count)
@@ -298,8 +321,8 @@ def exerciseCheck(request,sdate):
         daily_dic['ex_name'] = qs.ex_name
         daily_dic['ex_time'] = int(qs_m[i].ex_time)*int(nums[0])
         daily_dic['goal_kcal'] = qs_m[i].goal_kcal
-        daily_dic['burned_kcal'] = qs_m[i].burned_kcal #
-        total_burn_kcal+=qs_m[i].burned_kcal #
+        daily_dic['burned_kcal'] = qs_m[i].burned_kcal
+        daily_dic['total_burn_kcal']=goal_burn_kcal
         
         
         if ((int(qs_m[i].burned_kcal)/int(qs_m[i].goal_kcal))*100)>=100:
@@ -359,7 +382,6 @@ def exercise2(request):
     mySQL="select * from adminpage_exercise"
     
     rows=my_cursor.execute(mySQL)
-    print(rows)    
     data_list = []
     for row in rows:
         data_dic={}
@@ -400,7 +422,8 @@ def saveBtn(request,sdate):
         level=request.POST.get('savelevel')
         exercise=Exercise.objects.get(ex_name=ex_name,level=level)
         ex_id=exercise.ex_id
-        Daily=Dailydata.objects.filter(user=u_id).order_by('-add_date')[0]
+        
+        Daily=Dailydata.objects.filter(user=u_id).order_by('-day_no')[0]
         ex_time2=request.POST.get('ex_time2')
         ex_set2=request.POST.get('sets2')
         ex_count=request.POST.get('counts2')
