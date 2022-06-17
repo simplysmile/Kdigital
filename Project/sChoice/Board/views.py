@@ -23,17 +23,18 @@ def shop(request):
 #     return JsonResponse(context,safe=False)
     
 
-
+#운동 게시판
 def exboard(request):
     qs = ExerciseBoard.objects.order_by('-b_Group')
     context={'board_list':qs}
     
     
-    return render(request,'infoTable.html',context)
+    return render(request,'exboard.html',context)
 
+#운동 글쓰기
 def exwrite(request):
     if request.method=="GET":
-        return render(request,'boardWrite.html')
+        return render(request,'exboardWrite.html')
     
     u_id=request.session['session_user_id']
     bmem=Members.objects.get(user_id=u_id)
@@ -43,6 +44,31 @@ def exwrite(request):
     bfile=request.FILES.get('multim',None)
     
     qs = ExerciseBoard(member=bmem,m_Pro=bispro,b_Title=btitle,b_Content=bcontent,b_File=bfile)
+    qs.save()
+    qs.b_Group=qs.b_No
+    qs.save()
+    return redirect('Board:exboard')
+    
+
+#식단 게시판
+def fdboard(request):
+    qs = ExerciseBoard.objects.order_by('-b_Group')
+    context={'board_list':qs}
+    return render(request,'fdboard.html',context)
+
+#식단 글쓰기
+def fdwrite(request):
+    if request.method=="GET":
+        return render(request,'fdboardWrite.html')
+    
+    u_id=request.session['session_user_id']
+    bmem=Members.objects.get(user_id=u_id)
+    bispro=bmem.pro
+    btitle=request.POST.get('title')
+    bcontent=request.POST.get('content')
+    bfile=request.FILES.get('multim',None)
+    
+    qs = MealBoard(member=bmem,m_Pro=bispro,b_Title=btitle,b_Content=bcontent,b_File=bfile)
     qs.save()
     qs.b_Group=qs.b_No
     qs.save()

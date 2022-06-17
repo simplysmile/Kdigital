@@ -1,0 +1,91 @@
+{%extends 'base.html' %}
+{%block mycontent%}
+    <meta charset="utf-8">
+	<!--cookit css-->
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900&display=swap&subset=korean" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+	<link rel="stylesheet" href="/static/css/ck_style.css">
+	<link rel="stylesheet" href="/static/css/ck_notice_list.css">
+	<!--//cookit css-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="/static/css/bt_style.css">
+
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section">운동 정보 공유 게시판</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-wrap">
+						<table class="table table-responsive-xl">
+						  <thead>
+						    <tr>
+								<th>번호</th>
+								<th>제목</th>
+								<th>작성자</th	>
+								<th>전문가여부</th>
+								<th>작성일</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+							{%if board_list%}
+							{%for board in board_list%}
+							<tr class="alert" role="alert">
+								<!--번호-->
+						    	<td>{{board.b_No}}</td>
+								<!--제목-->
+						        <td class="d-flex align-items-center">
+									<div class="img" style="background-image: url(images/person_2.jpg);"></div>
+									<div class="pl-3 email">{{board.b_Title}}</div>
+								</td>
+								<!--작성자-->
+								<td>{{board.member.user_name}}</td>
+								<!--전문가여부:비전문가-->
+								{%if board.member.pro == 'advance' %}
+								<td class="status"><span class="active">전문가</span></td>
+								{%else%}
+								<td class="status"><span class="waiting">비전문가</span></td>
+								{%endif%}
+								<!--작성일-->
+								<td>{{board.Modidate}}</td>
+						    </tr>
+							{%endfor%}
+							{%else%}
+							<tr>
+								<td colspan=5>글이 없습니다</td>
+							</tr>
+							{%endif%}
+
+						  </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--paging-->
+		<ul class="page-num">
+			<li class="firstb"></li>
+			<li class="prevb"></li>
+			<li class="numb">
+			  <div>1</div>
+			</li>
+			<li class="nextb"></li>
+			<li class="lastb"></li>
+		</ul>
+	  <!--/pagint-->
+		<a href="{% url 'Board:exwrite' %}" ><div class="write">쓰기</div></a>
+	</section>
+
+	<script src="/static/js/bt_jquery.min.js"></script>
+  <script src="/static/js/bt_popper.js"></script>
+  <script src="/static/js/bootstrap.min.js"></script>
+  <script src="/static/js/bt_main.js"></script>
+{%endblock mycontent%}
