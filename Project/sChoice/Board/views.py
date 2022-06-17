@@ -90,7 +90,7 @@ def exView(request,bNo,nowpage):
 
 
 #식단 글 상세보기
-def exView(request,bNo,nowpage):
+def fdView(request,bNo,nowpage):
     qs=MealBoard.objects.get(b_No=bNo)
     context={'bNo':bNo,'nowpage':nowpage,'bitem':qs}
     return render(request,'fdView.html',context)

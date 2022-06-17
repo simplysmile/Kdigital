@@ -30,3 +30,11 @@ class Food(models.Model):
     f_fat = models.FloatField(default=0,blank=True) #지방
     
     
+class ContactUs(models.Model):
+    c_No=models.AutoField(primary_key=True)
+    c_name=models.CharField(max_length=100,null=True,blank=True)
+    c_email=models.CharField(max_length=1000,null=True,blank=True)
+    c_tel=models.CharField(max_length=13,null=True,blank=True)
+    c_title=models.CharField(max_length=1000,null=True,blank=True)
+    c_content=models.TextField(null=True,blank=True)
+    
