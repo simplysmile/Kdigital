@@ -27,7 +27,7 @@ def shop(request):
 
 #운동 게시판
 def exboard(request,nowpage):
-    qs = ExerciseBoard.objects.order_by('-b_Group')
+    qs = ExerciseBoard.objects.order_by('-b_Group','b_Step')
     
     mypages=Paginator(qs,5)
     fList=mypages.get_page(nowpage)
@@ -57,7 +57,7 @@ def exwrite(request,nowpage):
 
 #식단 게시판
 def fdboard(request,nowpage):
-    qs = ExerciseBoard.objects.order_by('-b_Group')
+    qs = ExerciseBoard.objects.order_by('-b_Group','b_Step')
     mypages=Paginator(qs,5)
     fList=mypages.get_page(nowpage)
     context={'board_list':fList,'nowpage':nowpage}    
