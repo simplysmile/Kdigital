@@ -1,16 +1,30 @@
 $(function(){
     $.ajax({
-        url:"/static/test.json",
+        url:"/static/mealjson.json",
         dataType:"json",
         success:function(data){
             let note = ''
-            note+='<tr><td><progress  id="carbB" value="'+ data[9].carb +'" max="100"></progress></td>'
-            note+='<td><progress id="proteinB" value="'+ data[9].protien +'" max="100"></progress></td>'
-            note+='<td><progress id="fatB" value="'+ data[9].fat +'" max="100"></progress></td></tr>'
-            note+='<tr><td>탄수화물 : '+ data[9].carb+'g</td><td>단백질 : '+ data[9].protien+'g</td><td>지방 : '+data[9].fat+'g</td></tr>'
+            note+='<tr><td><progress  id="carbB" value="'+ data.carb +'" max="100"></progress></td>'
+            note+='<td><progress id="proteinB" value="'+ data.prot +'" max="100"></progress></td>'
+            note+='<td><progress id="fatB" value="'+ data.fat +'" max="100"></progress></td></tr>'
+            note+='<tr><td>탄수화물 : '+ data.carb+'g</td><td>단백질 : '+ data.prot+'g</td><td>지방 : '+data.fat+'g</td></tr>'
             
 
             $("#progressbars").html(note)
+
+            // console.log(data)
+            var remaincal = data.goalCal - data.totalCal
+            var gcal = 0
+            var tcal = 0
+            if (remaincal<0) {
+                gcal = 0
+                tcal = 100
+            }
+            else{
+                gcal = remaincal
+                tcal = data.totalCal
+
+            }
 
             const counter = {
                 id: 'counter',
@@ -23,7 +37,7 @@ $(function(){
                   ctx.textAlign = 'center';     
                   // w 변동 h 변동  l 70 r 변동 t 0 b 변동
                   //console.log("width", width); 
-                  ctx.fillText('1200kcal', width / 2 +(left), top + (height / 2));
+                  ctx.fillText(remaincal+'kcal', width / 2 +(left), top + (height / 2));
                   ctx.fillText('remains', width / 2 +(left), top + (height / 2)+50);
                 }
             };
@@ -36,14 +50,14 @@ $(function(){
                     
                     datasets: [{
                         label: '칼로리',
-                        data: [80,(100-80),0,0,0],
+                        data: [tcal,gcal,0,0,0],
                         backgroundColor: ['#7CCAAE','#eee'],
                         hoverOffset: 0,
                         cutout: "80%",
                     },
                     {
                         label: '탄단지',
-                        data: [0,0,data[9].carb, data[9].protien, data[9].fat],
+                        data: [0,0,data.carb, data.prot, data.fat],
                         backgroundColor: ['white','white','#ECEC84','#FFB69B','#A299CA'],
                         label: 'Doughnut 2',
                         cutout: "80%",

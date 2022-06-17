@@ -9,6 +9,7 @@ import json,datetime
 import cx_Oracle
 import pandas as pd
 import numpy as np
+
 # import jaydebeapi
 # from dbdefs.oracleDef import *
 
@@ -131,8 +132,14 @@ def mealCheck(request,sdate):
     # 세션을 통해 아이디 
     u_id = request.session['session_user_id']
     user = Members.objects.get(user_id=u_id)
-    # user_data = Dailydata.objects.get(user=user)
+    
+    # sdate안에 날짜 필터로 가져오기
+    # ckdate = datetime.strptime(sdate, '%Y-%m-%d')
+    # user_data = Dailydata.objects.filter(user=user,add_date__year=ckdate.year,add_date__month=ckdate.month,add_date__month=ckdate.day)
     # print(user_data.goal_eat_kcal)
+    
+    user_data = Dailydata.objects.filter(user=user).order_by('-add_date')
+  
     
     
     # 사용자의 아이디와, 입력을 위해 클릭한 날짜 정보를 사용해서 쿼리를 얻는다. 
@@ -192,7 +199,7 @@ def mealCheck(request,sdate):
             
             
     
-    print('아침칼로리',sum(breakfast_cal))
+    # print('아침칼로리',sum(breakfast_cal))
     context = {'sdate':sdate,
                'b_k':sum(breakfast_cal),
                'b_c':sum(breakfast_c),
@@ -213,6 +220,22 @@ def mealCheck(request,sdate):
                'bcnt':b_cnt, 'lcnt':l_cnt, 'dcnt':d_cnt, 'scnt':s_cnt
     }
     
+    
+    
+    # json for chart 필요한거 -> goal칼로리, 칼로리, 단백질 총량, 탄수화물총량, 지방총량 
+    meal_json = {"goalCal":user_data[0].goal_eat_kcal, 
+                 "totalCal":(sum(breakfast_cal)+sum(lunch_cal)+sum(dinner_cal)+sum(snack_cal)), 
+                 'carb':(sum(breakfast_c)+sum(lunch_c)+sum(dinner_c)+sum(snack_c)),
+                 'prot':(sum(breakfast_p)+sum(lunch_p)+sum(dinner_p)+sum(snack_p)),
+                 'fat':(sum(breakfast_f)+sum(lunch_f)+sum(dinner_f)+sum(snack_f))
+                 }
+    #-----------------------------------------------------------------------------------------
+    #--------------------------  json part --------------------------------------------
+    with open('static/mealjson.json','w') as f:
+        json.dump(meal_json,f)
+        
+        
+        
     print(context)
                
                
