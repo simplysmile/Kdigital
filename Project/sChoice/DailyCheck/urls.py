@@ -3,6 +3,7 @@ from . import views
 app_name='DailyCheck'
 urlpatterns = [
     path('calendar/',views.calendar,name='calendar'),
+    path('calendarData/',views.calendarData,name='calendarData'),
     path('<str:sdate>/mealCheck/',views.mealCheck,name='mealCheck'),
     path('<str:sdate>/exerciseCheck/',views.exerciseCheck,name='exerciseCheck'),
     path('<str:sdate>/<int:ex_no>/exerciseView/',views.exerciseView,name='exerciseView'),
