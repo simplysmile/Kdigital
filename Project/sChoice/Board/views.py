@@ -171,7 +171,7 @@ def exReply(request,bNo,nowpage):
         tMember=Members.objects.get(user_id=tId)
         
         step_qs=ExerciseBoard.objects.filter(b_Group=tGroup,b_Step__gte=tStep)
-        step_qs.update(fStep=F('b_Step')+1)
+        step_qs.update(b_Step=F('b_Step')+1)
         
         qs=ExerciseBoard(member=tMember,b_Title=tTitle,b_Content=tContent,b_File=tFile,b_Group=tGroup,b_Step=tStep,b_Indent=tIndent)
         qs.save()
@@ -196,7 +196,7 @@ def fdReply(request,bNo,nowpage):
         tMember=Members.objects.get(user_id=tId)
         
         step_qs=MealBoard.objects.filter(b_Group=tGroup,b_Step__gte=tStep)
-        step_qs.update(fStep=F('b_Step')+1)
+        step_qs.update(b_Step=F('b_Step')+1)
         
         qs=MealBoard(member=tMember,b_Title=tTitle,b_Content=tContent,b_File=tFile,b_Group=tGroup,b_Step=tStep,b_Indent=tIndent)
         qs.save()

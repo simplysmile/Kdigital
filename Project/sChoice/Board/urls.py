@@ -12,5 +12,7 @@ urlpatterns = [
     path('<int:bNo>/<int:nowpage>/fdBUP/',views.fdBUP,name='fdBUP'),
     path('<int:bNo>/<int:nowpage>/exDel/',views.exDel,name='exDel'),
     path('<int:bNo>/<int:nowpage>/fdDel/',views.fdDel,name='fdDel'),
+    path('<int:bNo>/<int:nowpage>/exReply/',views.exReply,name='exReply'),
+    path('<int:bNo>/<int:nowpage>/fdReply/',views.fdReply,name='fdReply'),
     path('shop/',views.shop,name='shop'),
 ]

@@ -3,7 +3,7 @@
     <script>
         function delBtn(){ //삭제버튼
         if(confirm('정말 삭제하시겠습니까?')){
-            location.href="{% url 'Board:fexBDel' bitem.b_No nowpage %}"
+            location.href="{% url 'Board:exDel' bitem.b_No nowpage %}"
         }else{return false}
         }
     </script>
@@ -39,7 +39,7 @@
             <p class="text-white-50 mb-0">{{bitem.b_File}}</p>
         </div>
         {%endif%}
-        
+
         <a href="{% url 'Board:exReply' bitem.b_No nowpage %}"><div class="list">답글</div></a>
         <a href="{% url 'Board:exboard' nowpage %}"><div class="list">목록</div></a>
         <a href="{% url 'Board:exBUP' bitem.b_No nowpage %}"><div class="list">수정</div></a>
