@@ -1,7 +1,7 @@
 import datetime
 from django.shortcuts import render,redirect
 from Member.models import Members
-from AdminPage.models import Food,Exercise
+from AdminPage.models import Food,Exercise,ContactUs
 from django.db.models import Q
 
 
@@ -10,10 +10,27 @@ def aboutus(request):
     return render(request,'aboutus.html')
 
 
-#ad_contact_us
-
+#Admin Contact Us 
 def ad_contact_us(request):
-    return render(request,'ad_contact_us.html')
+    
+    
+    if request.method == 'GET':
+        
+        return render(request,'ad_contact_us.html')
+    
+    elif request.method == 'POST':
+        
+        c_name = request.POST.get('c_name',None)
+        c_email = request.POST.get('c_email',None)
+        c_tel = request.POST.get('c_tel',None)
+        c_title = request.POST.get('c_title',None)
+        c_content = request.POST.get('c_content',None)
+        
+        contact_us = ContactUs(c_name=c_name,c_email=c_email,c_tel=c_tel,c_title=c_title,c_content=c_content)
+        
+        contact_us.save()
+        
+        return redirect('/')
 
 
 #Admin MEMBER List
