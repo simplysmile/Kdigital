@@ -300,3 +300,41 @@ def ad_e_U(request,ex_id,searchword3,category3):
         qs.save()
         
         return redirect('AdminPage:ad_e_L',searchword3,category3)
+    
+    
+###################################################################################
+
+
+
+#Admin CONTACT List
+def ad_c_L(request,searchword4,category4):
+    
+    if request.method == 'POST':
+        category4 = request.POST.get('category4')
+        searchword4 = request.POST.get('searchword4')
+        
+    if category4 == 'category4':
+            qs = ContactUs.objects.all().order_by('-c_No')
+        
+
+    elif category4 == 'c_name':
+        qs = ContactUs.objects.filter(c_name__contains=searchword4).order_by('-c_No')
+        
+          
+    elif category4 == 'c_title':
+        qs = ContactUs.objects.filter(c_title__contains=searchword4).order_by('-c_No')
+        
+        
+        
+    elif category4 == 'c_email':
+        qs = ContactUs.objects.filter(c_email__contains=searchword4).order_by('-c_No')
+        
+        
+    else:
+        qs = ContactUs.objects.filter(Q(c_name__contains=searchword4)|Q(c_title__contains=searchword4)|Q(c_email__contains=searchword4)).order_by('-c_No')
+        
+        
+    context ={'contact_List':qs,'searchword4':searchword4,'category4':category4}
+    
+    return render(request,'ad_c_L.html',context)
+

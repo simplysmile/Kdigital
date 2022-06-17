@@ -43,6 +43,9 @@ urlpatterns = [
     
     ###########################################################################################
     
+    #admin문의list
+    path('<str:searchword4>/<str:category4>/ad_c_L/',views.ad_c_L, name='ad_c_L'),
+    
     
     
     

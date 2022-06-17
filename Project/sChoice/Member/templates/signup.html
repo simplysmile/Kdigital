@@ -87,28 +87,6 @@
         }
     }
 
-    function check_gender(){
-
-        let female = document.getElementById('F').value;
-        let male = document.getElementById('M').value;
-
-        if (!female.checked && !male.checked){
-
-            document.getElementById('gender_check_msg').innerHTML = '필수 입력사항입니다.'
-            
-
-        }
-        else{
-
-            document.getElementById('gender_check_msg').innerHTML = '';
-
-
-        }
-    }
-
-    
-    
-
 
     function cancelBtn(){
 
@@ -251,12 +229,11 @@
 
     <div class="form-group">
       <label for="gender">성별</label><br>
-        <select id="gender" name="gender" onkeyup="check_gender()" aria-label="성별">
+        <select id="gender" name="gender"  aria-label="성별">
             <option disabled selected>성별</option>
             <option value="M">남자</option>
             <option value="F">여자</option>
         </select>
-        <span id="gender_check_msg"></span>
     </div>
 
     <div class="form-group">
@@ -264,7 +241,7 @@
       <input type= "text" class="form-control" id="tel" onkeyup="check_tel()" placeholder="'-'를 제외하고 입력해주세요." name = "tel">
       <span id="tel_check_msg"></span> 
     </div>
-
+    
 
     <div class="form-group">
       <label for="email">이메일</label>
