@@ -43,7 +43,15 @@
 						    	<td>{{board.b_No}}</td>
 								<!--제목-->
 						        <td class="d-flex align-items-center">
-									<div class="pl-3 email"><a href="{% url 'Board:fdView' board.b_No nowpage %}">{{board.b_Title}}</a></div>
+									<div class="pl-3 email">
+										<a href="{% url 'Board:fdView' board.b_No nowpage %}">
+											{% if board.b_Indent > 0 %}
+											{% for i in "x"|rjust:board.b_Indent %}
+											⌞
+											{%endfor%}
+											{%endif%}
+											{{board.b_Title}}
+										</a></div>
 								</td>
 								<!--작성자-->
 								<td>{{board.member.user_name}}</td>

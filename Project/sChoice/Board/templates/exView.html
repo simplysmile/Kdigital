@@ -15,7 +15,11 @@
         <!-- Header - set the background image for the header in the line below-->
         <header class="py-5 bg-image-full" style="background-image: url('https://source.unsplash.com/wfh8dDlNFOk/1600x900')">
             <div class="text-center my-5">
-                <img class="img-fluid rounded-circle mb-4" src="https://dummyimage.com/150x150/6c757d/dee2e6.jpg" alt="..." />
+                {%if bitem.member.pro == 'advance' %}
+                <img class="img-fluid rounded-circle mb-4" src="/static/img/crown.png" alt="전문가" />
+                {%else%}
+                <img class="img-fluid rounded-circle mb-4" src="/static/img/memicon.png" alt="비전문가" />
+                {%endif%}
                 <h1 class="text-white fs-3 fw-bolder">{{bitem.member.user_name}}</h1>
                 <p class="text-white-50 mb-0">{{bitem.b_Modidate|date:"Y-m-d H:i"}}</p>
             </div>
@@ -40,10 +44,12 @@
         </div>
         {%endif%}
 
+        <div id="buttonlist">
         <a href="{% url 'Board:exReply' bitem.b_No nowpage %}"><div class="list">답글</div></a>
         <a href="{% url 'Board:exboard' nowpage %}"><div class="list">목록</div></a>
         <a href="{% url 'Board:exBUP' bitem.b_No nowpage %}"><div class="list">수정</div></a>
         <div class="list" onclick="delBtn()">삭제</div>
+        </div>
        
 
         <!-- Bootstrap core JS-->
