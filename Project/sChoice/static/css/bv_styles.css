@@ -10,6 +10,22 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
+#buttonlist>div{
+  float:left;
+  width: 150px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background: #004d00;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+  }
+  #buttonlist>div:hover {
+  background: #008000;
+  }
+
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -2487,8 +2503,8 @@ textarea.form-control-lg {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  -webkit-print-color-adjust: exact;
-          color-adjust: exact;
+  /* -webkit-print-color-adjust: exact;
+          color-adjust: exact; */
 }
 .form-check-input[type=checkbox] {
   border-radius: 0.25em;
