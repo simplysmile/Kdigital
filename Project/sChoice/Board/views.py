@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from Member.models import Members
 from Board.models import ExerciseBoard,MealBoard
+from django.core.paginator import Paginator
 import pandas as pd 
 import json
 import numpy as np
@@ -24,15 +25,17 @@ def shop(request):
     
 
 #운동 게시판
-def exboard(request):
+def exboard(request,nowpage):
     qs = ExerciseBoard.objects.order_by('-b_Group')
-    context={'board_list':qs}
     
+    mypages=Paginator(qs,5)
+    fList=mypages.get_page(nowpage)
+    context={'board_list':fList,'nowpage':nowpage}
     
     return render(request,'exboard.html',context)
 
 #운동 글쓰기
-def exwrite(request):
+def exwrite(request,nowpage):
     if request.method=="GET":
         return render(request,'exboardWrite.html')
     
@@ -47,17 +50,19 @@ def exwrite(request):
     qs.save()
     qs.b_Group=qs.b_No
     qs.save()
-    return redirect('Board:exboard')
+    return redirect('Board:exboard',nowpage)
     
 
 #식단 게시판
-def fdboard(request):
+def fdboard(request,nowpage):
     qs = ExerciseBoard.objects.order_by('-b_Group')
-    context={'board_list':qs}
+    mypages=Paginator(qs,5)
+    fList=mypages.get_page(nowpage)
+    context={'board_list':fList,'nowpage':nowpage}    
     return render(request,'fdboard.html',context)
 
 #식단 글쓰기
-def fdwrite(request):
+def fdwrite(request,nowpage):
     if request.method=="GET":
         return render(request,'fdboardWrite.html')
     
@@ -72,5 +77,5 @@ def fdwrite(request):
     qs.save()
     qs.b_Group=qs.b_No
     qs.save()
-    return redirect('Board:exboard')
+    return redirect('Board:fdboard',nowpage)
     

@@ -70,16 +70,43 @@
 				</div>
 			</div>
 		</div>
-		<!--paging-->
+		<!--페이징처리-->
 		<ul class="page-num">
-			<li class="firstb"></li>
-			<li class="prevb"></li>
-			<li class="numb">
-			  <div>1</div>
-			</li>
-			<li class="nextb"></li>
-			<li class="lastb"></li>
-		</ul>
+			<!--이전페이지-->
+				  {% if board_list.has_previous %} <!--현재게시글 목록 페이지에 이전 페이지가 존재한다면-->
+				  <a href="{% url 'Board:exboard' nowpage=1 %}"><li class="firstb"></li></a> <!--1번 페이지로 이동-->
+				  <a href="{% url 'Board:exboard' nowpage=board_list.previous_page_number %}"><li class="prevb"></li></a> <!--이전페이지로 이동-->
+				  {%else%}
+				  <li class="firstb"></li>
+				  <li class="prevb"></li>
+				  {%endif%}
+			<!--//이전페이지-->
+			
+			<!--페이지 순서 처리-->
+				  {% for page in board_list.paginator.page_range %} <!--현재게시글 목록이 포함된 모든 페이지번호를 리트스 형식으로 다 가져와서-->
+				  {% if page == nowpage %}
+				  <li class="numb on"> <!--on/off class로 css 대입해서 현재페이지 여부 구분해주기-->
+					<div>{{page}}</div> <!--해당 페이지 번호 대입-->
+				  </li>
+				  {%else%}
+				  <a href="{% url 'Board:exboard' nowpage=page %}"><li class="numb off"><div>{{page}}</div></li></a>
+				  {%endif%}
+				  {%endfor%}
+			<!--//페이지 순서 처리-->
+			
+			<!--다음페이지-->
+				  {%if fItems.has_next%} <!--현재게시글 목록 페이지에 다음 페이지가 존재한다면-->
+				  <a href="{% url 'Board:exboard' nowpage=board_list.next_page_number %}"><li class="nextb"></li></a><!--다음페이지로 이동-->
+				  <a href="{% url 'Board:exboard' nowpage=board_list.paginator.num_pages %}"><li class="lastb"></li></a>
+																			  <!--nowpage에 총 페이지 수를 대입해서 마지막 페이지로 이동-->
+			
+				  {%else%}
+				  <li class="nextb"></li>
+				  <li class="lastb"></li>
+				  {%endif%}
+			<!--//다음페이지-->
+				</ul>
+			<!--//페이징처리-->
 	  <!--/pagint-->
 		<a href="{% url 'Board:exwrite' %}" ><div class="write">쓰기</div></a>
 	</section>
