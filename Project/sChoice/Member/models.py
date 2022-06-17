@@ -44,7 +44,7 @@ class Dailydata(models.Model):
     cur_neck = models.IntegerField(null=True)
     cur_waist = models.IntegerField(null=True)
     cur_hip = models.IntegerField(null=True)
-    day_img = models.ImageField(default="../static/img/mem01.png",blank=True)
+    day_img = models.ImageField(null=True,blank=True)
     level_Choice=(('2','저강도 운동'),('3','중강도 운동'),('6','고강도 운동')) # 운동강도
     ex_level = models.CharField(max_length=100,choices=level_Choice,null=True)
     week_ex = models.IntegerField(default=0,null=True)

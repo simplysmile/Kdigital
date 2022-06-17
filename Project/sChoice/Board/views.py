@@ -102,7 +102,7 @@ def fdView(request,bNo,nowpage):
 def exBUP(request,bNo,nowpage):
     if request.method=="GET":
         qs=ExerciseBoard.objects.get(b_No=bNo)
-        context={'exitem':qs,'bNo':bNo,'nowpage':nowpage}
+        context={'item':qs,'bNo':bNo,'nowpage':nowpage}
         return render(request,'exUP.html',context)
 
     qs=ExerciseBoard.objects.get(b_No=bNo)
@@ -121,7 +121,7 @@ def exBUP(request,bNo,nowpage):
 def fdBUP(request,bNo,nowpage):
     if request.method=="GET":
         qs=MealBoard.objects.get(b_No=bNo)
-        context={'exitem':qs,'bNo':bNo,'nowpage':nowpage}
+        context={'item':qs,'bNo':bNo,'nowpage':nowpage}
         return render(request,'fdUP.html',context)
 
     qs=MealBoard.objects.get(b_No=bNo)
