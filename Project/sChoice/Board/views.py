@@ -37,7 +37,8 @@ def exboard(request,nowpage):
 #운동 글쓰기
 def exwrite(request,nowpage):
     if request.method=="GET":
-        return render(request,'exboardWrite.html')
+        context={'nowpage':nowpage}
+        return render(request,'exboardWrite.html',context)
     
     u_id=request.session['session_user_id']
     bmem=Members.objects.get(user_id=u_id)
@@ -64,7 +65,8 @@ def fdboard(request,nowpage):
 #식단 글쓰기
 def fdwrite(request,nowpage):
     if request.method=="GET":
-        return render(request,'fdboardWrite.html')
+        context={'nowpage':nowpage}
+        return render(request,'fdboardWrite.html',nowpage)
     
     u_id=request.session['session_user_id']
     bmem=Members.objects.get(user_id=u_id)

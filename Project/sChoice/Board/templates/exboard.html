@@ -95,7 +95,7 @@
 			<!--//페이지 순서 처리-->
 			
 			<!--다음페이지-->
-				  {%if fItems.has_next%} <!--현재게시글 목록 페이지에 다음 페이지가 존재한다면-->
+				  {%if board_list.has_next%} <!--현재게시글 목록 페이지에 다음 페이지가 존재한다면-->
 				  <a href="{% url 'Board:exboard' nowpage=board_list.next_page_number %}"><li class="nextb"></li></a><!--다음페이지로 이동-->
 				  <a href="{% url 'Board:exboard' nowpage=board_list.paginator.num_pages %}"><li class="lastb"></li></a>
 																			  <!--nowpage에 총 페이지 수를 대입해서 마지막 페이지로 이동-->
@@ -108,7 +108,7 @@
 				</ul>
 			<!--//페이징처리-->
 	  <!--/pagint-->
-		<a href="{% url 'Board:exwrite' %}" ><div class="write">쓰기</div></a>
+		<a href="{% url 'Board:exwrite' nowpage %}" ><div class="write">쓰기</div></a>
 	</section>
 
 	<script src="/static/js/bt_jquery.min.js"></script>

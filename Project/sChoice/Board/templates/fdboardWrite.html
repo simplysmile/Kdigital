@@ -149,7 +149,7 @@
     </script>
   </head>
     <div class="testbox">
-      <form action="{% url 'Board:exwrite' %}" method='post' id='frm' enctype="multipart/form-data">
+      <form action="{% url 'Board:exwrite' nowpage %}" method='post' id='frm' enctype="multipart/form-data">
         {% csrf_token %}
         <div class="banner">
           <h1>운동 정보 게시판 글 작성</h1>
