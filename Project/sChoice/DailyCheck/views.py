@@ -7,6 +7,8 @@ from Member.models import Members,Dailydata
 from DailyCheck.models import Dailyexercise,DailyMeal
 import json,datetime
 import cx_Oracle
+import pandas as pd
+import numpy as np
 # import jaydebeapi
 # from dbdefs.oracleDef import *
 
@@ -45,16 +47,85 @@ class Oracles():
 # Create your views here.
 
 def calendar(request):
+    return render(request,'calendar.html')
+def calendarData(request):
     # 세션을 통해 아이디 
     u_id = request.session['session_user_id']
     # 아이디를 사용해서 정보를 얻는다. 
     user = Members.objects.get(user_id=u_id) # 멤버테이블
-    # qs_ex = Dailyexercise.objects.get(user=u_id) # 데일리 운동 테이블
-    # qs_m = DailyMeal.objects.get(d_member=u_id) # 데일리 식사 테이블 
+    
+    today = datetime.date.today()
+    curr_month = today.month
+    curr_year = today.year
+    
+    
+    # 로그인한 사용자의 데일리 운동 테이블과 데일리 식사 테이블 (해당 년, 월)
+    exer = Dailyexercise.objects.filter(user=user, createdate__year=curr_year,createdate__month=curr_month)
+    meal = DailyMeal.objects.filter(d_member=u_id, d_meal_date__year=curr_year,d_meal_date__month=curr_month)
+    
+    userDt = Dailydata.objects.filter(user=user,add_date__year=curr_year,add_date__month=curr_month)
+    
+    
+    
+    meal_data = {}
+    exer_data={}
+    user_data={}
+    e_d = []
+    e_c =[]
+    m_d=[]
+    m_c=[]
+    u_d=[]
+    u_im=[]
+    u_w=[]
+    for i in range(len(exer)):
+        e_d.append(exer[i].createdate)
+        e_c.append(exer[i].burned_kcal)
+    for i in range(len(meal)):
+        m_d.append(meal[i].d_meal_date)
+        m_c.append(meal[i].d_kcal)
+    
+    for i in range(len(userDt)):
+        u_d.append(userDt[i].add_date)
+        if userDt[i].day_img:
+            u_im.append(userDt[i].day_img)
+        else:
+            u_im.append(np.nan)
+            
+        if userDt[i].cur_weight:
+            u_w.append(userDt[i].cur_weight)
+        else:
+            u_w.append(np.nan)
+          
+    
+    
+    meal_data['m_date']=m_d
+    meal_data['m_cal']=m_c
+    exer_data['ex_date']=e_d
+    exer_data['ex_cal']=e_c
+    user_data['u_date']=u_d
+    user_data['u_im']=u_im
+    user_data['u_w']=u_w
+    
+    df_meal = pd.DataFrame(meal_data)
+    df_exer = pd.DataFrame(exer_data)
+    df_user = pd.DataFrame(user_data)
+    print(df_user)
+    
+    
+    df_meal_sum = df_meal.groupby('m_date').sum()
+    df_exer_sum = df_exer.groupby('ex_date').sum()
 
-    # print(qs_ex.burned_kcal)
-    # print(qs_m.d_kcal)
-    return render(request,'calendar.html')
+    js_meal = df_meal_sum.to_json()
+    js_exer = df_exer_sum.to_json()
+    js_user = df_user.to_json()
+    
+    body_json={}
+    body_json['meal'] = json.loads(js_meal)
+    body_json['exer'] = json.loads(js_exer)
+    body_json['user'] = json.loads(js_user)
+    
+    context = {'body_json':body_json}
+    return JsonResponse(context, safe=False)
 
 def mealCheck(request,sdate):
     # 세션을 통해 아이디 
