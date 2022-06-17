@@ -8,6 +8,6 @@ class DailyexerciseAdmin(admin.ModelAdmin):
     
 @admin.register(DailyMeal)
 class DailyMealAdmin(admin.ModelAdmin):
-    list_display=['d_member','d_food_name','d_por','d_carb','d_protein','d_fat','d_kcal']
+    list_display=['d_member','d_food_name','d_meal_date','d_meal_time']
 
 
