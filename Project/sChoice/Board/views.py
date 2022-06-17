@@ -80,4 +80,17 @@ def fdwrite(request,nowpage):
     qs.b_Group=qs.b_No
     qs.save()
     return redirect('Board:fdboard',nowpage)
-    
+
+
+#운동 글 상세보기
+def exView(request,bNo,nowpage):
+    qs=ExerciseBoard.objects.get(b_No=bNo)
+    context={'bNo':bNo,'nowpage':nowpage,'bitem':qs}
+    return render(request,'exView.html',context)
+
+
+#식단 글 상세보기
+def exView(request,bNo,nowpage):
+    qs=MealBoard.objects.get(b_No=bNo)
+    context={'bNo':bNo,'nowpage':nowpage,'bitem':qs}
+    return render(request,'fdView.html',context)
