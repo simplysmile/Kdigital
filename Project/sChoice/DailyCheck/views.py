@@ -131,7 +131,7 @@ def mealCheck(request,sdate):
     # 세션을 통해 아이디 
     u_id = request.session['session_user_id']
     user = Members.objects.get(user_id=u_id)
-    user_data = Dailydata.objects.get(user=user)
+    # user_data = Dailydata.objects.get(user=user)
     # print(user_data.goal_eat_kcal)
     
     
