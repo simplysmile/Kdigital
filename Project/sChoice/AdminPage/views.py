@@ -9,6 +9,13 @@ from django.db.models import Q
 def aboutus(request):
     return render(request,'aboutus.html')
 
+
+#ad_contact_us
+
+def ad_contact_us(request):
+    return render(request,'ad_contact_us.html')
+
+
 #Admin MEMBER List
 def ad_m_L(request,searchword,category):
     
@@ -16,8 +23,11 @@ def ad_m_L(request,searchword,category):
         category = request.POST.get('category')
         searchword = request.POST.get('searchword')
         
+    if category == 'category':
+            qs = Members.objects.all().order_by('-user_name')
+        
 
-    if category == 'user_name':
+    elif category == 'user_name':
         qs = Members.objects.filter(user_name__contains=searchword).order_by('-user_name')
         
           
@@ -114,7 +124,9 @@ def ad_f_L(request,searchword2,category2):
         category2 = request.POST.get('category2')
         searchword2 = request.POST.get('searchword2')
         
-
+    # if category2 == 'category2':
+    #     qs = Food.objects.all().order_by('-f_NO')
+        
     if category2 == 'f_NO':
         qs = Food.objects.filter(f_NO__contains=searchword2).order_by('-f_NO')
         
@@ -157,9 +169,9 @@ def ad_f_U(request,f_NO,searchword2,category2):
     if request.method == 'GET':
         qs = Food.objects.get(f_NO=f_NO)
         
-        context = {'ad_List':qs,'searchword2':searchword2,'category2':category2,'f_NO':f_NO}
+        context = {'food_List':qs,'searchword2':searchword2,'category2':category2,'f_NO':f_NO}
         
-        return render(request,'ad_m_U.html',context)
+        return render(request,'ad_f_U.html',context)
     
     else:
         qs = Food.objects.get(f_NO=f_NO)
@@ -178,11 +190,15 @@ def ad_f_U(request,f_NO,searchword2,category2):
 
 
 #Admin Food Delete
-def ad_f_D(request,f_NO,searchword,category):
+def ad_f_D(request,f_NO,searchword2,category2):
     
     qs = Food.objects.get(f_NO=f_NO)
+    
+    print('@@@@@@@@@@@@@@@@@@@:',qs)
+    
     qs.delete()
-    return redirect('AdminPage:ad_f_L',searchword,category)   
+    
+    return redirect('AdminPage:ad_f_L',searchword2,category2)   
     
 
 ###################################################################################
@@ -192,9 +208,13 @@ def ad_e_L(request,searchword3,category3):
     if request.method == 'POST':
         category3 = request.POST.get('category3')
         searchword3 = request.POST.get('searchword3')
+     
+     
+    if category3 == 'category3':
+        qs = Exercise.objects.all().order_by('-ex_id')   
+    
         
-
-    if category3 == 'ex_id':
+    elif category3 == 'ex_id':
         qs = Exercise.objects.filter(ex_id__contains=searchword3).order_by('-ex_id')
         
           
@@ -234,9 +254,32 @@ def ad_e_D(request,ex_id,searchword,category):
     
     qs = Exercise.objects.get(ex_id=ex_id)
     qs.delete()
-    return redirect('AdminPage:ad_e_L',searchword,category)   
+    return redirect('AdminPage:ad_e_L',searchword,category)
 
 
 
-
-
+#Admin EX Update
+def ad_e_U(request,ex_id,searchword3,category3):
+    
+    if request.method == 'GET':
+        qs = Exercise.objects.get(ex_id=ex_id)
+        
+        context = {'ex_List':qs,'searchword3':searchword3,'category3':category3,'ex_id':ex_id}
+        
+        return render(request,'ad_e_U.html',context)
+    
+    else:
+        qs = Exercise.objects.get(ex_id=ex_id)
+        
+        qs.activity = request.POST.get('activity')
+        qs.aerobic = request.POST.get('aerobic')
+        qs.met  = request.POST.get('met')
+        qs.level = request.POST.get('level')
+        qs.ex_name  = request.POST.get('ex_name')
+        qs.target_category = request.POST.get('target_category')
+        qs.muscle = request.POST.get('muscle')
+        qs.equipment = request.POST.get('equipment')
+        
+        qs.save()
+        
+        return redirect('AdminPage:ad_e_L',searchword3,category3)

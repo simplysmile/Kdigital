@@ -4,6 +4,7 @@ app_name='AdminPage'
 urlpatterns = [
     path('',views.aboutus,name='index'),
     path('aboutus/',views.aboutus, name='aboutus'),
+    path('ad_contact_us/',views.ad_contact_us, name='ad_contact_us'),
     ###########################################################################################
     
     #admin회원list
@@ -23,7 +24,7 @@ urlpatterns = [
     path('<str:searchword2>/<str:category2>/<str:f_NO>/ad_f_V/',views.ad_f_V, name='ad_f_V'),
     #admin음식update
     path('<str:searchword2>/<str:category2>/<str:f_NO>/ad_f_U/',views.ad_f_U, name='ad_f_U'),
-    #admin회원delete
+    #admin음식delete
     path('<str:searchword2>/<str:category2>/<str:f_NO>/ad_f_D/',views.ad_f_D, name='ad_f_D'),
     
     
@@ -35,6 +36,13 @@ urlpatterns = [
     path('<str:searchword3>/<str:category3>/<str:ex_id>/ad_e_V/',views.ad_e_V, name='ad_e_V'),
     #admin운동delete
     path('<str:searchword3>/<str:category3>/<str:ex_id>/ad_e_D/',views.ad_e_D, name='ad_e_D'),
+    #admin운동update
+    path('<str:searchword3>/<str:category3>/<str:ex_id>/ad_e_U/',views.ad_e_U, name='ad_e_U'),
+    
+    
+    ###########################################################################################
+    
+    
     
     
 ]

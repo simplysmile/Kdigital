@@ -1,129 +1,191 @@
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!--최신제이쿼리 이용-->
+	<meta charset="UTF-8">
+	<title>AdminPage</title>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{% static 'css/admin_list.css'%}">
 	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-  <link rel="stylesheet" href="{% static 'css/admin_list.css'%}">
-  <title>AdminPage</title>
-  <script>
-    
-  
-    function searchBtn(){
-  
-      if($('#searchword3').val()==''){
-  
-        alert('검색어를 입력하세요.')
-        $('#searchword3').focus()
-        return false 
-        
-      } 
-  
-      $('#searchfrm3').submit()
-  
-    }
+	<title>AdminPage</title>
+	<script>
+		
+	
+	
+		function searchBtn(){
+	
+		if($('#searchword3').val()==''){
+	
+			alert('검색어를 입력하세요.')
+			$('#searchword3').focus()
+			return false 
+			
+		} 
+	
+		$('#searchfrm3').submit()
+	
+		}
 
 
- 
-  
-  
   </script> 
+
+
+
+
 </head>
 <body>
 
-
-  <nav>
+	<nav>
   
-    <ul class='nav_container'>
-      <li class='nav_item'><a href="{% url 'AdminPage:ad_m_L' searchword='searchword' category='category' %}">회원관리</a></li>
-      <li class='nav_item'><a href="{% url 'AdminPage:ad_f_L' searchword2='searchword2' category2='category2' %}">음식DB관리</a></li>
-      <li class='nav_item'><a href="{% url 'AdminPage:ad_e_L' searchword3='searchword3' category3='category3' %}">운동DB관리</a></li>
-      <li class='nav_item'><a href="">게시판관리</a></li>
-      <li class='nav_item'><a href="">Contact-Us</a></li>
-    </ul>
-  
-  </nav>
-  
-  
-
-  
-  <section>
-    <h1>운동DB관리</h1>
-    <div class="wrapper">
-      <form action="{% url 'AdminPage:ad_e_L' searchword3='searchword3'  category3='category3' %}" name="searchfrm3" id='searchfrm3' method="post">
-        {% csrf_token %} 
-        
-        <select class='admin_select' name="category3" id="category3">
-          <option value="ex_id">운동아이디</option>
-          <option value="ex_name">운동이름</option>
-          <option value="level">운동강도</option>
-          <option value="all">전체</option>
-        </select>
-  
-        <div class="title">
-          <input type="text" name='searchword3' id='searchword3' size="16">
-       
-        <div>
-          <button type="button" onclick='searchBtn()'><span>search</span></button>
-        </div>
-      </form>
-    </div>
-  
-    <table>
-      <colgroup>
-        <col width="10%">
-        <col width="20%">
-        <col width="12%">
-        <col width="12%">
-        <col width="12%">
-        <col width="12%">
-        <col width="12%">
-      </colgroup>
-      
-        <tr>
-          <th>운동번호</th>
-          <th>운동이름</th>
-          <th>운동강도</th>
-          <th>운동종류</th>
-          <th>유,무산소</th>
-          <th>에너지소모량</th>
-          <th>타겟카테고리</th>
-        </tr>
-      
-      {% if ex_List %}
-      {% for board in ex_List%}
-      
-        <tr>
-          <td>{{board.ex_id}}</td>
-          <td><a href="{% url 'AdminPage:ad_e_V' searchword3 category3 board.ex_id %}">{{board.ex_name}}</a></td>
-          <td>{{board.level}}</td>
-          <td>{{board.activity}}</td>
-          <td>{{board.aerobic}}</td>
-          <td>{{board.met}}</td>
-          <td>{{board.target_category}}</td>
-        </tr>
-      
-      {% endfor %}
-      {%else%}
-      <tr>
-        <td colspan='7'>데이터가 없습니다</td>
-      </tr>
-      {% endif %}
-     
-    </table>
-  
-  
-   
-  </section>
+		<ul class='nav_container'>
+		  <li class='nav_item'><a href="{% url 'AdminPage:ad_m_L' searchword='searchword' category='category' %}">회원관리</a></li>
+		  <li class='nav_item'><a href="{% url 'AdminPage:ad_f_L' searchword2='searchword2' category2='category2' %}">음식DB관리</a></li>
+		  <li class='nav_item'><a href="{% url 'AdminPage:ad_e_L' searchword3='searchword3' category3='category3' %}">운동DB관리</a></li>
+		  <li class='nav_item'><a href="">게시판관리</a></li>
+		  <li class='nav_item'><a href="{% url 'AdminPage:ad_contact_us'%}">Contact-Us</a></li>
+		</ul>
+	  
+	  </nav>
 
 
 
+	<section class="main-content">
+		<div class="container">
+			<h1>EX-Admin</h1>
+
+			<div class="wrapper">
+				<form action="{% url 'AdminPage:ad_e_L' searchword3='searchword3'  category3='category3' %}" name="searchfrm3" id='searchfrm3' method="post">
+				  {% csrf_token %} 
+				
+
+				  <select class='admin_select' name="category3" id="category3">
+					<option value="ex_id">운동아이디</option>
+					<option value="ex_name">운동이름</option>
+					<option value="level">운동강도</option>
+					<option value="all">전체</option>
+				  </select>
+			
+			
+				  <div class="title">
+					<input type="text" name='searchword3' id='searchword3' size="16">
+				  <div>
+					<button type="button" onclick='searchBtn()'><span>search</span></button>
+				  </div>
+				</form>
+			  </div>
 
 
+			<br>
+			<br>
 
-  
-</body>  
+			<table class="table">
+				<thead>
+
+
+					<colgroup>
+						<col width="20%">
+						<col width="12%">
+						<col width="12%">
+						<col width="12%">
+						<col width="12%">
+						<col width="12%">
+						<col width="12%">
+					  </colgroup>
+					  
+						<tr>
+						<th>운동이름</th>
+						  <th>운동아이디</th>
+						  <th>운동강도</th>
+						  <th>운동종류</th>
+						  <th>유,무산소</th>
+						  <th>에너지소모량</th>
+						  <th>타겟카테고리</th>
+						  <th>actions</th>
+
+						</tr>
+
+					
+					
+				</thead>
+				<tbody>
+					{% if ex_List %}
+					{% for board in ex_List %}
+
+					<script>
+
+						function deleteBtn(){
+							if(confirm('삭제하시겠습니까?')){
+				
+							
+								
+							}else{
+				
+								return false
+							}
+						}
+					</script>
+						<td>
+							<div class="user-info">
+								<div class="user-info__img">
+									<img src="#" alt="name">
+								</div>
+								<div class="user-info__basic">
+									<h6 class="mb-0"><a href="{% url 'AdminPage:ad_e_V' searchword3 category3 board.ex_id %}">{{board.ex_name}}</a></h6>
+									
+								</div>
+							</div>
+						</td>
+						
+						<td>
+							<h6 class="mb-0">{{board.ex_id}}</h6>
+							
+						</td>
+						<td>
+							<h6 class="mb-0">{{board.level}}</h6>
+						</td>
+						<td>
+							<h6 class="mb-0">{{board.activity}}</h6>
+						</td>
+						<td>
+							<h6 class="mb-0">{{board.aerobic}}</h6>
+						</td>
+						<td>
+							<h6 class="mb-0">{{board.met}}</h6>
+						</td>
+						<td>
+							<h6 class="mb-0">{{board.target_category}}</h6>
+						</td>
+
+						<td>
+							<div class="dropdown open">
+								<a href="#!" class="px-2" id="triggerId1" data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false">
+											<i class="fa fa-ellipsis-v"></i>
+								</a>
+								<div class="dropdown-menu" aria-labelledby="triggerId1">
+									<a class="dropdown-item" href="{% url 'AdminPage:ad_e_U' searchword3='searchword3' category3='category3' ex_id=board.ex_id %}"><i class="fa fa-pencil mr-1"></i> Edit</a>
+									<a class="dropdown-item text-danger" onclick='deleteBtn()'><i class="fa fa-trash mr-1"></i>Delete</a>
+								</div>
+							</div>
+						</td>
+					</tr>
+
+					{% endfor %}
+					{%else%}
+					<tr>
+					  <td colspan='8'>데이터가 없습니다</td>
+					</tr>
+					{% endif %}
+
+				</tbody>
+			</table>
+		</div>
+	</section>
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
 </html>

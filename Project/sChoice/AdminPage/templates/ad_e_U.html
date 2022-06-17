@@ -17,7 +17,7 @@
 
     function cancelBtn(){
 
-      location.href="{% url 'AdminPage:ad_f_L' searchword2=searchword2 category2=category2 %}"
+      location.href="{% url 'AdminPage:ad_e_L' searchword3=searchword3 category3=category3 %}"
     }
 
   </script>
@@ -27,7 +27,7 @@
     <h1>회원정보수정</h1>
 
 
-    <form action="{% url 'AdminPage:ad_f_U' searchword2=searchword2 category2=category2 f_NO=f_NO %}" name="update" method="post">
+    <form action="{% url 'AdminPage:ad_e_U' searchword3=searchword3 category3=category3 ex_id=ex_List.ex_id %}" name="update" method="post">
       {% csrf_token %}
       <table>
         <colgroup>
@@ -35,42 +35,44 @@
           <col width="85%">
         </colgroup>
         
-  {% if food_List%}
+  {% if ex_List%}
 
-
     <div class="form-group">
-      <label for="f_NO">음식번호</label>
-      <input type= "text" class="form-control" id="f_NO" value="{{food_List.f_NO}}" name ="f_NO" readonly>
+      <label for="ex_id">운동아이디</label>
+      <input type= "text" class="form-control" id="ex_id" value="{{ex_List.ex_id}}"  placeholder="{{ex_List.ex_id}}" name ="ex_id" readonly>
       </div>
     <div class="form-group">
-      <label for="f_id">음식아이디</label>
-      <input type= "text" class="form-control" id="f_id" value="{{food_List.f_id}}" name ="f_id">
+      <label for="activity">운동종류</label>
+      <input type= "text" class="form-control" id="activity" value="{{ex_List.activity}}" name ="activity">
       </div>
     <div class="form-group">
-      <label for="f_DB">음식DB군</label>
-      <input type= "text" class="form-control" id="f_DB" value="{{food_List.f_DB}}" name ="f_DB">
+      <label for="aerobic">유,무산소</label>
+      <input type= "text" class="form-control" id="aerobic" value="{{ex_List.aerobic}}" name ="aerobic">
       </div>
     <div class="form-group">
-      <label for="f_name">음식이름</label>
-      <input type= "text" class="form-control" id="f_name" value="{{food_List.f_name}}" name ="f_name">
+      <label for="met">에너지소모량</label>
+      <input type= "text" class="form-control" id="met" value="{{ex_List.met}}" name ="met">
       </div>
     <div class="form-group">
-      <label for="f_por">g당</label>
-      <input type= "text" class="form-control" id="f_por" value="{{food_List.f_por}}" name ="f_por">
+      <label for="level">운동강도</label>
+      <input type= "text" class="form-control" id="level" value="{{ex_List.level}}" name ="level">
       </div>
     <div class="form-group">
-      <label for="f_carb">탄수화물</label>
-      <input type= "text" class="form-control" id="f_carb" value="{{food_List.f_carb}}" name ="f_carb">
+      <label for="ex_name">운동이름</label>
+      <input type= "text" class="form-control" id="ex_name" value="{{ex_List.ex_name}}" name ="ex_name">
       </div>
     <div class="form-group">
-      <label for="f_protein">단백질</label>
-      <input type= "text" class="form-control" id="f_protein" value="{{food_List.f_protein}}" name ="f_protein">
+      <label for="target_category">타켓 카테고리</label>
+      <input type= "text" class="form-control" id="target_category" value="{{ex_List.target_category}}" name ="target_category">
       </div>
     <div class="form-group">
-      <label for="f_fat">지방</label>
-      <input type= "text" class="form-control" id="f_fat" value="{{food_List.f_fat}}" name ="f_fat">
+      <label for="muscle">자극되는 근육</label>
+      <input type= "text" class="form-control" id="muscle" value="{{ex_List.muscle}}" name ="muscle">
       </div>
-
+    <div class="form-group">
+      <label for="equipment">운동에 사용되는 운동기구</label>
+      <input type= "text" class="form-control" id="equipment" value="{{ex_List.equipment}}" name ="equipment">
+      </div>
 
       </table>
           

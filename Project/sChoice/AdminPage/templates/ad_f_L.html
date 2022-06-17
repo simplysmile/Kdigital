@@ -1,130 +1,190 @@
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!--최신제이쿼리 이용-->
+	<meta charset="UTF-8">
+	<title>AdminPage</title>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{% static 'css/admin_list.css'%}">
 	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-  <link rel="stylesheet" href="{% static 'css/admin_list.css'%}">
-  <title>AdminPage</title>
-  <script>
-    
-  
-    function searchBtn(){
-  
-      if($('#searchword2').val()==''){
-  
-        alert('검색어를 입력하세요.')
-        $('#searchword2').focus()
-        return false 
-        
-      } 
-  
-      $('#searchfrm2').submit()
-  
-    }
+	<title>AdminPage</title>
+	<script>
+		
+	
+	
+		function searchBtn(){
+	
+		if($('#searchword2').val()==''){
+	
+			alert('검색어를 입력하세요.')
+			$('#searchword2').focus()
+			return false 
+			
+		} 
+	
+		$('#searchfrm2').submit()
+	
+		}
 
 
- 
-  
-  
   </script> 
+
+
+
+
 </head>
 <body>
 
-
-  <nav>
+	<nav>
   
-    <ul class='nav_container'>
-      <li class='nav_item'><a href="{% url 'AdminPage:ad_m_L' searchword='searchword' category='category' %}">회원관리</a></li>
-      <li class='nav_item'><a href="{% url 'AdminPage:ad_f_L' searchword2='searchword2' category2='category2' %}">음식DB관리</a></li>
-      <li class='nav_item'><a href="{% url 'AdminPage:ad_e_L' searchword3='searchword3' category3='category3' %}">운동DB관리</a></li>
-      <li class='nav_item'><a href="">게시판관리</a></li>
-      <li class='nav_item'><a href="">Contact-Us</a></li>
-    </ul>
-  
-  </nav>
-  
-  
-
-  
-  <section>
-    <h1>음식DB관리</h1>
-    <div class="wrapper">
-      <form action="{% url 'AdminPage:ad_f_L' searchword2='searchword2'  category2='category2' %}" name="searchfrm2" id='searchfrm2' method="post">
-        {% csrf_token %} 
-        
-        <select class='admin_select' name="category2" id="category2">
-          <option value="f_NO">음식번호</option>
-          <option value="f_name">음식이름</option>
-          <option value="f_DB">음식DB군</option>
-          <option value="all">전체</option>
-        </select>
-  
-        <div class="title">
-          <input type="text" name='searchword2' id='searchword2' size="16">
-       
-        <div>
-          <button type="button" onclick='searchBtn()'><span>search</span></button>
-        </div>
-      </form>
-    </div>
-  
-    <table>
-      <colgroup>
-        <col width="10%">
-        <col width="20%">
-        <col width="12%">
-        <col width="12%">
-        <col width="12%">
-        <col width="12%">
-        <col width="12%">
-      </colgroup>
-      
-        <tr>
-          <th>음식번호</th>
-          <th>음식이름</th>
-          <th>음식DB군</th>
-          <th>g당</th>
-          <th>탄수화물</th>
-          <th>단백질</th>
-          <th>지방</th>
-        </tr>
-      
-      {% if food_List %}
-      {% for board in food_List%}
-      
-        <tr>
-          <td>{{board.f_NO}}</td>
-          <td><a href="{% url 'AdminPage:ad_f_V' searchword2 category2 board.f_NO %}">{{board.f_name}}</a></td>
-          <td>{{board.f_DB}}</td>
-          <td>{{board.f_por}}</td>
-          <td>{{board.f_carb}}</td>
-          <td>{{board.f_protein}}</td>
-          <td>{{board.f_fat}}</td>
-        </tr>
-      
-      {% endfor %}
-      {%else%}
-      <tr>
-        <td colspan='7'>데이터가 없습니다</td>
-      </tr>
-      {% endif %}
-     
-    </table>
-  
-  
-   
-  </section>
+		<ul class='nav_container'>
+		  <li class='nav_item'><a href="{% url 'AdminPage:ad_m_L' searchword='searchword' category='category' %}">회원관리</a></li>
+		  <li class='nav_item'><a href="{% url 'AdminPage:ad_f_L' searchword2='searchword2' category2='category2' %}">음식DB관리</a></li>
+		  <li class='nav_item'><a href="{% url 'AdminPage:ad_e_L' searchword3='searchword3' category3='category3' %}">운동DB관리</a></li>
+		  <li class='nav_item'><a href="">게시판관리</a></li>
+		  <li class='nav_item'><a href="{% url 'AdminPage:ad_contact_us'%}">Contact-Us</a></li>
+		</ul>
+	  
+	  </nav>
 
 
 
+	<section class="main-content">
+		<div class="container">
+			<h1>Food-Admin</h1>
+
+			<div class="wrapper">
+				<form action="{% url 'AdminPage:ad_f_L' searchword2='searchword2'  category2='category2' %}" name="searchfrm2" id='searchfrm2' method="post">
+				  {% csrf_token %} 
+				  
+				  <select class='admin_select' name="category2" id="category2">
+					<option value="f_NO">음식번호</option>
+					<option value="f_name">음식이름</option>
+					<option value="f_DB">음식DB군</option>
+					<option value="all">전체</option>
+				  </select>
+			
+				  <div class="title">
+					<input type="text" name='searchword2' id='searchword2' size="16">
+				  <div>
+					<button type="button" onclick='searchBtn()'><span>search</span></button>
+				  </div>
+				</form>
+			  </div>
 
 
+			<br>
+			<br>
 
-  
-</body>  
+			<table class="table">
+				<thead>
+
+					<colgroup>
+						<col width="24%">
+						<col width="13%">
+						<col width="13%">
+						<col width="13%">
+						<col width="13%">
+						<col width="13%">
+						<col width="13%">
+						<col width="13%">
+					  </colgroup>
+
+					<tr>
+						<th>음식이름</th>
+						<th>음식번호</th>
+						<th>음식DB군</th>
+						<th>g당</th>
+						<th>탄수화물</th>
+						<th>단백질</th>
+						<th>지방</th>
+						<th>actions</th>
+					  </tr>
+					
+				</thead>
+				<tbody>
+					{% if food_List %}
+					{% for board in food_List %}
+
+					<script>
+
+						function deleteBtn(){
+							if(confirm('삭제하시겠습니까?')){
+				
+								location.href="{% url 'AdminPage:ad_f_D' searchword2='searchword2' category2='category2'  f_NO=board.f_NO %}"
+
+								alert('삭제되었습니다.')
+								
+							}else{
+				
+								return false
+							}
+						}
+					</script>
+					<tr>
+						<td>
+							<div class="user-info">
+								<div class="user-info__img">
+									<img src="/static/img/사과.jpeg" alt="사과">
+								</div>
+								<div class="user-info__basic">
+									<h6 class="mb-0"><a href="{% url 'AdminPage:ad_f_V' searchword2 category2 board.f_NO %}">{{board.f_name}}</a></h6>
+									
+								</div>
+							</div>
+						</td>
+						
+						<td>
+							<h6 class="mb-0">{{board.f_NO}}</h6>
+							
+						</td>
+						<td>
+							<h6 class="mb-0">{{board.f_DB}}</h6>
+							
+						</td>
+						<td>
+							<h6 class="mb-0">{{board.f_por}}</h6>
+						</td>
+						<td>
+							<h6 class="mb-0">{{board.f_carb}}</h6>
+						</td>
+						<td>
+							<h6 class="mb-0">{{board.f_protein}}</h6>
+						</td>
+						<td>
+							<h6 class="mb-0">{{board.f_fat}}</h6>
+						</td>
+
+						<td>
+							<div class="dropdown open">
+								<a href="#!" class="px-2" id="triggerId1" data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false">
+											<i class="fa fa-ellipsis-v"></i>
+								</a>
+								<div class="dropdown-menu" aria-labelledby="triggerId1">
+									<a class="dropdown-item" href="{% url 'AdminPage:ad_f_U' searchword2=searchword2 category2=category2  f_NO=board.f_NO %}"><i class="fa fa-pencil mr-1"></i> Edit</a>
+									<a class="dropdown-item text-danger" onclick='deleteBtn()'><i class="fa fa-trash mr-1"></i>Delete</a>
+								</div>
+							</div>
+						</td>
+					</tr>
+
+					{% endfor %}
+					{%else%}
+					<tr>
+					  <td colspan='7'>데이터가 없습니다</td>
+					</tr>
+					{% endif %}
+
+				</tbody>
+			</table>
+		</div>
+	</section>
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
 </html>
-
