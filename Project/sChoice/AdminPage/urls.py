@@ -4,6 +4,7 @@ app_name='AdminPage'
 urlpatterns = [
     path('',views.aboutus,name='index'),
     path('aboutus/',views.aboutus, name='aboutus'),
+    
     path('ad_contact_us/',views.ad_contact_us, name='ad_contact_us'),
     ###########################################################################################
     
