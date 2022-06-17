@@ -1,3 +1,12 @@
+
+
+.warning{
+    font-size: 13px;
+    color: red;
+
+
+}
+
 #pw_check_msg {
 
     font-size: 13px;
@@ -19,3 +28,19 @@
 
 
 }
+
+/**#height_check_msg{
+
+
+    font-size: 13px;
+    color: red;
+
+}
+
+#weight_check_msg{
+
+    font-size: 13px;
+    color: red;
+
+
+}**/

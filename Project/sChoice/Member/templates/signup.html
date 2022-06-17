@@ -47,24 +47,27 @@
        } //비밀번호 확인
 
 
-    
-    function check_email(){
+    function checkIt(){
 
-        let email1= document.getElementById('email').value;
+        var email = document.getElementById('email').value
+        var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 
-        if (email1==''){
+            if(exptext.test(email)==false){
 
-            document.getElementById('email_check_msg').innerHTML = '필수 입력사항입니다.';
+            //이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우			
 
-        }
-        else{
+            document.getElementById('email_check_msg').innerHTML = '이메일형식이 잘 못 되었습니다.';
 
-            document.getElementById('email_check_msg').innerHTML = '';
+        return false;
+        
+            }else{
 
-
-        }
+                document.getElementById('email_check_msg').innerHTML = '';
+            }
         
     }
+        
+    
     function check_height(){
 
         let height= document.getElementById('height').value;
@@ -77,6 +80,25 @@
         else{
 
             document.getElementById('height_check_msg').innerHTML = '';
+
+
+        }
+        
+    }
+    
+    
+    function check_weight(){
+
+        let weight= document.getElementById('weight').value;
+
+        if (weight==''){
+
+            document.getElementById('weight_check_msg').innerHTML = '필수 입력사항입니다.';
+
+        }
+        else{
+
+            document.getElementById('weight_check_msg').innerHTML = '';
 
 
         }
@@ -103,6 +125,9 @@
 
         }
     }
+
+
+    
 
 
     function cancelBtn(){
@@ -262,7 +287,7 @@
 
     <div class="form-group">
       <label for="email">* 이메일</label>
-      <input type= "text" class="form-control" id="email" onkeyup="check_email()" placeholder="abcd@unnischoice.com" name = "email">
+      <input type= "text" class="form-control" id="email" onkeyup='checkIt()' placeholder="abcd@unnischoice.com" name = "email">
       <span id="email_check_msg"></span> 
 
     </div>
@@ -355,13 +380,14 @@
     <div class="form-group">
         <label for="height">* 키</label>
         <input type="text" class="form-control"  id="height" onkeyup='check_height()' placeholder="키 ex) 165" name="height">  
-        <span id= "height_check_msg"></span>  
+        <span class="warning" id= "height_check_msg"></span>  
        
     </div>
 
     <div class="form-group">
         <label for="weigth"> * 몸무게</label>
-        <input type="text" class="form-control"  id="weight" placeholder="몸무게 ex) 50 " name="weight">   
+        <input type="text" class="form-control"  id="weight" onkeyup='check_weight()' placeholder="몸무게 ex) 50 " name="weight">   
+        <span class="warning"></span>  
        
     </div>
 
