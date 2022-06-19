@@ -1,3 +1,30 @@
+.inner-div{
+
+    margin:auto;
+    background-color: red;
+}
+.outer-div{
+
+    margin:auto;
+    background-color: pink;
+}
+
+
+
+.main_logo a:link {
+    text-decoration: none;
+  }
+  a:visited {
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+  a:active {
+    text-decoration: none;
+  }
+
+
 
 
 .warning{
@@ -29,7 +56,17 @@
 
 }
 
-ㅗ1
+.on{ font-size: 13px;
+    color: red;}
+
+
+
+
+
+
+
+
+
 
 /**#height_check_msg{
 
