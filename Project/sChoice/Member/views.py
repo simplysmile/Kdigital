@@ -124,7 +124,6 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
         user_name = request.POST.get('username', None)
         user_id = request.POST.get('user_id',None)   
         user_pw  = request.POST.get('user_pw',None)
-        re_pw  = request.POST.get('re_password',None)
         pro = request.POST.get('advancelevel',None)
         year  = int(request.POST.get('year'))
         month = int(request.POST.get('month'))
@@ -173,7 +172,7 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
 
         # bmi 계산
         len = height/100
-        bmi = float(cur_weight)/float(len*len);
+        bmi = float(cur_weight)/float(len*len)
 
         # bmr
         bmr = 0
