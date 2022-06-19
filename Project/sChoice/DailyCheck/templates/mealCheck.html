@@ -123,7 +123,10 @@
                     </a>
                 </td>
                 {% else %}
-                <td width=250 height=250 style='background-color:#eee;'><img onclick="addMeal('{{ sdate }}',1)" width=50 height=50 src='/static/img/basic/plus.png'></td>
+                <td width=250 height=250 style='background-color:#eee;'>
+                    <ul style="font-size:10px; margin-top:0px; text-align: center;">아침</ul>
+                    <img onclick="addMeal('{{ sdate }}',1)" width=50 height=50 src='/static/img/basic/plus.png'>
+                </td>
                 {% endif %}
                 {% if lcnt %}
                 <td width=250 height=250 style='background-color:#A0DDE0;'> 
@@ -137,14 +140,17 @@
                 
                 </td>
                 {% else %}
-                <td width=250 height=250 style='background-color:#eee;'><img onclick="addMeal('{{ sdate }}',2)" width=50 height=50 src='/static/img/basic/plus.png'></td>
+                <td width=250 height=250 style='background-color:#eee;'>
+                    <ul style="font-size:10px; margin-top:0px; text-align: center;">점심</ul>
+                    <img onclick="addMeal('{{ sdate }}',2)" width=50 height=50 src='/static/img/basic/plus.png'>
+                </td>
                 {% endif %}
                 
             </tr>
             <tr>                
                 {% if dcnt %}
                 <td width=250 height=250 style='background-color:#A0DDE0;'> 
-                    <a href="#">
+                    <a onclick="addMeal('{{ sdate }}',3)">
                     <ul>저녁</ul>
                     <ul>{{ d_k }} kcal</ul>
                     <ul><p style="font-size:17px;">탄수화물: {{ d_c }}g</p></ul>
@@ -153,11 +159,14 @@
                     </a>
                 </td>
                 {% else %}
-                <td width=250 height=250 style='background-color:#eee;'><img onclick="addMeal('{{ sdate }}',3)" width=50 height=50 src='/static/img/basic/plus.png'></td>
+                <td width=250 height=250 style='background-color:#eee;'>
+                    <ul style="font-size:10px; margin-top:0px; text-align: center;">저녁</ul>
+                    <img onclick="addMeal('{{ sdate }}',3)" width=50 height=50 src='/static/img/basic/plus.png'>
+                </td>
                 {% endif %}
                 {% if scnt %}
                 <td width=250 height=250 style='background-color:#A0DDE0;'> 
-                    <a href="#">
+                    <a onclick="addMeal('{{ sdate }}',4)">
                     <ul>간식</ul>
                     <ul>{{ s_k }} kcal</ul>
                     <ul><p style="font-size:17px;">탄수화물: {{ s_c }}g</p></ul>
@@ -167,7 +176,10 @@
                 
                 </td>
                 {% else %}
-                <td width=250 height=250 style='background-color:#eee;'><img onclick="addMeal('{{ sdate }}',4)" width=50 height=50 src='/static/img/basic/plus.png'></td>
+                <td width=250 height=250 style='background-color:#eee;'>
+                    <ul style="font-size:10px; margin-top:0px; text-align: center;">간식</ul>
+                    <img onclick="addMeal('{{ sdate }}',4)" width=50 height=50 src='/static/img/basic/plus.png'>
+                </td>
                 {% endif %}
                 
             </tr>

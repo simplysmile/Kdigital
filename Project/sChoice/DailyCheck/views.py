@@ -617,7 +617,7 @@ def addMealData(request, sdate):
 
     elif request.POST: 
 
-        print('post 로 넘어온 데이터 처리 ... ')   
+          
         # json 에서 가져온 입력 정보     
         response_body = request.POST  
         meallist = dict(response_body.items())
@@ -627,26 +627,47 @@ def addMealData(request, sdate):
         # 현재 입력하고 있는 식사 시간(아침, 점심, 저녁, 간식)
         mealtime = meallist['mealtime']
 
-        # 총 데이터의 길이만큼 db에 데이터를 넣어준다
-        for i in range(datalen):
-            m_id = meallist['d['+str(i)+'][f_id]']
-            m_name = meallist['d['+str(i)+'][f_name]']
-            m_weight = meallist['d['+str(i)+'][f_weight]']
-            m_cal = meallist['d['+str(i)+'][f_cal]']
-            m_carb = meallist['d['+str(i)+'][f_carb]']
-            m_prot = meallist['d['+str(i)+'][f_prot]']
-            m_fat = meallist['d['+str(i)+'][f_fat]']
-            # arr =    [mealtime,m_id,m_name,m_weight,m_cal,m_carb,m_prot,m_fat]
-            # print(arr)
+        originalData = DailyMeal.objects.filter(d_member=u_id, d_meal_date=sdate,d_meal_time=mealtime)
+        msg = ''
+        if not originalData:
+            # 만약에 원래 디비에 같은 정보가 없을 경우 .. 
+            # 총 데이터의 길이만큼 db에 데이터를 넣어준다
+            for i in range(datalen):
+                m_id = meallist['d['+str(i)+'][f_id]']
+                m_name = meallist['d['+str(i)+'][f_name]']
+                m_weight = meallist['d['+str(i)+'][f_weight]']
+                m_cal = meallist['d['+str(i)+'][f_cal]']
+                m_carb = meallist['d['+str(i)+'][f_carb]']
+                m_prot = meallist['d['+str(i)+'][f_prot]']
+                m_fat = meallist['d['+str(i)+'][f_fat]']
+                # arr =    [mealtime,m_id,m_name,m_weight,m_cal,m_carb,m_prot,m_fat]
+                # print(arr)
 
-            dmeal = DailyMeal(d_member = user, d_meal_date = sdate, d_meal_time=mealtime,d_food=m_id,d_food_name=m_name,d_por=m_weight,d_protein=m_prot,d_carb=m_carb,d_fat=m_fat,d_kcal=m_cal)
-            dmeal.save()
+                dmeal = DailyMeal(d_member = user, d_meal_date = sdate, d_meal_time=mealtime,d_food=m_id,d_food_name=m_name,d_por=m_weight,d_protein=m_prot,d_carb=m_carb,d_fat=m_fat,d_kcal=m_cal)
+                dmeal.save()
+            msg = '데이터를 성공적으로 저장하였습니다'
+        else:
+            DailyMeal.objects.filter(d_member=u_id, d_meal_date=sdate,d_meal_time=mealtime).delete()
+            for i in range(datalen):
+                m_id = meallist['d['+str(i)+'][f_id]']
+                m_name = meallist['d['+str(i)+'][f_name]']
+                m_weight = meallist['d['+str(i)+'][f_weight]']
+                m_cal = meallist['d['+str(i)+'][f_cal]']
+                m_carb = meallist['d['+str(i)+'][f_carb]']
+                m_prot = meallist['d['+str(i)+'][f_prot]']
+                m_fat = meallist['d['+str(i)+'][f_fat]']
+                # arr =    [mealtime,m_id,m_name,m_weight,m_cal,m_carb,m_prot,m_fat]
+                # print(arr)
+
+                dmeal = DailyMeal(d_member = user, d_meal_date = sdate, d_meal_time=mealtime,d_food=m_id,d_food_name=m_name,d_por=m_weight,d_protein=m_prot,d_carb=m_carb,d_fat=m_fat,d_kcal=m_cal)
+                dmeal.save()
+            msg = '데이터를 성공적으로 수정하였습니다'
 
 
 
-        
+            
 
-        context={'msg': '성공적으로 저장되었습니다'}
+        context={'msg': msg}
         return JsonResponse(context)
 
 

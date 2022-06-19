@@ -12,11 +12,13 @@ var span = document.getElementsByClassName("close")[0];
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
     modal.style.display = "none";
+    location.reload();
 }
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
+        location.reload();
     }
 }
 
@@ -157,6 +159,7 @@ function canceldBtnb()
 {
     if (confirm('등록을 취소하시겠습니까?')){
         modal.style.display = "none";   
+        location.reload();
     }
 }
 function modifyMeal(sdate,num)
