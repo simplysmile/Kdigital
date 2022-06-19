@@ -114,8 +114,8 @@
             <tr>                
                 {% if bcnt %}
                 <td width=250 height=250 style='background-color:#A0DDE0;'> 
-                    <a href="#">
-                    <ul>아침</ul>
+                    <a onclick="addMeal('{{ sdate }}',1)">
+                    <ul id="mealsel">아침</ul>
                     <ul>{{ b_k }} kcal</ul>
                     <ul><p style="font-size:17px;">탄수화물: {{ b_c }}g</p></ul>
                     <ul><p style="font-size:17px;">단백질: {{ b_p }}g </p></ul>
@@ -123,11 +123,11 @@
                     </a>
                 </td>
                 {% else %}
-                <td width=250 height=250 style='background-color:#eee;'><img onclick="addMeal()" width=50 height=50 src='/static/img/basic/plus.png'></td>
+                <td width=250 height=250 style='background-color:#eee;'><img onclick="addMeal('{{ sdate }}',1)" width=50 height=50 src='/static/img/basic/plus.png'></td>
                 {% endif %}
                 {% if lcnt %}
                 <td width=250 height=250 style='background-color:#A0DDE0;'> 
-                    <a href="#">
+                    <a onclick="addMeal('{{ sdate }}',2)">
                     <ul>점심</ul>
                     <ul>{{ l_k }} kcal</ul>
                     <ul><p style="font-size:17px;">탄수화물: {{ l_c }}g</p></ul>
@@ -137,7 +137,7 @@
                 
                 </td>
                 {% else %}
-                <td width=250 height=250 style='background-color:#eee;'><img onclick="addMeal()" width=50 height=50 src='/static/img/basic/plus.png'></td>
+                <td width=250 height=250 style='background-color:#eee;'><img onclick="addMeal('{{ sdate }}',2)" width=50 height=50 src='/static/img/basic/plus.png'></td>
                 {% endif %}
                 
             </tr>
@@ -153,7 +153,7 @@
                     </a>
                 </td>
                 {% else %}
-                <td width=250 height=250 style='background-color:#eee;'><img onclick="addMeal()" width=50 height=50 src='/static/img/basic/plus.png'></td>
+                <td width=250 height=250 style='background-color:#eee;'><img onclick="addMeal('{{ sdate }}',3)" width=50 height=50 src='/static/img/basic/plus.png'></td>
                 {% endif %}
                 {% if scnt %}
                 <td width=250 height=250 style='background-color:#A0DDE0;'> 
@@ -167,7 +167,7 @@
                 
                 </td>
                 {% else %}
-                <td width=250 height=250 style='background-color:#eee;'><img onclick="addMeal()" width=50 height=50 src='/static/img/basic/plus.png'></td>
+                <td width=250 height=250 style='background-color:#eee;'><img onclick="addMeal('{{ sdate }}',4)" width=50 height=50 src='/static/img/basic/plus.png'></td>
                 {% endif %}
                 
             </tr>
