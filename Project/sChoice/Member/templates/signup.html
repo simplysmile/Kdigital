@@ -41,7 +41,7 @@
         
                     //이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우			
         
-                    document.getElementById('email_check_msg').innerHTML = '이메일형식이 잘 못 되었습니다.';
+                    document.getElementById('email_check_msg').innerHTML = '이메일형식이 잘못되었습니다.';
         
                 return false;
                 
@@ -54,89 +54,116 @@
         
         
                 
+        
+            ////////////////////////////필수항목 검사 
+
+
+            function signup_now(){
+
+
+                if($('#year').val() == '' |  $('#month').val() == '' |  $('#day').val() == '' ){
+                    $('#birthday_check_msg').attr('class','warning');
+                    $('#birthday_check_msg').text('필수 입력사항입니다.');
+
+                    if($('#height').val() == ''){
+                        $('#height_check_msg').attr('class','warning');
+                        $('#height_check_msg').text('필수 입력사항입니다.');
+
+                        if($('#weight').val() == ''){
+                            $('#weight_check_msg').attr('class','warning');
+                            $('#weight_check_msg').text('필수 입력사항입니다.');
+
+                            if($('#goal_weight').val() == ''){
+                                $('#goal_weight_check_msg').attr('class','warning');
+                                $('#goal_weight_check_msg').text('필수 입력사항입니다.');
+
+
+                                if($('#tel').val() == ''){
+                                    $('#tel_check_msg').attr('class','warning');
+                                    $('#tel_check_msg').text('필수 입력사항입니다.');
+
+                                    if($('#user_pw').val() == ''){
+                                        $('#pw1_check_msg').attr('class','warning');
+                                        $('#pw1_check_msg').text('필수 입력사항입니다.');
+
+                                        if($('#re_password').val() == ''){
+                                            $('#pw_check_msg').attr('class','warning');
+                                            $('#pw_check_msg').text('필수 입력사항입니다.');
+
+                                            if($('#user_id').val() == ''){
+                                                $('#user_id_check_msg').attr('class','warning');
+                                                $('#user_id_check_msg').text('필수 입력사항입니다.');
+
+
+                                                if($('#user_name').val() == ''){
+                                                    $('#user_name_check_msg').attr('class','warning');
+                                                    $('#user_name_check_msg').text('필수 입력사항입니다.');
+
+
+
+                                                    if($('#email').val() == ''){
+                                                        $('#email_check_msg').attr('class','warning');
+                                                        $('#email_check_msg').text('필수 입력사항입니다.');
+
+
+                                                        if($('#postcode').val() == '' |  $('#address').val() == '' |  $('#detailAddress').val() == '' ){
+                                                            $('#address_check_msg').attr('class','warning');
+                                                            $('#address_check_msg').text('필수 입력사항입니다.');
+
+                                                            return false
+                                        
+                                        
+                                        
+                                                        }
+                                    
+                                    
+                                    
+                                                    }
+                                
+                                
+                                
+                                                }
+
+
+                                            
+                            
+                                            }
+
+
+                                        }
+
+                                    }
+
+
+                                }
+
+
+                        
+                            }
+        
+        
+        
+                        }
+    
+    
+    
+                    }
+
+                }else{
+
+
+                    $('#signupfrm').submit()
+
+                    }
+
             
-            function check_all(){
-        
-                let height= document.getElementById('height').value;
-                let weight= document.getElementById('weight').value;
-                let goal_weight= document.getElementById('goal_weight').value;
-                let tel = document.getElementById('tel').value;
-                let p1 = document.getElementById('user_pw').value;
-                let p2 = document.getElementById('re_password').value;
-                let user_id = document.getElementById('user_id').value;
-                let user_name = document.getElementById('user_name').value;
-                let email = document.getElementById('email').value;
-        
-        
-                if (email==''){
-        
-                    document.getElementById('email_check_msg').innerHTML = '필수 입력사항입니다.';
-        
-                }
-                if (user_name==''){
-        
-                    document.getElementById('user_name_check_msg').innerHTML = '필수 입력사항입니다.';
-        
-                }
-                if (user_id==''){
-        
-                    document.getElementById('user_id_check_msg').innerHTML = '필수 입력사항입니다.';
-        
-                }
-                if (p1==''){
-        
-                    document.getElementById('pw1_check_msg').innerHTML = '필수 입력사항입니다.';
-        
-                }
-        
-                if (p2==''){
-        
-                    document.getElementById('pw_check_msg').innerHTML = '필수 입력사항입니다.';
-        
-                }
-        
-                if (height==''){
-        
-                    document.getElementById('height_check_msg').innerHTML = '필수 입력사항입니다.';
-        
-                }
-                if (weight==''){
-        
-                    document.getElementById('weight_check_msg').innerHTML = '필수 입력사항입니다.';
-        
-                }
-                if (goal_weight==''){
-        
-                    document.getElementById('goal_weight_check_msg').innerHTML = '필수 입력사항입니다.';
-        
-        
-                }
-                if (tel==''){
-        
-                    document.getElementById('tel_check_msg').innerHTML = '필수 입력사항입니다.';
-        
-                }
-                else{
-        
+            }//signup
+             
+              
+            
                 
-                    document.getElementById('height_check_msg').innerHTML = '';
-                    document.getElementById('weight_check_msg').innerHTML = '';
-                    document.getElementById('goal_weight_check_msg').innerHTML = '';
-                    document.getElementById('tel_check_msg').innerHTML = '';
-                    document.getElementById('pw_check_msg').innerHTML = '';
-                    document.getElementById('pw1_check_msg').innerHTML = '';
-                    document.getElementById('email_check_msg').innerHTML = '';
-                    document.getElementById('user_name_check_msg').innerHTML = '';
-                    document.getElementById('user_name_check_msg').innerHTML = '';
+            
         
-        
-                }
-            
-                
-            }
-            
-            
-            
         //////////////////////////전화번호 유효성검사
             function check_tel(){
         
@@ -159,6 +186,100 @@
         
                 }
             }
+        //////////////////////////키 유효성검사
+
+            function check_height(){
+        
+                let all_reg = /[^0-9]+/g;
+                let height = document.getElementById('height').value;
+               
+                if (all_reg.test(height)){
+        
+                    document.getElementById('height_check_msg').innerHTML = '숫자만 입력해주세요'
+               
+                    
+        
+                }
+                
+                else{
+        
+                    document.getElementById('height_check_msg').innerHTML = '';
+                 
+        
+        
+                }
+            }
+        //////////////////////////몸무게 유효성검사
+
+            function check_weigth(){
+        
+                let all_reg = /[^0-9]+/g;
+                let weight = document.getElementById('weight').value;
+                let goal_weight = document.getElementById('goal_weight').value;
+        
+            
+                if (all_reg.test(weight)){
+        
+                    document.getElementById('weight_check_msg').innerHTML = '숫자만 입력해주세요'
+               
+                    
+        
+                }
+                
+                else{
+        
+                    document.getElementById('weight_check_msg').innerHTML = '';
+                 
+        
+        
+                }
+            }
+        //////////////////////////목표몸무게 유효성검사
+
+            function check_goal_weight(){
+        
+                let all_reg = /[^0-9]+/g;
+                let goal_weight = document.getElementById('goal_weight').value;
+        
+            
+                if (all_reg.test(goal_weight)){
+        
+                    document.getElementById('goal_weight_check_msg').innerHTML = '숫자만 입력해주세요'
+               
+                    
+        
+                }
+                
+                else{
+        
+                    document.getElementById('goal_weight_check_msg').innerHTML = '';
+                 
+        
+        
+                }
+            }
+        //////////////////////////목표기간 유효성검사
+
+            function check_goal_period(){
+        
+                let all_reg = /[^0-9]+/g;
+                let goal_period = document.getElementById('goal_period').value;
+        
+            
+                if (all_reg.test(goal_period)){
+        
+                    document.getElementById('goal_period_check_msg').innerHTML = '숫자만 입력해주세요'
+               
+                    
+
+                }
+                
+                else{
+        
+                    document.getElementById('goal_period_check_msg').innerHTML = '';
+        
+                }
+            }
         
         
         
@@ -166,18 +287,11 @@
         
         ////////////////////////////생년월일 유효성 검사
             $(function(){
-                let check = /^[0-9]+$/
-                let day = document.getElementById('day').value;
-                let year = document.getElementById('year').value;
-                let month = document.getElementById('month').value;
-                $('#day,#year,#month').keyup(function(){
+                let all_reg = /[^0-9]+/g;
+                $('#day').keyup(function(){
                     
-                    if($('#year').val() == '' |  $('#month').val() == '' |  $('#day').val() == '' ){
-                        $('#birthday_check_msg').attr('class','warning');
-                        $('#birthday_check_msg').text('필수 입력사항입니다.');
-        
-                    }
-                    else if(!check.test($('#year').val())| !check.test($('#month').val()) | !check.test($('#day').val()) ){
+                 
+                    if(all_reg.test($('#year').val())| all_reg.test($('#month').val()) | all_reg.test($('#day').val()) ){
         
                         $('#birthday_check_msg').attr('class','warning');
                         $('#birthday_check_msg').text('숫자만 입력해주세요.');
@@ -201,87 +315,6 @@
 
     </script>
 
-    <script>
-        // 우편번호 찾기 찾기 화면을 넣을 element
-        var element_wrap = document.getElementById('wrap');
-
-        function foldDaumPostcode() {
-            // iframe을 넣은 element를 안보이게 한다.
-            element_wrap.style.display = 'none';
-        }
-        function sample3_execDaumPostcode() {
-            // 현재 scroll 위치를 저장해놓는다.
-            var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
-            new daum.Postcode({
-                oncomplete: function(data) {
-                    // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-                    // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                    var addr = ''; // 주소 변수
-                    var extraAddr = ''; // 참고항목 변수
-
-                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                        addr = data.roadAddress;
-                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                        addr = data.jibunAddress;
-                    }
-
-                    // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                    if(data.userSelectedType === 'R'){
-                        // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                        if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                            extraAddr += data.bname;
-                        }
-                        // 건물명이 있고, 공동주택일 경우 추가한다.
-                        if(data.buildingName !== '' && data.apartment === 'Y'){
-                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                        }
-                        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                        if(extraAddr !== ''){
-                            extraAddr = ' (' + extraAddr + ')';
-                        }
-                        // 조합된 참고항목을 해당 필드에 넣는다.
-                        document.getElementById("extraAddress").value = extraAddr;
-                    
-                    } else {
-                        document.getElementById("extraAddress").value = '';
-                    }
-
-                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                    document.getElementById('postcode').value = data.zonecode;
-                    document.getElementById("address").value = addr;
-                    // 커서를 상세주소 필드로 이동한다.
-                    document.getElementById("detailAddress").focus();
-
-                    // iframe을 넣은 element를 안보이게 한다.
-                    // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
-                    element_wrap.style.display = 'none';
-
-                    // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
-                    document.body.scrollTop = currentScroll;
-                },
-                // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
-                onresize : function(size) {
-                    element_wrap.style.height = size.height+'px';
-                },
-                width : '50%',
-                height : '70%'
-            }).embed(element_wrap);
-
-            // iframe을 넣은 element를 보이게 한다.
-            element_wrap.style.display = 'block';
-        }
-    </script>
-
-
-
-
-
-
-    
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
@@ -342,13 +375,6 @@
 </script>
 
 
-
-
-
-
-
-
-
 </head>
 
 
@@ -365,38 +391,38 @@
                     
                 </div>
 
-                <form method = "POST" action = "{% url 'Member:signup' %}">  
+                <form method = "POST" action = "{% url 'Member:signup' %}" id="signupfrm">  
                 {% csrf_token %} 
                 <div class="lil_box">
-                <label class="label" for="user_name">* 사용자이름</label> <br>
-                <input type= "text"  id="user_name" class="first_input" onkeyup='check_all()' placeholder="사용자이름" name ="username">
+                <label class="label" for="user_name">사용자이름</label> <br><br>
+                <input type= "text"  id="user_name" class="first_input"  placeholder="사용자이름" name ="username">
                 <br><span class="warning"  id="user_name_check_msg"></span>
                 </div>
              
                 <div class="lil_box">
-                  <label class="label"  for="user_id">* 아이디</label><br>
+                  <label class="label"  for="user_id">아이디</label><br><br>
                   <input type="text"  id="user_id" class="first_input"  placeholder="아이디" name="user_id">  
                   <br><span class="warning"  id="user_id_check_msg"></span> 
                   <!-- 이 name 값으로 정보가 전달된다 -->
                 </div>
              
                 <div class="lil_box">
-                    <label class="label"  for="user_pw">* 비밀번호</label><br>
+                    <label class="label"  for="user_pw">비밀번호</label><br><br>
                     <input type="text"  id="user_pw"  class="first_input"  placeholder="비밀번호" name="user_pw">   
                     <br><span class="warning"  id="pw1_check_msg"></span>
                  
                   </div>
                 
                 <div class="lil_box">
-                  <label class="label"  for="re_password">* 비밀번호 확인</label><br>
+                  <label class="label"  for="re_password">비밀번호 확인</label><br><br>
                   <input type= "text" id="re_password" class="first_input"   onkeyup="check_pw()" placeholder="비밀번호 확인" name ="re_password">
                   <br><span class="warning" id="pw_check_msg"></span> 
                 </div>
                
              
                 <div class="lil_box" > 
-                    <label class="label"  for="birthday">생년월일</label><br>
-                    <input type="text" id="year"  class="second_input" placeholder="ex)1999" aria-label="년(4자)" maxlength="4" name="year">
+                    <label class="label"  for="birthday">생년월일</label><br><br>
+                    <input type="text" id="year"  class="second_input" placeholder="년" aria-label="년(4자)" maxlength="4" name="year">
                     <select id="month"  aria-label="월" class="month_input" name="month">
                         <option disabled selected>월</option>
                         <option value="01">1월</option>
@@ -418,7 +444,7 @@
                 </div>
              
                 <div class="lil_box" >
-                  <label class="label"  for="gender">성별</label><br>
+                  <label class="label"  for="gender">성별</label><br><br>
                     <select id="gender" class="box_design"  name="gender" aria-label="성별">
                         <option value="M" selected>남자</option>
                         <option value="F">여자</option>
@@ -427,14 +453,14 @@
                 </div>
              
                 <div class="lil_box" >
-                  <label class="label"  for="tel">* 전화</label><br>
+                  <label class="label"  for="tel">전화</label><br><br>
                   <input type= "text" id="tel" onkeyup="check_tel()" placeholder="'-'를 제외하고 입력해주세요." name = "tel">
                   <br><span  class="warning" id="tel_check_msg"></span> 
                 </div>
                 
              
                 <div class="lil_box">
-                  <label class="label"  for="email">* 이메일</label><br>
+                  <label class="label"  for="email">이메일</label><br><br>
                   <input type= "text"  id="email" onkeyup='check_email()' placeholder="@unnischoice.com" name = "email">
                   <br><span class="warning" id="email_check_msg"></span> 
              
@@ -443,6 +469,7 @@
              
              
                 <div class="lil_box">
+                    <label class="label"  for="address">주소</label><br><br>
                     <input type="text" id="postcode"  class="third_input"  name="postcode"  placeholder="우편번호">
                     <input type="button" class="fourth_input"  onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
                     <input type="text"  id="address" name="address" placeholder="주소"><br>
@@ -450,10 +477,11 @@
                     <span id="guide" style="color:#999;display:none"></span>
                     <input type="text" id="detailAddress" name="detailAddress" placeholder="상세주소">
                     <input type="text" id="extraAddress" name="extraAddress" placeholder="참고항목">
+                    <br><span class="warning" id="address_check_msg"></span> 
                 </div>
              
                 <div class="lil_box">
-                    <label class="label"  for="service">* 서비스</label><br>
+                    <label class="label"  for="service">서비스</label><br><br>
                 
                         <select id="service"   name="service" class="box_design" aria-label="서비스">
                             
@@ -466,7 +494,7 @@
              
              
                 <div class="lil_box">
-                    <label class="label" for="purpose">* 목적</label><br>
+                    <label class="label" for="purpose">목적</label><br><br>
                 
                     <select id="purpose" name="purpose" class="box_design"  aria-label="목적">
                         <option value="weightlose" selected>체중감소</option>
@@ -478,7 +506,7 @@
              
              
                 <div class="lil_box">
-                    <label class="label" for="target">타겟부위</label><br>
+                    <label class="label" for="target">타겟부위</label><br><br>
                 
                     <select id="target" class="box_design" name="target"  aira-label='타겟부위'>
                         <option value="abs" selected>복부</option>
@@ -494,7 +522,7 @@
              
              
                 <div class="lil_box">
-                    <label class="label" for="vegan">비건여부</label><br>
+                    <label class="label" for="vegan">비건여부</label><br><br>
                 
                     <select id="vegan" class="box_design" name="vegan"  aria-label="비건">
                         <option value="notvegan" selected>해당사항없음</option>
@@ -511,7 +539,7 @@
              
              
                 <div class="lil_box">
-                    <label class="label"  for="advancelevel">전문가여부</label><br>
+                    <label class="label"  for="advancelevel">전문가여부</label><br><br>
                       <select id="advancelevel" class="box_design" name="advancelevel"  aria-label="전문가여부">
                           <option value="notadvance" selected>비전문가</option>
                           <option value="advance">전문가</option>
@@ -520,29 +548,29 @@
              
              
                 <div class="lil_box">
-                    <label class="label" for="height">* 키</label><br>
-                    <input type="text"   id="height"  placeholder="키 ex) 165" name="height">  
+                    <label class="label" for="height">키</label><br><br>
+                    <input type="text"   id="height"  placeholder="키 ex) 165" maxlength="3" onkeyup="check_height()" name="height">  
                     <br><span class="warning" id= "height_check_msg"></span>  
                    
                 </div>
              
                 <div class="lil_box">
-                    <label class="label"  for="weigth"> * 몸무게</label><br>
-                    <input type="text" id="weight"  placeholder="몸무게 ex) 50 " name="weight">   
+                    <label class="label"  for="weigth">몸무게</label><br><br>
+                    <input type="text" id="weight"  placeholder="몸무게 ex) 50 " maxlength="3" onkeyup="check_weigth()"  name="weight">   
                     <br><span class="warning" id="weight_check_msg"></span>  
                    
                 </div>
              
                 <div class="lil_box">
-                    <label class="label"  for="goal_weight">* 목표몸무게</label><br>
-                    <input type="text"  id="goal_weight"   placeholder="목표몸무게 ex) 50 " name="goal_weight">   
+                    <label class="label"  for="goal_weight">목표몸무게</label><br><br>
+                    <input type="text"  id="goal_weight"   placeholder="목표몸무게 ex) 50 "  maxlength="3"  onkeyup="check_goal_weight()" name="goal_weight">   
                     <br><span class="warning" id="goal_weight_check_msg"></span>  
                    
                 </div>
              
              
                 <div class="lil_box">
-                    <label class="label"  for="goal_bodyfat">목표체지방률</label><br>
+                    <label class="label"  for="goal_bodyfat">목표체지방률</label><br><br>
                       <select id="goal_bodyfat" class="box_design" name="goal_bodyfat"  aria-label="목표체지방률">
                           <option value="10" selected>체지방률 10~15%</option>
                           <option value="20" >체지방률 20~25%</option>
@@ -555,13 +583,14 @@
              
                 
                 <div class="lil_box">
-                    <label class="label"  for="goal_period">목표기간</label><br>
-                    <input type="text" id="goal_period" placeholder="목표기간" name="goal_period">   
+                    <label class="label"  for="goal_period">목표기간</label><br><br>
+                    <input type="text" id="goal_period" placeholder="목표기간"  onkeyup="check_goal_period()" name="goal_period"> 
+                    <br><span class="warning" id="goal_period_check_msg"></span>   
                 </div>
              
              
                 <div class="lil_box">
-                    <label class="label"  for="activity">활동량</label><br>
+                    <label class="label"  for="activity">활동량</label><br><br>
                       <select id="activity" class="box_design" name="activity"  aria-label="목표체지방률">
                             <option value="0" selected>운동하지 않음</option>
                             <option value="1">가벼운 활동 (운동: 1~3일)</option>
@@ -574,7 +603,7 @@
 
                 <div  class="lil_box">
 
-                    <button id="btnJoin" type="submit" ><span>가입하기</span></button>
+                    <button id="btnJoin" type="button" onclick="signup_now()"><span>가입하기</span></button>
 
                 </div>
              
