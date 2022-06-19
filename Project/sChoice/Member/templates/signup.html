@@ -293,13 +293,8 @@
 
 <body>
        
-    <div class="outer-div">
-        <div class="inner-div">
-
-
-
-
-
+    <div id="container">
+        <div id="content">
 
             <div>
                 <a class ="main_logo" href='/'><h1>UNNI'S CHOICE</h1></a>
@@ -309,27 +304,27 @@
            <div >
            <label for="user_name">* 사용자이름</label> 
            <input type= "text"  id="user_name" onkeyup='check_all()' placeholder="사용자이름" name ="username">
-           <span class="warning"  id="user_name_check_msg"></span>
+           <br><span class="warning"  id="user_name_check_msg"></span>
            </div>
         
            <div>
              <label for="user_id">* 아이디</label>
              <input type="text"  id="user_id" placeholder="아이디" name="user_id">  
-             <span class="warning"  id="user_id_check_msg"></span> 
+             <br><span class="warning"  id="user_id_check_msg"></span> 
              <!-- 이 name 값으로 정보가 전달된다 -->
            </div>
         
            <div >
                <label for="user_pw">* 비밀번호</label>
                <input type="text"  id="user_pw" placeholder="비밀번호" name="user_pw">   
-               <span class="warning"  id="pw1_check_msg"></span>
+               <br><span class="warning"  id="pw1_check_msg"></span>
             
              </div>
            
            <div >
              <label for="re_password">* 비밀번호 확인</label>
              <input type= "text" id="re_password"  onkeyup="check_pw()" placeholder="비밀번호 확인" name ="re_password">
-             <span class="warning" id="pw_check_msg"></span> 
+             <br><span class="warning" id="pw_check_msg"></span> 
            </div>
           
         
@@ -368,14 +363,14 @@
            <div >
              <label for="tel">* 전화</label>
              <input type= "text" id="tel" onkeyup="check_tel()" placeholder="'-'를 제외하고 입력해주세요." name = "tel">
-             <span  class="warning" id="tel_check_msg"></span> 
+             <br><span  class="warning" id="tel_check_msg"></span> 
            </div>
            
         
            <div >
              <label for="email">* 이메일</label>
              <input type= "text"  id="email" onkeyup='check_email()' placeholder="abcd@unnischoice.com" name = "email">
-             <span class="warning" id="email_check_msg"></span> 
+             <br><span class="warning" id="email_check_msg"></span> 
         
            </div>
         
@@ -462,21 +457,21 @@
            <div >
                <label for="height">* 키</label>
                <input type="text"   id="height"  placeholder="키 ex) 165" name="height">  
-               <span class="warning" id= "height_check_msg"></span>  
+               <br><span class="warning" id= "height_check_msg"></span>  
               
            </div>
         
            <div >
                <label for="weigth"> * 몸무게</label>
                <input type="text" id="weight"  placeholder="몸무게 ex) 50 " name="weight">   
-               <span class="warning" id="weight_check_msg"></span>  
+               <br><span class="warning" id="weight_check_msg"></span>  
               
            </div>
         
            <div class="form-group">
                <label for="goal_weight">* 목표몸무게</label>
                <input type="text"  id="goal_weight"   placeholder="목표몸무게 ex) 50 " name="goal_weight">   
-               <span class="warning" id="goal_weight_check_msg"></span>  
+               <br><span class="warning" id="goal_weight_check_msg"></span>  
               
            </div>
         
@@ -512,8 +507,7 @@
                   
            </div>
         
-           <button type="submit" class="btn btn-primary">회원가입</button>
-           <button type="button" onclick="cancelBtn()" class="btn btn-primary">다시입력</button>
+           <button id="btnJoin" type="submit" class="btn-primary"><span>가입하기</span></button>
         
            </form>    
 
