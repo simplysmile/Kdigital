@@ -51,12 +51,12 @@
 #btnJoin{
 
     color: white;
+    background-color:  #40e0d0 ;
+    font-family: "dohyeon";
     font-size: 20px;
     border: solid 1px rgba(0,0,0,.08);
-    background-color:  #40e0d0 ;
     height: 50px;
 	width: 490px;
-    font-family: "dohyeon";
    
    
 
@@ -139,8 +139,12 @@ a{
 
 .fourth_input{
 
-    width: 100px;
+    width: 150px;
     height: 50px;
+    color: white;
+    background-color:  #40e0d0 ;
+    font-family: "dohyeon";
+    padding-right: 20px;
 
 
 }
