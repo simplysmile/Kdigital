@@ -1,14 +1,134 @@
+@font-face {
+
+  src : url("/static/font/BMDOHYEON_otf.otf"); 
+
+  font-family: "dohyeon";
+
+}
+
 table {
-    width: 100%;
+
+    margin-left: 300px;
+    margin-top: 20px;
+    width: 800px;
+    height: 500px;
   }
-  table, th, td {
-    border: 1px solid #bcbcbc;
-  }
 
 
-#list a {
+td {
+  border: 1px solid #bcbcbc;
+}
 
-    border: 1px solid black;
-    
+th {
 
-  }
+  border: 1px solid #bcbcbc;
+
+
+
+}
+
+td:nth-child(1){
+
+  font-family: "dohyeon";
+
+
+}
+
+.admin_name{
+  padding-left: 600px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+
+
+}
+
+h1 {
+  font-family: "dohyeon";
+
+  font-size: 35px;
+}
+
+.btns{
+
+  margin-left: 1100px;
+  margin-top: 60px;
+
+  width: 240px;
+  height: 30px;
+
+
+ 
+
+
+}
+
+
+.list1 {
+
+  margin-right:10px;
+  float:left;
+  width:70px;
+  height:30px;
+  font-family: "dohyeon";
+  text-align: center;
+  font-size: 15px;
+  color: black;
+  border: 1px solid #40e0d0;
+  background-color: #40e0d0;
+}
+.list2 {
+  margin-right:10px;
+  float:left;
+  text-align: center;
+
+  width:70px;
+  height:30px;
+  font-family: "dohyeon";
+  font-size: 15px;
+  color: black;
+  border: 1px solid #40e0d0;
+  background-color: #40e0d0;
+}
+.list3 {
+  
+  text-align: center;
+  float:left;
+  width:70px;
+  height:30px;
+  font-family: "dohyeon";
+  font-size: 15px;
+  color: black;
+  border: 1px solid #40e0d0;
+  background-color: #40e0d0;
+}
+
+
+a:hover {
+
+    text-decoration:none; 
+    color:black;
+
+
+}
+a:visited {
+
+    text-decoration:none; 
+    color:black;
+
+
+}
+a:active {
+
+    text-decoration:none; 
+    color:black;
+
+
+}
+a:link{
+
+    text-decoration:none; 
+    color:black;
+
+
+}

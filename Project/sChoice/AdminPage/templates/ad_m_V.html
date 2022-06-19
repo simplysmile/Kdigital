@@ -23,35 +23,94 @@
 
 
   <section>
-    <h1>상세페이지</h1>
+    <div class="admin_name">
+      <h1>상세페이지</h1>
+    </div>
     
 
     <table>
     {% if admin_List %}
-    
+
       <tr>
-        <th>아이디: {{admin_List.user_id}}</th>
+        <td>아이디</th>
+        <td>{{admin_List.user_id}}</th>
+
+      </tr>
+      
+      <tr>
+        <td>회원이름</td>
+        <td>{{admin_List.user_name}}</td>
       </tr>
 
       <tr>
-        <td>수정날짜: {{admin_List.modidate|date:'Y-M-d H:i'}}</td>
+        <td>전문가여부</td>
+        <td>{{admin_List.pro}}</td>
       </tr>
 
       <tr>
-        <td>회원이름: {{admin_List.user_name}}</td>
+        <td>생년월일</td>
+        <td>{{admin_List.birth|date:'Y-M-d'}}</td>
+      </tr>
+      <tr>
+        <td>이메일</td>
+        <td>{{admin_List.email}}</td>
+      </tr>
+      <tr>
+        <td>우편번호</td>
+        <td>{{admin_List.zipcode}}</td>
+      </tr>
+      <tr>
+        <td>주소</td>
+        <td>{{admin_List.addressd1}}, {{admin_List.addressd2}}, {{admin_List.addressd3}}</td>
       </tr>
 
       <tr>
-        <td>이메일: {{admin_List.email}}</td>
+        <td>목적</td>
+        <td>{{admin_List.user_purpose}}</td>
       </tr>
+      <tr>
+        <td>타겟부위</td>
+        <td>{{admin_List.user_target}}</td>
+      </tr>
+      <tr>
+        <td>서비스</td>
+        <td>{{admin_List.service}}</td>
+      </tr>
+      <tr>
+        <td>비건여부</td>
+        <td>{{admin_List.vegan}}</td>
+      </tr>
+     
+      <tr>
+        <td>목표몸무게</td>
+        <td>{{admin_List.goal_weight}}kg</td>
+      </tr>
+     
+      <tr>
+        <td>목표체지방</td>
+        <td>{{admin_List.goal_bodyfat}}</td>
+      </tr>
+     
+      <tr>
+        <td>목표기간</td>
+        <td>{{admin_List.goal_period}}일</td>
+      </tr>
+     
+
+
+     
    
     {% endif %}
     </table>
 
     
+    <div class="btns">
 
-    <div class="list"><a href="{% url 'AdminPage:ad_m_L' searchword=searchword category=category %}">목록</a></div>
-    <div class="list" onclick='deleteBtn()'>삭제</div>
-    <div class="list"><a href="{% url 'AdminPage:ad_m_U' searchword=searchword category=category user_id=user_id %}">수정</a></div>
+      <div class="list1"><a href="{% url 'AdminPage:ad_m_L' searchword=searchword category=category %}">목록</a></div>
+      <div class="list2" onclick='deleteBtn()'>삭제</div>
+      <div class="list3"><a href="{% url 'AdminPage:ad_m_U' searchword=searchword category=category user_id=user_id %}">수정</a></div>
+
+    </div>
+
   </section>
 
