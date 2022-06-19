@@ -103,8 +103,11 @@ def login(request):
     
 # logout 함수        
 def logout(request):
+    
     request.session.clear()
-    return redirect('/')    
+    
+    return redirect('/')
+    
 #######################################################
 
 
