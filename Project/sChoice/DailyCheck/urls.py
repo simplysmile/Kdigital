@@ -13,6 +13,7 @@ urlpatterns = [
     path('<str:sdate>/saveBtn/',views.saveBtn,name='saveBtn'),
     path('<str:sdate>/imgCheck/',views.imgCheck,name='imgCheck'),
     path('myStatus/',views.myStatus,name='myStatus'),
+    path('myStatusData/',views.myStatusData,name='myStatusData'),
     path('selfCheck/',views.selfCheck,name='selfCheck'),
     path('searchMeal/',views.searchMeal,name='searchMeal'),
     path('<str:sdate>/addMealData/',views.addMealData,name='addMealData'),

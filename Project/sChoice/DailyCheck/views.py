@@ -110,7 +110,7 @@ def calendarData(request):
     df_meal = pd.DataFrame(meal_data)
     df_exer = pd.DataFrame(exer_data)
     df_user = pd.DataFrame(user_data)
-    print(df_user)
+ 
     
     
     df_meal_sum = df_meal.groupby('m_date').sum()
@@ -534,14 +534,83 @@ def saveBtn(request,sdate):
     
 
 def myStatus(request):
-    my_conn=Oracles.oraconn()
-    my_cursor=Oracles.oracs(my_conn)
-    mySQL="select * from MEMBER_DAILYDATA where user_id='gong1111'"
-    rows=my_cursor.execute(mySQL)
-    for row in rows:
-        print(row)
-    
     return render(request,'myStatus.html')
+
+def myStatusData(request):
+    # 세션을 통해 아이디 
+    u_id = request.session['session_user_id']
+    # 아이디를 사용해서 정보를 얻는다. 
+    user = Members.objects.get(user_id=u_id) # 멤버테이블
+    
+    today = datetime.date.today()
+    curr_month = today.month
+    curr_year = today.year
+    curr_day = today.day
+    
+    # 로그인한 사용자의 데일리 운동 테이블과 데일리 식사 테이블 (해당 년, 월)
+    exer = Dailyexercise.objects.filter(user=user, createdate__year=curr_year,createdate__month=curr_month)
+    meal = DailyMeal.objects.filter(d_member=u_id, d_meal_date__year=curr_year,d_meal_date__range=[today-datetime.timedelta(days=7), today])
+    
+    
+
+    #  ----- 몸무게 달성 그래프 반 도넛 그래프를 위한 정보
+    # 사용자 몸무게 데이터를 날짜 역순으로 가져온다. 
+    userDt = Dailydata.objects.filter(user=user).order_by('-add_date')
+    goal_meal_cal = userDt[0].goal_eat_kcal
+    goal_burn_cal = userDt[0].goal_burn_kcal
+    goal_weight = user.goal_weight
+    goal_period = user.goal_period
+    workoutdays = user.createdate
+    start_date = datetime.date(workoutdays.year, workoutdays.month, workoutdays.day)
+    target_date = datetime.date(curr_year, curr_month, curr_day)
+    d_day = target_date - start_date
+  
+
+    allweight=[]
+    alldays = []
+    for i in range(len(userDt)):
+        allweight.append(userDt[i].cur_weight)
+        alldays.append(userDt[i].add_date.date())
+
+    firstweight = userDt[len(userDt)-1].cur_weight
+    #  ----- 몸무게 달성 그래프 반 도넛 그래프를 위한 정보 -end
+
+    #  ----- 식단 정보 그래프 
+    mdata={}
+    m_d =[]
+    m_c =[]
+
+    for i in range(len(meal)):
+        m_d.append(meal[i].d_meal_date)
+        m_c.append(meal[i].d_kcal)
+
+
+    mdata['m_date']=m_d
+    mdata['m_cal']=m_c
+    
+    df_meal = pd.DataFrame(mdata)
+    df_meal_sum = df_meal.groupby('m_date').sum()
+    js_meal = df_meal_sum.to_json()
+
+    # body_json={}
+    # body_json['meal'] = json.loads(js_meal)
+
+    
+
+
+
+    #  ----- 식단 정보 그래프 -end 
+    
+
+
+    context={'goalEx':goal_burn_cal,'goalMeal':goal_meal_cal,'goal_weight':goal_weight,'goal_period':goal_period,
+            'firstweight':firstweight,'workoutday':d_day.days, 'weight':allweight,'alldays':alldays,
+            'Gmealcal':goal_meal_cal,'mealweak':json.loads(js_meal)}
+
+
+
+    return JsonResponse(context)
+    
 
 
 
