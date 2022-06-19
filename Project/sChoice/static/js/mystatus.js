@@ -2,12 +2,11 @@
 
 $(function(){
     $.ajax({
-        url:"/static/test.json",
+        url:"/dailycheck/myStatusData",
         dataType:"json",
         success:function(data){
 
-            
-
+            console.log(data)
 
 
             // 달성일, 몸무게 차트 
@@ -20,9 +19,10 @@ $(function(){
                   ctx.fillRect(width / 2, top + (height / 2), 0, 0);
                   ctx.font = '50px sans-serif';
                   ctx.textAlign = 'center';     
-                  console.log("width", width); 
-                  ctx.fillText('10/60 일', width / 2 +(left), top + (height / 2)+70);
-                  ctx.fillText('-5kg', width / 2 +(left), top + (height / 2)+120);
+                  var daystr = String(data.workoutday)+'/'+String(data.goal_period) +' 일'
+                  var kgstr = '-'+String(data.weight[0]-data.goal_weight)+'kg 남음'
+                  ctx.fillText(daystr, width / 2 +(left), top + (height / 2)+70);
+                  ctx.fillText(kgstr, width / 2 +(left), top + (height / 2)+120);
                 }
 
             };
@@ -38,7 +38,7 @@ $(function(){
                     [
                         {
                             label: '날짜',
-                            data: [10,(60-10),0,0],
+                            data: [data.workoutday,(data.goal_period-data.workoutday),0,0],
                             backgroundColor: ['#8C5A76','#eee'],
                             cutout: "95%",
                             //hoverOffset: 5,    
@@ -48,7 +48,7 @@ $(function(){
                         },
                         {
                             label: '몸무게',
-                            data: [0,0,50,(60-50)],
+                            data: [0,0,(data.firstweight-data.goal_weight),(data.weight[0]-data.goal_weight)],
                             backgroundColor: ['#6D80A6','#eee'],
                             cutout: "90%",
                             //hoverOffset: 5,    
@@ -78,9 +78,20 @@ $(function(){
             
 
             // 몸무게 라인 그래프 
+            var lenw = data.weight.length
+            var goalw = []
+            var currw=[]
+            var currdays=[]
+            for (var i = 0 ; i<lenw ; i++)
+            {
+                goalw.push(data.goal_weight)
+                currw.push(data.weight[lenw-i-1])
+                currdays.push(data.alldays[lenw-i-1])
+
+            }
 
             const ctxW = document.getElementById('weightchange').getContext('2d');
-            const labels_weight = ['월','화','수','목','금','토','일']
+            const labels_weight = currdays
             const weightchange = new Chart(ctxW, {
                 type: 'line', 
                 data: {
@@ -88,13 +99,13 @@ $(function(){
                     datasets: [
                     {
                         label: '몸무게 변화추이',
-                        data: [59, 58, 57.8, 58, 57.5, 57.5, 57.3],
+                        data: currw,
                         borderColor: ['rgb(255, 99, 132)'],
                         backgroundColor:['rgba(255, 99, 132, 0.2)']
                     },
                     {
                         label: '목표몸무게',
-                        data: [55,55,55,55,55,55,55],
+                        data: goalw,
                         borderColor: ['rgba(54, 162, 235)'],
                         backgroundColor:['rgba(54, 162, 235, 0.2)']
                     }
@@ -106,8 +117,8 @@ $(function(){
                     responsive: true,
                     scales: {
                         y: {
-                            max: 60,
-                            min: 50,
+                            max: data.firstweight + 1 ,
+                            min: data.goal_weight -5,
                             ticks: {
                                 stepSize: 1
                             }
@@ -128,7 +139,23 @@ $(function(){
         // --------------------------------------------------------------------------------------------------
          
 
-
+        
+        var meal_keys = Object.keys(data.mealweak.m_cal)
+        var eatweek=[]
+        var goalweek=[]
+        var week = new Array('일','월','화','수','목','금','토','일','월','화','수','목','금','토')
+        var d = new Date();
+        //alert(week[d.getDay()])
+        var titleweek = []
+        for (var i = 0; i<meal_keys.length;i++){
+            eatweek.push(data.mealweak.m_cal[meal_keys[i]])
+            goalweek.push(data.goalMeal)
+            
+            titleweek.push(week[(d.getDay())+1+i])
+            
+        }
+        
+        
 
         const textinsert = {
             id: 'textinsert',
@@ -139,7 +166,7 @@ $(function(){
               ctx.fillRect(width / 2, top + (height / 2), 0, 0);
               ctx.font = '50px sans-serif';
               ctx.textAlign = 'center';     
-              console.log("width", width); 
+              
               ctx.fillText('90%', width / 2 +(left), top + (height / 2));
             }
         };
@@ -182,12 +209,13 @@ $(function(){
                 
             }); // doughnut chart 
             
+            
 
 
 
 
             const ctx_b_m = document.getElementById('weeklyBarChart_meal').getContext('2d');
-            const labelsW = ['월','화','수','목','금','토','일']
+            const labelsW = titleweek
             const mealWeekChart = new Chart(ctx_b_m, {
                 type: 'bar', 
                 data: {
@@ -195,7 +223,7 @@ $(function(){
                     datasets: [
                     {
                         label: '달성현황',
-                        data: [65, 59, 120, 81, 56, 100, 80],
+                        data: eatweek,
                         backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(255, 159, 64, 0.2)',
@@ -227,7 +255,7 @@ $(function(){
                     },
                     {
                         label: '목표',
-                        data: [100, 100, 100, 100, 100, 100, 100],
+                        data: goalweek,
                         backgroundColor: ['#eee','#eee','#eee','#eee','#eee','#eee','#eee'],
                         borderWidth: 5,
                         borderSkipped: false,
@@ -313,7 +341,7 @@ $(function(){
               ctx.fillRect(width / 2, top + (height / 2), 0, 0);
               ctx.font = '50px sans-serif';
               ctx.textAlign = 'center';     
-              console.log("width", width); 
+              
               ctx.fillText('100%', width / 2 +(left), top + (height / 2));
             }
         };
