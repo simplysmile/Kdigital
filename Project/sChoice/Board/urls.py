@@ -14,5 +14,6 @@ urlpatterns = [
     path('<int:bNo>/<int:nowpage>/fdDel/',views.fdDel,name='fdDel'),
     path('<int:bNo>/<int:nowpage>/exReply/',views.exReply,name='exReply'),
     path('<int:bNo>/<int:nowpage>/fdReply/',views.fdReply,name='fdReply'),
+    path('yourbody/',views.yourbody,name='yourbody'),
     path('shop/',views.shop,name='shop'),
 ]

@@ -202,3 +202,7 @@ def fdReply(request,bNo,nowpage):
         qs.save()
         
         return redirect('Board:fdboard',nowpage)
+###############################
+#데이터 분석
+def yourbody(request):
+    return render(request,'yourbody.html')
