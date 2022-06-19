@@ -1,5 +1,25 @@
 {%extends 'base.html' %}
 {%block mycontent%}
+<style>
+    #buttonlist{
+        margin: 0 auto;
+        padding-right:30px;
+    }
+    #buttonlist .myb{
+        text-align:center;
+        margin:10px;
+        float:right;
+        width: 150px;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background: #40e0d0;
+        font-size: 16px;
+        color: #fff;
+        cursor: pointer;
+        }
+    
+</style>
     <script>
         function delBtn(){ //삭제버튼
         if(confirm('정말 삭제하시겠습니까?')){
@@ -13,7 +33,7 @@
         <link href="/static/css/bv_styles.css" rel="stylesheet" />
         
         <!-- Header - set the background image for the header in the line below-->
-        <header class="py-5 bg-image-full" style="background-image: url('https://source.unsplash.com/wfh8dDlNFOk/1600x900')">
+        <header class="py-5 bg-image-full" style="background-image: url('/static/img/fdboardback.png')">
             <div class="text-center my-5">
                 {%if bitem.member.pro == 'advance' %}
                 <img class="img-fluid rounded-circle mb-4" style="width:160px; height:160px;" src="/static/img/crown.png" alt="전문가" />
@@ -45,10 +65,10 @@
         {%endif%}
 
         <div id="buttonlist">
-        <a href="{% url 'Board:fdReply' bitem.b_No nowpage %}"><div>답글</div></a>
-        <a href="{% url 'Board:fdboard' nowpage %}"><div>목록</div></a>
-        <a href="{% url 'Board:fdBUP' bitem.b_No nowpage %}"><div>수정</div></a>
-        <div onclick="delBtn()">삭제</div>
+        <a href="{% url 'Board:fdReply' bitem.b_No nowpage %}"><div class="myb">답글</div></a>
+        <a href="{% url 'Board:fdboard' nowpage %}"><div class="myb">목록</div></a>
+        <a href="{% url 'Board:fdBUP' bitem.b_No nowpage %}"><div class="myb">수정</div></a>
+        <div class="myb" onclick="delBtn()">삭제</div>
         </div>
        
 
