@@ -8,16 +8,15 @@
     <link rel="stylesheet" href="{% static 'css/admin_contactus.css'%}"  >
   </head>
   <body>
-    <div class="main-block">
-      <div class="left-part">
-        <i class="fas fa-envelope"></i>
-        <i class="fas fa-at"></i>
-        <i class="fas fa-mail-bulk"></i>
-      </div>
 
 
       <form action="{% url 'AdminPage:ad_contact_us' %}" name="contact_us" id='contact_us' method="post">
         {% csrf_token %}
+        <div class="unni">
+
+          <a href="/"><h2>UNNI'S CHOICE</h2></a>
+
+        </div>
         <h1>Contact Us</h1>
         <div class="info">
           <input type="text" name="c_title" placeholder="제목">
