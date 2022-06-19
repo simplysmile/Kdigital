@@ -201,22 +201,22 @@ def mealCheck(request,sdate):
     
     # print('아침칼로리',sum(breakfast_cal))
     context = {'sdate':sdate,
-               'b_k':sum(breakfast_cal),
-               'b_c':sum(breakfast_c),
-               'b_p':sum(breakfast_p),
-               'b_f':sum(breakfast_f),
-               'l_k':sum(lunch_cal),
-               'l_c':sum(lunch_c),
-               'l_p':sum(lunch_p),
-               'l_f':sum(lunch_f),
-               'd_k':sum(dinner_cal),
-               'd_c':sum(dinner_c),
-               'd_p':sum(dinner_p),
-               'd_f':sum(dinner_f),
-               's_k':sum(snack_cal),
-               's_c':sum(snack_c),
-               's_p':sum(snack_p),
-               's_f':sum(snack_f),
+               'b_k':round(sum(breakfast_cal),2),
+               'b_c':round(sum(breakfast_c),2),
+               'b_p':round(sum(breakfast_p),2),
+               'b_f':round(sum(breakfast_f),2),
+               'l_k':round(sum(lunch_cal),2),
+               'l_c':round(sum(lunch_c),2),
+               'l_p':round(sum(lunch_p),2),
+               'l_f':round(sum(lunch_f),2),
+               'd_k':round(sum(dinner_cal),2),
+               'd_c':round(sum(dinner_c),2),
+               'd_p':round(sum(dinner_p),2),
+               'd_f':round(sum(dinner_f),2),
+               's_k':round(sum(snack_cal),2),
+               's_c':round(sum(snack_c),2),
+               's_p':round(sum(snack_p),2),
+               's_f':round(sum(snack_f),2),
                'bcnt':b_cnt, 'lcnt':l_cnt, 'dcnt':d_cnt, 'scnt':s_cnt
     }
     
@@ -224,10 +224,10 @@ def mealCheck(request,sdate):
     
     # json for chart 필요한거 -> goal칼로리, 칼로리, 단백질 총량, 탄수화물총량, 지방총량 
     meal_json = {"goalCal":user_data[0].goal_eat_kcal, 
-                 "totalCal":(sum(breakfast_cal)+sum(lunch_cal)+sum(dinner_cal)+sum(snack_cal)), 
-                 'carb':(sum(breakfast_c)+sum(lunch_c)+sum(dinner_c)+sum(snack_c)),
-                 'prot':(sum(breakfast_p)+sum(lunch_p)+sum(dinner_p)+sum(snack_p)),
-                 'fat':(sum(breakfast_f)+sum(lunch_f)+sum(dinner_f)+sum(snack_f))
+                 "totalCal":round((sum(breakfast_cal)+sum(lunch_cal)+sum(dinner_cal)+sum(snack_cal)),2), 
+                 'carb':round((sum(breakfast_c)+sum(lunch_c)+sum(dinner_c)+sum(snack_c)),2),
+                 'prot':round((sum(breakfast_p)+sum(lunch_p)+sum(dinner_p)+sum(snack_p)),2),
+                 'fat':round((sum(breakfast_f)+sum(lunch_f)+sum(dinner_f)+sum(snack_f)),2)
                  }
     #-----------------------------------------------------------------------------------------
     #--------------------------  json part --------------------------------------------
