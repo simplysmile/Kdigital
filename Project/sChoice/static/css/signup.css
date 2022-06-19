@@ -1,3 +1,192 @@
+@font-face {
+
+    src : url("/static/font/BMDOHYEON_otf.otf"); 
+
+    font-family: "dohyeon";
+
+}
+
+
+#container{
+
+    
+    border: solid 1px #ffff;
+}
+#content{
+
+
+    width : 490px;
+    height : 1018px;
+    margin: auto;
+}
+
+
+::placeholder{
+
+    font-size: 16px;
+}
+
+.label{
+
+    font-family: "dohyeon";
+    font-size:13px;
+
+
+
+
+}
+#label_corp_box{
+
+    padding-top: 100px;
+    padding-bottom: 80px;
+}
+
+#label_corp{
+
+    padding-left: 195px;
+   
+   
+}
+
+#btnJoin{
+
+    color: white;
+    background-color:  #40e0d0 ;
+    font-family: "dohyeon";
+    font-size: 20px;
+    border: solid 1px rgba(0,0,0,.08);
+    height: 50px;
+	width: 490px;
+   
+   
+
+
+}
+
+.main_logo{
+
+    border: solid 1px rgba(0,0,0,.08);
+    color :white;
+    height: 80px;
+	width: 490px;
+    background-color:  #40e0d0;
+   
+
+
+
+}
+
+.lil_box{
+
+
+    padding-left: 10px;
+    padding-top: 20px;
+    padding-bottom: 15px;
+ 
+
+
+}
+
+
+h1{
+    
+    color: black;
+    font-family: "dohyeon";
+
+    padding-left: 120px;
+    padding-bottom: 20px;
+   
+    
+    
+
+
+}
+
+a{
+
+     text-decoration:none; 
+
+
+}
+
+#email{
+
+    padding-left: 300px;
+
+
+}
+
+
+
+.second_input{
+    width: 154px;
+    height: 50px;
+
+
+
+
+}
+
+.third_input{
+
+    width: 150px;
+    height: 50px;
+
+
+
+
+}
+
+.fourth_input{
+
+    width: 150px;
+    height: 50px;
+    color: white;
+    background-color:  #40e0d0 ;
+    font-family: "dohyeon";
+    padding-right: 20px;
+
+
+}
+
+.box_design{
+
+    width: 470px;
+    height: 50px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 2px;
+    outline: none;
+    padding-left: 13px;
+    background-color: white;
+
+}
+
+.month_input{
+
+    width: 154px;
+    height: 50px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 2px;
+    outline: none;
+    padding-left: 13px;
+    background-color: white;
+
+
+}
+
+input {
+    width: 470px;
+    height: 50px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 2px;
+    outline: none;
+    padding-left: 20px;
+    background-color: white;
+  }
+
 
 
 .warning{
@@ -29,7 +218,17 @@
 
 }
 
-ㅗ1
+.on{ font-size: 13px;
+    color: red;}
+
+
+
+
+
+
+
+
+
 
 /**#height_check_msg{
 

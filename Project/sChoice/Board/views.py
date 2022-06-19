@@ -57,7 +57,7 @@ def exwrite(request,nowpage):
 
 #식단 게시판
 def fdboard(request,nowpage):
-    qs = ExerciseBoard.objects.order_by('-b_Group','b_Step')
+    qs = MealBoard.objects.order_by('-b_Group','b_Step')
     mypages=Paginator(qs,5)
     fList=mypages.get_page(nowpage)
     context={'board_list':fList,'nowpage':nowpage}    
@@ -67,7 +67,7 @@ def fdboard(request,nowpage):
 def fdwrite(request,nowpage):
     if request.method=="GET":
         context={'nowpage':nowpage}
-        return render(request,'fdboardWrite.html',nowpage)
+        return render(request,'fdboardWrite.html',context)
     
     u_id=request.session['session_user_id']
     bmem=Members.objects.get(user_id=u_id)
@@ -202,3 +202,7 @@ def fdReply(request,bNo,nowpage):
         qs.save()
         
         return redirect('Board:fdboard',nowpage)
+###############################
+#데이터 분석
+def yourbody(request):
+    return render(request,'yourbody.html')
