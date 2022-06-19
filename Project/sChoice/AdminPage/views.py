@@ -10,6 +10,48 @@ def aboutus(request):
     return render(request,'aboutus.html')
 
 
+
+#Admin login
+def ad_login(request):
+    if request.method=='GET':
+        return render(request,'ad_login.html')
+    
+    else: 
+        user_id = request.POST.get('user_id')
+        user_pw = request.POST.get('user_pw')
+        
+        if user_id == 'admin' and user_pw =='1234':
+        
+            try:
+                qs = Members.objects.get(user_id=user_id,user_pw=user_pw)
+                
+            except Members.DoesNotExist: 
+                qs = None 
+                
+            if qs:
+                request.session['session_user_id']=qs.user_id
+                request.session['session_user_name']=qs.user_name
+                
+                return render(request,'ad_m_L.html')
+            else:
+                
+                msg="관리자만 로그인이 가능합니다."
+                
+         
+                return render(request,'ad_m_L.html',{'msg':msg})
+            
+        else:
+            msg="관리자만 로그인이 가능합니다."
+            return render(request,'ad_login.html',{'msg':msg})
+        
+    
+#Admin logout
+def ad_logout(request):
+    request.session.clear()
+    return redirect('/') 
+    
+
+
 #Admin Contact Us 
 def ad_contact_us(request):
     

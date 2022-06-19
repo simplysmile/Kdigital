@@ -5,6 +5,11 @@ urlpatterns = [
     path('',views.aboutus,name='index'),
     path('aboutus/',views.aboutus, name='aboutus'),
     
+    #admin login 
+    path('ad_login/',views.ad_login,name="ad_login"),
+    #admin logout
+    path('ad_logout/',views.ad_logout,name="ad_logout"),
+    #문의사항페이지
     path('ad_contact_us/',views.ad_contact_us, name='ad_contact_us'),
     ###########################################################################################
     

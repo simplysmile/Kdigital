@@ -1,0 +1,72 @@
+{% load static %}
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900&display=swap&subset=korean" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/loginstyle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <title>Login</title>
+    <script>
+        function loginBtn(){
+            if($("#id").val()==''){
+            alert('아이디가 입력되지 않았습니다. 아이디를 입력해주세요.')
+            $("#id").focus()
+            return false
+            }
+            if($("#pw").val()==''){
+            alert('패스워드가 입력되지 않았습니다. 패스워드를 입력해주세요.')
+            $("#pw").focus()
+            return false
+            }
+    
+            return $("#login").submit()
+        }
+        </script>
+    </head>
+    <body>
+        <div class= "container">
+            <div class = "row mt-5">
+                <div id ="logo" class = "col-12 text-center">
+
+
+                    <a href='/'><h1>UNNI'S CHOICE-Admin</h1></a>
+
+
+                </div>
+                <br><br><br><br>
+            </div>
+        </div>
+    {% if msg  %}
+        <script>alert('{{ msg }}')</script>
+    {% endif %}
+    <section>
+
+        <form action="{% url 'AdminPage:ad_login' %}" id='login' name="login" method="post">
+        {% csrf_token %}
+            <div class="id">
+                <input type="text" name="user_id" id="user_id" size="20" placeholder="아이디 6~20자" class="dform dform-text dform-installed dform-required dform-error-installed dform-error invalid" id="f-login-userid" data-dform-lang="ko">                 
+            </div>
+            <div class="pw">
+                <input type="password" name="user_pw" id="user_pw" size="45" class="dform dform-text dform-installed dform-password dform-required" id="f-login-passwd" placeholder="비밀번호 영문, 특수문자, 숫자혼합 8~12자">
+            </div>
+            <div id="save">
+                <div class="save"></div>
+                <span>아이디 저장</span>
+            </div>
+            <div id="find">
+                <span>아이디 찾기</span> <span class="separator">|</span> <span>비밀번호 찾기</span>
+            </div>
+        
+            <button type="button" onclick='loginBtn()'>로그인</button>
+        </form>
+
+   
+            
+    </section>
+       
+
+</body>
+</html>
