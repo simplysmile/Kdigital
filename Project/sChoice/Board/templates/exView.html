@@ -16,9 +16,9 @@
         <header class="py-5 bg-image-full" style="background-image: url('https://source.unsplash.com/wfh8dDlNFOk/1600x900')">
             <div class="text-center my-5">
                 {%if bitem.member.pro == 'advance' %}
-                <img class="img-fluid rounded-circle mb-4" src="/static/img/crown.png" alt="전문가" />
+                <img class="img-fluid rounded-circle mb-4" style="width:160px; height:160px;" src="/static/img/crown.png" alt="전문가" />
                 {%else%}
-                <img class="img-fluid rounded-circle mb-4" src="/static/img/memicon.png" alt="비전문가" />
+                <img class="img-fluid rounded-circle mb-4" style="width:160px; height:160px;" src="/static/img/memicon.png" alt="비전문가" />
                 {%endif%}
                 <h1 class="text-white fs-3 fw-bolder">{{bitem.member.user_name}}</h1>
                 <p class="text-white-50 mb-0">{{bitem.b_Modidate|date:"Y-m-d H:i"}}</p>
