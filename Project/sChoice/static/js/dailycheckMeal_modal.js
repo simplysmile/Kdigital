@@ -1,6 +1,8 @@
 // 모달
-function addMeal(){
+function addMeal(sdate,num){
     modal.style.display = "block";
+    
+    modifyMeal(sdate,num)
 }
 // Get the modal
 var modal = document.getElementById("myModal");
@@ -10,16 +12,18 @@ var span = document.getElementsByClassName("close")[0];
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
     modal.style.display = "none";
+    location.reload();
 }
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
+        location.reload();
     }
 }
 
-var dummydata=[]
-//document.addEventListener('keydown',function(e){
+
+
 
 document.getElementById('serDB').addEventListener('keydown',function(e){
     if(e.code === 'Enter'){
@@ -84,7 +88,7 @@ function add_meal(num)
 
     }
     userdata.push(adddata)
-
+    
     var insertdata=''
 
     insertdata += '<tr class="'+adddata.f_id+'"><td>'+adddata.f_name +'</td>'
@@ -155,7 +159,73 @@ function canceldBtnb()
 {
     if (confirm('등록을 취소하시겠습니까?')){
         modal.style.display = "none";   
+        location.reload();
     }
+}
+function modifyMeal(sdate,num)
+{
+    var mealSel = ''
+    // 아침, 점심, 저녁, 간식
+    if (num ==1){
+        
+        mealSel='B'
+    }
+    else if (num ==2){
+        mealSel='L'
+    }
+    else if (num ==3){
+        mealSel='D'
+    }
+    else if (num ==4){
+        mealSel='S'
+    }
+    
+    
+    // 만약에 데이터가 있을 경우... 보여주기 . 
+    mymeallistDic = {'len':6,'mealSel':mealSel}
+
+    $.ajax({
+        type: "GET",
+        url:"/dailycheck/"+ sdate +"/addMealData/",
+        data: mymeallistDic,
+        dataType:"json",   
+        success: function (data) {
+            
+            console.log( document.querySelector('#m_select').options[1].value )
+            document.querySelector('#m_select').options[num].selected = true
+
+            //$('#m_select').html(mealSel)
+
+            
+            
+            var insertdata=''
+            for(var i = 0 ; i < data.indata.length; i++){
+                
+                var adddata = data.indata[i]
+               
+            
+                insertdata += '<tr class="'+adddata.f_id+'"><td>'+adddata.f_name +'</td>'
+                insertdata += '<td><input id="foodweight'+adddata.f_id+'" class="foodweight" type="text" name="foodweight" size="5" value="'+adddata.f_weight +'" style="text-align:center;"><img width=20 height=20 src="/static/img/basic/chevron.png" onclick="modi_meal('+adddata.f_id+')"></td>'
+                insertdata += '<td id="eat_cal'+adddata.f_id+'">'+adddata.f_cal+'</td>'
+                insertdata += '<td id="eat_carb'+adddata.f_id+'">'+adddata.f_carb+'</td>'
+                insertdata += '<td id="eat_prot'+adddata.f_id+'">'+adddata.f_prot+'</td>'
+                insertdata += '<td id="eat_fat'+adddata.f_id+'">'+adddata.f_fat+'</td>'
+                insertdata += '<td><img width=20 height=20 src="/static/img/basic/minus_data.png" onclick="del_meal('+adddata.f_id+')"></td></tr>'
+             
+                
+            }
+            $('#meal_input_tbody').append(insertdata)
+            
+
+            
+
+        
+            
+        },
+        error: function () {
+            console.log('error');
+        }
+    });
 }
 function registerdbBtn(sdate)
 {
@@ -213,7 +283,7 @@ function registerdbBtn(sdate)
     
 
     $.ajax({
-        type: "GET",
+        type: "POST",
         url:"/dailycheck/"+ sdate +"/addMealData/",
         data: mymeallistDic,
         dataType:"json",   
