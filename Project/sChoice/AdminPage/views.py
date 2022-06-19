@@ -31,6 +31,8 @@ def ad_login(request):
             if qs:
                 request.session['session_user_id']=qs.user_id
                 request.session['session_user_name']=qs.user_name
+               
+                
                 
                 return render(request,'ad_m_L.html')
             else:
@@ -38,7 +40,7 @@ def ad_login(request):
                 msg="관리자만 로그인이 가능합니다."
                 
          
-                return render(request,'ad_m_L.html',{'msg':msg})
+                return render(request,'ad_login.html',{'msg':msg})
             
         else:
             msg="관리자만 로그인이 가능합니다."
