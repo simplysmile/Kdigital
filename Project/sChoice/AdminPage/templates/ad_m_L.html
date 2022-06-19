@@ -40,6 +40,7 @@
 	<nav>
   
 		<ul class='nav_container'>
+		  <li class='nav_item'><a href="/">UNNI'S CHOICE</a></li>
 		  <li class='nav_item'><a href="{% url 'AdminPage:ad_m_L' searchword='searchword' category='category' %}">회원관리</a></li>
 		  <li class='nav_item'><a href="{% url 'AdminPage:ad_f_L' searchword2='searchword2' category2='category2' %}">음식DB관리</a></li>
 		  <li class='nav_item'><a href="{% url 'AdminPage:ad_e_L' searchword3='searchword3' category3='category3' %}">운동DB관리</a></li>
@@ -53,7 +54,10 @@
 
 	<section class="main-content">
 		<div class="container">
-			<h1>Memeber-Admin</h1>
+
+			<div class="admin_name">
+				<h1>Memeber-Admin</h1>
+			</div>
 
 			<div class="wrapper">
 				<form action="{% url 'AdminPage:ad_m_L' searchword='searchword'  category='category' %}" name="searchfrm" id='searchfrm' method="post">

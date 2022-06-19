@@ -1,7 +1,14 @@
 /* IE */
+@font-face {
 
+    src : url("/static/font/BMDOHYEON_otf.otf"); 
+
+    font-family: "dohyeon";
+
+}
 select::-ms-expand {
     display: none;
+    font-family: "dohyeon";
 
 }
 
@@ -15,15 +22,35 @@ select::-ms-expand {
     padding: 5px 30px 5px 10px;
     border-radius: 4px;
     outline: 0 none;
+    font-family: "dohyeon";
 
 }
 
+h1 {
+    font-family: "dohyeon";
+}
+
+
+.admin_name{
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+
+
+}
+
+th {
+
+    font-family: "dohyeon";
+}
 
 
 .admin_select option {
 background: black;
 color: #fff;
 padding: 3px 0;
+font-family: "dohyeon";
 }
 
 
@@ -37,8 +64,9 @@ padding: 3px 0;
     width: 100%;
     margin: 0; /* 쓸데 없는 공백제거 */
     padding: 0; /* 쓸데 없는 공백제거 */
-    background-color: lightskyblue;
+    background-color: #40e0d0;
     list-style-type:none; 
+    font-family: "dohyeon";
     
     
 
