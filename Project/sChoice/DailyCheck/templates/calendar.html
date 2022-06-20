@@ -4,7 +4,10 @@
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/css/calendar.css" />
     
-    
+    <script>
+        
+
+    </script>
     
     <div class='rap'>
         <div class="headerCal">
@@ -79,44 +82,48 @@
                 url : "/dailycheck/"+clickeddate+"/imgCheck/",
                 dataType:'json',
                 success:function(data){
-                    console.log(data)
-                    if(data[0].day_img!=''){
-                        console.log('이미지있음')
+                    console.log(data[0].day_img)
+                    if(data[0].day_img!='/static/img/mem01.png'){
                         inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/mealCheck/">식단</a></ul>'
                         inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/exerciseCheck/">운동</a></ul>'
-                        inserttxt +=    '<ul><img width=15 height=15 alt="없음" src="'+data[0].day_img+'"></ul>'
-                        inserttxt +=    '<ul>'+data[0].cur_weight+'</ul>'
-                    }
-                    else{
-                        console.log('이미지없음')
+                        inserttxt +=    '<div style="padding-top:10px"><ul><img width=150 height=200 alt="없음" src="'+data[0].day_img+'"></ul>'
+                        inserttxt +=    '<ul> 몸무게 : '+data[0].cur_weight+'</ul></div>'
+                        }
+                        else{
                         var urlname= "/dailycheck/"+clickeddate+"/imgCheck/"
-                        inserttxt+='<form method = "POST" action = "'+urlname+'" id="imgSave">'
+                        inserttxt+='<form method = "POST" action = "'+urlname+'" name="imgSave" id="imgSave" enctype="multipart/form-data">'
                         inserttxt+='{% csrf_token %}'    
                         inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/mealCheck/">식단</a></ul>'
                         inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/exerciseCheck/">운동</a></ul>'
                         inserttxt +=    '<ul>이미지 : <input type="file" name="file" id="file"></ul>'
                         inserttxt +=    '<ul>몸무게 : <input type="text" name="weight" id="weight" value="'+data[0].cur_weight+'"></ul>'
-                        inserttxt+='<button type="submit" class="saveBtn" id="saveBtn" onclick="saveBtn()">Save</button>'
+                        inserttxt+='<button type="button" class="saveBtn" id="saveBtn" onclick="saveBtn()">Save</button>'
                         
                     }
                         
                     $("#madalshows").html(inserttxt)
+                    
+                    $('#saveBtn').click(function(){
+                        if($('#weight').val()==0){
+                            alert('몸무게를 정확하게 입력하세요.')
+                            $('#weight').focus()
+                            return false
+            
+                        }
+                        document.imgSave.submit()
+                    })
+
                 },
                 error:function(){
                     console.log('실패')
                 }
             })//ajax 
 
-
-
-
-
-
+            
+            
         }
-        function saveBtn(){
-            console.log('hi')
-
-        }
+        
+        
         // Get the modal
         var modal = document.getElementById("myModal");
         var imgmodal = document.getElementById("imgModal");
