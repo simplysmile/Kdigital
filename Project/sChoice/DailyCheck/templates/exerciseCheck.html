@@ -102,8 +102,8 @@
                 </h3>
                 <div id="targetsel" class = "targetsel">
                     <br>
-                    <ul><p id='target1' value="{{user_category}}">{{user_category}}</p> 위주의 운동을 선호하십니다.</ul>
-                    <ul><p id='target2' value="{{user_category}}">{{user_category}}</p> 위주의 운동을 선택하시겠습니까?</ul>
+                    <ul><p id='target1' style="display:inline" value="{{user_category}}">{{user_category}}</p> 위주의 운동을 선호하십니다.</ul>
+                    <ul><p id='target2' style="display:inline" value="{{user_category}}">{{user_category}}</p> 위주의 운동을 선택하시겠습니까?</ul>
                 </div>
                 <br>
                 <button class="prevBtn2" id='prevBtn2' onclick="prevBtn2()">Prev</button>
@@ -250,15 +250,16 @@
             var exercisenumber
             var target1Name
             $(document).on("click",".activity",function(){
-                activityName = $(this).text();
-                console.log(activityName)
+                $('.activitysel').find('ul').not(this).removeClass('on')
                 $(this).toggleClass("on")
-                
-                
+                activityName = $('.activity.on').text();
+                console.log(activityName)
             })
             $(document).on("click",".exercise",function(){
-                exerciseName = $(this).text();
-                $(this).toggleClass("on")
+                $('.exerciseysel').find('ul').not(this).removeClass('on2')
+                $(this).toggleClass("on2")
+                exerciseName = $('.exercise.on2').text();
+                console.log(exerciseName)
             })
             $('#nextBtn').click(function(){
                 $.ajax({
@@ -277,7 +278,7 @@
                             var str=''
                             for(let i=0;i<data.length;i++){
                                 if(data[i].activity==activityName){
-                                    str+='<ul class="exercise" name="exercise">'+data[i].ex_name+'</ul>'
+                                    str+='<ul class="exercise" name="exercise"><img class="imgtt" width=25 height=25 src="/static/img/basic/check2.png">'+data[i].ex_name+'</ul>'
                                 }
                             }
                             $('#exerciseysel').html(str)
@@ -326,7 +327,7 @@
                             var str=''
                             for(let i=0;i<data.length;i++){
                                 if(data[i].activity==activityName){
-                                    str+='<ul class="exercise" name="exercise">'+data[i].ex_name+'</ul>'
+                                    str+='<ul class="exercise" name="exercise"><img class="imgtt" width=25 height=25 src="/static/img/basic/check2.png">'+data[i].ex_name+'</ul>'
                                 }
                             }
                             $('#exerciseysel').html(str)
@@ -350,7 +351,7 @@
                         let ex=[]
                         for(let i=0;i<data.length;i++){
                             if(data[i].activity==activityName){
-                                str+='<ul class="exercise" name="exercise">'+data[i].ex_name+'</ul>'
+                                str+='<ul class="exercise" name="exercise"><img class="imgtt" width=25 height=25 src="/static/img/basic/check2.png">'+data[i].ex_name+'</ul>'
                             }
                         }
                         $('#exerciseysel').html(str)
@@ -423,9 +424,11 @@
         function nextBtn2(){
             modal.style.display = "none";
             modal2.style.display = "none";
+            modal2_1.style.display = "none";
             modal3.style.display = "block";
             
         }
+
 
         function saveBtn(){
             modal3.style.display="none";
