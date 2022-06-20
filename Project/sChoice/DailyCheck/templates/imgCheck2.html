@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% block mycontent %}
+
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/imgcheck.css" />
+    
+    
+    
+    <div class='rap'>
+        <div class="headerCal">
+            <div class="btnCal prevDay"></div>
+            <h2 class='dateTitle'></h2>
+            <div class="btnCal nextDay"></div>
+        </div>
+        
+        <div class="grid dateHead">
+            <div>일</div>
+            <div>월</div>
+            <div>화</div>
+            <div>수</div>
+            <div>목</div>
+            <div>금</div>
+            <div>토</div>
+        </div>
+        
+        <div class="grid dateBoard"></div>
+    </div>
+
+
+    <!-- The imgModal -->
+    <div id="Modal" class="modal">
+        
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <br>
+
+                <div class='sel_box' name='savebox'>
+                    <h3 class="join_title">
+                        <label>상태변화</label>
+                        <br>
+                        <p id='des'>상태변화를 기록하세요.</p>
+                        <br>
+                    </h3>
+                    <div id='weightdiv'>
+                        <ul><img width=200 height=200 src='{{day_img}}'></ul>               
+                        <ul>현재 몸무게</ul>
+                        <ul>{{cur_weight}}</ul>
+                        <br>
+                        <button class="updateBtn" id='updateBtn' onclick="updateBtn()">수정</button>
+                    </div>
+                </div>
+                <br>
+        </div>
+        
+    </div>
+
+    {% comment %} <div id="Modal2" class="modal2">
+        
+        <!-- Modal content -->
+        <div class="modal-content2">
+            <span class="close">&times;</span>
+            <br>
+
+            <form method = "POST" action = "{%url 'DailyCheck:imgCheck' sdate %}" id="wExercise">
+                {% csrf_token %}
+                <div class='sel_box' name='savebox'>
+                    <h3 class="join_title">
+                        <label>상태변화</label>
+                        <br>
+                        <p id='des'>상태변화를 기록하세요.</p>
+                        <br>
+                    </h3>
+                    
+                </div>
+                <br>
+            </form>
+        </div>
+        
+    </div>
+     {% endcomment %}
+    <script src="/static/js/calendar.js"></script>
+    
+    <script>
+        // 모달
+        // Get the modal
+        function selectD(date){
+            const dateToArray = date.split(',')
+        }
+
+        $(function(){
+            $('#updateBtn').click(function(){
+                $.ajax({
+                    url:'{%url "DailyCheck:imgCheck1" sdate%}',
+                    dataType:'json',
+                    success:function(data){
+                        console.log('fwfwjflwkf')
+                        str=''
+                        str+='<tr><td><label>이미지</label></td>'
+                        str+='<td><input type="file" name="file" id="file"></td></tr>'
+                        str+='<tr><td><label>몸무게</label></td>'
+                        str+='<td><input type="text" name="weight" id="weight" required></tr><br>'
+                        str+='<button type="submit" class="saveBtn" id="saveBtn" onclick="saveBtn()">Save</button>'
+                        
+                        $('#weightdiv').html(str)
+                        },
+                        error:function(){
+
+                    }
+                })
+
+            })//nextBtn function
+        })
+        
+
+        var modal = document.getElementById("Modal");
+        
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none"; 
+            location.href="{%url 'DailyCheck:calendar' %}"
+        }
+        // When the user clicks any
+        where outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none"; 
+                location.href="{%url 'DailyCheck:calendar' %}"
+            }
+        }
+    </script>
+    
+{% endblock mycontent %}

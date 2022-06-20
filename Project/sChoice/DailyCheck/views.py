@@ -340,7 +340,11 @@ def exerciseUpdate(request,sdate,ex_no):
 # 수정 모달페이지를 불러오기위한 빌드업
 def exerciseView(request,sdate,ex_no):
     u_id = request.session['session_user_id']
-    qs_m = Dailyexercise.objects.filter(user=u_id, createdate=sdate)
+    date=sdate.split('-')
+    curr_year=date[0]
+    curr_month=date[1]
+    curr_day=date[2]
+    qs_m = Dailyexercise.objects.filter(user=u_id, createdate__year=curr_year,createdate__month=curr_month,createdate__day=curr_day)
     # 블럭에 뿌려주기랑 차트그리기로 만들기
     b_list = []
     for i in range(qs_m.count()):
@@ -378,7 +382,11 @@ def exerciseView(request,sdate,ex_no):
 
 def exerciseCheck(request,sdate):
     u_id = request.session['session_user_id']
-    qs_m = Dailyexercise.objects.filter(user=u_id, createdate=sdate)
+    date=sdate.split('-')
+    curr_year=date[0]
+    curr_month=date[1]
+    curr_day=date[2]
+    qs_m = Dailyexercise.objects.filter(user=u_id, createdate__year=curr_year,createdate__month=curr_month,createdate__day=curr_day)
     daily=Dailydata.objects.filter(user=u_id).order_by('day_no')[0]
         
     goal_burn_kcal=daily.goal_burn_kcal
@@ -387,7 +395,6 @@ def exerciseCheck(request,sdate):
     b_list = []
     daily_list = []
     count=0
-    total_burn_kcal=0
     for i in range(qs_m.count()):
         b_dic={}
         daily_dic={}
@@ -448,7 +455,11 @@ def exerciseCheck(request,sdate):
         data_list.append(data_dic)
     Oracles.oraclose(my_cursor,my_conn)
         
-    content={'b_list':b_list,'exerciseList':data_list,'sdate':sdate}
+    user = Members.objects.get(user_id=u_id)  
+    user_category=user.user_target
+        
+        
+    content={'b_list':b_list,'exerciseList':data_list,'sdate':sdate,'user_category':user_category}
     return render(request,'exerciseCheck.html',content)
 
 def exercise1(request):

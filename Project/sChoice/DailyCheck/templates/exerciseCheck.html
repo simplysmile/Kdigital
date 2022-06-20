@@ -101,7 +101,9 @@
                     <p id='des'></p>
                 </h3>
                 <div id="targetsel" class = "targetsel">
-
+                    <br>
+                    <ul><p id='target1' value="{{user_category}}">{{user_category}}</p> 위주의 운동을 선호하십니다.</ul>
+                    <ul><p id='target2' value="{{user_category}}">{{user_category}}</p> 위주의 운동을 선택하시겠습니까?</ul>
                 </div>
                 <br>
                 <button class="prevBtn2" id='prevBtn2' onclick="prevBtn2()">Prev</button>
@@ -246,12 +248,13 @@
             var activityName
             var exerciseName
             var exercisenumber
+            var target1Name
             $(document).on("click",".activity",function(){
                 activityName = $(this).text();
                 console.log(activityName)
                 $(this).toggleClass("on")
-
-
+                
+                
             })
             $(document).on("click",".exercise",function(){
                 exerciseName = $(this).text();
@@ -264,14 +267,9 @@
                     success:function(data){
                         console.log(activityName)
                         if(activityName=='health club exercise'){
+                            target1Name = $('#target1').text()
                             modal.style.display = "none";
                             modal2_1.style.display = "block";
-                            var str=''
-                            str+='<br>'
-                            str+='<ul>복부 위주의 운동을 선호하십니다.</ul>'
-                            str+='<ul>복부 위주의 운동을 선택하시겠습니까?</ul>'
-                        
-                            $('#targetsel').html(str)
                         }
                         else{
                             modal.style.display = "none";
@@ -297,12 +295,13 @@
                     dataType:'json',
                     success:function(data){
                         console.log(activityName)
+                        console.log(data)
                         if(activityName=='health club exercise'){
                             modal.style.display = "none";
                             modal2.style.display = "block";
                             var str=''
                             for(let i=0;i<data.length;i++){
-                                if(data[i].activity==activityName && data[i].target_category=='Abs'){
+                                if(data[i].activity==activityName && data[i].target_category==target1Name){
                                     str+='<ul class="exercise" name="exercise"><img class="imgtt" width=25 height=25 src="/static/img/basic/check2.png">'+data[i].ex_name+'</ul>'
                                 }
                             }

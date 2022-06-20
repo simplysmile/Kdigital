@@ -36,32 +36,16 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <br>
-            <p  id='madalshows'></p>
+            <div class='modal-content2'>
+                <p  id='madalshows'></p>
+                </br>
+
+            </div>
         </div>
         
     </div>
     
 
-{% comment %} 
-
-    <!-- The imgModal -->
-    <div id="imgModal" class="modal">
-        
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <br>
-            <p  id='madalshows'>
-                <a href="#">
-                    <ul><img width=200 height=200 src='{{bexer.imgName}}'></ul>               
-                    <ul>현재 몸무게</ul>
-                    <ul>{{bexer.cur_weight}}</ul>
-                </a>
-            </p>
-        </div>
-        
-    </div> {% endcomment %}
-    
     <script src="/static/js/calendar.js"></script>
     
     <script>
@@ -96,7 +80,7 @@
                         inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/mealCheck/">식단</a></ul>'
                         inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/exerciseCheck/">운동</a></ul>'
                         inserttxt +=    '<ul>이미지 : <input type="file" name="file" id="file"></ul>'
-                        inserttxt +=    '<ul>몸무게 : <input type="text" name="weight" id="weight" value="'+data[0].cur_weight+'"></ul>'
+                        inserttxt +=    '<ul>몸무게 : <input type="text" name="weight" id="weight" value="'+data[0].cur_weight+'"></ul><br>'
                         inserttxt+='<button type="button" class="saveBtn" id="saveBtn" onclick="saveBtn()">Save</button>'
                         
                     }
