@@ -106,7 +106,7 @@ def logout(request):
     
     request.session.clear()
     
-    return redirect('/')
+    return render(request,'login.html')
     
 #######################################################
 
@@ -144,11 +144,11 @@ def signup(request):   #회원가입 페이지를 보여주기 위한 함수
         user_target = request.POST.get('target',None)
         vegan = request.POST.get('vegan',None)
         activity  = request.POST.get('activity',None)
-        goal_weight = int(request.POST.get('goal_weight',None))
-        goal_bodyfat= int(request.POST.get('goal_bodyfat',None))
+        goal_weight = float(request.POST.get('goal_weight',None))
+        goal_bodyfat= float(request.POST.get('goal_bodyfat',None))
         goal_period = int(request.POST.get('goal_period',None))
-        height = int(request.POST.get('height',None))
-        cur_weight = int(request.POST.get('weight',None))
+        height = float(request.POST.get('height',None))
+        cur_weight = float(request.POST.get('weight',None))
         
         
         user = Members(user_id =user_id, user_pw = user_pw, user_name=user_name,pro=pro,birth=birth,gender=gender,phone=phone,email=email,zipcode=zipcode,addressd1=addressd1,\

@@ -1,0 +1,174 @@
+@font-face {
+
+    src : url("/static/font/BMDOHYEON_otf.otf"); 
+
+    font-family: "dohyeon";
+
+}
+
+
+h1 {
+    font-family: "dohyeon";
+}
+
+.admin_name{
+    
+    padding-left:620px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+
+}
+
+.form-group{
+
+    padding-bottom: 20px;
+}
+
+
+.whole_thing{
+
+    padding-left: 530px;
+
+}
+
+.button-wrapper{
+
+
+    font-family: "dohyeon";
+
+    padding-left:550px;
+
+    padding-bottom:30px ;
+}
+
+.label_name{
+
+
+    font-family: "dohyeon";
+
+}
+
+
+.btnfont{
+
+    font-family: "dohyeon";
+    background-color: #40e0d0;
+    color:white;
+    border:0;
+    outline:0;
+    padding: 10px 10px 10px 10px;
+
+
+
+}
+
+.form-control1{
+
+    width: 350px;
+    height: 30px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 2px;
+    outline: none;
+    padding-left: 20px;
+    background-color: white;
+
+
+
+
+}
+
+
+.form-control{
+
+    width: 330px;
+    height: 30px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 2px;
+    outline: none;
+    padding-left: 20px;
+    background-color: white;
+
+
+
+}
+
+#find_post{
+
+
+    width: 145px;
+    height: 30px;
+    font-size: 14px;
+    border: 0;
+    border-radius: 2px;
+    outline: none;
+    padding-left: 9px;
+    background-color: #40e0d0;
+    color:white;
+    font-family: "dohyeon";
+    
+
+
+}
+
+#postcode{
+
+
+    width: 180px;
+    height: 30px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 2px;
+    outline: none;
+    padding-left: 20px;
+    background-color: white;
+    
+
+
+
+
+}
+
+
+#year{
+
+    width: 100px;
+    height: 30px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 2px;
+    outline: none;
+    padding-left: 20px;
+    background-color: white;
+
+
+}
+#month{
+
+    width: 100px;
+    height: 30px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 2px;
+    outline: none;
+    padding-left: 20px;
+    background-color: white;
+
+
+}
+#day{
+
+    width: 100px;
+    height: 30px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 2px;
+    outline: none;
+    padding-left: 20px;
+    background-color: white;
+
+
+}
+

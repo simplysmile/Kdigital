@@ -11,284 +11,287 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  <link rel="stylesheet" href="{% static 'css/admin_list.css'%}">
+  <link rel="stylesheet" href="{% static 'css/admin_update.css'%}">
   <title>AdminPage</title>
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script>
-    // 우편번호 찾기 찾기 화면을 넣을 element
-    var element_wrap = document.getElementById('wrap');
-
-    function foldDaumPostcode() {
-        // iframe을 넣은 element를 안보이게 한다.
-        element_wrap.style.display = 'none';
-    }
-    function sample3_execDaumPostcode() {
-        // 현재 scroll 위치를 저장해놓는다.
-        var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
-        new daum.Postcode({
-            oncomplete: function(data) {
-                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var addr = ''; // 주소 변수
-                var extraAddr = ''; // 참고항목 변수
-
-                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    addr = data.jibunAddress;
-                }
-
-                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                if(data.userSelectedType === 'R'){
-                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                        extraAddr += data.bname;
-                    }
-                    // 건물명이 있고, 공동주택일 경우 추가한다.
-                    if(data.buildingName !== '' && data.apartment === 'Y'){
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                    }
-                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                    if(extraAddr !== ''){
-                        extraAddr = ' (' + extraAddr + ')';
-                    }
-                    // 조합된 참고항목을 해당 필드에 넣는다.
-                    document.getElementById("extraAddress").value = extraAddr;
-                
-                } else {
-                    document.getElementById("extraAddress").value = '';
-                }
-
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('postcode').value = data.zonecode;
-                document.getElementById("address").value = addr;
-                // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("detailAddress").focus();
-
-                // iframe을 넣은 element를 안보이게 한다.
-                // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
-                element_wrap.style.display = 'none';
-
-                // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
-                document.body.scrollTop = currentScroll;
-            },
-            // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
-            onresize : function(size) {
-                element_wrap.style.height = size.height+'px';
-            },
-            width : '100%',
-            height : '100%'
-        }).embed(element_wrap);
-
-        // iframe을 넣은 element를 보이게 한다.
-        element_wrap.style.display = 'block';
-    }
-</script>
+      //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+      function sample4_execDaumPostcode() {
+          new daum.Postcode({
+              oncomplete: function(data) {
+                  // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+  
+                  // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                  // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                  var roadAddr = data.roadAddress; // 도로명 주소 변수
+                  var extraRoadAddr = ''; // 참고 항목 변수
+  
+                  // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                  // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                  if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                      extraRoadAddr += data.bname;
+                  }
+                  // 건물명이 있고, 공동주택일 경우 추가한다.
+                  if(data.buildingName !== '' && data.apartment === 'Y'){
+                     extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                  }
+                  // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                  if(extraRoadAddr !== ''){
+                      extraRoadAddr = ' (' + extraRoadAddr + ')';
+                  }
+  
+                  // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                  document.getElementById('postcode').value = data.zonecode;
+                  document.getElementById("address").value = roadAddr;
+                  document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+                  
+                  // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                  if(roadAddr !== ''){
+                      document.getElementById("extraAddress").value = extraRoadAddr;
+                  } else {
+                      document.getElementById("extraAddress").value = '';
+                  }
+  
+                  var guideTextBox = document.getElementById("guide");
+                  // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                  if(data.autoRoadAddress) {
+                      var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                      guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                      guideTextBox.style.display = 'block';
+  
+                  } else if(data.autoJibunAddress) {
+                      var expJibunAddr = data.autoJibunAddress;
+                      guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                      guideTextBox.style.display = 'block';
+                  } else {
+                      guideTextBox.innerHTML = '';
+                      guideTextBox.style.display = 'none';
+                  }
+              }
+          }).open();
+      }
+  </script>
   <script>
 
     function cancelBtn(){
 
-      location.href="#"
+      location.href="{% url 'AdminPage:ad_m_L' searchword='searchword' category='category' %}"
     }
 
   </script>
 </head>
 
-  <section>
-    <h1>회원정보수정</h1>
+
+<body>
 
 
-    <form action="{% url 'AdminPage:ad_m_U' searchword=searchword category=category user_id=user_id %}" name="update" method="post">
-      {% csrf_token %}
-      <table>
+
+
+
+
+
+
+
+<body bgcolor='#f7f7f7 '>
+<section>
+
+          <div class="admin_name">
+
+            <h1>회원정보수정</h1>
+
+          </div>
+
+
+  <form action="{% url 'AdminPage:ad_m_U' searchword=searchword category=category user_id=user_id %}" name="update" method="post">
+    {% csrf_token %}
+    
         <colgroup>
           <col width="15%">
           <col width="85%">
         </colgroup>
-
-
         
-{% if ad_List%}
-    <div class="form-group">
-      <label for="re_password">사용자이름</label>
-      <input type= "text" class="form-control" id="user_name" value="{{ad_List.user_name}}" name ="username">
-      </div>
+    {% if ad_List%}
+    <div class="whole_thing">
 
-      <div class="form-group">
-        <label for="user_id">아이디</label>
-        <input type="text" class="form-control" id="user_id" value="{{ad_List.user_id}}" name="user_id" readonly>   
-        <!-- 이 name 값으로 정보가 전달된다 -->
-      </div>
-
-      <div class="form-group">
-        <label for="password">비밀번호</label>
-        <input type="text" class="form-control" id="password" value="{{ad_List.user_pw}}" name= "user_pw'" readonly>
-      </div>
-      
-      <div class="form-group"> 
-          <label for="birthday">생년월일</label><br>
-          <input type="text" id="year" value="{{ad_List.birth.year}}" aria-label="년(4자)" maxlength="4" name="year">
-          <select id="month"  aria-label="월" name="month">
-              <option value="{{ad_List.birth.month}}">{{ad_List.birth.month}}월</option>
-              <option value="01">1월</option>
-              <option value="02">2월</option>
-              <option value="03">3월</option>
-              <option value="04">4월</option>
-              <option value="05">5월</option>
-              <option value="06">6월</option>
-              <option value="07">7월</option>
-              <option value="08">8월</option>
-              <option value="09">9월</option>
-              <option value="09">10월</option>
-              <option value="09">11월</option>
-              <option value="10">12월</option>
-
-          </select> 
-          <input type="text" id="day" value="{{ad_List.birth.day}}" aria-label="일" maxlength="2" name="day">
-      </div>
-
-      <div class="form-group">
-        <label for="gender">성별</label><br>
-          <select id="gender" name="gender" aria-label="성별">
-              <option disabled selected>성별</option>
-              <option value="남자">남자</option>
-              <option value="여자">여자</option>
-          </select>
-      </div>
-
-      <div class="form-group">
-        <label for="tel">전화</label>
-        <input type= "text" class="form-control" id="tel" value="{{ad_List.phone}}"  name = "tel">
-      </div>
-
-
-
-      <div class="form-group">
-        <label for="email">이메일</label>
-        <input type= "text" class="form-control" id="email" value="{{ad_List.email}}" name = "email">
-      </div>
-
-
-      <div class="form-group">
-        <label for="address">주소</label>
-        <input type="text" class="form-control" id="postcode" name="postcode" value="{{ad_List.zipcode}}">
-        <input type="button" onclick="sample3_execDaumPostcode()" value="우편번호 찾기"><br>
-        <input type="text"  class="form-control" id="address" name="address" value="{{ad_List.addressd1}}"><br>
-        <input type="text"  class="form-control" id="detailAddress" name="detailAddress" value="{{ad_List.addressd2}}">
-        <input type="text" class="form-control" id="extraAddress" name="extraAddress"  value="{{ad_List.addressd3}}">
-        <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
-        <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+        <div class="form-group">
+            <label class="label_name" for="re_password">사용자이름</label><br>
+            <input type= "text" class="form-control" id="user_name" value="{{ad_List.user_name}}" name ="username">
         </div>
-      </div>
 
-      <div class="form-group">
-          <label for="service">서비스</label>
-      
-              <select id="service" class="form-control"  name="service" class="sel" aria-label="서비스">
-                  
-                  <option disabled selected>{{ad_List.service}}</option>
-                  <option value="식단형">식단형</option>
-                  <option value="균형형">균형형</option>
-                  <option value="운동형">운동형</option>
-              </select>
-      </div>
+        <div class="form-group">
+            <label class="label_name" for="user_id">아이디</label><br>
+            <input type="text" class="form-control" id="user_id" value="{{ad_List.user_id}}" name="user_id" readonly>   
+            <!-- 이 name 값으로 정보가 전달된다 -->
+        </div>
 
+        <div class="form-group">
+          <label class="label_name" for="password">비밀번호</label><br>
+          <input type="text" class="form-control" id="password" value="{{ad_List.user_pw}}" name= "user_pw'" readonly>
+        </div>
+            
+        <div class="form-group"> 
+            <label class="label_name" for="birthday">생년월일</label><br>
+            <input type="text" id="year" class="form-control" value="{{ad_List.birth.year}}" aria-label="년(4자)" maxlength="4" name="year">
+            <select id="month" class="form-control"  aria-label="월" name="month">
+                <option value="{{ad_List.birth.month}}">{{ad_List.birth.month}}월</option>
+                <option value="01">1월</option>
+                <option value="02">2월</option>
+                <option value="03">3월</option>
+                <option value="04">4월</option>
+                <option value="05">5월</option>
+                <option value="06">6월</option>
+                <option value="07">7월</option>
+                <option value="08">8월</option>
+                <option value="09">9월</option>
+                <option value="09">10월</option>
+                <option value="09">11월</option>
+                <option value="10">12월</option>
 
+            </select> 
+            <input type="text" id="day" class="form-control"  value="{{ad_List.birth.day}}" aria-label="일" maxlength="2" name="day">
+        </div>
 
-      <div class="form-group">
-          <label for="purpose">목적</label>
-      
-          <select id="purpose" name="purpose"  class="form-control"  aria-label="목적">
-              <option value="{{ad_List.user_purpose}}">{{ad_List.user_purpose}}</option>
-              <option value="체중감소">체중감소</option>
-              <option value="체중유지">체중유지</option>
-              <option value="체중증가">체중증가</option>
-          </select>
-
-      </div>
-
-
-      <div class="form-group">
-          <label for="target">타겟부위</label>
-      
-          <select id="target" name="target" class="form-control" aira-label='타겟부위'>
-              <option value="{{ad_List.user_target}}">{{ad_List.user_target}}</option>
-              <option value="복부">복부</option>
-              <option value="어깨">어깨</option>
-              <option value="팔">팔</option>
-              <option value="등">등</option>
-              <option value="가슴">가슴</option>
-              <option value="하체">하체</option>
-              <option value="전신">전신</option>
-          </select>
-
-      </div>
-
-
-      <div class="form-group">
-          <label for="vegan">비건여부</label>
-      
-          <select id="vegan" name="vegan" class="form-control" aria-label="비건">
-              <option value="{{ad_List.vegan}}">{{ad_List.vegan}}</option>
-              <option value="비건채식">비건채식</option>
-              <option value="락토채식">락토채식</option>
-              <option value="오보채식">오보채식</option>
-              <option value="락토오보채식">락토오보채식</option>
-              <option value="폴로채식">폴로채식</option>
-              <option value="페스코채식">페스코채식</option>
-              <option value="플렉시테리안">플렉시테리안</option>
-              <option value="해당사항없음">해당사항없음</option>
-          </select>
-
-      </div>
-
-
-      <div class="form-group">
-          <label for="advancelevel">전문가여부</label><br>
-            <select id="advancelevel" name="advancelevel" aria-label="전문가여부">
-                <option value="{{ad_List.pro}}">{{ad_List.pro}}</option>
-                <option value="전문가">전문가</option>
-                <option value="비전문가">비전문가</option>
+        <div class="form-group">
+          <label class="label_name" for="gender">성별</label><br>
+            <select id="gender"  class="form-control1" name="gender" aria-label="성별">
+                <option value="{{ad_List.gender}}" selected>{{ad_List.gender}}</option>
+                <option value="남자">남자</option>
+                <option value="여자">여자</option>
             </select>
-      </div>
+        </div>
+
+        <div class="form-group">
+          <label class="label_name" for="tel">전화</label><br>
+          <input type= "text" class="form-control" id="tel" value="{{ad_List.phone}}"  name = "tel">
+        </div>
 
 
-      <div class="form-group">
-          <label for="goalweigth">목표몸무게</label>
-          <input type="text" class="form-control"  id="goalweigth" value="{{ad_List.goal_weight}}" name="goal_weigth">   
-        
-      </div>
 
-      <div class="form-group">
-          <label for="goal_bodyfat">목표체지방률</label>
-          <input type="text" class="form-control"  id="goal_bodyfat" value="{{ad_List.goal_bodyfat}}" name="goal_bodyfat">   
-        
-      </div>
+        <div class="form-group">
+          <label class="label_name" for="email">이메일</label><br>
+          <input type= "text" class="form-control" id="email" value="{{ad_List.email}}" name = "email">
+        </div>
 
-      <div class="form-group">
-          <label for="goal_period">목표기간</label>
-          <input type="text" class="form-control"  id="goal_period" value="{{ad_List.goal_period}}" name="goal_period">   
-      </div>
-
-      <div class="form-group">
-          <label for="allergic_food">알레르기음식</label>
-          <input type="text" class="form-control"  id="allergic_food" value="{{ad_List.allergic_food}}" name="allergic_food">   
-      </div>
-      </table>
+        <div class="form-group">
+          <label  class="label_name" for="address">주소</label><br>
+          <input type="text" class="form-control" id="postcode" name="postcode" value="{{ad_List.zipcode}}">
+          <input type="button"  class="form-control" id="find_post" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br><br>
+          <input type="text"  class="form-control" id="address" name="address" value="{{ad_List.addressd1}}"><br><br>
+          <input type="text" id="sample4_jibunAddress"class="form-control" placeholder="지번주소"><br><br>
+          <span id="guide" style="color:#999;display:none"></span>
+          <input type="text"  class="form-control" id="detailAddress" name="detailAddress" value="{{ad_List.addressd2}}"><br><br>
+          <input type="text" class="form-control" id="extraAddress" name="extraAddress"  value="{{ad_List.addressd3}}">
+          <br><span class="warning" id="address_check_msg"></span> 
           
-          <div class="button-wrapper">
-            <button type="submit"  class="update">수정완료</button>
-            <button type="button" onclick= 'cancelBtn()' class="cancel">취소</button>
-          </div>
+        </div>
 
-      {% endif %}
+        <div class="form-group">
+            <label  class="label_name" for="service">서비스</label><br>
+        
+                <select id="service" class="form-control1"  name="service" class="sel" aria-label="서비스">
+                    
+                    <option value="{{ad_List.service}}" selected>{{ad_List.service}}</option>
+                    <option value="식단형">식단형</option>
+                    <option value="균형형">균형형</option>
+                    <option value="운동형">운동형</option>
+                </select>
+        </div>
 
-    </form>
 
-  </section>
+
+        <div class="form-group">
+            <label  class="label_name" for="purpose">목적</label><br>
+        
+            <select id="purpose" name="purpose"  class="form-control1"  aria-label="목적">
+                <option value="{{ad_List.user_purpose}}" selected>{{ad_List.user_purpose}}</option>
+                <option value="체중감소">체중감소</option>
+                <option value="체중유지">체중유지</option>
+                <option value="체중증가">체중증가</option>
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+            <label class="label_name" for="target">타겟부위</label><br>
+        
+            <select id="target" name="target" class="form-control1" aira-label='타겟부위'>
+                <option value="{{ad_List.user_target}}" selected>{{ad_List.user_target}}</option>
+                <option value="복부">복부</option>
+                <option value="어깨">어깨</option>
+                <option value="팔">팔</option>
+                <option value="등">등</option>
+                <option value="가슴">가슴</option>
+                <option value="하체">하체</option>
+                <option value="전신">전신</option>
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+            <label class="label_name" for="vegan">비건여부</label><br>
+        
+            <select id="vegan" name="vegan" class="form-control1" aria-label="비건">
+                <option value="{{ad_List.vegan}}" selected>{{ad_List.vegan}}</option>
+                <option value="비건채식">비건채식</option>
+                <option value="락토채식">락토채식</option>
+                <option value="오보채식">오보채식</option>
+                <option value="락토오보채식">락토오보채식</option>
+                <option value="폴로채식">폴로채식</option>
+                <option value="페스코채식">페스코채식</option>
+                <option value="플렉시테리안">플렉시테리안</option>
+                <option value="해당사항없음">해당사항없음</option>
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+            <label class="label_name" for="advancelevel">전문가여부</label><br>
+              <select id="advancelevel"  class="form-control1" name="advancelevel" aria-label="전문가여부">
+                  <option value="{{ad_List.pro}}" selected>{{ad_List.pro}}</option>
+                  <option value="전문가">전문가</option>
+                  <option value="비전문가">비전문가</option>
+              </select>
+        </div>
+
+
+        <div class="form-group">
+            <label  class="label_name" for="goalweigth">목표몸무게</label><br>
+            <input type="text" class="form-control"  id="goalweigth" value="{{ad_List.goal_weight}}" name="goal_weigth">   
+          
+        </div>
+
+        <div class="form-group">
+            <label class="label_name" for="goal_bodyfat">목표체지방률</label><br>
+            <input type="text" class="form-control"  id="goal_bodyfat" value="{{ad_List.goal_bodyfat}}" name="goal_bodyfat">   
+          
+        </div>
+
+        <div class="form-group">
+            <label class="label_name" for="goal_period">목표기간</label><br>
+            <input type="text" class="form-control"  id="goal_period" value="{{ad_List.goal_period}}" name="goal_period">   
+        </div>
+
+        <div class="form-group">
+            <label class="label_name" for="allergic_food">알레르기음식</label><br>
+            <input type="text" class="form-control"  id="allergic_food" value="{{ad_List.allergic_food}}" name="allergic_food">   
+        </div>
+        
+                      
+        <div class="button-wrapper">
+          <button class="btnfont" type="submit"  class="update">수정완료</button>
+          <button class="btnfont" type="button" onclick= 'cancelBtn()' class="cancel">취소</button>
+        </div>
+
+        {% endif %}
+    </div> 
+                  
+  </form>
+
+
+</section>
 
 </body>  
 </html>

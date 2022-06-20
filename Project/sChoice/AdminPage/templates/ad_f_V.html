@@ -73,7 +73,7 @@
 
       <div class="list1"><a href="{% url 'AdminPage:ad_f_L' searchword2='searchword2' category2='category2' %}">목록</a></div>
       <div class="list2" onclick='deleteBtn()'>삭제</div>
-      <div class="list3"><a href="#">수정</a></div>
+      <div class="list3"><a href="{% url 'AdminPage:ad_f_U' searchword2=searchword2 category2=category2  f_NO=Food_List.f_NO %}">수정</a></div>
     </div>
   </section>
 
