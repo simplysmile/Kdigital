@@ -20,7 +20,7 @@ $(function(){
                   ctx.font = '50px sans-serif';
                   ctx.textAlign = 'center';     
                   var daystr = String(data.workoutday)+'/'+String(data.goal_period) +' 일'
-                  var kgstr = '-'+String(data.weight[0]-data.goal_weight)+'kg 남음'
+                  var kgstr = data.goal_weight+'까지 '+String(data.weight[0]-data.goal_weight)+'kg'
                   ctx.fillText(daystr, width / 2 +(left), top + (height / 2)+70);
                   ctx.fillText(kgstr, width / 2 +(left), top + (height / 2)+120);
                 }
@@ -48,7 +48,7 @@ $(function(){
                         },
                         {
                             label: '몸무게',
-                            data: [0,0,(data.firstweight-data.goal_weight),(data.weight[0]-data.goal_weight)],
+                            data: [0,0,(data.firstweight-data.goal_weight)-(data.weight[0]-data.goal_weight),(data.weight[0]-data.goal_weight)],
                             backgroundColor: ['#6D80A6','#eee'],
                             cutout: "90%",
                             //hoverOffset: 5,    
@@ -130,6 +130,38 @@ $(function(){
 
 
 
+            var meal_keys = Object.keys(data.mealweak.m_cal)
+            var exer_keys = Object.keys(data.exerweak.m_cal)
+            var eatweek=[]
+            var exerweek=[]
+            var exergoalweek=[]
+            var goalweek=[]
+            var week = new Array('일','월','화','수','목','금','토','일','월','화','수','목','금','토')
+            var d = new Date();
+            //alert(week[d.getDay()])
+            var titleweek = []
+
+            for (var i = 0; i<meal_keys.length;i++){
+                eatweek.push(data.mealweak.m_cal[meal_keys[i]])
+                goalweek.push(data.goalMeal)
+                
+                titleweek.push(week[(d.getDay())+1+i])
+                
+            }
+
+            for (var i = 0; i<exer_keys.length;i++){
+                exerweek.push(data.exerweak.m_cal[exer_keys[i]])
+                exergoalweek.push(data.goalEx)                
+            }
+            
+            
+            
+            var mealpercentage = (data.mealpercent)
+            var exerpercentage = (data.exerpercent)
+
+            console.log(exerpercentage)
+
+
 
 
         // --------------------------------------------------------------------------------------------------
@@ -140,24 +172,6 @@ $(function(){
          
 
         
-        var meal_keys = Object.keys(data.mealweak.m_cal)
-        var eatweek=[]
-        var goalweek=[]
-        var week = new Array('일','월','화','수','목','금','토','일','월','화','수','목','금','토')
-        var d = new Date();
-        //alert(week[d.getDay()])
-        var titleweek = []
-        for (var i = 0; i<meal_keys.length;i++){
-            eatweek.push(data.mealweak.m_cal[meal_keys[i]])
-            goalweek.push(data.goalMeal)
-            
-            titleweek.push(week[(d.getDay())+1+i])
-            
-        }
-        
-        
-        
-        var mealpercentage = Math.round(data.mealpercent)
         
         const textinsert = {
             id: 'textinsert',
@@ -166,7 +180,7 @@ $(function(){
               ctx.save();
               ctx.fillStyle = 'black';
               ctx.fillRect(width / 2, top + (height / 2), 0, 0);
-              ctx.font = '50px sans-serif';
+              ctx.font = '10px sans-serif';
               ctx.textAlign = 'center';     
               
               ctx.fillText(mealpercentage +"%", width / 2 +(left), top + (height / 2));
@@ -182,7 +196,7 @@ $(function(){
                         label: '칼로리',
                         data: [mealpercentage,(100-mealpercentage),0,0,0],
                         backgroundColor: ['#7CCAAE','#eee'],
-                        cutout: mealpercentage +"%",    
+                        cutout: "80%",    
                     }],
                 },//data.
                 options: {
@@ -341,10 +355,10 @@ $(function(){
               ctx.save();
               ctx.fillStyle = 'black';
               ctx.fillRect(width / 2, top + (height / 2), 0, 0);
-              ctx.font = '50px sans-serif';
+              ctx.font = '10px sans-serif';
               ctx.textAlign = 'center';     
               
-              ctx.fillText('100%', width / 2 +(left), top + (height / 2));
+              ctx.fillText(exerpercentage+'%', width / 2 +(left), top + (height / 2));
             }
         };
 
@@ -356,7 +370,7 @@ $(function(){
                 labels: ['done','remain'],
                 datasets: [{
                     label: '칼로리',
-                    data: [80,(100-80),0,0,0],
+                    data: [exerpercentage,(100-exerpercentage),0,0,0],
                     backgroundColor: ['#7CCAAE','#eee'],
                     cutout: "80%",    
                 }],
@@ -404,7 +418,7 @@ $(function(){
                 datasets: [
                 {
                     label: '달성현황',
-                    data: [65, 59, 120, 81, 56, 100, 80],
+                    data: exerweek,
                     backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(255, 159, 64, 0.2)',
@@ -436,7 +450,7 @@ $(function(){
                 },
                 {
                     label: '목표',
-                    data: [100, 100, 100, 100, 100, 100, 100],
+                    data: exergoalweek,
                     backgroundColor: ['#eee','#eee','#eee','#eee','#eee','#eee','#eee'],
                     borderWidth: 5,
                     borderSkipped: false,

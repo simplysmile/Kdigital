@@ -85,7 +85,6 @@ transform: rotate(45deg);
 
 
 
-
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
@@ -126,6 +125,19 @@ ul{
   .close:focus {
     color: #000;
     text-decoration: none;
+    cursor: pointer;
+  }
+  .saveBtn{
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    border: 1px solid white;
+    border-collapse: collapse;
+    padding-bottom: 5px;
+  
+  }
+  .saveBtn:hover,
+  .saveBtn:focus{
     cursor: pointer;
   }
 

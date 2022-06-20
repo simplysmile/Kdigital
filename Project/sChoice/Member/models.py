@@ -21,7 +21,7 @@ class Members(models.Model):
     addressd3=models.CharField(max_length=1000,null=True)
     purpose_Choice=(('weightlose','체중감소'),('maintain','체중유지'),('weightgain','체중증가'))
     user_purpose = models.CharField(max_length=1000,choices=purpose_Choice,null=True) # 신체 타켓부위 (복부,하체,상체)
-    target_Choice=(('abs','복부'),('shoulders','어깨'),('arms','팔'),('back','등'),('chest','가슴'),('legs','하체'),('all','전신'))
+    target_Choice=(('Abs','복부'),('Shoulders','어깨'),('Arms','팔'),('Back','등'),('Chest','가슴'),('Legs','하체'),('All','전신'))
     user_target = models.CharField(max_length=1000,choices=target_Choice,null=True) # 신체 타켓부위 (복부,하체,상체)
     service_Choice=(('meal','식단형'),('balance','균형형'),('exercise','운동형'))
     service = models.CharField(max_length=1000,choices=service_Choice,null=True)

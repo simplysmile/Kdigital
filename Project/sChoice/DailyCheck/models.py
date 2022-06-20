@@ -16,7 +16,7 @@ class Dailyexercise(models.Model):
     
 class DailyMeal(models.Model):
     d_No=models.AutoField(primary_key=True)
-    d_member = models.ForeignKey(Members,on_delete=models.DO_NOTHING,null=True) #member 외래키
+    d_member = models.ForeignKey(Members,on_delete=models.CASCADE,null=True) #member 외래키
     d_meal_date = models.DateTimeField(default=now,blank=True) #식사날짜
     mael_time_Choice=(('B','아침'),('L','점심'),('D','저녁'),('S','간식'))
     d_meal_time = models.CharField(max_length=10,choices=mael_time_Choice,null=True) #식사시간

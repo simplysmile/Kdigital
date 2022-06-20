@@ -88,8 +88,9 @@ const makeCalendar = (date) => {
                             str_user_w = '<li style="font-size:11px; color:#36aeb3;">'+ data.body_json.user.u_w[l] +'kg </li>'
                             $("#"+nowMonth+"m"+i).append(str_user_w)
                         }
+                        
                         if (data.body_json.user.u_im[l]!= null ){
-                            str_user_im = '<li style="font-size:11px;"><i class="fa-solid fa-image"></i></li>'
+                            str_user_im = '<li><img width="15" src="/static/img/nav_icon/image.png"></li>'
                             $("#"+nowMonth+"m"+i).append(str_user_im)
                         }
                     }
