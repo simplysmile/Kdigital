@@ -536,7 +536,13 @@ def saveBtn(request,sdate):
     
 
 def myStatus(request):
-    return render(request,'myStatus.html')
+    # 세션을 통해 아이디 
+    u_id = request.session['session_user_id']
+    # 아이디를 사용해서 정보를 얻는다. 
+    user = Members.objects.get(user_id=u_id) # 멤버테이블
+    
+    context={'username':user.user_name, "achievement":90}
+    return render(request,'myStatus.html',context)
 
 def myStatusData(request):
     # 세션을 통해 아이디 
