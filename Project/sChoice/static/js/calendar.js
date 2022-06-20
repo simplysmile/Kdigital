@@ -32,7 +32,7 @@ const makeCalendar = (date) => {
         success: function (data) {
             var meal_keys = Object.keys(data.body_json.meal.m_cal)
             var exer_keys = Object.keys(data.body_json.exer.ex_cal)
-            var user_keys = Object.keys(data.body_json.user)
+            var user_keys = Object.keys(data.body_json.user.u_date)
             
             console.log((data.body_json.user))
             console.log(( data.body_json.user.u_date.length))
