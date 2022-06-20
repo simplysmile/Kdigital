@@ -33,14 +33,31 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <br>
-            <p  id='madalshows'>
-                
-
-
-            </p>
+            <p  id='madalshows'></p>
         </div>
         
     </div>
+    
+
+{% comment %} 
+
+    <!-- The imgModal -->
+    <div id="imgModal" class="modal">
+        
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <br>
+            <p  id='madalshows'>
+                <a href="#">
+                    <ul><img width=200 height=200 src='{{bexer.imgName}}'></ul>               
+                    <ul>현재 몸무게</ul>
+                    <ul>{{bexer.cur_weight}}</ul>
+                </a>
+            </p>
+        </div>
+        
+    </div> {% endcomment %}
     
     <script src="/static/js/calendar.js"></script>
     
@@ -51,20 +68,58 @@
 
             
             modal.style.display = "block"; 
-            
+            //imgmodal.style.display = "none";
             var clickeddate = dateToArray[0]+'-'+dateToArray[1]+'-'+dateToArray[2]
             // alert(clickeddate)
             var inserttxt = `<ul>`+dateToArray[0]+'-'+dateToArray[1]+'-'+dateToArray[2]+`</ul>`
-        
-            inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/mealCheck/">식단</a></ul>'
-            inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/exerciseCheck/">운동</a></ul>'
-            inserttxt +=    `<ul><a href="#">사진</a></ul>`
+            var inserttxt2 = `<ul>`+dateToArray[0]+'-'+dateToArray[1]+'-'+dateToArray[2]+`</ul>`
 
-                
-            $("#madalshows").html(inserttxt)
+            var inserttxt2=''
+            $.ajax({
+                url : "/dailycheck/"+clickeddate+"/imgCheck/",
+                dataType:'json',
+                success:function(data){
+                    console.log(data)
+                    if(data[0].day_img!=''){
+                        console.log('이미지있음')
+                        inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/mealCheck/">식단</a></ul>'
+                        inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/exerciseCheck/">운동</a></ul>'
+                        inserttxt +=    '<ul><img width=15 height=15 alt="없음" src="'+data[0].day_img+'"></ul>'
+                        inserttxt +=    '<ul>'+data[0].cur_weight+'</ul>'
+                    }
+                    else{
+                        console.log('이미지없음')
+                        var urlname= "/dailycheck/"+clickeddate+"/imgCheck/"
+                        inserttxt+='<form method = "POST" action = "'+urlname+'" id="imgSave">'
+                        inserttxt+='{% csrf_token %}'    
+                        inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/mealCheck/">식단</a></ul>'
+                        inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/exerciseCheck/">운동</a></ul>'
+                        inserttxt +=    '<ul>이미지 : <input type="file" name="file" id="file"></ul>'
+                        inserttxt +=    '<ul>몸무게 : <input type="text" name="weight" id="weight" value="'+data[0].cur_weight+'"></ul>'
+                        inserttxt+='<button type="submit" class="saveBtn" id="saveBtn" onclick="saveBtn()">Save</button>'
+                        
+                    }
+                        
+                    $("#madalshows").html(inserttxt)
+                },
+                error:function(){
+                    console.log('실패')
+                }
+            })//ajax 
+
+
+
+
+
+
+        }
+        function saveBtn(){
+            console.log('hi')
+
         }
         // Get the modal
         var modal = document.getElementById("myModal");
+        var imgmodal = document.getElementById("imgModal");
  
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];

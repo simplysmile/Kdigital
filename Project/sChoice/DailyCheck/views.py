@@ -125,7 +125,7 @@ def calendarData(request):
     body_json['exer'] = json.loads(js_exer)
     body_json['user'] = json.loads(js_user)
     
-    context = {'body_json':body_json}
+    context = {'body_json':body_json,'goaleatcal':userDt[0].goal_eat_kcal, 'goalburncal':userDt[0].goal_burn_kcal}
     return JsonResponse(context, safe=False)
 
 def mealCheck(request,sdate):
@@ -247,55 +247,43 @@ def mealCheck(request,sdate):
     
     return render(request,'mealCheck.html',context)
 
+
 def imgCheck(request,sdate):
-    if request.method=='GET':
-        u_id = request.session['session_user_id']
-        daily=Dailydata.objects.filter(user=u_id,add_date=sdate)
-        print(daily)
+    u_id = request.session['session_user_id']
+    date=sdate.split('-')
+    curr_year=date[0]
+    curr_month=date[1]
     
-        b_list = []
-        for i in range(daily.count()):
-            b_dic={}
-            b_dic['imgName'] = daily[i].day_img
-            b_dic['cur_weight'] = daily[i].cur_weight
-            print(daily[i].day_img)
-            b_list.append(b_dic)
-        content={'b_list':b_list,'sdate':sdate}
-        
-        return render(request,'imgCheck.html',content)
-        
-        
-    else:
-        u_id=request.session['session_user_id']
+    if request.method=='POST':
         user = Members.objects.get(user_id=u_id)
         cur_weight=request.POST.get('weight')
-        user_data = Dailydata.objects.filter(user=u_id).order_by('-day_no')[0]
+        daily=Dailydata.objects.filter(user=u_id,add_date__year=curr_year,add_date__month=curr_month)[0]
         # 목표칼로리 가져오기 위해서(가입할때 자동으로 들어가서 제일 처음에 기입한 데이터 넣어야함)
-        user_data2 = Dailydata.objects.filter(user=u_id).order_by('day_no')[0]
-        print(user_data2)
-        cur_height=user_data.height
+        
+        qs = Dailydata.objects.filter(user=u_id).order_by('day_no')[0]
+        cur_height=daily.height
         cur_bmi=int(int(cur_weight)//((int(cur_height)*0.01)**2))
+        qs.cur_bmi=cur_bmi
+        qs.cur_weight=cur_weight
         
-        print(cur_weight)
-        print(cur_height)
-        print(cur_bmi)
-        
-        cur_bodyfat=0
-        cur_neck=0
-        cur_waist=0
-        cur_hip=0
-        ex_level=user_data2.ex_level
-        goal_eat_kcal=user_data2.goal_eat_kcal
-        goal_burn_kcal=goal_eat_kcal
-        
-        imgName= request.FILES.get('file',None)
-            
-        qs=Dailydata(user=user,goal_eat_kcal=goal_eat_kcal,goal_burn_kcal=goal_burn_kcal,cur_bmi=cur_bmi,ex_level=ex_level,cur_bodyfat=cur_bodyfat,cur_neck=cur_neck,cur_waist=cur_waist,cur_hip=cur_hip,add_date=sdate,height=cur_height,cur_weight=cur_weight,day_img=imgName)
+        imgName= request.FILES.get('file')
+        qs.day_img=imgName
+        print(imgName)
         qs.save()
-        
-        url='/dailycheck/'+sdate+'/imgCheck/'
-        return redirect(url)
+        return redirect('DailyCheck:calendar')
 
+    else:
+        
+        daily=Dailydata.objects.filter(user=u_id,add_date__year=curr_year,add_date__month=curr_month)[0]
+        day_img=daily.day_img
+        if not day_img:
+            day_img=''
+        cur_weight = daily.cur_weight
+        content={'day_img':day_img,'cur_weight':cur_weight,'sdate':sdate}
+        data_relist=[content]
+        print(data_relist)
+        return JsonResponse(data_relist,safe=False)
+    
 
 
 
@@ -532,6 +520,7 @@ def saveBtn(request,sdate):
     
         return redirect(url)      
     
+    
 
 def myStatus(request):
     return render(request,'myStatus.html')
@@ -550,6 +539,7 @@ def myStatusData(request):
     # 로그인한 사용자의 데일리 운동 테이블과 데일리 식사 테이블 (해당 년, 월)
     exer = Dailyexercise.objects.filter(user=user, createdate__year=curr_year,createdate__month=curr_month)
     meal = DailyMeal.objects.filter(d_member=u_id, d_meal_date__year=curr_year,d_meal_date__range=[today-datetime.timedelta(days=7), today])
+    meal_all = DailyMeal.objects.filter(d_member=u_id)
     
     
 
@@ -576,6 +566,26 @@ def myStatusData(request):
     #  ----- 몸무게 달성 그래프 반 도넛 그래프를 위한 정보 -end
 
     #  ----- 식단 정보 그래프 
+    # 전체 날짜에 해당하는 내용
+    mealstatus = {}
+    m_d_a=[]
+    m_c_a=[]
+    for i in range(len(meal_all)):
+        m_d_a.append(meal_all[i].d_meal_date)
+        m_c_a.append(meal_all[i].d_kcal)
+    mealstatus['m_date']=m_d_a
+    mealstatus['m_cal']=m_c_a  
+    df_meal_all = pd.DataFrame(mealstatus)
+    df_meal_all_sum = df_meal_all.groupby('m_date').sum()
+    meal_succ_day = 0
+    
+    for j in df_meal_all_sum.m_cal:
+        if j <= goal_meal_cal:
+            meal_succ_day+=1
+    
+    m_percent =  meal_succ_day/len(df_meal_all_sum) *100
+    
+    # 일주일 정보
     mdata={}
     m_d =[]
     m_c =[]
@@ -605,7 +615,7 @@ def myStatusData(request):
 
     context={'goalEx':goal_burn_cal,'goalMeal':goal_meal_cal,'goal_weight':goal_weight,'goal_period':goal_period,
             'firstweight':firstweight,'workoutday':d_day.days, 'weight':allweight,'alldays':alldays,
-            'Gmealcal':goal_meal_cal,'mealweak':json.loads(js_meal)}
+            'Gmealcal':goal_meal_cal,'mealweak':json.loads(js_meal), 'mealpercent':m_percent}
 
 
 

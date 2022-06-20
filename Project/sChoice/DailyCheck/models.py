@@ -27,4 +27,4 @@ class DailyMeal(models.Model):
     d_protein = models.FloatField(default=0,blank=True) #단백질
     d_fat = models.FloatField(default=0,blank=True) #지방
     d_kcal=models.IntegerField(default=0,blank=True) #칼로리
-    d_img=models.ImageField(blank=True)
+    d_img=models.ImageField(blank=True,upload_to="images")
