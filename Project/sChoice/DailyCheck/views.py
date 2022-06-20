@@ -567,9 +567,10 @@ def myStatusData(request):
     curr_day = today.day
     
     # 로그인한 사용자의 데일리 운동 테이블과 데일리 식사 테이블 (해당 년, 월)
-    exer = Dailyexercise.objects.filter(user=user, createdate__year=curr_year,createdate__month=curr_month)
-    meal = DailyMeal.objects.filter(d_member=u_id, d_meal_date__year=curr_year,d_meal_date__range=[today-datetime.timedelta(days=7), today])
+    meal = DailyMeal.objects.filter(d_member=u_id,d_meal_date__range=[today-datetime.timedelta(days=7), today])
     meal_all = DailyMeal.objects.filter(d_member=u_id)
+    exer = Dailyexercise.objects.filter(user=user, createdate__range=[today-datetime.timedelta(days=7), today])
+    exer_all = Dailyexercise.objects.filter(user=user)
     
     
 
@@ -641,11 +642,55 @@ def myStatusData(request):
 
     #  ----- 식단 정보 그래프 -end 
     
+    
+    #  ----- 운동 정보 그래프 
+     # 전체 날짜에 해당하는 내용
+    exerstatus = {}
+    e_d_a=[]
+    e_c_a=[]
+
+    for i in range(len(exer_all)):
+        e_d_a.append(exer_all[i].createdate)
+        e_c_a.append(exer_all[i].burned_kcal)
+    exerstatus['m_date']=e_d_a
+    exerstatus['m_cal']=e_c_a  
+    df_exer_all = pd.DataFrame(exerstatus)
+    df_exer_all_sum = df_exer_all.groupby('m_date').sum()
+    exer_succ_day = 0
+    
+    for k in df_exer_all_sum.m_cal:
+        if k <= goal_burn_cal:
+            exer_succ_day+=1
+    
+    e_percent =  exer_succ_day/len(df_exer_all_sum) *100
+    
+    # 일주일 정보
+    edata={}
+    e_d =[]
+    e_c =[]
+
+    for i in range(len(exer)):
+        e_d.append(exer[i].createdate)
+        e_c.append(exer[i].burned_kcal)
+
+
+    edata['m_date']=e_d
+    edata['m_cal']=e_c
+    
+    df_exer = pd.DataFrame(edata)
+    df_exer_sum = df_exer.groupby('m_date').sum()
+    js_exer = df_exer_sum.to_json()
+
+
+    #  ----- 운동 정보 그래프 -end 
+    
 
 
     context={'goalEx':goal_burn_cal,'goalMeal':goal_meal_cal,'goal_weight':goal_weight,'goal_period':goal_period,
             'firstweight':firstweight,'workoutday':d_day.days, 'weight':allweight,'alldays':alldays,
-            'Gmealcal':goal_meal_cal,'mealweak':json.loads(js_meal), 'mealpercent':m_percent}
+            'Gmealcal':goal_meal_cal,'mealweak':json.loads(js_meal), 'mealpercent':m_percent,
+            'Gexercal':goal_burn_cal,'exerweak':json.loads(js_exer), 'mealpercent':e_percent
+            }
 
 
 
