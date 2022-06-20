@@ -3,7 +3,7 @@ from Member.models import Members
 
 class MealBoard(models.Model):
     b_No=models.AutoField(primary_key=True)
-    member=models.ForeignKey(Members,on_delete=models.DO_NOTHING)
+    member=models.ForeignKey(Members,on_delete=models.CASCADE)
     m_Pro=models.CharField(max_length=100,blank=True)
     b_Title=models.CharField(max_length=1000)
     b_Content=models.TextField(blank=True)
@@ -17,7 +17,7 @@ class MealBoard(models.Model):
     
 class ExerciseBoard(models.Model):
     b_No=models.AutoField(primary_key=True)
-    member=models.ForeignKey(Members,on_delete=models.DO_NOTHING)
+    member=models.ForeignKey(Members,on_delete=models.CASCADE)
     m_Pro=models.CharField(max_length=100,blank=True)
     b_Title=models.CharField(max_length=1000)
     b_Content=models.TextField(blank=True)

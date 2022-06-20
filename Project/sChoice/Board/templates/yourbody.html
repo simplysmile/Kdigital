@@ -1,4 +1,31 @@
 {%extends 'base.html' %}
 {%block mycontent%}
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+    function diBtn(){
+        alert('diBtn Test')
+
+        $.ajax({
+            url:'',
+            data:{},
+            dataType:'json',
+            success:function(data){
+                
+            },//성공
+            except:function(){
+
+            }//실패
+        })
+
+    }
+
+
+</script>
+
 <h2>데이터 분석 페이지</h2>
+<span onclick="diBtn()">당뇨</span>
+<span>심장질환</span>
+<div id='mychart'>
+    <canvas id='canchart'></canvas>
+</div>
 {%endblock mycontent%}
