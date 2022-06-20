@@ -567,9 +567,9 @@ def myStatusData(request):
     curr_day = today.day
     
     # 로그인한 사용자의 데일리 운동 테이블과 데일리 식사 테이블 (해당 년, 월)
-    meal = DailyMeal.objects.filter(d_member=u_id,d_meal_date__range=[today-datetime.timedelta(days=7), today])
+    meal = DailyMeal.objects.filter(d_member=u_id,d_meal_date__range=[today-datetime.timedelta(days=6), today])
     meal_all = DailyMeal.objects.filter(d_member=u_id)
-    exer = Dailyexercise.objects.filter(user=user, createdate__range=[today-datetime.timedelta(days=7), today])
+    exer = Dailyexercise.objects.filter(user=user, createdate__range=[today-datetime.timedelta(days=6), today])
     exer_all = Dailyexercise.objects.filter(user=user)
     
     
@@ -614,7 +614,7 @@ def myStatusData(request):
         if j <= goal_meal_cal:
             meal_succ_day+=1
     
-    m_percent =  meal_succ_day/len(df_meal_all_sum) *100
+    m_percent =  round(meal_succ_day/len(df_meal_all_sum) *100,2)
     
     # 일주일 정보
     mdata={}
@@ -662,16 +662,25 @@ def myStatusData(request):
         if k <= goal_burn_cal:
             exer_succ_day+=1
     
-    e_percent =  exer_succ_day/len(df_exer_all_sum) *100
+    e_percent =  round(exer_succ_day/len(df_exer_all_sum) *100,2)
     
     # 일주일 정보
     edata={}
     e_d =[]
     e_c =[]
 
+    std = curr_day-7
+    
     for i in range(len(exer)):
-        e_d.append(exer[i].createdate)
-        e_c.append(exer[i].burned_kcal)
+        
+        if std == exer[i].createdate.day:
+            e_d.append(exer[i].createdate)
+            e_c.append(exer[i].burned_kcal)
+        else:
+            e_d.append(np.nan)
+            e_c.append(0)
+        std += 1
+        print('std:' ,std)
 
 
     edata['m_date']=e_d
@@ -689,10 +698,12 @@ def myStatusData(request):
     context={'goalEx':goal_burn_cal,'goalMeal':goal_meal_cal,'goal_weight':goal_weight,'goal_period':goal_period,
             'firstweight':firstweight,'workoutday':d_day.days, 'weight':allweight,'alldays':alldays,
             'Gmealcal':goal_meal_cal,'mealweak':json.loads(js_meal), 'mealpercent':m_percent,
-            'Gexercal':goal_burn_cal,'exerweak':json.loads(js_exer), 'mealpercent':e_percent
+            'Gexercal':goal_burn_cal,'exerweak':json.loads(js_exer), 'exerpercent':e_percent
             }
 
 
+    print(exer[0].createdate.day)
+    print(df_exer_sum)
 
     return JsonResponse(context)
     

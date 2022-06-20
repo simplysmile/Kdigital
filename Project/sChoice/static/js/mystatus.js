@@ -156,8 +156,8 @@ $(function(){
             
             
             
-            var mealpercentage = Math.round(data.mealpercent)
-            var exerpercentage = Math.round(data.exerpercent)
+            var mealpercentage = (data.mealpercent)
+            var exerpercentage = (data.exerpercent)
 
             console.log(exerpercentage)
 
