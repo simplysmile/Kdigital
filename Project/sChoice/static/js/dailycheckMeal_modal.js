@@ -137,10 +137,10 @@ function modi_meal(num){
     updated_data += '<tr class="'+modidata.f_id+'"><td class="'+modidata.f_id+'">'+ modidata.f_name +'</td>'
     updated_data += '<td><input id="foodweight'+modidata.f_id+'" class="foodweight" type="text" name="foodweight" size="5" value="'+change_gram +'" style="text-align:center;"><img width=20 height=20 src="/static/img/basic/chevron.png" onclick="modi_meal('+modidata.f_id+')"></td>'
     
-    var updated_data_cal = '<td id="eat_cal'+modidata.f_id+'">'+modi_cal+'</td>'
-    var updated_data_carb = '<td id="eat_carb'+modidata.f_id+'">'+modi_carb+'</td>'
-    var updated_data_prot = '<td id="eat_prot'+modidata.f_id+'">'+modi_prot+'</td>'
-    var updated_data_fat = '<td id="eat_fat'+modidata.f_id+'">'+modi_fat+'</td>'
+    var updated_data_cal = '<td id="eat_cal'+modidata.f_id+'">'+modi_cal.toFixed(2)+'</td>'
+    var updated_data_carb = '<td id="eat_carb'+modidata.f_id+'">'+modi_carb.toFixed(2)+'</td>'
+    var updated_data_prot = '<td id="eat_prot'+modidata.f_id+'">'+modi_prot.toFixed(2)+'</td>'
+    var updated_data_fat = '<td id="eat_fat'+modidata.f_id+'">'+modi_fat.toFixed(2)+'</td>'
 
     var txt1 = '#eat_cal'+modidata.f_id
     var txt2 = '#eat_carb'+modidata.f_id
