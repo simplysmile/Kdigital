@@ -49,7 +49,19 @@ const makeCalendar = (date) => {
                 for (let j = 0 ; j < meal_keys.length; j++){
                     var m_date = new Date(parseInt(meal_keys[j]));
                     if ( m_date.getDate() == i ){
-                        str = '<li style="font-size:11px;">식단 : '+ data.body_json.meal.m_cal[meal_keys[j]] +'kcal</li>'
+                        
+                        
+                        if (data.goaleatcal >= data.body_json.meal.m_cal[meal_keys[j]]){
+                            str = '<li style="font-size:11px;">식단: '+ data.body_json.meal.m_cal[meal_keys[j]] +'kcal<img width="10" src="/static/img/face_icon/smile.png"></li>'
+
+                        }
+                        else{
+
+                            str = '<li style="font-size:11px;">식단: '+ data.body_json.meal.m_cal[meal_keys[j]] +'kcal<img width="10" src="/static/img/face_icon/angry.png"></li>'
+                        }
+                        
+                        
+                        
                         $("#"+nowMonth+"m"+i).append(str)
                     }
                 }
@@ -57,7 +69,14 @@ const makeCalendar = (date) => {
                 for (let k = 0 ; k < exer_keys.length; k++){
                     var ex_date = new Date(parseInt(exer_keys[k]));
                     if ( ex_date.getDate() == i ){
-                        str_ex = '<li style="font-size:11px;">운동 : '+ data.body_json.exer.ex_cal[exer_keys[k]] +'kcal</li>'
+                        if (data.goalburncal < data.body_json.exer.ex_cal[exer_keys[k]] ){
+
+                            str_ex = '<li style="font-size:11px;">운동: '+ data.body_json.exer.ex_cal[exer_keys[k]] +'kcal<img width="10" src="/static/img/face_icon/smile.png"></li>'
+                        }
+                        else{
+
+                            str_ex = '<li style="font-size:11px;">운동: '+ data.body_json.exer.ex_cal[exer_keys[k]] +'kcal<img width="10" src="/static/img/face_icon/angry.png"></li>'
+                        }
                         $("#"+nowMonth+"m"+i).append(str_ex)
                     }
                 }
@@ -66,10 +85,7 @@ const makeCalendar = (date) => {
                     var usr_date = new Date(parseInt(data.body_json.user.u_date[l]));
                     if ( usr_date.getDate() == i ){
                         if (data.body_json.user.u_w[l]!= null ){
-                            str_user_w = '<li style="font-size:11px;">'+ data.body_json.user.u_w[l] +'kg </li>'
-                            str_user_w += '<li><img width="15" src="/static/img/nav_icon/image.png"></li>'
-                            
-
+                            str_user_w = '<li style="font-size:11px; color:#36aeb3;">'+ data.body_json.user.u_w[l] +'kg </li>'
                             $("#"+nowMonth+"m"+i).append(str_user_w)
                         }
                         if (data.body_json.user.u_im[l]!= null ){

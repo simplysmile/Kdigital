@@ -125,7 +125,7 @@ def calendarData(request):
     body_json['exer'] = json.loads(js_exer)
     body_json['user'] = json.loads(js_user)
     
-    context = {'body_json':body_json}
+    context = {'body_json':body_json,'goaleatcal':userDt[0].goal_eat_kcal, 'goalburncal':userDt[0].goal_burn_kcal}
     return JsonResponse(context, safe=False)
 
 def mealCheck(request,sdate):
