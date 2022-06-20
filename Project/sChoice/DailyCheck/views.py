@@ -247,55 +247,43 @@ def mealCheck(request,sdate):
     
     return render(request,'mealCheck.html',context)
 
+
 def imgCheck(request,sdate):
-    if request.method=='GET':
-        u_id = request.session['session_user_id']
-        daily=Dailydata.objects.filter(user=u_id,add_date=sdate)
-        print(daily)
+    u_id = request.session['session_user_id']
+    date=sdate.split('-')
+    curr_year=date[0]
+    curr_month=date[1]
     
-        b_list = []
-        for i in range(daily.count()):
-            b_dic={}
-            b_dic['imgName'] = daily[i].day_img
-            b_dic['cur_weight'] = daily[i].cur_weight
-            print(daily[i].day_img)
-            b_list.append(b_dic)
-        content={'b_list':b_list,'sdate':sdate}
-        
-        return render(request,'imgCheck.html',content)
-        
-        
-    else:
-        u_id=request.session['session_user_id']
+    if request.method=='POST':
         user = Members.objects.get(user_id=u_id)
         cur_weight=request.POST.get('weight')
-        user_data = Dailydata.objects.filter(user=u_id).order_by('-day_no')[0]
+        daily=Dailydata.objects.filter(user=u_id,add_date__year=curr_year,add_date__month=curr_month)[0]
         # 목표칼로리 가져오기 위해서(가입할때 자동으로 들어가서 제일 처음에 기입한 데이터 넣어야함)
-        user_data2 = Dailydata.objects.filter(user=u_id).order_by('day_no')[0]
-        print(user_data2)
-        cur_height=user_data.height
+        
+        qs = Dailydata.objects.filter(user=u_id).order_by('day_no')[0]
+        cur_height=daily.height
         cur_bmi=int(int(cur_weight)//((int(cur_height)*0.01)**2))
+        qs.cur_bmi=cur_bmi
+        qs.cur_weight=cur_weight
         
-        print(cur_weight)
-        print(cur_height)
-        print(cur_bmi)
-        
-        cur_bodyfat=0
-        cur_neck=0
-        cur_waist=0
-        cur_hip=0
-        ex_level=user_data2.ex_level
-        goal_eat_kcal=user_data2.goal_eat_kcal
-        goal_burn_kcal=goal_eat_kcal
-        
-        imgName= request.FILES.get('file',None)
-            
-        qs=Dailydata(user=user,goal_eat_kcal=goal_eat_kcal,goal_burn_kcal=goal_burn_kcal,cur_bmi=cur_bmi,ex_level=ex_level,cur_bodyfat=cur_bodyfat,cur_neck=cur_neck,cur_waist=cur_waist,cur_hip=cur_hip,add_date=sdate,height=cur_height,cur_weight=cur_weight,day_img=imgName)
+        imgName= request.FILES.get('file')
+        qs.day_img=imgName
+        print(imgName)
         qs.save()
-        
-        url='/dailycheck/'+sdate+'/imgCheck/'
-        return redirect(url)
+        return redirect('DailyCheck:calendar')
 
+    else:
+        
+        daily=Dailydata.objects.filter(user=u_id,add_date__year=curr_year,add_date__month=curr_month)[0]
+        day_img=daily.day_img
+        if not day_img:
+            day_img=''
+        cur_weight = daily.cur_weight
+        content={'day_img':day_img,'cur_weight':cur_weight,'sdate':sdate}
+        data_relist=[content]
+        print(data_relist)
+        return JsonResponse(data_relist,safe=False)
+    
 
 
 
@@ -531,6 +519,7 @@ def saveBtn(request,sdate):
         url='/dailycheck/'+sdate+'/exerciseCheck/'
     
         return redirect(url)      
+    
     
 
 def myStatus(request):
