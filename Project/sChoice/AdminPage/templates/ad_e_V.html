@@ -83,7 +83,7 @@
     <div class="btns">
       <div class="list1"><a href="{% url 'AdminPage:ad_e_L' searchword3='searchword3' category3='category3' %}">목록</a></div>
       <div class="list2" onclick='deleteBtn()'>삭제</div>
-      <div class="list3"><a href="#">수정</a></div>
+      <div class="list3"><a href="{% url 'AdminPage:ad_e_U' searchword3='searchword3' category3='category3' ex_id=ex_List.ex_id %}">수정</a></div>
     </div>
   </section>
 

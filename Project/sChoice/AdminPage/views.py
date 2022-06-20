@@ -382,3 +382,55 @@ def ad_c_L(request,searchword4,category4):
     
     return render(request,'ad_c_L.html',context)
 
+
+#Admin CONTACT View
+
+def ad_c_V(request,c_No,searchword4,category4):
+    
+    qs = ContactUs.objects.get(c_No=c_No)
+    
+    
+    context ={'c_List':qs,'searchword4':searchword4,'category4':category4,'c_No':c_No}
+    
+
+    return render(request,'ad_c_V.html',context)
+
+
+
+
+#Admin CONTACT Update
+def ad_c_U(request,c_No,searchword4,category4):
+    
+    if request.method == 'GET':
+        
+        qs = ContactUs.objects.get(c_No=c_No)
+        
+        context = {'c_List':qs,'searchword4':searchword4,'category4':category4,'c_No':c_No}
+        
+        return render(request,'ad_c_U.html',context)
+    
+    else:
+        qs = ContactUs.objects.get(c_No=c_No)
+        
+        qs.c_name = request.POST.get('c_name')
+        qs.c_title = request.POST.get('c_title')
+        qs.c_email  = request.POST.get('c_email')
+        qs.c_tel = request.POST.get('c_tel')
+        qs.c_content = request.POST.get('c_content')
+        qs.save()
+        
+        return redirect('AdminPage:ad_c_L',searchword4,category4)
+    
+    
+
+#Admin CONTACT Delete
+def ad_c_D(request,c_No,searchword4,category4):
+    
+    qs = ContactUs.objects.get(c_No=c_No)
+    qs.delete()
+    return redirect('AdminPage:ad_c_L',searchword4,category4)
+
+
+
+
+

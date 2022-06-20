@@ -17,7 +17,7 @@
 
     function cancelBtn(){
 
-      location.href="{% url 'AdminPage:ad_e_L' searchword3=searchword3 category3=category3 %}"
+      location.href="{% url 'AdminPage:ad_c_L' searchword4=searchword4 category4=category4 %}"
     }
 
   </script>
@@ -32,12 +32,12 @@
   <section>
     <div class="admin_name">
   
-      <h1>운동정보수정</h1>
+      <h1>문의사항수정</h1>
   
     </div>
   
   
-    <form action="{% url 'AdminPage:ad_e_U' searchword3=searchword3 category3=category3 ex_id=ex_List.ex_id %}" name="update" method="post">
+    <form action="{% url 'AdminPage:ad_c_U' searchword4=searchword4 category4=category4 c_No=c_List.c_No %}" name="update" method="post">
       {% csrf_token %}
       
         <colgroup>
@@ -45,49 +45,35 @@
           <col width="85%">
         </colgroup>
         
-  {% if ex_List%}
+  {% if c_List%}
   
   <div class="whole_thing">
-  
+
     <div class="form-group">
-      <label class="label_name" for="ex_id">운동아이디</label><br>
-      <input type= "text" class="form-control" id="ex_id" value="{{ex_List.ex_id}}"  placeholder="{{ex_List.ex_id}}" name ="ex_id" readonly>
+      <label class="label_name" for="c_No">번호</label><br>
+      <input type= "text" class="form-control" id="c_No" value="{{c_List.c_No}}" name ="c_No" readonly>
       </div>
     <div class="form-group">
-      <label class="label_name" for="activity">운동종류</label><br>
-      <input type= "text" class="form-control" id="activity" value="{{ex_List.activity}}" name ="activity">
+      <label class="label_name" for="c_name">이름</label><br>
+      <input type= "text" class="form-control" id="ex_id" value="{{c_List.c_name}}"  placeholder="{{c_List.c_name}}" name ="c_name">
       </div>
     <div class="form-group">
-      <label class="label_name" for="aerobic">유,무산소</label><br>
-      <input type= "text" class="form-control" id="aerobic" value="{{ex_List.aerobic}}" name ="aerobic">
+      <label class="label_name" for="c_title">제목</label><br>
+      <input type= "text" class="form-control" id="c_title" value="{{c_List.c_title}}" name ="c_title">
       </div>
     <div class="form-group">
-      <label class="label_name" for="met">에너지소모량</label><br>
-      <input type= "text" class="form-control" id="met" value="{{ex_List.met}}" name ="met">
+      <label class="label_name" for="c_email">이메일</label><br>
+      <input type= "text" class="form-control" id="met" value="{{c_List.c_email}}" name ="c_email">
       </div>
     <div class="form-group">
-      <label class="label_name" for="level">운동강도</label><br>
-      <input type= "text" class="form-control" id="level" value="{{ex_List.level}}" name ="level">
+      <label class="label_name" for="c_tel">전화번호</label><br>
+      <input type= "text" class="form-control" id="c_tel" value="{{c_List.c_tel}}" name ="c_tel">
       </div>
     <div class="form-group">
-      <label class="label_name" for="ex_name">운동이름</label><br>
-      <input type= "text" class="form-control" id="ex_name" value="{{ex_List.ex_name}}" name ="ex_name">
-      </div>
-    <div class="form-group">
-      <label class="label_name" for="target_category">타켓 카테고리</label><br>
-      <input type= "text" class="form-control" id="target_category" value="{{ex_List.target_category}}" name ="target_category">
-      </div>
-    <div class="form-group">
-      <label class="label_name" for="muscle">자극되는 근육</label><br>
-      <input type= "text" class="form-control" id="muscle" value="{{ex_List.muscle}}" name ="muscle">
-      </div>
-    <div class="form-group">
-      <label class="label_name" for="equipment">운동에 사용되는 운동기구</label><br>
-      <input type= "text" class="form-control" id="equipment" value="{{ex_List.equipment}}" name ="equipment">
+      <label class="label_name" for="c_content">문의내용</label><br>
+      <input type= "text" class="form-control" id="c_content" value="{{c_List.c_content}}" name ="c_content">
       </div>
   
-     
-          
           <div class="button-wrapper">
             <button type="submit" class="btnfont" >수정완료</button>
             <button type="button" onclick= 'cancelBtn()' class="btnfont" >취소</button>

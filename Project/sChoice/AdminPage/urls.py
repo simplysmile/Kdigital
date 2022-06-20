@@ -50,6 +50,12 @@ urlpatterns = [
     
     #admin문의list
     path('<str:searchword4>/<str:category4>/ad_c_L/',views.ad_c_L, name='ad_c_L'),
+    #admin문의view
+    path('<str:searchword4>/<str:category4>/<str:c_No>/ad_c_V/',views.ad_c_V, name='ad_c_V'),
+    #admin문의update
+    path('<str:searchword4>/<str:category4>/<str:c_No>/ad_c_U/',views.ad_c_U, name='ad_c_U'),
+    #admin문의delete
+    path('<str:searchword4>/<str:category4>/<str:c_No>/ad_c_D/',views.ad_c_D, name='ad_c_D'),
     
     
     
