@@ -156,7 +156,9 @@ $(function(){
         }
         
         
-
+        
+        var mealpercentage = Math.round(data.mealpercent)
+        
         const textinsert = {
             id: 'textinsert',
             beforeDraw(chart, args, options) {
@@ -167,7 +169,7 @@ $(function(){
               ctx.font = '50px sans-serif';
               ctx.textAlign = 'center';     
               
-              ctx.fillText('90%', width / 2 +(left), top + (height / 2));
+              ctx.fillText(mealpercentage +"%", width / 2 +(left), top + (height / 2));
             }
         };
             // doughnut chart 
@@ -178,9 +180,9 @@ $(function(){
                     labels: ['done','remain'],
                     datasets: [{
                         label: '칼로리',
-                        data: [80,(100-80),0,0,0],
+                        data: [mealpercentage,(100-mealpercentage),0,0,0],
                         backgroundColor: ['#7CCAAE','#eee'],
-                        cutout: "80%",    
+                        cutout: mealpercentage +"%",    
                     }],
                 },//data.
                 options: {

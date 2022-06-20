@@ -550,6 +550,7 @@ def myStatusData(request):
     # 로그인한 사용자의 데일리 운동 테이블과 데일리 식사 테이블 (해당 년, 월)
     exer = Dailyexercise.objects.filter(user=user, createdate__year=curr_year,createdate__month=curr_month)
     meal = DailyMeal.objects.filter(d_member=u_id, d_meal_date__year=curr_year,d_meal_date__range=[today-datetime.timedelta(days=7), today])
+    meal_all = DailyMeal.objects.filter(d_member=u_id)
     
     
 
@@ -576,6 +577,26 @@ def myStatusData(request):
     #  ----- 몸무게 달성 그래프 반 도넛 그래프를 위한 정보 -end
 
     #  ----- 식단 정보 그래프 
+    # 전체 날짜에 해당하는 내용
+    mealstatus = {}
+    m_d_a=[]
+    m_c_a=[]
+    for i in range(len(meal_all)):
+        m_d_a.append(meal_all[i].d_meal_date)
+        m_c_a.append(meal_all[i].d_kcal)
+    mealstatus['m_date']=m_d_a
+    mealstatus['m_cal']=m_c_a  
+    df_meal_all = pd.DataFrame(mealstatus)
+    df_meal_all_sum = df_meal_all.groupby('m_date').sum()
+    meal_succ_day = 0
+    
+    for j in df_meal_all_sum.m_cal:
+        if j <= goal_meal_cal:
+            meal_succ_day+=1
+    
+    m_percent =  meal_succ_day/len(df_meal_all_sum) *100
+    
+    # 일주일 정보
     mdata={}
     m_d =[]
     m_c =[]
@@ -605,7 +626,7 @@ def myStatusData(request):
 
     context={'goalEx':goal_burn_cal,'goalMeal':goal_meal_cal,'goal_weight':goal_weight,'goal_period':goal_period,
             'firstweight':firstweight,'workoutday':d_day.days, 'weight':allweight,'alldays':alldays,
-            'Gmealcal':goal_meal_cal,'mealweak':json.loads(js_meal)}
+            'Gmealcal':goal_meal_cal,'mealweak':json.loads(js_meal), 'mealpercent':m_percent}
 
 
 
