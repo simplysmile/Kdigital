@@ -1,0 +1,193 @@
+@font-face {
+
+    src : url("/static/font/BMDOHYEON_otf.otf"); 
+
+    font-family: "dohyeon";
+
+}
+
+.btn_ex{
+
+
+    padding-left: 460px;
+  
+}
+
+
+
+
+
+
+.real_btn1{
+   
+    width: 150px;
+    height: 30px;
+    font-family: "dohyeon";
+    background-color: #40e0d0;
+    color:white;
+    text-align: center;
+    border: 3px;;
+   
+
+
+
+}
+
+.btn_div1{
+    float:left;
+
+
+}
+.btn_div2{
+    float:left;
+
+
+}
+
+
+.real_btn2{
+   
+    width: 150px;
+    height: 30px;
+    font-family: "dohyeon";
+    background-color: #40e0d0;
+    color:white;
+    text-align: center;
+    border: 3px;;
+   
+
+
+
+}
+
+
+tr{
+
+    font-family: "dohyeon";
+
+
+}
+
+
+#bmiresult{
+
+    padding-top: 30px;
+}
+
+#birth{
+
+    width: 300px;
+    height: 30px;
+    font-size: 15px;
+    border-radius: 2px;
+    padding-left: 20px;
+    background-color: white;
+    font-family: "dohyeon";
+    text-align: center;
+    
+    
+}
+
+#gender{
+    text-align: center;
+    font-family: "dohyeon";
+    width: 300px;
+    height: 30px;
+    font-size: 15px;
+    border-radius: 2px;
+    padding-left: 20px;
+    background-color: white;
+    
+
+
+}
+
+#activity{
+
+    text-align: center;
+    font-family: "dohyeon";
+    width: 300px;
+    height: 30px;
+    font-size: 15px;
+    border-radius: 2px;
+    padding-left: 20px;
+    background-color: white;
+
+
+}
+
+#height{
+
+    text-align: center;
+    font-family: "dohyeon";
+    width: 300px;
+    height: 30px;
+    font-size: 15px;
+    border-radius: 2px;
+    padding-left: 20px;
+    background-color: white;
+
+
+}
+
+
+#weight{
+
+
+    text-align: center;
+    font-family: "dohyeon";
+    width: 300px;
+    height: 30px;
+    font-size: 15px;
+    border-radius: 2px;
+    padding-left: 20px;
+    background-color: white;
+
+
+
+
+
+}
+
+
+#box1{
+
+    width: 50%;
+    height: 300px;
+
+ 
+    float: left;
+
+    padding-bottom: 90px;
+    padding-top:60px;
+
+
+}
+#box2{
+
+    width: 50%;
+    height: 300px;
+    float: left;
+   
+
+}
+table{
+    margin: 0 auto;
+}
+input{
+
+    display: inline;
+    
+ 
+ }
+input[type="radio"]{
+    -webkit-appearance: radio;
+    width: 100px;
+}
+.form-group label {
+    position: relative;
+}
+.form-checkbox input[type=radio] {
+    float: left;
+}
+

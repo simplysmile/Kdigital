@@ -218,7 +218,10 @@
 												<li class="first menu-about"><a href="{% url 'AdminPage:ad_login' %}" class=""><span
 															class="title">admin</span></a></li>
 											</ul>
+
 										</li>
+
+
 										<li class="menu-brand"><a href="{% url 'Board:exboard' nowpage=1%}" class=""><span
 													class="ico- brand-"></span> <span class="title">게시판</span>
 													<ul class="">
@@ -233,6 +236,9 @@
 		
 		
 													</ul>
+
+										</li>
+										
 										<li class="has-children"><span class="has-children"><span
 													class="ico- shop-"></span> <span class="title">달성 기록</span></span>
 											<ul class="">
@@ -246,15 +252,29 @@
 														class=""><span class="title">일주일 달성현황</span></a></li>
 
 
-											</ul></a></li>
+											</ul></a>
 										</li>
+
 										<li class="active home menu-"><a href="/"
 												class="home active current-"><span class="ico- home-"></span> <span
 													class="title">게시판</span></a></li>
+
 										<li class="product-search-trigger no-pjax menu-shop-keyword"><a
-												href="{% url 'DailyCheck:selfCheck' %}" class="product-search-trigger no-pjax"><span
-													class="ico- search-"></span> <span class="title">자가진단</span></a>
+												href="#" class="product-search-trigger no-pjax"><span
+													class="ico- search-"></span><span class="title">자가진단</span></a>
+
+													<ul class="">
+														<li class="first  menu-shop-category-217"><a href="{% url 'DailyCheck:selfCheck' %}"
+															class=""><span class="title">자가진단 보기</span></a></li>
+
+													</ul>
+												
+												
 										</li>
+
+
+
+
 										{% if not request.session.session_user_id%} 
 										<li class="has-children"><span class="has-children"><span
 													class="ico- user-"></span> <span
