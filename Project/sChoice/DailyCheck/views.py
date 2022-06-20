@@ -88,7 +88,7 @@ def calendarData(request):
     for i in range(len(userDt)):
         u_d.append(userDt[i].add_date)
         if userDt[i].day_img:
-            u_im.append(userDt[i].day_img)
+            u_im.append(1)
         else:
             u_im.append(np.nan)
             
@@ -110,6 +110,8 @@ def calendarData(request):
     df_meal = pd.DataFrame(meal_data)
     df_exer = pd.DataFrame(exer_data)
     df_user = pd.DataFrame(user_data)
+    
+    print(u_im)
  
     
     
