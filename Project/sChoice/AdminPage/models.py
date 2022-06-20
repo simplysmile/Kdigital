@@ -14,7 +14,7 @@ class Exercise(models.Model):
     target_category=models.CharField(max_length=1000,blank=True) # 타켓 카테고리
     muscle=models.CharField(max_length=1000,blank=True) # 자극되는 근육
     equipment=models.CharField(max_length=1000,blank=True) # 운동에 사용되는 운동기구
-    imgUrl=models.ImageField(blank=True) # 운동 자세 이미지 주소
+    imgUrl=models.ImageField(blank=True,upload_to="images") # 운동 자세 이미지 주소
     
     
     

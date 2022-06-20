@@ -11,7 +11,7 @@ class MealBoard(models.Model):
     b_Step=models.IntegerField(default=1)
     b_Indent=models.IntegerField(default=0)
     b_Hit=models.IntegerField(default=0)
-    b_File=models.ImageField(blank=True)
+    b_File=models.ImageField(blank=True,upload_to="images")
     b_Createdate=models.DateTimeField(auto_now_add=True)
     b_Modidate=models.DateTimeField(auto_now=True)
     
@@ -25,7 +25,7 @@ class ExerciseBoard(models.Model):
     b_Step=models.IntegerField(default=1)
     b_Indent=models.IntegerField(default=0)
     b_Hit=models.IntegerField(default=0)
-    b_File=models.ImageField(blank=True)
+    b_File=models.ImageField(blank=True,upload_to="images")
     b_Createdate=models.DateTimeField(auto_now_add=True)
     b_Modidate=models.DateTimeField(auto_now=True)
     
