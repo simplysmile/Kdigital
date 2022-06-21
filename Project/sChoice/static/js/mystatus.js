@@ -17,10 +17,10 @@ $(function(){
                   ctx.save();
                   ctx.fillStyle = 'black';
                   ctx.fillRect(width / 2, top + (height / 2), 0, 0);
-                  ctx.font = '50px sans-serif';
+                  ctx.font = '30px sans-serif';
                   ctx.textAlign = 'center';     
                   var daystr = String(data.workoutday)+'/'+String(data.goal_period) +' 일'
-                  var kgstr = data.goal_weight+'까지 '+String(data.weight[0]-data.goal_weight)+'kg'
+                  var kgstr = '목표까지 '+String(data.weight[0]-data.goal_weight)+'kg!!'
                   ctx.fillText(daystr, width / 2 +(left), top + (height / 2)+70);
                   ctx.fillText(kgstr, width / 2 +(left), top + (height / 2)+120);
                 }
@@ -158,8 +158,44 @@ $(function(){
             
             var mealpercentage = (data.mealpercent)
             var exerpercentage = (data.exerpercent)
+            var totalpercentage = Math.round((mealpercentage + exerpercentage)/2)
 
-            console.log(exerpercentage)
+            
+
+            var statstr = '<h2>' + data.username +'님 '
+            if (totalpercentage == 100){
+                statstr += '<img width="50" src="/static/img/face_icon/love.png"> <h4>총'+totalpercentage+'%의 달성률이십니다 ! AMAZING !!</h4> '
+            }
+            else if(totalpercentage >= 80){
+                statstr += '<img width="50" src="/static/img/face_icon/smile.png"><h4>총'+ totalpercentage+'%의 달성률이십니다 ! 지금처럼 꾸준히 진행해주세요</h4>'
+            }
+            else if(totalpercentage >= 60){
+                statstr += '<img width="50" src="/static/img/face_icon/neutral.png"><h4>총'+ totalpercentage+'%의 달성률이십니다. 조금만 분발해주세요 </h4>'
+            }
+            else if(totalpercentage >= 40){
+                statstr += '<img width="50" src="/static/img/face_icon/disbelief.png"><h4>총'+totalpercentage+'%의 달성률이십니다. 힘내주세요! </h4>'
+            }
+            else if(totalpercentage >= 20){
+                statstr += '<img width="50" src="/static/img/face_icon/sad.png"><h4>총'+ totalpercentage+'%의 달성률이십니다. 다시 시작하실 수 있습니다 ! 힘내세요! </h4>'
+            }
+            else {
+                statstr += '<img width="50" src="/static/img/face_icon/crying.png"><h4>총'+ totalpercentage+'%의 달성률이십니다. 새로운 마음으로 다시 시작해보세요 :) 목표하시는 몸무게를 달성하실 수 있을거에요  </h4>'
+            }
+            statstr += '</h2>'
+
+            $('#usertotalstatus').html(statstr)
+
+            var mealtxt = '현재까지 식단목표 '+mealpercentage+'% 달성중 !!'
+            mealtxt+='<br>평균적으로 아침, 점심, 저녁, 간식을 2:2:6:0의 비율로 섭취하고 계십니다'
+            mealtxt+='<br>총 20일 중 간식을 5일 섭취하셨습니다. 건강한 다이어트를 위해 간식의 섭취를 줄여주세요'
+            mealtxt+='<br>평균적으로 탄단지를 4:4:2의 비율로 섭취하고 계십니다 건강한 비율은 5:3:2 입니다'
+            mealtxt+='<br>하루평균 탄단지섭취량은 10g, 20g, 5g 입니다.'
+            mealtxt+='<br>하루 단백질은 '+ data.weight[0]*1 +'g을 섭취하셔야 합니다. '
+
+            var exertxt = '현재까지 운동목표 '+exerpercentage+'% 달성중 !!'
+            $('#mealtxt').html(mealtxt)
+            $('#exertxt').html(exertxt)
+
 
 
 
@@ -180,7 +216,7 @@ $(function(){
               ctx.save();
               ctx.fillStyle = 'black';
               ctx.fillRect(width / 2, top + (height / 2), 0, 0);
-              ctx.font = '10px sans-serif';
+              ctx.font = '20px sans-serif';
               ctx.textAlign = 'center';     
               
               ctx.fillText(mealpercentage +"%", width / 2 +(left), top + (height / 2));
@@ -196,7 +232,7 @@ $(function(){
                         label: '칼로리',
                         data: [mealpercentage,(100-mealpercentage),0,0,0],
                         backgroundColor: ['#7CCAAE','#eee'],
-                        cutout: "80%",    
+                        cutout: "60%",    
                     }],
                 },//data.
                 options: {
@@ -332,6 +368,10 @@ $(function(){
                            
                             display: false,
                         },
+                        title: {
+                            display: true,
+                            text: '지난 일주일간 섭취 칼로리'
+                        }
                     }    
 
 
@@ -355,7 +395,7 @@ $(function(){
               ctx.save();
               ctx.fillStyle = 'black';
               ctx.fillRect(width / 2, top + (height / 2), 0, 0);
-              ctx.font = '10px sans-serif';
+              ctx.font = '20px sans-serif';
               ctx.textAlign = 'center';     
               
               ctx.fillText(exerpercentage+'%', width / 2 +(left), top + (height / 2));
@@ -372,7 +412,7 @@ $(function(){
                     label: '칼로리',
                     data: [exerpercentage,(100-exerpercentage),0,0,0],
                     backgroundColor: ['#7CCAAE','#eee'],
-                    cutout: "80%",    
+                    cutout: "60%",    
                 }],
             },//data.
             options: {
@@ -511,6 +551,10 @@ $(function(){
                        
                         display: false,
                     },
+                    title: {
+                        display: true,
+                        text: '지난 일주일간 운동 칼로리'
+                    }
                 }    
 
 

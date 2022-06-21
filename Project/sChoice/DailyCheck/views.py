@@ -594,12 +594,13 @@ def saveBtn(request,sdate):
 
 def myStatus(request):
     # 세션을 통해 아이디 
-    u_id = request.session['session_user_id']
+    # u_id = request.session['session_user_id']
     # 아이디를 사용해서 정보를 얻는다. 
-    user = Members.objects.get(user_id=u_id) # 멤버테이블
+    # user = Members.objects.get(user_id=u_id) # 멤버테이블
     
-    context={'username':user.user_name, "achievement":90}
-    return render(request,'myStatus.html',context)
+    # context={'username':user.user_name, "achievement":90}
+    return render(request,'myStatus.html')
+
 
 def myStatusData(request):
     # 세션을 통해 아이디 
@@ -611,6 +612,13 @@ def myStatusData(request):
     curr_month = today.month
     curr_year = today.year
     curr_day = today.day
+    
+    # 날짜 설정
+    now = datetime.datetime.now()
+    # idx = pd.date_range((now-datetime.timedelta(days=6)),now)
+    idx = pd.date_range((now-datetime.timedelta(days=6)).strftime('%Y-%m-%d 00:00:00'),now.strftime('%Y-%m-%d 00:00:00'))
+    
+    
     
     # 로그인한 사용자의 데일리 운동 테이블과 데일리 식사 테이블 (해당 년, 월)
     meal = DailyMeal.objects.filter(d_member=u_id,d_meal_date__range=[today-datetime.timedelta(days=6), today])
@@ -645,11 +653,21 @@ def myStatusData(request):
     #  ----- 식단 정보 그래프 
     # 전체 날짜에 해당하는 내용
     mealstatus = {}
+    mealdict={}
     m_d_a=[]
     m_c_a=[]
+    m_cab_a=[]
+    m_prt_a=[]
+    m_fat_a=[]
+    m_time_a=[]
     for i in range(len(meal_all)):
         m_d_a.append(meal_all[i].d_meal_date)
         m_c_a.append(meal_all[i].d_kcal)
+        m_cab_a.append(meal_all[i].d_carb)
+        m_prt_a.append(meal_all[i].d_protein)
+        m_fat_a.append(meal_all[i].d_fat)
+        m_time_a.append(meal_all[i].d_meal_time)
+        
     mealstatus['m_date']=m_d_a
     mealstatus['m_cal']=m_c_a  
     df_meal_all = pd.DataFrame(mealstatus)
@@ -662,13 +680,42 @@ def myStatusData(request):
     
     m_percent =  round(meal_succ_day/len(df_meal_all_sum) *100,2)
     
+    mealdict['m_date']=m_d_a
+    mealdict['m_cal']=m_c_a 
+    mealdict['m_carb']=m_cab_a 
+    mealdict['m_prot']=m_prt_a 
+    mealdict['m_fat']=m_fat_a 
+    mealdict['m_time']=m_time_a 
+    df_mm = pd.DataFrame(mealdict)
+    df_mm_day = df_mm.groupby('m_date').sum()
+    df_mm_mealtime = df_mm.groupby('m_time').sum()
+    
+    print(df_mm_mealtime['m_cal'])
+
+    total_carb = df_mm['m_carb'].sum()
+    total_prot = df_mm['m_prot'].sum()
+    total_fat = df_mm['m_fat'].sum()
+    total_total = total_carb+total_prot+total_fat
+    ratiotxt = str(round(total_carb/total_total *100 ))+':'+str(round(total_prot/total_total *100 ))+':'+str(round(total_fat/total_total *100 ))
+    
+
+    
+    d_avg_carb = df_mm_day['m_carb'].mean()
+    d_avg_prot = df_mm_day['m_prot'].mean()
+    d_avg_fat = df_mm_day['m_fat'].mean()
+    
+    
+    
+    mealinfo={'cpf_ratio':ratiotxt,'avgCarb':d_avg_carb,'avgProt':d_avg_prot,'avgFat':d_avg_fat}
+    
+    
     # 일주일 정보
     mdata={}
     m_d =[]
     m_c =[]
 
     for i in range(len(meal)):
-        m_d.append(meal[i].d_meal_date)
+        m_d.append(meal[i].d_meal_date.date())
         m_c.append(meal[i].d_kcal)
 
 
@@ -677,10 +724,17 @@ def myStatusData(request):
     
     df_meal = pd.DataFrame(mdata)
     df_meal_sum = df_meal.groupby('m_date').sum()
+    
+    df_meal_sum.index = pd.DatetimeIndex(df_meal_sum.index)
+    df_meal_sum = df_meal_sum.reindex(idx, fill_value=0)
+    
+    
     js_meal = df_meal_sum.to_json()
 
     # body_json={}
     # body_json['meal'] = json.loads(js_meal)
+    
+    
 
     
 
@@ -713,29 +767,40 @@ def myStatusData(request):
     # 일주일 정보
     edata={}
     e_d =[]
-    e_c =[]
-
-    std = curr_day-7
-    
+    e_c =[]       
     for i in range(len(exer)):
-        
-        if std == exer[i].createdate.day:
-            e_d.append(exer[i].createdate)
-            e_c.append(exer[i].burned_kcal)
-        else:
-            e_d.append(np.nan)
-            e_c.append(0)
-        std += 1
-        print('std:' ,std)
-
+        e_d.append(exer[i].createdate.date())
+        e_c.append(exer[i].burned_kcal)
 
     edata['m_date']=e_d
     edata['m_cal']=e_c
-    
+ 
+    # 데이터 프레임으로 만들기 => 날짜기준으로 칼로리 총합 구하기. 
     df_exer = pd.DataFrame(edata)
     df_exer_sum = df_exer.groupby('m_date').sum()
+      
+    
+ 
+
+    df_exer_sum.index = pd.DatetimeIndex(df_exer_sum.index)
+    df_exer_sum = df_exer_sum.reindex(idx, fill_value=0)
+  
+  
+        
+ 
+    
+    
+    
+    
+    
+    
+    
     js_exer = df_exer_sum.to_json()
 
+
+    # print(df_exer)
+
+    # print(df_exer_sum)
 
     #  ----- 운동 정보 그래프 -end 
     
@@ -744,14 +809,16 @@ def myStatusData(request):
     context={'goalEx':goal_burn_cal,'goalMeal':goal_meal_cal,'goal_weight':goal_weight,'goal_period':goal_period,
             'firstweight':firstweight,'workoutday':d_day.days, 'weight':allweight,'alldays':alldays,
             'Gmealcal':goal_meal_cal,'mealweak':json.loads(js_meal), 'mealpercent':m_percent,
-            'Gexercal':goal_burn_cal,'exerweak':json.loads(js_exer), 'exerpercent':e_percent
+            'Gexercal':goal_burn_cal,'exerweak':json.loads(js_exer), 'exerpercent':e_percent,
+            'username':user.user_name
             }
 
 
-    print(exer[0].createdate.day)
-    print(df_exer_sum)
 
     return JsonResponse(context)
+    
+
+
     
 
 
