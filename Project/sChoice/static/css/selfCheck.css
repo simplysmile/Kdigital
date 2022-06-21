@@ -6,12 +6,89 @@
 
 }
 
-.btn_ex{
+#box1{
 
+    width:600px;
+    height:700px; 
+    float: left;
 
-    padding-left: 460px;
-  
+   
 }
+
+#box2{
+    width:300px;
+    height:700px; 
+    padding-right: 550px ;
+    padding-top: 70px ;
+
+  
+
+    float:right;
+ 
+ 
+}
+#box3{
+
+ 
+    padding-bottom: 90px;
+    padding-top: 90px;
+    font-size:80px;
+
+    font-family: "dohyeon";
+}
+
+#box4{
+
+
+    
+    font-size:20px;
+
+    font-family: "dohyeon";
+
+    border: 1px solid red;
+    
+   
+
+
+
+}
+
+
+.box_style{
+
+
+    font-family: "dohyeon";
+
+
+
+}
+
+#myChart{
+
+    width:300px;
+    height:100px;
+
+}
+
+.canvas1{
+    padding-left: 70px;
+    padding-bottom: 50px;
+
+    
+  
+
+    
+    
+}
+
+
+#dummyimg{
+
+    margin-bottom: 100px;
+}
+
+
+
 
 
 
@@ -20,7 +97,7 @@
 
 .real_btn1{
    
-    width: 150px;
+    width: 50px;
     height: 30px;
     font-family: "dohyeon";
     background-color: #40e0d0;
@@ -32,22 +109,10 @@
 
 
 }
-
-.btn_div1{
-    float:left;
-
-
-}
-.btn_div2{
-    float:left;
-
-
-}
-
 
 .real_btn2{
    
-    width: 150px;
+    width: 50px;
     height: 30px;
     font-family: "dohyeon";
     background-color: #40e0d0;
@@ -59,6 +124,23 @@
 
 
 }
+.btn_div1{
+
+
+    padding-left: 300px;
+    padding-top: 30px;
+    padding-right:20px;
+    float:left;
+   
+
+}
+.btn_div2{
+
+    padding-top: 30px;
+
+}
+
+
 
 
 tr{
@@ -66,12 +148,6 @@ tr{
     font-family: "dohyeon";
 
 
-}
-
-
-#bmiresult{
-
-    padding-top: 30px;
 }
 
 #birth{
@@ -150,27 +226,6 @@ tr{
 }
 
 
-#box1{
-
-    width: 50%;
-    height: 300px;
-
- 
-    float: left;
-
-    padding-bottom: 90px;
-    padding-top:60px;
-
-
-}
-#box2{
-
-    width: 50%;
-    height: 300px;
-    float: left;
-   
-
-}
 table{
     margin: 0 auto;
 }
