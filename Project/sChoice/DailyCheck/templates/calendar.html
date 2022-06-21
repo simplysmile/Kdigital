@@ -67,10 +67,11 @@
                 dataType:'json',
                 success:function(data){
                     console.log(data[0].day_img)
+                    console.log(data[0].sdate)
                     if(data[0].day_img!='/static/img/mem01.png'){
                         inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/mealCheck/">식단</a></ul>'
                         inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/exerciseCheck/">운동</a></ul>'
-                        inserttxt +=    '<div style="padding-top:10px"><ul><img width=150 height=200 alt="없음" src="'+data[0].day_img+'"></ul>'
+                        inserttxt +=    '<div style="padding-top:10px"><ul><img width=150 height=200 id= "imgDelete" onclick="imgDelete()" src="'+data[0].day_img+'"></ul>'
                         inserttxt +=    '<ul> 몸무게 : '+data[0].cur_weight+'</ul></div>'
                         }
                         else{
@@ -79,14 +80,15 @@
                         inserttxt+='{% csrf_token %}'    
                         inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/mealCheck/">식단</a></ul>'
                         inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/exerciseCheck/">운동</a></ul>'
-                        inserttxt +=    '<ul>이미지 : <input type="file" name="file" id="file"></ul>'
-                        inserttxt +=    '<ul>몸무게 : <input type="text" name="weight" id="weight" value="'+data[0].cur_weight+'"></ul><br>'
+                        inserttxt +=    '<div style="padding-top:10px"><ul>이미지 : <input type="file" name="file" id="file"></ul>'
+                        inserttxt +=    '<ul>몸무게 : <input type="text" name="weight" id="weight" value="'+data[0].cur_weight+'"></ul></div><br>'
                         inserttxt+='<button type="button" class="saveBtn" id="saveBtn" onclick="saveBtn()">Save</button>'
                         
                     }
                         
                     $("#madalshows").html(inserttxt)
                     
+
                     $('#saveBtn').click(function(){
                         if($('#weight').val()==0){
                             alert('몸무게를 정확하게 입력하세요.')
@@ -97,17 +99,34 @@
                         document.imgSave.submit()
                     })
 
+                    $('#imgDelete').click(function(){
+                        var result = confirm('이미지를 정말 삭제하시겠습니까?');
+                        //console.log(data2)
+                        //const dateToArray2 = date2.split(',')
+                        
+                        //var clickeddate2 = dateToArray2[0]+'-'+dateToArray2[1]+'-'+dateToArray2[2]
+                        var url='/dailycheck/'+clickeddate+'/imgDelete/'
+                        console.log(url)
+                        if(result){
+                            location.href=url
+                        } else {
+                            console.log('취소')
+                        }
+                    })
+                    
                 },
                 error:function(){
                     console.log('실패')
                 }
-            })//ajax 
 
+            })//ajax 
+            
+            
             
             
         }
         
-        
+
         // Get the modal
         var modal = document.getElementById("myModal");
         var imgmodal = document.getElementById("imgModal");
