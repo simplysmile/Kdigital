@@ -8,28 +8,8 @@
 <script src="/static/js/mystatus.js"></script>
 
 <main>
-    <div style="margin-top:20px; margin-left:100px;">
-        <h2> {{ username }} 님 
-            {% if achievement == 100 %}
-                <img width="50" src="/static/img/face_icon/love.png">
-                <h4>총 {{ achievement }}%의 달성률이십니다 ! AMAZING !!</h4>
-            {% elif achievement >= 80 %}
-                <img width="50" src="/static/img/face_icon/smile.png">
-                <h4>총 {{ achievement }}%의 달성률이십니다 ! 지금처럼 꾸준히 진행해주세요</h4>
-            {% elif achievement >= 60 %}
-                <img width="50" src="/static/img/face_icon/neutral.png">
-                <h4>총 {{ achievement }}%의 달성률이십니다. 조금만 분발해주세요 </h4>
-            {% elif achievement >= 40 %}
-                <img width="50" src="/static/img/face_icon/disbelief.png">
-                <h4>총 {{ achievement }}%의 달성률이십니다. 힘내주세요! </h4>
-            {% elif achievement >= 20 %}
-                <img width="50" src="/static/img/face_icon/sad.png">
-                <h4>총 {{ achievement }}%의 달성률이십니다. 다시 시작하실 수 있습니다 ! 힘내세요! </h4>
-            {% else %}
-                <img width="50" src="/static/img/face_icon/crying.png">
-                <h4>총 {{ achievement }}%의 달성률이십니다. 새로운 마음으로 다시 시작해보세요 :) 목표하시는 몸무게를 달성하실 수 있을거에요  </h4>
-            {% endif %}
-        </h2>
+    <div id="usertotalstatus" style="margin-top:20px; margin-left:100px;">
+       
         
     </div>	
 
@@ -38,12 +18,12 @@
         <table id='maintb' class='maintb'>
             <colgroup>
                 <col width="60%">
-                <col width="20%">
-                <col width="20%">
+                <col width="5%">
+                <col width="35%">
             </colgroup>
             <tr >
                 <td rowspan=4>
-                    <canvas id="goalchart"></canvas> 
+                    <canvas id="goalchart" style="width:700px;"></canvas> 
                     <p>
                         
                         <details>
@@ -54,37 +34,37 @@
                     
                 </td>
                 <td>
-                    <div> 
+                    <div style="margin:150px 10px 10px 0px;"> 
                         <canvas id="mealChart"></canvas> 
                     </div>
                 </td>
                 <td>
                     <div>
-                        <canvas id="weeklyBarChart_meal"></canvas> 
+                        <canvas id="weeklyBarChart_meal" style="width:500px;"></canvas> 
                     </div>
                 </td>
             </tr>
             <tr>
                 
-                <td colspan='2'>현재까지 식단목표를 88% 달성중이십니다</td>
+                <td colspan='2'><div id="mealtxt">현재까지 식단목표를 88% 달성중이십니다</div></td>
                 
             </tr>
             <tr>
                 
                 <td>
-                    <div>   
+                    <div style="margin:150px 10px 10px 0px;">   
                         <canvas id="exerChart"></canvas> 
                     </div>
                 </td>
                 <td>
-                    <div >
-                        <canvas id="weeklyBarChart_exer"></canvas> 
+                    <div style="margin-right:20px;">
+                        <canvas id="weeklyBarChart_exer" style="width:500px;"></canvas> 
                 
                     </div>
                 </td>
             </tr>
             <tr> 
-                <td colspan='2'>현재까지 운동목표를 90% 달성중이십니다</td>
+                <td colspan='2'><div id="exertxt">현재까지 운동목표를 90% 달성중이십니다</div></td>
             </tr>
             
         </table>

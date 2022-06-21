@@ -1,5 +1,5 @@
 *{ 
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
 }
 table{
@@ -8,6 +8,7 @@ table{
     border-collapse: collapse;
     width: 100%;
     height: 800px;
+    margin-top: 0px;
 }
 td,tr{
     border: 1px solid white;
@@ -18,41 +19,19 @@ td,tr{
 #topchart{
     margin: 0 auto;
     width: 100%;
+    margin-bottom: 0px;
 }
-
-
-
-#box1{
-
-    margin-top: 20px;
-    float: left;
-    width: 50%;
-    height: 700px;
-
-
-}
-#box2{
-    margin-top: 20px;
-    width: 50%;
-    float: left;
-    height: 700px;
+#mealtxt{
     
-}
-#box3{
-    margin-top: 20px;
-
-    float: left;
-    width: 50%;
-
-
-}
-#box4{
-    margin-top: 20px;
+    padding-left: 70px;
     
-    width: 50%;
-    float: left;
-    
+
 }
+#exertxt{
+    margin-left:10px;
+
+}
+
 
 a:link {
     color: black;
@@ -95,12 +74,7 @@ ul{
     margin-top: 30%;
 }
 
-#goalchart{
-    
-    margin: 0 auto;
-    height: 500px;
-    width: 500px;
-}
+
 #weightchange{
     
     margin: 0 auto;
