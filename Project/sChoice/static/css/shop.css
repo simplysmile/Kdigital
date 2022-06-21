@@ -8,11 +8,12 @@ a:visited{ color:white;}
 a:hover{ color:white;}
 a:active{ color:white;}
 	
-#shop_banner{ display:block; width:80%; height: 100px; background: url("/static/img/shop_img/shop_banner.png") no-repeat;
-	position: relative; top:20px; }
+#shop_banner{ display:block; width: 1000px; height: 200px; background: url("/static/img/shop_img/shop_banner.png") no-repeat;
+	position: relative; top:20px; margin-left: 300px; margin-right: 100px;
+	overflow: hidden; top: 20px;}
 	
 #best_box {
-	border:1px solid black;
+	/* border:1px solid black; */
 	width: 1200px;
 	margin: 0 auto;
 	overflow: hidden;
@@ -20,17 +21,17 @@ a:active{ color:white;}
 	top: 20px;}
 	
 #item_list { 
-	border:1px solid black;
+	/* border:1px solid black; */
 	width: 1154px;
 	margin-left: 20px;
 	margin-right: 20px;
 	margin: 0 auto;
 	overflow: hidden;
     position: relative; 
-	top: 20px;}
+	top: 30px;}
 
 #item_context .item_nth {
-	border:1px solid black;
+	/* border:1px solid black; */
     position: relative;
     display: inline-block;
     width: 342px;
@@ -50,16 +51,17 @@ a:active{ color:white;}
 .item_img .img_nth {
 	width: 342px;
 	height: 342px;
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	overflow: hidden;
 	border-radius: 8px;
 }
 .item_text{
-    position: relative;
+	position: relative;
     display: block;
     font-weight: normal;
     height: 100px;
     text-align: left;
+	border: 1px solid silver;
 }
 .item_name{
     overflow: hidden;

@@ -16,4 +16,5 @@ urlpatterns = [
     path('<int:bNo>/<int:nowpage>/fdReply/',views.fdReply,name='fdReply'),
     path('yourbody/',views.yourbody,name='yourbody'),
     path('shop/',views.shop,name='shop'),
+    path('shopAjax/',views.shopAjax,name='shopAjax'),
 ]

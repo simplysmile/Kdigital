@@ -10,20 +10,29 @@ import matplotlib.pyplot as plt
 from django.http import JsonResponse
 
 
-#쇼핑 추천 함수
+
+# #쇼핑 추천 함수
 def shop(request): 
     return render(request,'shop.html')
 
-# def shop(request): 
-#     df = pd.read_csv("BEST_100.csv")
-#     print(df)
-#     js_item={}
-#     js = df.to_json()
-#     js_item['json_data'] = json.loads(js)
-#     print(js_item['json_data'])
-#     context = {'js_item':js_item}
-#     return JsonResponse(context,safe=False)
-    
+# shop.html page에 제품을 올려 주는 함수
+def shopAjax(request): 
+    # Data 파일 안에 있는 csv 불러 옴
+    df = pd.read_csv("./Data/BEST_100.csv")
+    print(df)
+    # json 파일을 위한 dictionary 만들기
+    js_item={}
+    # csv을 json으로 바꾸기
+    js = df.to_json()
+    #json 읽고 오기
+    js_item['json_data'] = json.loads(js)
+    print(js_item['json_data'])
+    #json 데이터 담아서 보내기
+    context = {'json_item':js_item}
+    # context = {'id':'aaa'}
+    # print("TEST")
+    return JsonResponse(context, safe=False)
+#####################################################################
 
 #운동 게시판
 def exboard(request,nowpage):
