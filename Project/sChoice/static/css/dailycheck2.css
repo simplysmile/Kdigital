@@ -39,7 +39,7 @@ a:hover{
 #progressbars{
     margin: 0 auto;
     
-    width: 500px;
+    width: 700px;
     height: 50px;
     
     border-collapse: collapse;
@@ -52,7 +52,7 @@ a:hover{
   text-align: center;
   border: 1px solid white;
   border-radius: 20px;
-  
+  padding: 15px;
 }
 
 #modalcontent3>.sel_box>.savecontent tr,td{
@@ -163,21 +163,23 @@ a:hover{
 }
 #health_result{
   border: 1px solid white;
-  border-radius: 10px;
-  width: 100px;
-  height: 30px;
-  color: white;
-  font-size: 20px;
-  margin-left: 100px;
+  border-radius: 15px;
+  width: 200px;
+  height: 50px;
+  color: black;
+  /* color: #b3dae9; */
+  font-size: 15px;
+  font-weight: bold;
+  margin-left:80px;
 }
 #health_cont{
-  color:white;
+  margin: 0 auto;
+  visibility: hidden;
 }
 .on3 tbody{
-  display: inline-block;
+  visibility: visible;
   color: black;
 }
-
 #addExercise:hover{
   cursor: pointer;
   width: 100px;

@@ -24,7 +24,8 @@
             
         </table>
         <br>
-        <button type="button" style='background-color:#196b9b;' id='health_result' onclick="healthBtn()">운동 추천</button>
+        <button type="button" style='background-color:#b3dae9;' id='health_result' onclick="healthBtn()">매일 운동으로 {{goal_burn_kcal}}kcal를 소모하려면?</button>
+        <br><br>
         <table id='health_cont'>
             {%if health_list%}
             {%for health in health_list%}
@@ -50,11 +51,9 @@
             <tr>                
                     <td width=250 height=250 style='background-color:#A0DDE0;'> 
                         <a href='{%url "DailyCheck:exerciseView" sdate bexer.ex_no %}'>
-                        {% comment %} <button class="viewBtn" id='viewBtn'  onclick="viewBtn()"> {% endcomment %}
                         <ul>{{bexer.ex_name}}</ul>
                         <ul>{{bexer.ex_counts}}회</ul>               
                         <ul>{{bexer.burned_kcal}}kcal</ul>               
-                        {% comment %} </button> {% endcomment %}
                         </a>
                     
                     </td>

@@ -403,7 +403,7 @@ def exerciseCheck(request,sdate):
     goal_burn_kcal=daily.goal_burn_kcal 
     
     exercise_qs=Exercise.objects.all()
-    dailydata=Dailydata.objects.filter(user=u_id,add_date__year=curr_year,add_date__month=curr_month,add_date__day=curr_day)[0]
+    dailydata=Dailydata.objects.filter(user=u_id).order_by('-day_no')[0]
     print(exercise_qs.count())
     health_list=[]
     for i in range(exercise_qs.count()//2):
@@ -505,7 +505,7 @@ def exerciseCheck(request,sdate):
     
     
         
-    content={'b_list':b_list,'exerciseList':data_list,'sdate':sdate,'user_category':user_category,'health_list':health_list}
+    content={'goal_burn_kcal':goal_burn_kcal,'b_list':b_list,'exerciseList':data_list,'sdate':sdate,'user_category':user_category,'health_list':health_list}
     return render(request,'exerciseCheck.html',content)
 
 def exercise1(request):
