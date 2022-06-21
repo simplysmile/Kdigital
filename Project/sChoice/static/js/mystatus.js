@@ -186,11 +186,11 @@ $(function(){
             $('#usertotalstatus').html(statstr)
 
             var mealtxt = '현재까지 식단목표 '+mealpercentage+'% 달성중 !!'
-            mealtxt+='<br>평균적으로 아침, 점심, 저녁, 간식을 2:2:6:0의 비율로 섭취하고 계십니다'
-            mealtxt+='<br>총 20일 중 간식을 5일 섭취하셨습니다. 건강한 다이어트를 위해 간식의 섭취를 줄여주세요'
-            mealtxt+='<br>평균적으로 탄단지를 4:4:2의 비율로 섭취하고 계십니다 건강한 비율은 5:3:2 입니다'
-            mealtxt+='<br>하루평균 탄단지섭취량은 10g, 20g, 5g 입니다.'
-            mealtxt+='<br>하루 단백질은 '+ data.weight[0]*1 +'g을 섭취하셔야 합니다. '
+            mealtxt+='<br>평균적으로 아침, 점심, 저녁, 간식을'+ data.minfo.blds_ratio +'의 비율로 섭취하고 계십니다'
+            //mealtxt+='<br>총 20일 중 간식을 5일 섭취하셨습니다. 건강한 다이어트를 위해 간식의 섭취를 줄여주세요'
+            mealtxt+='<br>평균적으로 탄단지를 '+ data.minfo.cpf_ratio +'의 비율로 섭취하고 계십니다 건강한 비율은 5:3:2 입니다'
+            mealtxt+='<br>하루평균 탄단지섭취량은 '+Math.round(data.minfo.avgCarb,2) +'g ,' +Math.round(data.minfo.avgProt)+ 'g,'+ Math.round(data.minfo.avgFat)+'g 입니다.'
+            mealtxt+='<br>하루 단백질은 '+ data.weight[0]*1 +'g을 섭취하셔야 합니다. 단백질 섭취량을 늘려주세요'
 
             var exertxt = '현재까지 운동목표 '+exerpercentage+'% 달성중 !!'
             $('#mealtxt').html(mealtxt)
