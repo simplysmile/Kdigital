@@ -36,6 +36,16 @@ a:hover{
     
     border-collapse: collapse;
 }
+#inputsection~#gocalendarimg{
+  height: 50px;
+  float: right;
+  margin-right: 150px;
+}
+
+#gocalendarimg:hover,
+#gocalendarimg:focus{
+  cursor: pointer;
+}
 #progressbars{
     margin: 0 auto;
     

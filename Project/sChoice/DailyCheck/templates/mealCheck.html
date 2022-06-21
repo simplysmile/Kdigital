@@ -184,6 +184,8 @@
                 
             </tr>
         </table>
+        <br>
+        <img id="gocalendarimg" onclick="gocalendar()" width=50 height=50 src='/static/img/basic/gocalendar_icon.png'>
 	</div>
 
     <!-- 모달 창 !!  -->
@@ -269,7 +271,12 @@
     </div> <!-- 모달창  -->
     
     <script src="/static/js/dailycheckMeal_modal.js"></script>
-   
+    <script>
+        function gocalendar(){
+            location.href="{%url 'DailyCheck:calendar'%}"
+        
+        }
+    </script>
 </main>
 
 {% endblock mycontent %}
