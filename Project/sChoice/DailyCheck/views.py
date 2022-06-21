@@ -691,6 +691,20 @@ def myStatusData(request):
     df_mm_mealtime = df_mm.groupby('m_time').sum()
     
     print(df_mm_mealtime['m_cal'])
+    print(df_mm_mealtime.loc['B']['m_cal'])
+    
+    total_b, total_l, total_d, total_s = 0,0,0,0
+    if 'B' in df_mm_mealtime.index: 
+        total_b = df_mm_mealtime.loc['B']['m_cal']
+    if 'L' in df_mm_mealtime.index:
+        total_l = df_mm_mealtime.loc['L']['m_cal']
+    if 'D' in df_mm_mealtime.index:
+        total_d = df_mm_mealtime.loc['D']['m_cal']
+    if 'S' in df_mm_mealtime.index:
+        total_s = df_mm_mealtime.loc['S']['m_cal']
+    
+    t_total= df_mm_mealtime['m_cal'].sum()
+    bldstext = str(round(total_b/t_total *100 ))+':'+str(round(total_l/t_total *100 ))+':'+str(round(total_d/t_total *100 ))+':'+str(round(total_s/t_total *100 ))
 
     total_carb = df_mm['m_carb'].sum()
     total_prot = df_mm['m_prot'].sum()
@@ -706,7 +720,7 @@ def myStatusData(request):
     
     
     
-    mealinfo={'cpf_ratio':ratiotxt,'avgCarb':d_avg_carb,'avgProt':d_avg_prot,'avgFat':d_avg_fat}
+    mealinfo={'blds_ratio':bldstext,'cpf_ratio':ratiotxt,'avgCarb':d_avg_carb,'avgProt':d_avg_prot,'avgFat':d_avg_fat}
     
     
     # 일주일 정보
@@ -810,7 +824,7 @@ def myStatusData(request):
             'firstweight':firstweight,'workoutday':d_day.days, 'weight':allweight,'alldays':alldays,
             'Gmealcal':goal_meal_cal,'mealweak':json.loads(js_meal), 'mealpercent':m_percent,
             'Gexercal':goal_burn_cal,'exerweak':json.loads(js_exer), 'exerpercent':e_percent,
-            'username':user.user_name
+            'username':user.user_name, 'minfo':mealinfo
             }
 
 
