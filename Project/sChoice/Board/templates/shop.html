@@ -7,29 +7,77 @@
 		<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700,900&display=swap" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="{% static 'css/shop.css' %}">
 	</head>
+	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script>
+		//jquery선언
+		$(function(){
+							
+			//ajax선언 
+			$.ajax({
+				type:"GET",
+				url:"/board/shopAjax",
+				dataType:"json",
+				success:function(data){
+					items = data.json_item.json_data
+					// console.log(items.title[0])
+					var html_data = ""
+					
+					var img_list=[]
+					var img={}
+					for(var p=1; p<5; p++){
+						if(p==4){
+							for(var n=1; n<=10; n++){	
+									img ='item_image'+p+n;
+									
+								img_list.push(img)
+							} //n for 
+						}else{
+							for(var n=1; n<=30; n++){
+								// console.log(n)	
+									img = 'item_image'+p+n;
+									
+								img_list.push(img)
+							} //n for 
+
+						}//else
+					} //p for
+					console.log(img_list)
+
+					for (var i=0; i<100;i++){
+						console.log(items.link[i])
+						console.log(items.title[i])
+						console.log(items.dicprice[i])
+						console.log(items.review[i])
+						html_data += "<ul id='item_context'>"
+						html_data += "<li class='item_nth'>"
+						html_data += "<div class='best_nth'><span id='best_top'>BEST 0"+(i+1)+"</span></div>"						
+						html_data += "<a href='"+items.link[i]+"'><p class='item_img'><img src='/static/img/shop_img/"+img_list[i]+".jpg' class='img_nth'></p></a>"
+						html_data += "<div class='item_text'>"
+						html_data += "<span class='item_name'>제품명: "+items.title[i]+"</span>"
+						html_data += "<span class='item_price'>할인가격:"+items.dicprice[i]+"원</span><br>"
+						html_data += "<span class='item_review'>리뷰: "+items.review[i]+" </span>"
+						html_data += "</div>"
+						html_data += "</li>"
+						html_data += "</ul>"
+					}//for
+					$("#item_list").html(html_data)
+					
+				}, //success
+				error:function(){
+					alert('에러!')
+				} //error
+			})//ajax
+		})//function
+	</script>
 	<body>
 	 	<section>
-			<h1>Hello</h1>
-			<h3>Hello again</h3>
-			<a href="#" id="shop_banner"></a>
+			<!-- <h1>Hello</h1>
+			<h3>Hello again</h3> -->
 			<div id="best_box">
+				<a href="#" id="shop_banner"></a>
 				<div id="item_list">
-					<ul id="item_context">
-					
-						<li class="item_nth">
-							<div class="best_nth"><span id="best_top">BEST_01</span></div>
-							<a href="https://dshop.dietshin.com/goods/view.asp?g=13748">
-								<p class="item_img ">
-									<img src="/static/img/shop_img/item_image1_1.jpg" class="img_nth">
-								</p>
-							</a>
-							<div class="item_text">
-								<span class="item_name">제품명: 김밥</span>
-								<span class="item_price">할인가격: 00,000원</span><br>
-								<span class="item_review">리뷰: 000 </span>
-							</div>	
-						</li>
-						<li class="item_nth">
+						
+						<!-- <li class="item_nth">
 							<div class="best_nth"><span id="best_top">BEST_01</span></div>
 							<a href="https://dshop.dietshin.com/goods/view.asp?g=12874">
 								<p class="item_img ">
@@ -93,8 +141,8 @@
 								<span class="item_price">할인가격: 00,000원</span><br>
 								<span class="item_review">리뷰: 000 </span>
 							</div>	
-						</li>
-					</ul>
+						</li> -->
+					<!-- </ul> -->
 					<!-- <ul>
 						{% if pList %}
 						{% for product in pList %}

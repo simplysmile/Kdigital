@@ -249,6 +249,17 @@ def mealCheck(request,sdate):
     
     return render(request,'mealCheck.html',context)
 
+def imgDelete(request,sdate):
+    u_id = request.session['session_user_id']
+    date=sdate.split('-')
+    curr_year=date[0]
+    curr_month=date[1]
+    curr_day=date[2]
+    daily=Dailydata.objects.filter(user=u_id,add_date__year=curr_year,add_date__month=curr_month,add_date__day=curr_day)[0]
+    daily.day_img=''
+    daily.save()
+    return redirect('DailyCheck:calendar')
+
 
 def imgCheck(request,sdate):
     u_id = request.session['session_user_id']
