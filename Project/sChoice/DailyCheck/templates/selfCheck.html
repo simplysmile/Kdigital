@@ -14,22 +14,37 @@
         function calculator(birth,gender,height,weight,activity,isuser){
 
             
-
+          
             // bmi 계산
             var len = height/100
             var result = parseFloat(weight)/parseFloat(len*len);
+
             if(result<18.5){
-                resultText = "저체중";
+                resultText = "<span id='spancolor'>저체중</span>";
+                
+
             } else if(result<23){
-                resultText = "정상체중";
+                resultText = "<span id='spancolor2'>정상체중</span>";
+
             } else if(result<25){
-                resultText = "과체중";
+                resultText = "<span id='spancolor3'>과체중</span>";
+
             } else{
-                resultText = "비만";
+                resultText = "<span id='spancolor4'>비만</span>";
+
             }
     
-            resultText += " 입니다:D";
+            resultText += " 입니다.";
             result=result.toString().match(/^.*\.\d{2}/);
+
+
+            
+
+
+
+
+
+
     
             // 기초대사량 계산기 (bmr)
             // 1 헤리스- 베네딕트 식 
@@ -105,13 +120,17 @@
 
                 // 결과 업데이트
                 var resultstr = ''
-                resultstr+='<div><tr><td colspan="2">' + resultText +'</td></tr></div>'
+                resultstr+='<div><tr><td id="resultText" colspan="2">' + resultText +'</td></tr></div>'
 
                 /**resultstr+='<tr><td>BMI 지수</td><td>'+ result +'</td></tr>'
                 resultstr+='<tr><td>기초대사량(BMR)</td><td>'+ BMR +'</td></tr>'
                 resultstr+='<tr><td>활동대사량(AMR)</td><td>'+ AMR +'</td></tr>'**/
 
                 $('#box3').html(resultstr)
+                $('#spancolor').css({'color':'#F2CB05'});
+                $('#spancolor2').css({'color':'#03A64A'});
+                $('#spancolor3').css({'color':'#FF6B1A'});
+                $('#spancolor4').css({'color':'#D90416'});
                
     
                 var needcalstr = ''
@@ -130,7 +149,7 @@
                 $('.level2').css({'color':'#F28F38'});
                 $('.level3').css({'color':'#F2E85C'});
                 $('.level4').css({'color':'#5BA638'});
-                $('.level').css({'font-size':'20px'});
+                $('.level').css({'font-size':'13px'});
 
                
                 
@@ -199,21 +218,21 @@
                                     data: user_data,
                                     fill: true,
                                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                                    borderColor: 'rgb(255, 99, 132)',
-                                    pointBackgroundColor: 'rgb(255, 99, 132)',
+                                    borderColor: '#D91818',
+                                    pointBackgroundColor: '#D91818',
                                     pointBorderColor: '#fff',
                                     pointHoverBackgroundColor: '#fff',
-                                    pointHoverBorderColor: 'rgb(255, 99, 132)'
+                                    pointHoverBorderColor: '#D91818'
                                 },{
                                     label: '20대 평균여성',
                                     data: avg_data,
                                     fill: true,
                                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                                    borderColor: 'rgb(54, 162, 235)',
-                                    pointBackgroundColor: 'rgb(54, 162, 235)',
+                                    borderColor: '#1374F2',
+                                    pointBackgroundColor: '#1374F2',
                                     pointBorderColor: '#fff',
                                     pointHoverBackgroundColor: '#fff',
-                                    pointHoverBorderColor: 'rgb(54, 162, 235)'
+                                    pointHoverBorderColor: '#1374F2'
                             }]
 
                             
@@ -221,8 +240,17 @@
                         options: {
                             
                             plugins: {
-                                legend: {
-                                    isplay: false,
+                                legend: { 
+                                    labels:{
+
+                                        font:{
+
+                                            weight
+                                        }
+
+                                    
+                                }
+                                   
                                 },
                                 title: {
                                     display: false,
