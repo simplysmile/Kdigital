@@ -12,18 +12,32 @@
 <main>	
 	<div id="box1">
         
-            <canvas id="myChart" >
-               
-            </canvas> 
-            <div id='labeltext' class="label-text">
-            </div>
+        <canvas id="myChart" >
+            
+        </canvas> 
+        <div id='labeltext' class="label-text">
+        </div>
         
-       
-
+        
+        
         <table id="progressbars">
-
+            
         </table>
-
+        <br>
+        <button type="button" style='background-color:#196b9b;' id='health_result' onclick="healthBtn()">운동 추천</button>
+        <table id='health_cont'>
+            {%if health_list%}
+            {%for health in health_list%}
+            <tr>
+                <td>{{health.ex_name0}}<br>{{health.level0}}</td>
+                <td>{{health.health_time0}}분</td>
+                <td>{{health.ex_name1}}<br>{{health.level1}}</td>
+                <td>{{health.health_time1}}분</td>
+            </tr>
+            {%endfor%}
+            {%endif%}
+        </table>
+            
 
 	</div>
 	
@@ -51,7 +65,11 @@
             <tr>
                 <td id='addExercise' width=250 height=250 style='background-color:#eee;'><img onclick="addExercise()" width=50 height=50 src='/static/img/basic/plus.png'></td>
             </tr>
+            <tr id="gocalendarimg">
+                <td><img onclick="gocalendar()" width=50 height=50 src='/static/img/basic/gocalendar_icon.png'></td>
+            </tr>
         </table>
+        <br>
 	</div>
 
 
@@ -249,6 +267,11 @@
             var exerciseName
             var exercisenumber
             var target1Name
+            $(document).on('click','#health_result',function(){
+                $('#health_cont').toggleClass('on3')
+            })
+
+
             $(document).on("click",".activity",function(){
                 $('.activitysel').find('ul').not(this).removeClass('on')
                 $(this).toggleClass("on")
@@ -432,6 +455,10 @@
 
         function saveBtn(){
             modal3.style.display="none";
+
+        }
+        function gocalendar(){
+            location.href="{%url 'DailyCheck:calendar'%}"
 
         }
         // Get the modal

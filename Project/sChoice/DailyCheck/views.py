@@ -398,9 +398,43 @@ def exerciseCheck(request,sdate):
     curr_month=date[1]
     curr_day=date[2]
     qs_m = Dailyexercise.objects.filter(user=u_id, createdate__year=curr_year,createdate__month=curr_month,createdate__day=curr_day)
+    
     daily=Dailydata.objects.filter(user=u_id).order_by('day_no')[0]
+    goal_burn_kcal=daily.goal_burn_kcal 
+    
+    exercise_qs=Exercise.objects.all()
+    dailydata=Dailydata.objects.filter(user=u_id,add_date__year=curr_year,add_date__month=curr_month,add_date__day=curr_day)[0]
+    print(exercise_qs.count())
+    health_list=[]
+    for i in range(exercise_qs.count()//2):
+        health_time0=int(goal_burn_kcal*60/int(dailydata.cur_weight)/int(exercise_qs[2*i].met))
+        health_time1=int(goal_burn_kcal*60/int(dailydata.cur_weight)/int(exercise_qs[2*i+1].met))
+        health_dic={}
+        health_dic['health_time0']=health_time0
+        health_dic['health_time1']=health_time1
         
-    goal_burn_kcal=daily.goal_burn_kcal
+        level0=exercise_qs[i*2].level
+        level1=exercise_qs[2*i+1].level
+        if level0==2:
+            levelstr0='(저강도)'
+        elif level0==3:
+            levelstr0='(중강도)'
+        else:
+            levelstr0='(고강도)'
+        if level1==2:
+            levelstr1='(저강도)'
+        elif level1==3:
+            levelstr1='(중강도)'
+        else:
+            levelstr1='(고강도)'
+        
+        
+        health_dic['ex_name0']=exercise_qs[i*2].ex_name 
+        health_dic['ex_name1']=exercise_qs[2*i+1].ex_name 
+        health_dic['level0']=levelstr0
+        health_dic['level1']=levelstr1
+        
+        health_list.append(health_dic)
     
     # 블럭에 뿌려주기랑 차트그리기로 만들기
     b_list = []
@@ -468,9 +502,10 @@ def exerciseCheck(request,sdate):
         
     user = Members.objects.get(user_id=u_id)  
     user_category=user.user_target
+    
+    
         
-        
-    content={'b_list':b_list,'exerciseList':data_list,'sdate':sdate,'user_category':user_category}
+    content={'b_list':b_list,'exerciseList':data_list,'sdate':sdate,'user_category':user_category,'health_list':health_list}
     return render(request,'exerciseCheck.html',content)
 
 def exercise1(request):
