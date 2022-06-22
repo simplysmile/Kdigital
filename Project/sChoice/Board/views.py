@@ -283,8 +283,93 @@ def bmidiabet(request):
         bmidp=bmi_pv*100
         
         cur_user_diabet=bmidp[cur_bmi][user_category] #현재 유병률
+        cur_user_diabet=round(cur_user_diabet,1)
         goal_user_diabet=bmidp[user_bmi][user_category] #목표시 유병률
+        goal_user_diabet=round(goal_user_diabet,1)
         differs=goal_user_diabet-cur_user_diabet #유병률 변화
+        differs=round(differs,1)
+        
+        context={'cur_w':cur_weight,'cur_bmi':cur_bmi,'goal_w':user_goal_weight,'goal_bmi':user_bmi,'cur_dp':cur_user_diabet,'goal_dp':goal_user_diabet,'differs':differs}
+    
+    else: #로그인 안된 경우
+        context={'msg':'회원 가입시 개인 목표 분석을 제공해드립니다'}
+    return JsonResponse(context,safe=False)
+
+
+
+#심장
+def bmiheart(request):
+    if request.session['session_user_id']: #로그인 된 경우
+        user=Members.objects.get(user_id=request.session['session_user_id'])#사용자
+        user_age=calculate_age(user.birth)#사용자 나이
+        user_category=age_category(user_age)#사용자 연령대
+        user_goal_weight=user.goal_weight #목표 몸무게
+        
+        user_daily=Dailydata.objects.filter(user=user).order_by('-day_no')[0] #사용자 변화데이터
+        print(user_daily)
+        user_hieght=user_daily.height #사용자 키
+        cur_bmi=user_daily.cur_bmi #현재BMI
+        cur_bmi=math.trunc(cur_bmi)
+        cur_weight=user_daily.cur_weight #현재몸무게
+        
+        # bmi 계산
+        len = user_hieght/100
+        user_bmi = float(user_goal_weight)/float(len*len) #목표 BMI
+        user_bmi=math.trunc(user_bmi)
+        
+        #데이터프레임 읽어오기
+        df=pd.read_csv('./static/bmi_data/bmi_data.csv')
+        #bmi-age 피벗테이블:당뇨
+        bmi_pv=pd.pivot_table(df,values='HeartDisease',index='AgeCategory',columns='BMI_range')
+        bmidp=bmi_pv*100
+        
+        cur_user_diabet=bmidp[cur_bmi][user_category] #현재 유병률
+        cur_user_diabet=round(cur_user_diabet,1)
+        goal_user_diabet=bmidp[user_bmi][user_category] #목표시 유병률
+        goal_user_diabet=round(goal_user_diabet,1)
+        differs=goal_user_diabet-cur_user_diabet #유병률 변화
+        differs=round(differs,1)
+        
+        context={'cur_w':cur_weight,'cur_bmi':cur_bmi,'goal_w':user_goal_weight,'goal_bmi':user_bmi,'cur_dp':cur_user_diabet,'goal_dp':goal_user_diabet,'differs':differs}
+    
+    else: #로그인 안된 경우
+        context={'msg':'회원 가입시 개인 목표 분석을 제공해드립니다'}
+    return JsonResponse(context,safe=False)
+
+
+
+#신장
+def bmikidney(request):
+    if request.session['session_user_id']: #로그인 된 경우
+        user=Members.objects.get(user_id=request.session['session_user_id'])#사용자
+        user_age=calculate_age(user.birth)#사용자 나이
+        user_category=age_category(user_age)#사용자 연령대
+        user_goal_weight=user.goal_weight #목표 몸무게
+        
+        user_daily=Dailydata.objects.filter(user=user).order_by('-day_no')[0] #사용자 변화데이터
+        print(user_daily)
+        user_hieght=user_daily.height #사용자 키
+        cur_bmi=user_daily.cur_bmi #현재BMI
+        cur_bmi=math.trunc(cur_bmi)
+        cur_weight=user_daily.cur_weight #현재몸무게
+        
+        # bmi 계산
+        len = user_hieght/100
+        user_bmi = float(user_goal_weight)/float(len*len) #목표 BMI
+        user_bmi=math.trunc(user_bmi)
+        
+        #데이터프레임 읽어오기
+        df=pd.read_csv('./static/bmi_data/bmi_data.csv')
+        #bmi-age 피벗테이블:당뇨
+        bmi_pv=pd.pivot_table(df,values='KidneyDisease',index='AgeCategory',columns='BMI_range')
+        bmidp=bmi_pv*100
+        
+        cur_user_diabet=bmidp[cur_bmi][user_category] #현재 유병률
+        cur_user_diabet=round(cur_user_diabet,1)
+        goal_user_diabet=bmidp[user_bmi][user_category] #목표시 유병률
+        goal_user_diabet=round(goal_user_diabet,1)
+        differs=goal_user_diabet-cur_user_diabet #유병률 변화
+        differs=round(differs,1)
         
         context={'cur_w':cur_weight,'cur_bmi':cur_bmi,'goal_w':user_goal_weight,'goal_bmi':user_bmi,'cur_dp':cur_user_diabet,'goal_dp':goal_user_diabet,'differs':differs}
     

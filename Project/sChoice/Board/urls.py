@@ -14,8 +14,10 @@ urlpatterns = [
     path('<int:bNo>/<int:nowpage>/fdDel/',views.fdDel,name='fdDel'),
     path('<int:bNo>/<int:nowpage>/exReply/',views.exReply,name='exReply'),
     path('<int:bNo>/<int:nowpage>/fdReply/',views.fdReply,name='fdReply'),
-    path('yourbody/',views.yourbody,name='yourbody'),
+    path('yourbody/',views.yourbody,name='yourbody'), #분석페이지 열기
     path('shop/',views.shop,name='shop'),
     path('shopAjax/',views.shopAjax,name='shopAjax'),
-    path('bmidiabet/',views.bmidiabet,name='bmidiabet'), 
+    path('bmidiabet/',views.bmidiabet,name='bmidiabet'), #당뇨에이잭
+    path('bmiheart/',views.bmiheart,name='bmiheart'), #심장에이잭
+    path('bmikidney/',views.bmikidney,name='bmikidney'), #신장에이잭
 ]

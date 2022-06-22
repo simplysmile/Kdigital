@@ -3,8 +3,6 @@
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
     function diBtn(){
-        alert('diBtn Test')
-
         $.ajax({
             url:'{% url "Board:bmidiabet" %}',
             data:{},
@@ -47,14 +45,106 @@
             }//실패
         })
 
-    }
+    }//당뇨버튼
+    function htBtn(){
+        $.ajax({
+            url:'{% url "Board:bmiheart" %}',
+            data:{},
+            dataType:'json',
+            success:function(data){
+
+                let newinfo=''
+
+                newinfo+='<img src="/static/bmi_data/heatmap_Diabetic.png" />'
+
+                newinfo+='<table>'
+                newinfo+='<tr>'
+                newinfo+='<td>현재 몸무게</td>'
+                newinfo+='<td>'+data.cur_w+'kg</td>'
+                newinfo+='<td>목표 몸무게</td>'
+                newinfo+='<td>'+data.goal_w+'kg</td>'
+                newinfo+='</tr>'
+                newinfo+='<tr>'
+                newinfo+='<td>현재 BMI</td>'
+                newinfo+='<td>'+data.cur_bmi+'</td>'
+                newinfo+='<td>목표 BMI</td>'
+                newinfo+='<td>'+data.goal_bmi+'</td>'
+                newinfo+='</tr>'
+                newinfo+='<tr>'
+                newinfo+='<td>현재 발병률</td>'
+                newinfo+='<td>'+data.cur_dp+'%</td>'
+                newinfo+='<td>목표 달성시 예측 발병률</td>'
+                newinfo+='<td>'+data.goal_dp+'%</td>'
+                newinfo+='</tr>'
+                newinfo+='<tr>'
+                newinfo+='<td colspan="2">유병률변화량</td>'
+                newinfo+='<td colspan="2">'+data.differs+'%</td>'
+                newinfo+='</tr>'
+                newinfo+='</table>'
+                
+                $("#mychart").html(newinfo)
+            },//성공
+            except:function(){
+                alert('실패')
+            }//실패
+        })
+
+    }//심장버튼
+
+    function kdBtn(){
+        $.ajax({
+            url:'{% url "Board:bmikidney" %}',
+            data:{},
+            dataType:'json',
+            success:function(data){
+
+                let newinfo=''
+
+                newinfo+='<img src="/static/bmi_data/heatmap_Diabetic.png" />'
+
+                newinfo+='<table>'
+                newinfo+='<tr>'
+                newinfo+='<td>현재 몸무게</td>'
+                newinfo+='<td>'+data.cur_w+'kg</td>'
+                newinfo+='<td>목표 몸무게</td>'
+                newinfo+='<td>'+data.goal_w+'kg</td>'
+                newinfo+='</tr>'
+                newinfo+='<tr>'
+                newinfo+='<td>현재 BMI</td>'
+                newinfo+='<td>'+data.cur_bmi+'</td>'
+                newinfo+='<td>목표 BMI</td>'
+                newinfo+='<td>'+data.goal_bmi+'</td>'
+                newinfo+='</tr>'
+                newinfo+='<tr>'
+                newinfo+='<td>현재 발병률</td>'
+                newinfo+='<td>'+data.cur_dp+'%</td>'
+                newinfo+='<td>목표 달성시 예측 발병률</td>'
+                newinfo+='<td>'+data.goal_dp+'%</td>'
+                newinfo+='</tr>'
+                newinfo+='<tr>'
+                newinfo+='<td colspan="2">유병률변화량</td>'
+                newinfo+='<td colspan="2">'+data.differs+'%</td>'
+                newinfo+='</tr>'
+                newinfo+='</table>'
+                
+                $("#mychart").html(newinfo)
+            },//성공
+            except:function(){
+                alert('실패')
+            }//실패
+        })
+
+    }//신장버튼
 
 
 </script>
-
+<style>
+    .disease{width: 200px; height: 80px; text-align:center;}
+</style>
 <h2>데이터 분석 페이지</h2>
-<span onclick="diBtn()">당뇨</span>
-<span>심장질환</span>
+<div class='disease' onclick="diBtn()">당뇨</div>
+<div class='disease' onclick="htBtn()">심장질환</div>
+<div class='disease' onclick="kdBtn()">신장질환</div>
 <div id='mychart'>
     
 </div>
