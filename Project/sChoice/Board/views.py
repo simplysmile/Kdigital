@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from Member.models import Members
+from Member.models import Members,Dailydata
 from Board.models import ExerciseBoard,MealBoard
 from django.core.paginator import Paginator
 from django.db.models import F
@@ -8,6 +8,8 @@ import json
 import numpy as np
 import matplotlib.pyplot as plt
 from django.http import JsonResponse
+import math
+from datetime import date
 
 
 
@@ -215,4 +217,74 @@ def fdReply(request,bNo,nowpage):
 ###############################
 #데이터 분석
 def yourbody(request):
-    return render(request,'yourbody.html')
+    return render(request,'helthInfo.html')
+
+
+#나이계산
+def calculate_age(born):
+    today = date.today()
+    return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+
+#나이 범위 지정
+def age_category(olds):
+    if olds<25:
+        a_cate='18-24'
+    elif olds<30:
+        a_cate='25-29'
+    elif olds<35:
+        a_cate='30-34'
+    elif olds<40:
+        a_cate='35-39'
+    elif olds<45:
+        a_cate='40-44'
+    elif olds<50:
+        a_cate='45-49'
+    elif olds<55:
+        a_cate='50-54'
+    elif olds<60:
+        a_cate='55-59'
+    elif olds<65:
+        a_cate='60-64'
+    elif olds<70:
+        a_cate='65-69'
+    elif olds<75:
+        a_cate='70-74'
+    elif olds<80:
+        a_cate='75-79'
+    else:
+        a_cate='80 or older'
+    return a_cate
+
+#Ajax
+#당뇨
+def bmidiabet(request):
+    if request.session['session_id']: #로그인 된 경우
+        user=Members.objects.get(user_id=request.session['session_id'])#사용자
+        user_age=calculate_age(user.birth)#사용자 나이
+        user_category=age_category(user_age)#사용자 연령대
+        user_goal_weight=user.goal_weight #목표 몸무게
+        
+        user_daily=Dailydata.objects.get(user=user) #사용자 변화데이터
+        user_hieght=user_daily.height #사용자 키
+        cur_bmi=user_daily.cur_bmi #현재BMI
+        cur_weight=user_daily.cur_weight #현재몸무게
+        
+        # bmi 계산
+        len = user_hieght/100
+        user_bmi = float(user_goal_weight)/float(len*len) #목표 BMI
+        
+        #데이터프레임 읽어오기
+        df=pd.read_csv('/static/bmi_data/bmi_data.csv')
+        #bmi-age 피벗테이블:당뇨
+        bmi_pv=pd.pivot_table(df,values='Diabetic',index='AgeCategory',columns='BMI_range')
+        bmidp=bmi_pv*100
+        
+        cur_user_diabet=bmidp[cur_bmi][user_category] #현재 유병률
+        goal_user_diabet=bmidp[user_bmi][user_category] #목표시 유병률
+        differs=goal_user_diabet-cur_user_diabet #유병률 변화
+        
+        context={'cur_w':cur_weight,'cur_bmi':cur_bmi,'goal_w':user_goal_weight,'goal_bmi':user_bmi,'cur_dp':cur_user_diabet,'goal_dp':goal_user_diabet,'differs':differs}
+    
+    else: #로그인 안된 경우
+        context={'msg':'회원 가입시 개인 목표 분석을 제공해드립니다'}
+    return JsonResponse(context,safe=False)

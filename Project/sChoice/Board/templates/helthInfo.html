@@ -6,11 +6,41 @@
         alert('diBtn Test')
 
         $.ajax({
-            url:'',
+            url:'{% url "Board:bmidiabet" %}',
             data:{},
             dataType:'json',
             success:function(data){
 
+                let newinfo=''
+
+                newinfo+='<img src="/static/bmi_data/heatmap_Diabetic.png" />'
+
+                newinfo+='<table>'
+                newinfo+='<tr>'
+                newinfo+='<td>현재 몸무게</td>'
+                newinfo+='<td>'+data.cur_w+'kg</td>'
+                newinfo+='<td>목표 몸무게</td>'
+                newinfo+='<td>'+data.goal_w+'kg</td>'
+                newinfo+='</tr>'
+                newinfo+='<tr>'
+                newinfo+='<td>현재 BMI</td>'
+                newinfo+='<td>'+data.cur_bmi+'</td>'
+                newinfo+='<td>목표 BMI</td>'
+                newinfo+='<td>'+data.goal_bmi+'</td>'
+                newinfo+='</tr>'
+                newinfo+='<tr>'
+                newinfo+='<td>현재 발병률</td>'
+                newinfo+='<td>'+data.cul_dp+'%</td>'
+                newinfo+='<td>목표 달성시 예측 발병률</td>'
+                newinfo+='<td>'+data.goal_dp+'%</td>'
+                newinfo+='</tr>'
+                newinfo+='<tr>'
+                newinfo+='<td colspan="2">유병률변화량</td>'
+                newinfo+='<td colspan="2">'+data.differs+'%</td>'
+                newinfo+='</tr>'
+                newinfo+='</table>'
+                
+                $("#mychart").html(newinfo)
             },//성공
             except:function(){
 
@@ -26,26 +56,6 @@
 <span onclick="diBtn()">당뇨</span>
 <span>심장질환</span>
 <div id='mychart'>
-    <canvas id='canchart'></canvas>
+    
 </div>
-<table>
-    <tr>
-        <td>현재 몸무게</td>
-        <td>65kg</td>
-        <td>목표 몸무게</td>
-        <td>58kg</td>
-    </tr>
-    <tr>
-        <td>현재 BMI</td>
-        <td>29</td>
-        <td>목표 BMI</td>
-        <td>25</td>
-    </tr>
-    <tr>
-        <td>현재 발병률</td>
-        <td>50%</td>
-        <td>목표 달성시 예측 발병률</td>
-        <td>25%</td>
-    </tr>
-</table>
 {%endblock mycontent%}
