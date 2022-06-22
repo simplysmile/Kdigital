@@ -10,17 +10,8 @@
 <script src="/static/js/dailycheckExercise_modal.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
 <script>
-    var table_str=''
-    {%if health_list%}
-        {%for health in health_list%}
-        table_str+='<tr>'
-        table_str+='<td>'+{{health.ex_name0}}+'<br>'+{{health.level0}}'</td>>'
-        table_str+='<td>'+{{health.health_time0}}+'분</td>>'
-        table_str+='<td>'+{{health.ex_name1}}+'<br>'+{{health.level1}}'+</td>>'
-        table_str+='<td>'+{{health.health_time1}}+'분</td>>'
-        table_str+='</tr>'
-        {%endfor%}
-    {%endif%}
+    var table_str='ㅋㅋㅋㅋ'
+ 
     $('#health_cont').html(table_str)
 
     $('#health_cont').css({'margin':'0 auto'},{'display':'none'});

@@ -39,11 +39,16 @@
 
 #box4{
 
-  
+    /*border : 1px solid blue;*/
     
     font-size:20px;
+    padding-top: 40px;
+    padding-right: 230px;
 
     font-family: "dohyeon";
+    width:500px;
+    height : 200px;
+    text-align : center;
 
 
     
