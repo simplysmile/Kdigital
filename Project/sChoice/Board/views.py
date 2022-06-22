@@ -13,6 +13,7 @@ from django.http import JsonResponse
 
 # #쇼핑 추천 함수
 def shop(request): 
+    print()
     return render(request,'shop.html')
 
 # shop.html page에 제품을 올려 주는 함수

@@ -134,11 +134,11 @@
                
     
                 var needcalstr = ''
-                needcalstr+='<div><tr><td class="level" colspan="2"> 목표별 권장 칼로리 </td></tr></div>'
-                needcalstr+='<div><tr><td>체중조절 <span class="level1">1</span>단계: </td><td><span class="level1">'+ needcal[3] +'</span>kcal</td></tr></div>'
-                needcalstr+='<div><tr><td>체중조절 <span class="level2">2</span>단계: </td><td><span class="level2">'+ needcal[2] +'</span>kcal</td></tr></div>'
-                needcalstr+='<div><tr><td>체중조절 <span class="level3">3</span>단계: </td><td><span class="level3">'+ needcal[1] +'</span>kcal</td></tr></div>'
-                needcalstr+='<div><tr><td>체중조절 <span class="level4">4</span>단계 </td><td><span class="level4">' + needcal[0] +'</span>kcal</td></tr></div>'
+                needcalstr+='<div><tr><td class="level" colspan="2">얼마나 먹어야 되나요?</td></tr></div>'
+                needcalstr+='<div><tr><td><span class="level1">1</span>단계: </td><td><span class="level1">'+ needcal[3] +'</span>kcal</td></tr></div>'
+                needcalstr+='<div><tr><td><span class="level2">2</span>단계: </td><td><span class="level2">'+ needcal[2] +'</span>kcal</td></tr></div>'
+                needcalstr+='<div><tr><td><span class="level3">3</span>단계: </td><td><span class="level3">'+ needcal[1] +'</span>kcal</td></tr></div>'
+                needcalstr+='<div><tr><td><span class="level4">4</span>단계 </td><td><span class="level4">' + needcal[0] +'</span>kcal</td></tr></div>'
                 
                 $('#box4').html(needcalstr).css({
     
@@ -356,14 +356,14 @@
                             <button id="reset" class='real_btn2' type="button" onclick="resetBtn()">취소</button>  
         
                         </div>
-
+                        
+                        <div id="box4">
+                           
+                        </div>
                         <div id="box3">
                            
                         </div>
 
-                        <div align="left" id="box4">
-                           
-                        </div>
 
                 </div>
                 <div id="box1">
