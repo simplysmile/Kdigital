@@ -9,6 +9,26 @@
 <script src="/static/js/dailycheckExercise.js"></script>
 <script src="/static/js/dailycheckExercise_modal.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+<script>
+    var table_str=''
+    {%if health_list%}
+        {%for health in health_list%}
+        table_str+='<tr>'
+        table_str+='<td>'+{{health.ex_name0}}+'<br>'+{{health.level0}}'</td>>'
+        table_str+='<td>'+{{health.health_time0}}+'분</td>>'
+        table_str+='<td>'+{{health.ex_name1}}+'<br>'+{{health.level1}}'+</td>>'
+        table_str+='<td>'+{{health.health_time1}}+'분</td>>'
+        table_str+='</tr>'
+        {%endfor%}
+    {%endif%}
+    $('#health_cont').html(table_str)
+
+    $('#health_cont').css({'margin':'0 auto'},{'display':'none'});
+    $('.on3 tbody').css({'display':'block'},{'color':'black'});
+    $('#aerobic_cont').css({'margin':'0 auto'},{'display':'none'});
+    $('.on4.tbody').css({'display':'block'},{'color':'black'});
+</script>
+
 <main>	
 	<div id="box1">
         
@@ -25,9 +45,12 @@
         </table>
         <br>
         <button type="button" style='background-color:#b3dae9;' id='health_result' onclick="healthBtn()">매일 운동으로 {{goal_burn_kcal}}kcal를 소모하려면?</button>
+        <br>
+        <button type="button" style='background-color:#b3dae9;' id='aerobic' onclick="aerobicBtn()">유산소운동</button>
+        <button type="button" style='background-color:#b3dae9;' id='anaerobic' onclick="anaerobicBtn()">무산소운동</button>
         <br><br>
         <table id='health_cont'>
-            {%if health_list%}
+            {% comment %} {%if health_list%}
             {%for health in health_list%}
             <tr>
                 <td>{{health.ex_name0}}<br>{{health.level0}}</td>
@@ -36,8 +59,20 @@
                 <td>{{health.health_time1}}분</td>
             </tr>
             {%endfor%}
-            {%endif%}
+            {%endif%} {% endcomment %}
         </table>
+        {% comment %} <table id='aerobic_cont'>
+            {%if aerobic_list%}
+            {%for aerobic in aerobic_list%}
+            <tr>
+                <td>{{aerobic.ex_name0}}<br>{{aerobic.level0}}</td>
+                <td>{{aerobic.health_time0}}분</td>
+                <td>{{aerobic.ex_name1}}<br>{{aerobic.level1}}</td>
+                <td>{{aerobic.health_time1}}분</td>
+            </tr>
+            {%endfor%}
+            {%endif%}
+        </table> {% endcomment %}
             
 
 	</div>
@@ -267,6 +302,9 @@
             var target1Name
             $(document).on('click','#health_result',function(){
                 $('#health_cont').toggleClass('on3')
+            })
+            $(document).on('click','#aerobic',function(){
+                $('#aerobic').toggleClass('on4')
             })
 
 
