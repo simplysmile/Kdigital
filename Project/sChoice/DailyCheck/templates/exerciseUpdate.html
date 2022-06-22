@@ -157,7 +157,7 @@
                     </div>
                     {%endif%}
                     <br>
-                    <button type="button" class="cancelBtn" id='cancelBtn' onclick="cancelBtn()">Cancel</button>
+                    <button type="button" class="deleteBtn" id='deleteBtn' onclick="deleteBtn()">Delete</button>
                     <button type="submit" class="saveBtn" id='saveBtn' onclick="saveBtn()">Save</button>
 
                 </div>
@@ -168,9 +168,9 @@
     <script>
         // 모달
         $(function(){
-            $('#cancelBtn').click(function(){
-                if (confirm('수정을 취소하시겠습니까?')){
-                    location.href="{% url 'DailyCheck:exerciseCheck' sdate %}"
+            $('#deleteBtn').click(function(){
+                if (confirm('운동기록을 정말 삭제하시겠습니까?')){
+                    location.href="{% url 'DailyCheck:exerciseDelete' sdate ex_no %}"
                 }
             })
         })

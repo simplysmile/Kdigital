@@ -275,7 +275,7 @@ def imgCheck(request,sdate):
             daily=Dailydata.objects.filter(user=u_id,add_date__year=curr_year,add_date__month=curr_month,add_date__day=curr_day)[0]
             cur_height=daily.height
             daily.cur_weight=cur_weight
-            cur_bmi=int(int(cur_weight)//((int(cur_height)*0.01)**2))
+            cur_bmi=float(float(cur_weight)//((float(cur_height)*0.01)**2))
             daily.cur_bmi=cur_bmi
             
             daily.day_img=imgName
@@ -283,7 +283,7 @@ def imgCheck(request,sdate):
         else:
             qs = Dailydata.objects.filter(user=u_id).order_by('day_no')[0]
             cur_height=qs.height
-            cur_bmi=int(int(cur_weight)//((int(cur_height)*0.01)**2))
+            cur_bmi=float(float(cur_weight)//((float(cur_height)*0.01)**2))
             burned_kcal=qs.goal_burn_kcal
             eat_kcal=qs.goal_eat_kcal
             
@@ -307,8 +307,19 @@ def imgCheck(request,sdate):
             data_relist=[content]
         return JsonResponse(data_relist,safe=False)
     
-
-
+def exerciseDelete(request,sdate,ex_no):
+    u_id = request.session['session_user_id']
+    date=sdate.split('-')
+    curr_year=date[0]
+    curr_month=date[1]
+    curr_day=date[2]
+    daily=Dailyexercise.objects.get(user=u_id,ex_No=ex_no)
+    daily.delete()
+    daily.save()
+    
+    url='/dailycheck/'+sdate+'/exerciseCheck/'
+    
+    return redirect(url)     
 
 def exerciseUpdate(request,sdate,ex_no):
     if request.method=='POST':
@@ -330,7 +341,7 @@ def exerciseUpdate(request,sdate,ex_no):
         ex_count=request.POST.get('counts2') 
         
         goal_kcal=request.POST.get('goal_kcal') 
-        burned_kcal=int(exercise.met)*int(ex_set2)*int(ex_time2)*int(Daily.cur_weight)//60 
+        burned_kcal=int(exercise.met)*int(ex_set2)*int(ex_time2)*float(Daily.cur_weight)//60 
         content=ex_set2+','+ex_count 
         
         
@@ -378,7 +389,7 @@ def exerciseView(request,sdate,ex_no):
         b_dic['ex_counts']=int(nums[0])*int(nums[1])
         b_list.append(b_dic)
         
-    
+    b_list2 = sorted(b_list, key = lambda item : (item['ex_no']))
     qs=Dailyexercise.objects.get(ex_No=ex_no)
     qs2=Exercise.objects.get(ex_id=qs.exercise_id)
     level= qs2.level
@@ -386,7 +397,7 @@ def exerciseView(request,sdate,ex_no):
     sc=(qs.content).split(',')
     ex_set=sc[0]
     ex_count=sc[1]
-    content={'b_list':b_list,'myList':qs,'sdate':sdate,'ex_no':ex_no,'level':level,'ex_name':ex_name,'ex_count':ex_count,'ex_set':ex_set}
+    content={'b_list':b_list2,'myList':qs,'sdate':sdate,'ex_no':ex_no,'level':level,'ex_name':ex_name,'ex_count':ex_count,'ex_set':ex_set}
     
     return render(request,'exerciseUpdate.html',content)
 
@@ -407,8 +418,8 @@ def exerciseCheck(request,sdate):
     print(exercise_qs.count())
     health_list=[]
     for i in range(exercise_qs.count()//2):
-        health_time0=int(goal_burn_kcal*60/int(dailydata.cur_weight)/int(exercise_qs[2*i].met))
-        health_time1=int(goal_burn_kcal*60/int(dailydata.cur_weight)/int(exercise_qs[2*i+1].met))
+        health_time0=int(goal_burn_kcal*60/float(dailydata.cur_weight)/float(exercise_qs[2*i].met))
+        health_time1=int(goal_burn_kcal*60/float(dailydata.cur_weight)/float(exercise_qs[2*i+1].met))
         health_dic={}
         health_dic['health_time0']=health_time0
         health_dic['health_time1']=health_time1
@@ -479,6 +490,7 @@ def exerciseCheck(request,sdate):
         
         daily_list.append(daily_dic)
         
+    b_list2 = sorted(b_list, key = lambda item : (item['ex_no']))
     daily_list2 = sorted(daily_list, key = lambda item : (-item['kcal_per']))
     with open('static/exercisetest.json','w') as f:
         json.dump(daily_list2,f)
@@ -505,7 +517,7 @@ def exerciseCheck(request,sdate):
     
     
         
-    content={'goal_burn_kcal':goal_burn_kcal,'b_list':b_list,'exerciseList':data_list,'sdate':sdate,'user_category':user_category,'health_list':health_list}
+    content={'goal_burn_kcal':goal_burn_kcal,'b_list':b_list2,'exerciseList':data_list,'sdate':sdate,'user_category':user_category,'health_list':health_list}
     return render(request,'exerciseCheck.html',content)
 
 def exercise1(request):
@@ -580,7 +592,7 @@ def saveBtn(request,sdate):
         ex_count=request.POST.get('counts2')
         
         goal_kcal=request.POST.get('goal_kcal')
-        burned_kcal=int(exercise.met)*int(ex_set2)*int(ex_time2)*int(Daily.cur_weight)//60
+        burned_kcal=int(exercise.met)*int(ex_set2)*int(ex_time2)*float(Daily.cur_weight)//60
         content=ex_set2+','+ex_count
         
         qs=Dailyexercise(user=member,exercise=exercise,createdate=sdate,ex_time=ex_time2,burned_kcal=burned_kcal,goal_kcal=goal_kcal,content=content)

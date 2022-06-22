@@ -181,7 +181,7 @@ a:hover{
   cursor: pointer;
 }
 
-.cancelBtn{
+.deleteBtn{
   float: left;
   font-size: 28px;
   font-weight: bold;
@@ -200,8 +200,8 @@ a:hover{
 
 }
 
-.cancelBtn:hover,
-.cancelBtn:focus{
+.deleteBtn:hover,
+.deleteBtn:focus{
   cursor: pointer;
 }
 
