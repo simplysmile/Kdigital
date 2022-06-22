@@ -650,7 +650,6 @@ def myStatus(request):
     # context={'username':user.user_name, "achievement":90}
     return render(request,'myStatus.html')
 
-
 def myStatusData(request):
     # 세션을 통해 아이디 
     u_id = request.session['session_user_id']
@@ -721,6 +720,9 @@ def myStatusData(request):
     mealstatus['m_cal']=m_c_a  
     df_meal_all = pd.DataFrame(mealstatus)
     df_meal_all_sum = df_meal_all.groupby('m_date').sum()
+    avg_day_cal= round(df_meal_all_sum.mean()['m_cal'],2)
+ 
+
     meal_succ_day = 0
     
     for j in df_meal_all_sum.m_cal:
@@ -738,10 +740,7 @@ def myStatusData(request):
     df_mm = pd.DataFrame(mealdict)
     df_mm_day = df_mm.groupby('m_date').sum()
     df_mm_mealtime = df_mm.groupby('m_time').sum()
-    
-    print(df_mm_mealtime['m_cal'])
-    print(df_mm_mealtime.loc['B']['m_cal'])
-    
+  
     total_b, total_l, total_d, total_s = 0,0,0,0
     if 'B' in df_mm_mealtime.index: 
         total_b = df_mm_mealtime.loc['B']['m_cal']
@@ -759,7 +758,10 @@ def myStatusData(request):
     total_prot = df_mm['m_prot'].sum()
     total_fat = df_mm['m_fat'].sum()
     total_total = total_carb+total_prot+total_fat
-    ratiotxt = str(round(total_carb/total_total *100 ))+':'+str(round(total_prot/total_total *100 ))+':'+str(round(total_fat/total_total *100 ))
+    ratiotxt = str(round(total_carb/total_total *10 ,1))+':'+str(round(total_prot/total_total *10 ,1))+':'+str(round(total_fat/total_total *10,1 ))
+    
+    
+    
     
 
     
@@ -769,7 +771,7 @@ def myStatusData(request):
     
     
     
-    mealinfo={'blds_ratio':bldstext,'cpf_ratio':ratiotxt,'avgCarb':d_avg_carb,'avgProt':d_avg_prot,'avgFat':d_avg_fat}
+    mealinfo={'blds_ratio':bldstext,'cpf_ratio':ratiotxt,'avgCarb':d_avg_carb,'avgProt':d_avg_prot,'avgFat':d_avg_fat,'avgDCal':avg_day_cal}
     
     
     # 일주일 정보
@@ -811,14 +813,26 @@ def myStatusData(request):
     exerstatus = {}
     e_d_a=[]
     e_c_a=[]
+    e_t_a=[]
+    e_n_a=[]
+    e_isa=[]
 
     for i in range(len(exer_all)):
-        e_d_a.append(exer_all[i].createdate)
+        e_d_a.append(exer_all[i].createdate.date())
         e_c_a.append(exer_all[i].burned_kcal)
+        e_t_a.append(exer_all[i].ex_time)
+        e_n_a.append(exer_all[i].exercise.ex_name)
+        e_isa.append(exer_all[i].exercise.aerobic)
     exerstatus['m_date']=e_d_a
     exerstatus['m_cal']=e_c_a  
+    exerstatus['e_time']=e_t_a  
+    exerstatus['e_name']=e_n_a  
+    exerstatus['e_isaerobic']=e_isa  
     df_exer_all = pd.DataFrame(exerstatus)
     df_exer_all_sum = df_exer_all.groupby('m_date').sum()
+
+
+
     exer_succ_day = 0
     
     for k in df_exer_all_sum.m_cal:
@@ -826,8 +840,48 @@ def myStatusData(request):
             exer_succ_day+=1
     
     e_percent =  round(exer_succ_day/len(df_exer_all_sum) *100,2)
+
+    num_usanso, num_musanso, time_usanso, time_musanso, cal_usanso, cal_musanso = 0,0,0,0,0,0
+
+
+    if 'o' in df_exer_all.groupby('e_isaerobic').count().index: 
+        num_usanso=df_exer_all.groupby('e_isaerobic').count()['e_time'].o
+        time_usanso=df_exer_all.groupby('e_isaerobic').sum()['e_time'].o
+        cal_usanso=df_exer_all.groupby('e_isaerobic').sum()['m_cal'].o
+    if 'x' in df_exer_all.groupby('e_isaerobic').count().index:
+        num_musanso=df_exer_all.groupby('e_isaerobic').count()['e_time'].x
+        time_musanso=df_exer_all.groupby('e_isaerobic').sum()['e_time'].x
+        cal_musanso=df_exer_all.groupby('e_isaerobic').sum()['m_cal'].x
+
+
     
-    # 일주일 정보
+ 
+
+    dfe = pd.DataFrame(exerstatus)
+    dfe['m_date'] = pd.to_datetime(dfe['m_date'],format='%Y-%m-%d')
+    dfe_sum = dfe.groupby('m_date').sum()
+    mon_cnt = int(dfe_sum.query('m_date.dt.dayofweek == 0').count()['e_time'])
+    tue_cnt = int(dfe_sum.query('m_date.dt.dayofweek == 1').count()['e_time'])
+    wed_cnt = int(dfe_sum.query('m_date.dt.dayofweek == 2').count()['e_time'])
+    thr_cnt = int(dfe_sum.query('m_date.dt.dayofweek == 3').count()['e_time'])
+    fri_cnt = int(dfe_sum.query('m_date.dt.dayofweek == 4').count()['e_time'])
+    sat_cnt = int(dfe_sum.query('m_date.dt.dayofweek == 5').count()['e_time'])
+    sun_cnt = int(dfe_sum.query('m_date.dt.dayofweek == 6').count()['e_time'])
+
+
+
+    df_exer_all_ename = df_exer_all.groupby('e_name').count()
+    themostexer = df_exer_all_ename.idxmax()['m_date']
+
+
+    
+
+    exerinfo={'aerobic': [int(num_usanso),int(time_usanso),int(num_musanso),int(time_musanso),int(cal_usanso),int(cal_musanso)] ,
+                'exerwk': [mon_cnt,tue_cnt,wed_cnt,thr_cnt,fri_cnt,sat_cnt,sun_cnt],'mostexer':themostexer }
+
+
+
+    # 일주일 정보 ------------------------------------------------------
     edata={}
     e_d =[]
     e_c =[]       
@@ -873,14 +927,12 @@ def myStatusData(request):
             'firstweight':firstweight,'workoutday':d_day.days, 'weight':allweight,'alldays':alldays,
             'Gmealcal':goal_meal_cal,'mealweak':json.loads(js_meal), 'mealpercent':m_percent,
             'Gexercal':goal_burn_cal,'exerweak':json.loads(js_exer), 'exerpercent':e_percent,
-            'username':user.user_name, 'minfo':mealinfo
+            'username':user.user_name, 'minfo':mealinfo, 'einfo':exerinfo
             }
 
 
 
     return JsonResponse(context)
-    
-
 
     
 
