@@ -258,23 +258,26 @@ def age_category(olds):
 #Ajax
 #당뇨
 def bmidiabet(request):
-    if request.session['session_id']: #로그인 된 경우
-        user=Members.objects.get(user_id=request.session['session_id'])#사용자
+    if request.session['session_user_id']: #로그인 된 경우
+        user=Members.objects.get(user_id=request.session['session_user_id'])#사용자
         user_age=calculate_age(user.birth)#사용자 나이
         user_category=age_category(user_age)#사용자 연령대
         user_goal_weight=user.goal_weight #목표 몸무게
         
-        user_daily=Dailydata.objects.get(user=user) #사용자 변화데이터
+        user_daily=Dailydata.objects.filter(user=user).order_by('-day_no')[0] #사용자 변화데이터
+        print(user_daily)
         user_hieght=user_daily.height #사용자 키
         cur_bmi=user_daily.cur_bmi #현재BMI
+        cur_bmi=math.trunc(cur_bmi)
         cur_weight=user_daily.cur_weight #현재몸무게
         
         # bmi 계산
         len = user_hieght/100
         user_bmi = float(user_goal_weight)/float(len*len) #목표 BMI
+        user_bmi=math.trunc(user_bmi)
         
         #데이터프레임 읽어오기
-        df=pd.read_csv('/static/bmi_data/bmi_data.csv')
+        df=pd.read_csv('./static/bmi_data/bmi_data.csv')
         #bmi-age 피벗테이블:당뇨
         bmi_pv=pd.pivot_table(df,values='Diabetic',index='AgeCategory',columns='BMI_range')
         bmidp=bmi_pv*100

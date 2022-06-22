@@ -17,5 +17,5 @@ urlpatterns = [
     path('yourbody/',views.yourbody,name='yourbody'),
     path('shop/',views.shop,name='shop'),
     path('shopAjax/',views.shopAjax,name='shopAjax'),
-    path('bmidiabet/',views.bmidiabet,name='bmidiabet'),
+    path('bmidiabet/',views.bmidiabet,name='bmidiabet'), 
 ]
