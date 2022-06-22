@@ -81,7 +81,7 @@
                         inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/mealCheck/">식단</a></ul>'
                         inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/exerciseCheck/">운동</a></ul>'
                         inserttxt +=    '<div style="padding-top:10px"><ul>이미지 : <input type="file" name="file" id="file"></ul>'
-                        inserttxt +=    '<ul>몸무게 : <input type="text" name="weight" id="weight" value="'+data[0].cur_weight+'"></ul></div><br>'
+                        inserttxt +=    '<ul>몸무게 : <input type="number" min="0" max="1000" name="weight" id="weight" value="'+data[0].cur_weight+'"></ul></div><br>'
                         inserttxt+='<button type="button" class="saveBtn" id="saveBtn" onclick="saveBtn()">Save</button>'
                         
                     }
@@ -90,7 +90,7 @@
                     
 
                     $('#saveBtn').click(function(){
-                        if($('#weight').val()==0){
+                        if(($('#weight').val()<=0)||($('#weight').val()>=1000)){
                             alert('몸무게를 정확하게 입력하세요.')
                             $('#weight').focus()
                             return false

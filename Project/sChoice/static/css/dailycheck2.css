@@ -161,25 +161,19 @@ a:hover{
   font-size: 0px;
 
 }
-#health_result{
-  border: 1px solid white;
-  border-radius: 15px;
-  width: 200px;
-  height: 50px;
-  color: black;
-  /* color: #b3dae9; */
-  font-size: 15px;
-  font-weight: bold;
-  margin-left:80px;
+#health_result,
+#aerobic,
+#anaerobic{
+border: 1px solid white;
+border-radius: 15px;
+width: 200px;
+height: 50px;
+color: black;
+font-size: 15px;
+font-weight: bold;
+margin-left:80px;
 }
-#health_cont{
-  margin: 0 auto;
-  visibility: hidden;
-}
-.on3 tbody{
-  visibility: visible;
-  color: black;
-}
+
 #addExercise:hover{
   cursor: pointer;
   width: 100px;
