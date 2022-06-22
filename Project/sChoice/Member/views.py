@@ -32,9 +32,7 @@ def mUpdate(request):
         goal_period = request.POST.get('goal_period')
         allergic_food = request.POST.get('allergic_food')
         modidate = request.POST.get('modidate')
-        print(user_name)
-        print(birth)
-        print(allergic_food)
+        
 
         # db에 수정저장
         qs = Members.objects.get(user_id=user_id)

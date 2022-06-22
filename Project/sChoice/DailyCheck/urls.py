@@ -8,6 +8,7 @@ urlpatterns = [
     path('<str:sdate>/exerciseCheck/',views.exerciseCheck,name='exerciseCheck'),
     path('<str:sdate>/<int:ex_no>/exerciseView/',views.exerciseView,name='exerciseView'),
     path('<str:sdate>/<int:ex_no>/exerciseUpdate/',views.exerciseUpdate,name='exerciseUpdate'),
+    path('<str:sdate>/<int:ex_no>/exerciseDelete/',views.exerciseDelete,name='exerciseDelete'),
     path('exercise1/',views.exercise1,name='exercise1'),
     path('exercise2/',views.exercise2,name='exercise2'),
     path('<str:sdate>/saveBtn/',views.saveBtn,name='saveBtn'),
