@@ -36,10 +36,9 @@ a:hover{
     
     border-collapse: collapse;
 }
-#inputsection~#gocalendarimg{
+#gocalendarimg{
   height: 50px;
   float: right;
-  margin-right: 150px;
 }
 
 #gocalendarimg:hover,
