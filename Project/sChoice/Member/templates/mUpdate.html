@@ -1,6 +1,6 @@
-{% extends 'base.html' %}
+
 {% load static %}
-{% block mycontent %}
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -31,32 +31,45 @@
           <col width="70%">
       </colgroup>
         <tr>
-          <th>사용자이름 :</th>
+          <th>사용자이름</th>
           <td><input type='text' name='user_name' value="{{request.session.session_user_name}}"></td>
         </tr>
         <tr>
-          <th>아이디 :</th>
+          <th>아이디</th>
           <td><input type='text' name='user_id' value="{{request.session.session_user_id}}"></td>
           
         </tr>
         <tr>
-          <th>비밀번호 :</th>
+          <th>비밀번호</th>
           <td><input type='text' name='user_pw' value={{update.user_pw}}></td>
         </tr>
         <tr>
-          <th>생년월일 :</th>
+          <th>생년월일</th>
           <td><input type='text' name='birth' value="{{update.birth|date:'Y-m-d'}}"></td>          
         </tr>
         <tr>
-          <th>성별 :</th>
-          <td><input type='text' name='gender' value="{{update.get_gender_display}}"></td>
+          <th><label class="label"  for="gender">성별</label></th>
+                <td>
+                    <select id="gender" class="box_design"  name="gender" aria-label="성별">
+                        <option value="M" 
+                        {% if update.gender == "M" %}    
+                            selected
+                        {% endif %}
+                            >남자</option>
+                            <option value="F"
+                        {% if update.gender == "F" %}    
+                            selected  
+                        {% endif %}  
+                            >여자</option>
+                    </select>  
+                </td>
         </tr>
         <tr>
-          <th>전화 :</th>
+          <th>전화</th>
           <td><input type='text' name='phone' value="{{update.phone}}"></td>
         </tr>
         <tr>
-          <th>이메일 :</th>
+          <th>이메일</th>
           <td><input type='text' name='email' value="{{update.email}}"></td>
         </tr>
         <tr>
@@ -72,43 +85,197 @@
           <td><input type='text' name='addressd2' value="{{update.addressd2}}"></td>
         </tr>
         <tr>
-          <th>서비스 :</th>
-          <td><input type='text' name='service' value="{{update.get_service_display}}"></td>
+          <th><label class="label"  for="service">서비스</label></th>
+          <td><select id="service"   name="service" class="box_design" aria-label="서비스">      
+              <option value="meal"
+              {% if update.service == "meal" %} 
+              selected
+              {% endif %}
+               >식단형</option>
+              <option value="balance"
+              {% if update.service == "balance" %}
+              selected
+              {% endif %}>균형형</option>
+              <option value="exercise"
+              {% if update.service == "exercise" %}
+              selected
+              {% endif %}>운동형</option>
+          </select></td>
         </tr>
         <tr>
-          <th>목적 :</th>
-          <td><input type='text' name='user_purpose' value="{{update.get_user_purpose_display}}"></td>
+          <th><label class="label" for="user_purpose">목적</label></th>
+          <td><select id="user_purpose" name="user_purpose" class="box_design"  aria-label="목적">
+            <option value="weightlose" 
+            {% if update.user_purpose == "weightlose" %}
+            selected
+            {% endif %}>체중감소</option>
+            <option value="maintain"
+            {% if update.user_purpose == "maintain" %}
+            selected
+            {% endif %}
+            >체중유지</option>
+            <option value="weightgain"
+            {% if update.user_purpose == "weightgain" %}
+            selected
+            {% endif %}>체중증가</option>
+        </select></td>
+        </tr>
+
+        <tr>
+          <th><label class="label" for="target">타겟부위</label></th>
+          <td><select id="target" class="box_design" name="target"  aira-label='타겟부위'>
+            <option value="abs" 
+            {% if update.user_target == "abs" %}
+            selected
+            {% endif %}>복부</option>
+            <option value="shoulders"
+            {% if update.user_target == "shoulders" %}
+            selected
+            {% endif %}>어깨</option>
+            <option value="arms"
+            {% if update.user_target == "arms" %}
+            selected
+            {% endif %}>팔</option>
+            <option value="back"
+            {% if update.user_target == "back" %}
+            selected
+            {% endif %}>등</option>
+            <option value="chest"
+            {% if update.user_target == "chest" %}
+            selected
+            {% endif %}>가슴</option>
+            <option value="legs"
+            {% if update.user_target == "legs" %}
+            selected
+            {% endif %}>하체</option>
+            <option value="all"
+            {% if update.user_target == "all" %}
+            selected
+            {% endif %}>전신</option>
+        </select></td>
         </tr>
         <tr>
-          <th>타겟부위 :</th>
-          <td><input type='text' name='user_target' value="{{update.get_user_target_display}}"></td>
+          <th><label class="label" for="vegan">비건여부</label></th>
+          <td><select id="vegan" class="box_design" name="vegan"  aria-label="비건">
+            <option value="notvegan" 
+            {% if update.vegan == "notvegan" %}
+            selected
+            {% endif %}>해당사항없음</option>
+            <option value="vegan"
+            {% if update.vegan == "vegan" %}
+            selected
+            {% endif %}>비건채식</option>
+            <option value="lacto"
+            {% if update.vegan == "lacto" %}
+            selected
+            {% endif %}>락토채식</option>
+            <option value="ovo"
+            {% if update.vegan == "ovo" %}
+            selected
+            {% endif %}>오보채식</option>
+            <option value="lactoovo"
+            {% if update.vegan == "lactoovo" %}
+            selected
+            {% endif %}>락토오보채식</option>
+            <option value="pollo"
+            {% if update.vegan == "pollo" %}
+            selected
+            {% endif %}>폴로채식</option>
+            <option value="pesco"
+            {% if update.vegan == "pesco" %}
+            selected
+            {% endif %}>페스코채식</option>
+            <option value="flexitarian"
+            {% if update.vegan == "flexitarian" %}
+            selected
+            {% endif %}>플렉시테리안</option>
+        </select></td>
         </tr>
         <tr>
-          <th>비건여부 :</th>
-          <td><input type='text' name='vegan' value="{{update.get_vegan_display}}"></td>
+          <th><label class="label"  for="advancelevel">전문가여부</label></th>
+          <td><select id="advancelevel" class="box_design" name="advancelevel"  aria-label="전문가여부">
+            <option value="notadvance" 
+            {% if update.pro == "notadvance" %}
+            selected
+            {% endif %}>비전문가</option>
+            <option value="advance"
+            {% if update.pro == "advance" %}
+            selected
+            {% endif %}>전문가</option>
+        </select></td>
         </tr>
         <tr>
-          <th>전문가여부 :</th>
-          <td><input type='text' name='pro' value="{{update.get_pro_display}}"></td>
+          <th>키</th>
+          <td><input type='text' name='height' value="{{update_daily.height}}"></td>
         </tr>
         <tr>
-          <th>목표몸무게 :</th>
+          <th>몸무게</th>
+          <td><input type='text' name='cur_weight' value="{{update_daily.cur_weight}}"></td>
+        </tr>
+        <tr>
+          <th>목표몸무게</th>
           <td><input type='text' name='goal_weight' value="{{update.goal_weight}}"></td>
         </tr>
         <tr>
-          <th>목표체지방률 :</th>
-          <td><input type='text' name='goal_bodyfat' value="{{update.goal_bodyfat}}"></td>
+          <th><label class="label"  for="goal_bodyfat">목표체지방률</label></th>
+          <td><select id="goal_bodyfat" class="box_design" name="goal_bodyfat"  aria-label="목표체지방률">
+            <option value="10" 
+            {% if update.goal_bodyfat == "10" %}
+            selected
+            {% endif %}>체지방률 10~15%</option>
+            <option value="20"
+            {% if update.goal_bodyfat == "20" %}
+            selected
+            {% endif %} 
+            >체지방률 20~25%</option>
+            <option value="15"
+            {% if update.goal_bodyfat == "15" %}
+            selected
+            {% endif %}
+             >체지방률 15~20%</option>
+            <option value="25"
+            {% if update.goal_bodyfat == "25" %}
+            selected
+            {% endif %} 
+            >체지방률 25~30%</option>
+            <option value="30" 
+            {% if update.goal_bodyfat == "30" %}
+            selected
+            {% endif %}
+            >체지방률 30~%</option>
+        </select></td>
         </tr>
         <tr>
-          <th>목표기간 :</th>
+          <th>목표기간</th>
           <td><input type='text' name='goal_period' value="{{update.goal_period}}"></td>
         </tr>
         <tr>
-          <th>알레르기음식 :</th>
-          <td><input type='text' name='allergic_food' value="{{update.allergic_food}}"></td>
+          <th><label class="label"  for="activity">활동량</label></th>
+          <td><select id="activity" class="box_design" name="activity"  aria-label="목표체지방률">
+            <option value="0" 
+            {% if update.allergic_food == "0" %}
+            selected
+            {% endif %}>운동하지 않음</option>
+            <option value="1"
+            {% if update.allergic_food == "1" %}
+            selected
+            {% endif %}>가벼운 활동 (운동: 1~3일)</option>
+            <option value="2"
+            {% if update.allergic_food == "2" %}
+            selected
+            {% endif %}>보통 활동 (운동: 3~5일)</option>
+            <option value="3"
+            {% if update.allergic_food == "3" %}
+            selected
+            {% endif %}>많은 활동 (운동: 6~7일)</option>
+            <option value="4"
+            {% if update.allergic_food == "4" %}
+            selected
+            {% endif %}>격렬한 활동</option>
+      </select></td>
         </tr>
         <tr>
-          <th>수정 날짜 :</th>
+          <th>수정 날짜</th>
           <td><input type='text' name='modidate' value="{{update.modidate|date:'Y-m-d H:i'}}"></td>
         </tr>
       </table>
@@ -120,4 +287,4 @@
       </div>
     </form>
     </section>
-{%endblock mycontent%}
+

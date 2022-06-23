@@ -7,8 +7,14 @@ import datetime
 def mUpdate(request):
     user_id = request.session['session_user_id']
     if request.method =="GET":
-        qs = Members.objects.get(user_id=user_id)
-        context = {'update':qs}
+        qs_member = Members.objects.get(user_id=user_id)
+        
+        qs_daily = Dailydata.objects.filter(user=qs_member)[0]
+        print("ㅋㅣ",qs_daily)
+        print("bmi",qs_daily.cur_bmi)
+        print("bmi",qs_daily.cur_weight)
+        
+        context = {'update':qs_member,'update_daily':qs_daily}
         return render (request,'mUpdate.html',context)
     else:
         # 수정form에서 데이터 전달
@@ -16,7 +22,7 @@ def mUpdate(request):
         user_id = request.POST.get('user_id')
         user_pw = request.POST.get('user_pw')
         birth = request.POST.get('birth')
-        gender = request.POST.get('gender')
+        gender = request.POST.get('gender',None)
         phone = request.POST.get('phone')
         email = request.POST.get('email')
         zipcode = request.POST.get('zipcode')
@@ -24,9 +30,9 @@ def mUpdate(request):
         addressd2 = request.POST.get('addressd2')
         service = request.POST.get('service')
         user_purpose = request.POST.get('user_purpose')
-        user_target = request.POST.get('user_target')
+        user_target = request.POST.get('target')
         vegan= request.POST.get('vegan')
-        pro = request.POST.get('pro')
+        pro = request.POST.get('advancelevel')
         goal_weight = request.POST.get('goal_weight')
         goal_bodyfat = request.POST.get('goal_bodyfat')
         goal_period = request.POST.get('goal_period')
@@ -57,6 +63,7 @@ def mUpdate(request):
         qs.modidate =  modidate
         qs.save()
         return redirect('Member:mView')
+    
 
 # 회원 삭제 함수
 def mDelete(request):
