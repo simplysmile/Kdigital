@@ -175,9 +175,9 @@
                         <p id='des'>운동을 기록하세요.</p>
                     </h3>
                     <div class = "savecontent">
-                        <table id="savetable" class="savetable">
+                        <table id="savetable" class="savetable" style="margin: 0 auto">
                             <tr id="datetable">
-                                <td>
+                                <td style="float:left">
                                     <label>운동 날짜</label>
                                 </td>
                                 <td>
@@ -185,7 +185,7 @@
                                 </td>
                             </tr>
                             <tr id="nametable">
-                                <td>
+                                <td style="float:left"> 
                                     <label>운동이름</label>
                                 </td>
                                 <td>
@@ -193,43 +193,46 @@
                                 </td>
                             </tr>
                             <tr id="leveltable">
-                                <td>
-                                    <label>운동강도</label>
-                                </td>
-                                <td>
-                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr id="contenttable">
-                                <td colsspan="2">
-                                    <label>운동목표</label>                                
+                                <td colspan="2" style="float:left">
+                                    <label style="font-weight:bold">내 운동목표</label>                                
                                 </td>
                             </tr>
                             <div class="savecontent2">
                                 <tr>
-                                    <td>
-                                        <label for="goal_kcal">칼로리</label>
+                                    <td style="float:left">
+                                        <label for="goal_kcal">목표칼로리</label>
                                     </td>
                                     <td>
-                                        <input type="number" class="inputbox"  id="goal_kcal" name="goal_kcal" value="" required>
+                                        <input type="number" class="inputbox"  id="goal_kcal" name="goal_kcal" value="" required placeholder="태우고자하는 목표칼로리를 입력하세요.">
                                     </td>
                                 </tr>
                             </div>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                            </tr>
                             <tr id="contenttable2">
-                                <td colsspan="2">
-                                    <label>운동기록</label>                                
+                                <td colspan="2" style="float:left">
+                                    <label style="font-weight:bold">내 운동기록</label>                                
                                 </td>
                             </tr>
                             <div class="savecontent2_2">
                                 <tr>
-                                    <td>
-                                        <label for="sets2">세트 수</label>
+                                    <td style="float:left">
+                                        <label for="sets2" >세트 수</label>
                                     </td>
                                     <td>
                                         <input type="number" class="inputbox"  id="sets2" name="sets2" value="" required>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td style="float:left">
                                         <label for="counts2">횟수/한 세트 당</label>
                                     </td>
                                     <td>
@@ -237,7 +240,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td style="float:left">
                                         <label for="ex_time2">시간/한 세트 당(분)</label>
                                     </td>
                                     <td>
@@ -341,18 +344,25 @@
                 $('#anaerobic_cont').removeClass('on5')
                 if(on3.className=='on3'){
                     on3.style.display = "block";
+                    on333.style.backgroundColor="#a4dfba"
                 }else{
                     on3.style.display="none"
+                    on333.style.backgroundColor="#b3dae9"
                 }
                 if(on4.className=='on4'){
                     on4.style.display = "block";
+                    on444.style.backgroundColor="#84b696"
+                    
                 }else{
                     on4.style.display="none"
+                    on444.style.backgroundColor="#86c7cc"
                 }
                 if(on5.className=='on5'){
                     on5.style.display = "block";
+                    on555.style.backgroundColor="#84b696"
                 }else{
                     on5.style.display="none"
+                    on555.style.backgroundColor="#86c7cc"
                 }
             })
             $(document).on('click','#aerobic',function(){
@@ -361,18 +371,25 @@
                 $('#anaerobic_cont').removeClass('on5')
                 if(on3.className=='on3'){
                     on3.style.display = "block";
+                    on333.style.backgroundColor="#a4dfba"
                 }else{
                     on3.style.display="none"
+                    on333.style.backgroundColor="#b3dae9"
                 }
                 if(on4.className=='on4'){
                     on4.style.display = "block";
+                    on444.style.backgroundColor="#84b696"
+                    
                 }else{
                     on4.style.display="none"
+                    on444.style.backgroundColor="#86c7cc"
                 }
                 if(on5.className=='on5'){
                     on5.style.display = "block";
+                    on555.style.backgroundColor="#84b696"
                 }else{
                     on5.style.display="none"
+                    on555.style.backgroundColor="#86c7cc"
                 }
             })
             $(document).on('click','#anaerobic',function(){
@@ -381,18 +398,25 @@
                 $('#aerobic_cont').removeClass('on4')
                 if(on3.className=='on3'){
                     on3.style.display = "block";
+                    on333.style.backgroundColor="#a4dfba"
                 }else{
                     on3.style.display="none"
+                    on333.style.backgroundColor="#b3dae9"
                 }
                 if(on4.className=='on4'){
                     on4.style.display = "block";
+                    on444.style.backgroundColor="#84b696"
+                    
                 }else{
                     on4.style.display="none"
+                    on444.style.backgroundColor="#86c7cc"
                 }
                 if(on5.className=='on5'){
                     on5.style.display = "block";
+                    on555.style.backgroundColor="#84b696"
                 }else{
                     on5.style.display="none"
+                    on555.style.backgroundColor="#86c7cc"
                 }
             })
 
@@ -526,11 +550,11 @@
                     success:function(data){
                         console.log(exerciseName)
                         str=''
-                        str+='<td>'
+                        str+='<td style="float:left">'
                         str+='<label>운동강도</label>'
                         str+='</td>'
                         str+='<td>'
-                        str+='<select id="savelevel" name="savelevel" required aria-label="운동강도" ><br>'
+                        str+='<select style="float:left" id="savelevel" name="savelevel" required aria-label="운동강도" ><br>'
                         //str+='<option disabled selected>운동강도</option>'
                         for(let i=0;i<data.length;i++){
                             if(data[i].ex_name==exerciseName){
@@ -598,6 +622,9 @@
         var on3=document.getElementById('health_cont')
         var on4=document.getElementById('aerobic_cont')
         var on5=document.getElementById('anaerobic_cont')
+        var on333=document.getElementById('health_result')
+        var on444=document.getElementById('aerobic')
+        var on555=document.getElementById('anaerobic')
 
         // Get the modal
         var modal = document.getElementById("myModal");

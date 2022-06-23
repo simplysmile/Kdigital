@@ -316,8 +316,6 @@ def exerciseDelete(request,sdate,ex_no):
     curr_day=date[2]
     daily=Dailyexercise.objects.get(user=u_id,ex_No=ex_no)
     daily.delete()
-    daily.save()
-    
     url='/dailycheck/'+sdate+'/exerciseCheck/'
     
     return redirect(url)     
@@ -329,8 +327,6 @@ def exerciseUpdate(request,sdate,ex_no):
         
         ex_name=request.POST.get('saveexercise')
         level=request.POST.get('savelevel') 
-        print(ex_name)
-        print(level)
         exercise=Exercise.objects.get(ex_name=ex_name,level=level)
         
         ex_id=exercise.ex_id

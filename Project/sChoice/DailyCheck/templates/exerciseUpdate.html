@@ -9,6 +9,8 @@
 <script src="/static/js/dailycheckExercise.js"></script>
 <script src="/static/js/dailycheckExercise_modal.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <main>	
 	<div id="box1">
         
@@ -61,7 +63,7 @@
             <!--activity 고르기-->
             <form method = "POST" action = "{%url 'DailyCheck:exerciseUpdate' sdate ex_no%}" id="wExercise">
                 {% csrf_token %}
-                <div class='sel_box' name='savebox'>
+                <div class='sel_box' name='savebox' >
                     
                     <h3 class="join_title">
                         {% comment %} <input type='hidden' name='id' value="{{request.session.session_id}}"> {% endcomment %}
@@ -70,9 +72,9 @@
                         <p id='des'>운동을 수정하세요.</p>
                     </h3>
                     <div class = "savecontent">
-                        <table id="savetable" class="savetable">
+                        <table id="savetable" class="savetable" style="margin: 0 auto">
                             <tr id="datetable">
-                                <td>
+                                <td style="float:left">
                                     <label>운동 날짜</label>
                                 </td>
                                 <td>
@@ -83,7 +85,7 @@
                             </tr>
                             {%if myList%}
                             <tr id="nametable">
-                                <td>
+                                <td style="float:left">
                                     <label>운동이름</label>
                                 </td>
                                 <td>
@@ -91,11 +93,11 @@
                                 </td>
                             </tr>
                             <tr id="leveltable">
-                                <td>
+                                <td style="float:left">
                                     <label>운동강도</label>
                                 </td>
                                 <td>
-                                    <select id="savelevel" name="savelevel" aria-label="운동강도"><br>
+                                    <select style="float:left" id="savelevel" name="savelevel" aria-label="운동강도"><br>
                                         {%if level == 2%}
                                             <option value="2">저강도</option>
                                         {%elif level == 3%}
@@ -105,30 +107,37 @@
                                         {%endif%}
                                 </td>
                             </tr>
-                            
+                            <tr>
+                                <td></td>
+                                <td></td>
+                            </tr>
                             <tr id="contenttable">
-                                <td colsspan="2">
-                                    <label>운동목표</label>                                
+                                <td colsspan="2" style="float:left">
+                                    <label style="font-weight:bold">내 운동목표</label>                                
                                 </td>
                             </tr>
                             <div class="savecontent2">
                                 <tr>
-                                    <td>
-                                        <label for="goal_kcal">칼로리</label>
+                                    <td style="float:left">
+                                        <label for="goal_kcal">목표칼로리</label>
                                     </td>
                                     <td>
                                         <input type="text" class="inputbox"  id="goal_kcal" name="goal_kcal" value="{{myList.goal_kcal}}" required>
                                     </td>
                                 </tr>
                             </div>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                            </tr>
                             <tr id="contenttable2">
-                                <td colsspan="2">
-                                    <label>운동기록</label>                                
+                                <td colsspan="2" style="float:left">
+                                    <label style="font-weight:bold">내 운동기록</label>                                
                                 </td>
                             </tr>
                             <div class="savecontent2_2">
                                 <tr>
-                                    <td>
+                                    <td style="float:left">
                                         <label for="sets2">세트 수</label>
                                     </td>
                                     <td>
@@ -136,7 +145,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td style="float:left">
                                         <label for="counts2">횟수/한 세트 당</label>
                                     </td>
                                     <td>
@@ -144,7 +153,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td style="float:left">
                                         <label for="ex_time2">시간/한 세트 당(분)</label>
                                     </td>
                                     <td>
@@ -169,9 +178,22 @@
         // 모달
         $(function(){
             $('#deleteBtn').click(function(){
-                if (confirm('운동기록을 정말 삭제하시겠습니까?')){
-                    location.href="{% url 'DailyCheck:exerciseDelete' sdate ex_no %}"
-                }
+                Swal.fire({
+                    title: '정말로 운동기록을 삭제 하시겠습니까?',
+                    text: '다시 되돌릴 수 없습니다. 신중하세요.',
+                    icon: 'warning',
+                    
+                    showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+                    confirmButtonColor: '#87CEEB', // confrim 버튼 색깔 지정
+                    //cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+                    confirmButtonText: '승인', // confirm 버튼 텍스트 지정
+                    cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+                    
+                 }).then(result => {
+                    if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+                       location.href="{% url 'DailyCheck:exerciseDelete' sdate ex_no %}"
+                    }
+                 });
             })
         })
 
