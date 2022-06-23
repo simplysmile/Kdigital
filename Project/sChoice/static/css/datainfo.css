@@ -10,7 +10,7 @@
     font-family: "dohyeon";
 }
 #choicebox{
-    margin:0 auto;
+    padding-left: 30%;
 }
 .disease {
     margin:10px;
@@ -47,4 +47,6 @@ td{
 ul,li{
     display:none;
 }
-h2,h3{margin:0 auto;}
+h2,h3{margin:0 auto;
+    font-family: "dohyeon";
+}
