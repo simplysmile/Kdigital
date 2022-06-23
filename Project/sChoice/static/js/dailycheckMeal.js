@@ -41,8 +41,9 @@ $(function(){
                   ctx.textAlign = 'center';     
                   // w 변동 h 변동  l 70 r 변동 t 0 b 변동
                   //console.log("width", width); 
-                  ctx.fillText(remaincal+'kcal', width / 2 +(left), top + (height / 2));
-                  ctx.fillText('remains', width / 2 +(left), top + (height / 2)+50);
+                  ctx.fillText('Intake: '+data.totalCal+' kcal', width / 2 +(left), top + (height / 2));
+                  ctx.fillText('Remain: '+remaincal+' kcal', width / 2 +(left), top + (height / 2)+50);
+                  //ctx.fillText('남았습니다', width / 2 +(left), top + (height / 2)+100);
                 }
             };
 

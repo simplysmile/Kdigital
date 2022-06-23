@@ -100,10 +100,10 @@ ul{
 
 summary {
     cursor: pointer;
-    list-style: none;
-
+ /*    list-style: none;
+ 
     margin-top:9%; 
-    position: absolute; 
+  position: absolute; 
     top: 90px; 
     left: 320px; 
     width: 50%; 
@@ -113,9 +113,9 @@ summary {
     justify-content: center;
     align-items: center;
 
-    font-size: 50px;
+    font-size: 10px;
     padding-top: 1.5rem;
-
+*/
 }
 summary::-webkit-details-marker {
     display: none;
