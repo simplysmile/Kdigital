@@ -1,3 +1,6 @@
+* {
+    margin: 0 auto;
+}
 .disease {
     width: 150px;
     padding: 10px;
@@ -8,9 +11,15 @@
     color: #fff;
     cursor: pointer;
     float:left;
+    text-align: center;
     }
 #chartinfo, #mychart, #dinfo {width:80%;}
 #chartinfo{
     background:'red';
     clear:both;
     }
+
+table {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
