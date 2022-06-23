@@ -1,9 +1,19 @@
+@font-face {
+
+    src : url("/static/font/BMDOHYEON_otf.otf"); 
+
+    font-family: "dohyeon";
+
+}
 * {
     margin: 0 auto;
     font-family: "dohyeon";
 }
+#choicebox{
+    margin:0 auto;
+}
 .disease {
-    margin: 0 auto;
+    margin:10px;
     width: 150px;
     padding: 10px;
     border: none;
@@ -37,3 +47,4 @@ td{
 ul,li{
     display:none;
 }
+h2,h3{margin:0 auto;}
