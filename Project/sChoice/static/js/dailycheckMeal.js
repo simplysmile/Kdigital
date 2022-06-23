@@ -11,7 +11,7 @@ $(function(){
             note+='<tr><td><progress  id="carbB" value="'+ data.carb +'" max="'+carbgram+'"></progress></td>'
             note+='<td><progress id="proteinB" value="'+ data.prot +'" max="'+protgram+'"></progress></td>'
             note+='<td><progress id="fatB" value="'+ data.fat +'" max="'+fatgram+'"></progress></td></tr>'
-            note+='<tr><td>탄수화물 : '+ data.carb+'g</td><td>단백질 : '+ data.prot+'g</td><td>지방 : '+data.fat+'g</td></tr>'
+            note+='<tr><td>탄수화물 : '+ data.carb +'g/'+carbgram+'g</td><td>단백질 : '+ data.prot+'g/'+protgram+'g</td><td>지방 : '+data.fat+'g/'+fatgram+'g</td></tr>'
             
 
             $("#progressbars").html(note)
