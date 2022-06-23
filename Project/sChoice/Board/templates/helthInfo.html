@@ -230,20 +230,20 @@
 </script>
 <style>
     .disease{width: 200px; height: 80px; text-align:center; float:center;}
-    div{width:80%;}
-    #chartinfo{background:'#eee';}
+    #chartinfo #mychart #dinfo {width:80%;}
+    #chartinfo{background:'#ee2356';}
 </style>
 <h2>데이터 분석 페이지</h2>
 <div class='disease' onclick="diBtn()">당뇨</div>
 <div class='disease' onclick="htBtn()">심장질환</div>
 <div class='disease' onclick="kdBtn()">신장질환</div>
-<div id='mychart'>
-    
-</div>
 <div id="chartinfo">
-
+{% comment %} 그래프설명 {% endcomment %}
+</div>
+<div id='mychart'>
+    {% comment %} 그래프 {% endcomment %}
 </div>
 <div id='dinfo'>
-
+{% comment %} 질병정보 {% endcomment %}
 </div>
 {%endblock mycontent%}
