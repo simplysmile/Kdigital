@@ -2,11 +2,14 @@
 {% block mycontent %}
 
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/css/calendar.css" />
     {% if not request.session.session_user_id %}
     <script>
-    alert("로그인을 하셔야 달력 상세보기가 가능합니다.")
-    location.href="{% url 'Member:login' %}"
+    swal("로그인을 하셔야 달력 상세보기가 가능합니다.")
+    .then(function(){
+        location.href="{% url 'Member:login' %}"
+    })
     </script>
     {%endif%}
     <div class='rap'>
