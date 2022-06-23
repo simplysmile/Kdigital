@@ -10,4 +10,7 @@
     float:left;
     }
 #chartinfo, #mychart, #dinfo {width:80%;}
-#chartinfo{background:'#ee2356';}
+#chartinfo{
+    background:'red';
+    clear:both;
+    }
