@@ -3,10 +3,14 @@ $(function(){
         url:"/static/mealjson.json",
         dataType:"json",
         success:function(data){
+
+            var carbgram = Math.round(data.goalCal * 0.5 * 0.25)
+            var protgram =  Math.round(data.goalCal * 0.3 * 0.25)
+            var fatgram =  Math.round(data.goalCal * 0.2 * 0.11)
             let note = ''
-            note+='<tr><td><progress  id="carbB" value="'+ data.carb +'" max="100"></progress></td>'
-            note+='<td><progress id="proteinB" value="'+ data.prot +'" max="100"></progress></td>'
-            note+='<td><progress id="fatB" value="'+ data.fat +'" max="100"></progress></td></tr>'
+            note+='<tr><td><progress  id="carbB" value="'+ data.carb +'" max="'+carbgram+'"></progress></td>'
+            note+='<td><progress id="proteinB" value="'+ data.prot +'" max="'+protgram+'"></progress></td>'
+            note+='<td><progress id="fatB" value="'+ data.fat +'" max="'+fatgram+'"></progress></td></tr>'
             note+='<tr><td>탄수화물 : '+ data.carb+'g</td><td>단백질 : '+ data.prot+'g</td><td>지방 : '+data.fat+'g</td></tr>'
             
 

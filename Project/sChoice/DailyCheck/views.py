@@ -1037,9 +1037,10 @@ def addMealData(request, sdate):
             
 
         # print(f_id)
-        print(dlist)
+        # print(dlist)
 
-        sendData = {'indata':dlist}
+        sendData = {'indata':dlist,'mealdate':sdate}
+
         return JsonResponse(sendData)
 
     elif request.POST: 
@@ -1211,3 +1212,23 @@ def setGoals(request):
 
     
     return render(request,'setGoals.html',context)
+
+
+
+def delDailyMealData(request):
+    if 'f_id' in request.GET:
+        foodid = request.GET['f_id']
+        
+    if 'sdate' in request.GET:
+        sdate = request.GET['sdate']
+        
+    if 'mealtime' in request.GET:
+        mealtime = request.GET['mealtime']
+        
+    # 세션을 통해 아이디 
+    u_id = request.session['session_user_id']
+    delmeal = DailyMeal.objects.filter(d_member=u_id,d_meal_date=sdate,d_food=foodid,d_meal_time=mealtime)
+    delmeal.delete()
+    context={'msg':'성공적으로 삭제하였습니다.'}
+    
+    return JsonResponse(context)
