@@ -33,11 +33,10 @@ table,td {
     border-collapse: collapse;
     border: 1px solid white;
     text-align: center;
-    background: #40e0d0;
-    color:#fff;
+
 }
 table{
-    width: 75%;
+    width: 100%;
 }
 td{
     width: 25%;
@@ -48,4 +47,13 @@ ul,li{
 }
 h2,h3{margin:0 auto;
     font-family: "dohyeon";
+}
+
+.td_odd{
+    background: #40e0d0;
+    color:#fff;
+}
+
+.td_even{
+    color:black;
 }
