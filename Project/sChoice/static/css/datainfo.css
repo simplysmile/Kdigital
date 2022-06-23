@@ -15,11 +15,18 @@
     }
 #chartinfo, #mychart, #dinfo {width:80%;}
 #chartinfo{
-    background:'red';
+    background-color:#009900;
     clear:both;
     }
 
-table {
+table,td {
     border-collapse: collapse;
     border: 1px solid black;
+    text-align: center;
+}
+table{
+    width: 400px;
+}
+td{
+    width: 100px;
 }
