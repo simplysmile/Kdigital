@@ -3,6 +3,7 @@
     font-family: "dohyeon";
 }
 .disease {
+    margin: 0 auto;
     width: 150px;
     padding: 10px;
     border: none;
@@ -16,18 +17,23 @@
     }
 #chartinfo, #mychart, #dinfo {width:80%;}
 #chartinfo{
-    background-color:#009900;
     clear:both;
     }
 
 table,td {
     border-collapse: collapse;
-    border: 1px solid black;
+    border: 1px solid white;
     text-align: center;
+    background: #40e0d0;
+
 }
 table{
-    width: 400px;
+    width: 800px;
 }
 td{
-    width: 100px;
+    width: 200px;
+}
+
+ul,li{
+    display:none;
 }
