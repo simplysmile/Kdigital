@@ -203,10 +203,13 @@ $(function(){
                 mealtxt +='<ul  style="font-size:12px; text-align:left;"> 너무 적은 칼로리를 섭취하고 계시네요. 이렇게 계속 섭취하시면 건강을 잃을 수 있어요. <br>혹시 너무 무리한 목표설정이 아니신가요? 회원정보 수정에서 목표일을 변경하실 수 있습니다-. :) 천천히 건강하게 살을빼세요 </ul>'
             }
             mealtxt+='<li>또한 평균적으로 탄단지를 '+ data.minfo.cpf_ratio +'의 비율로 섭취하고 있어요.</li>'
-            mealtxt+='<li>건강한 다이어트를 위한 탄단지의 비율은 5:3:2 에요</li>'
+            mealtxt+='<li>건강한 다이어트를 위한 탄단지의 비율은 5:3:2, 혹은 4:4:2 비율이에요.</li>'
             mealtxt+='<li>하루평균 탄수화물 '+Math.round(data.minfo.avgCarb,2) +'g, 단백질 ' +Math.round(data.minfo.avgProt)+ 'g, 지방 '+ Math.round(data.minfo.avgFat)+'g을 섭취하고 있어요.</li>'
             if (data.minfo.avgProt<data.weight[0]*1){
                 mealtxt+='<li>건강한 다이어트를 위해서 단백질은 하루에 '+ data.weight[0]*1 +'g 이상을 섭취하셔야 해요. 단백질 섭취량을 조금 늘려주세요'
+            }
+            if (data.minfo.avgCarb<100){
+                mealtxt+='<li>건강한 다이어트를 위해서 탄수화물은 하루에 100g 이상을 섭취하셔야 해요. 안그러면 탈모와 같은 부작용이 올 수 있어요. 탄수화물 섭취를 좀 늘려주세요'
             }
             var exertxt = ''
             exertxt += data.username +'님 지금까지 운동목표를 '+exerpercentage+'% 달성중입니다.'
