@@ -76,6 +76,29 @@ function del_meal(num)
     $(rmtxt).remove()
 }
 
+function deltefromdb(num, mealSel, mealdate){
+
+    if (confirm('정말로 삭제 하시겠습니까?')){
+        rmtxt = '.'+num
+        $(rmtxt).remove()
+
+        $.ajax({
+            type: "GET",
+            url:"/dailycheck/delDailyMealData/",
+            data: {"f_id":num, 'sdate':mealdate, 'mealtime':mealSel},
+            dataType:"json",   
+            success: function (data) {
+                console.log('성공');
+            },
+            error: function () {
+                console.log('error');
+            }
+        });
+    }
+
+
+}
+
 // 검색한 db 데이터를 식단 등록 테이블에 추가 
 function add_meal(num)
 {
@@ -191,7 +214,7 @@ function modifyMeal(sdate,num)
         dataType:"json",   
         success: function (data) {
             
-            console.log( document.querySelector('#m_select').options[1].value )
+            var msel= document.querySelector('#m_select').options[1].value 
             document.querySelector('#m_select').options[num].selected = true
 
             //$('#m_select').html(mealSel)
@@ -205,13 +228,13 @@ function modifyMeal(sdate,num)
                
             
                 insertdata += '<tr class="'+adddata.f_id+'"><td>'+adddata.f_name +'</td>'
-                insertdata += '<td><input id="foodweight'+adddata.f_id+'" class="foodweight" type="text" name="foodweight" size="5" value="'+adddata.f_weight +'" style="text-align:center;"><img width=20 height=20 src="/static/img/basic/chevron.png" onclick="modi_meal('+adddata.f_id+')"></td>'
+                insertdata += '<td><input id="foodweight'+adddata.f_id+'" class="foodweight" type="text" name="foodweight" size="5" value="'+adddata.f_weight +'" style="text-align:center;"></td>'
                 insertdata += '<td id="eat_cal'+adddata.f_id+'">'+adddata.f_cal+'</td>'
                 insertdata += '<td id="eat_carb'+adddata.f_id+'">'+adddata.f_carb+'</td>'
                 insertdata += '<td id="eat_prot'+adddata.f_id+'">'+adddata.f_prot+'</td>'
                 insertdata += '<td id="eat_fat'+adddata.f_id+'">'+adddata.f_fat+'</td>'
-                insertdata += '<td><img width=20 height=20 src="/static/img/basic/minus_data.png" onclick="del_meal('+adddata.f_id+')"></td></tr>'
-             
+                insertdata += '<td><img width=20 height=20 src="/static/img/basic/minus_data.png" onclick="deltefromdb('+adddata.f_id+',\'' +msel+ '\'' +',\'' +data.mealdate+'\')"></td></tr>'
+                
                 
             }
             $('#meal_input_tbody').append(insertdata)

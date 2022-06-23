@@ -20,5 +20,6 @@ urlpatterns = [
     path('searchMeal/',views.searchMeal,name='searchMeal'),
     path('<str:sdate>/addMealData/',views.addMealData,name='addMealData'),
     path('setGoals/',views.setGoals,name='setGoals'),
+    path('delDailyMealData/',views.delDailyMealData,name='delDailyMealData')
     
 ]

@@ -297,6 +297,7 @@
 
             
             $(document).on('click','#health_result',function(){
+                $('#health_result').toggleClass('on333')
                 $('#health_cont').toggleClass('on3')
                 $('#aerobic_cont').removeClass('on4')
                 $('#anaerobic_cont').removeClass('on5')
@@ -411,9 +412,17 @@
                             modal2.style.display = "block";
                             var str=''
                             for(let i=0;i<data.length;i++){
-                                if(data[i].activity==activityName && data[i].target_category==target1Name){
-                                    str+='<ul class="exercise" name="exercise"><img class="imgtt" width=25 height=25 src="/static/img/basic/check2.png">'+data[i].ex_name+'</ul>'
+                                if(target1Name=='all'){
+                                    if(data[i].activity==activityName){
+                                        str+='<ul class="exercise" name="exercise"><img class="imgtt" width=25 height=25 src="/static/img/basic/check2.png">'+data[i].ex_name+'</ul>'
+                                    }
+
+                                }else{
+                                    if(data[i].activity==activityName && data[i].target_category==target1Name){
+                                        str+='<ul class="exercise" name="exercise"><img class="imgtt" width=25 height=25 src="/static/img/basic/check2.png">'+data[i].ex_name+'</ul>'
+                                    }
                                 }
+                            
                             }
                             $('#exerciseysel').html(str)
                         }

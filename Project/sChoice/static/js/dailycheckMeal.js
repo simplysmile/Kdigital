@@ -3,10 +3,14 @@ $(function(){
         url:"/static/mealjson.json",
         dataType:"json",
         success:function(data){
+
+            var carbgram = Math.round(data.goalCal * 0.5 * 0.25)
+            var protgram =  Math.round(data.goalCal * 0.3 * 0.25)
+            var fatgram =  Math.round(data.goalCal * 0.2 * 0.11)
             let note = ''
-            note+='<tr><td><progress  id="carbB" value="'+ data.carb +'" max="100"></progress></td>'
-            note+='<td><progress id="proteinB" value="'+ data.prot +'" max="100"></progress></td>'
-            note+='<td><progress id="fatB" value="'+ data.fat +'" max="100"></progress></td></tr>'
+            note+='<tr><td><progress  id="carbB" value="'+ data.carb +'" max="'+carbgram+'"></progress></td>'
+            note+='<td><progress id="proteinB" value="'+ data.prot +'" max="'+protgram+'"></progress></td>'
+            note+='<td><progress id="fatB" value="'+ data.fat +'" max="'+fatgram+'"></progress></td></tr>'
             note+='<tr><td>탄수화물 : '+ data.carb+'g</td><td>단백질 : '+ data.prot+'g</td><td>지방 : '+data.fat+'g</td></tr>'
             
 
@@ -37,8 +41,9 @@ $(function(){
                   ctx.textAlign = 'center';     
                   // w 변동 h 변동  l 70 r 변동 t 0 b 변동
                   //console.log("width", width); 
-                  ctx.fillText(remaincal+'kcal', width / 2 +(left), top + (height / 2));
-                  ctx.fillText('remains', width / 2 +(left), top + (height / 2)+50);
+                  ctx.fillText('Intake: '+data.totalCal+' kcal', width / 2 +(left), top + (height / 2));
+                  ctx.fillText('Remain: '+remaincal+' kcal', width / 2 +(left), top + (height / 2)+50);
+                  //ctx.fillText('남았습니다', width / 2 +(left), top + (height / 2)+100);
                 }
             };
 

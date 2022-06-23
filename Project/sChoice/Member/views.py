@@ -71,9 +71,13 @@ def mDelete(request):
 def mView(request):
     user_id = request.session['session_user_id']
     print(user_id)
-    qs = Members.objects.get(user_id=user_id)
-    qs.save()
-    context={'view':qs}
+    qs_member = Members.objects.get(user_id=user_id)
+    qs_member.save()
+
+    qs_daily = Dailydata.objects.get(user=user_id)
+    qs_daily.save()
+
+    context={'view':qs_member, 'view1':qs_daily}
     return render(request,'mView.html',context)
 
 
