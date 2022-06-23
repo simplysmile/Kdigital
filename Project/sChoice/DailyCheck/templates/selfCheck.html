@@ -5,11 +5,13 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
-   <link rel="stylesheet" href="{% static 'css/selfCheck.css'%}">
+    <link rel="stylesheet" href="{% static 'css/selfCheck.css'%}">
     <script>
 
         var user_data=[0,0,0,0,0];
+        var comp_data=[0,0,0,0,0];
         var avg_data=[0,0,0,0,0];
+        var ageforuser=0;
 
         function calculator(birth,gender,height,weight,activity,isuser){
 
@@ -37,15 +39,6 @@
             resultText += " 입니다.";
             result=result.toString().match(/^.*\.\d{2}/);
 
-
-            
-
-
-
-
-
-
-    
             // 기초대사량 계산기 (bmr)
             // 1 헤리스- 베네딕트 식 
             // 남: BMR = 88.362 + (13.397*weight) + (4.799*height) - (5.677*age )
@@ -114,7 +107,7 @@
 
 
             if (isuser==0){
-                user_data=[Number(height)-100, Number(weight), Number(result[0]),Number(BMR)/100,Number(AMR[0])/10]
+                user_data=[Number(height), Number(weight), Number(result[0]),Number(BMR),Number(AMR[0])]
 
                 $(".box_style").remove()
 
@@ -156,7 +149,7 @@
                 
             }
             else{
-                avg_data=[Number(height)-100, Number(weight), Number(result[0]),Number(BMR)/100,Number(AMR[0])/10]
+                avg_data=[Number(height), Number(weight), Number(result[0]),Number(BMR),Number(AMR[0])]
             }
 
     
@@ -166,8 +159,10 @@
             window.location.reload()
             
         }  
+        //$("#submitBtn").on("click",function(){
         function submitBtn(){
 
+            alert('submitbutt')
             var birth=document.getElementById("birth").value
             var gender=document.getElementById("gender").value
             //var gender=document.querySelector("input[name=gender]:checked").value
@@ -184,7 +179,88 @@
 
             calculator(birth,gender,height,weight,activity,0)
 
-            calculator(birth,gender,161.4,57,2,1)
+            // 10~80대 이상 평균 ,
+            var today1 = new Date();
+            var dd1 = String(today1.getDate()).padStart(2, '0');
+            var mm1 = String(today1.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy1 = today1.getFullYear();
+            var todaydate1 = yyyy1+mm1+dd1  
+            var age11 = parseInt((Number(todaydate1)-Number(birth))*0.0001)
+            ageforuser = Math.round(age11/10)*10
+
+            var avg_male_weight = [73.23, 75.91, 78.73, 76.37, 72.39, 69.22, 66.35, 62.76]
+            var avg_female_weight = [59.36, 57.84, 59.21, 59.38, 58.83, 58.37, 57.18, 52.91]
+            var avg_male_height = [173.73, 174.26, 174.53, 173.01, 170.18, 167.62, 165.40, 163.42]
+            var avg_female_height = [161.32, 161.75, 161.67, 160.12, 157.41, 154.94, 152.19, 148.62]
+
+    
+            if (age11 <20){ //10대
+                if(gender=='male'){
+                    calculator(birth,gender,avg_male_height[0],avg_male_weight[0],2,1)
+                }
+                else{
+                    calculator(birth,gender,avg_female_height[0],avg_female_weight[0],2,1)
+                }
+            } 
+            else if (age11<30){//20대
+                if(gender=='male'){
+                    calculator(birth,gender,avg_male_height[1],avg_male_weight[1],2,1)
+                }
+                else{                  
+                    calculator(birth,gender,avg_female_height[1],avg_female_weight[1],2,1)
+                }   
+            }
+            else if (age11<40){ //30 대
+                if(gender=='male'){
+                    calculator(birth,gender,avg_male_height[2],avg_male_weight[2],2,1)
+                }
+                else{                  
+                    calculator(birth,gender,avg_female_height[2],avg_female_weight[2],2,1)
+                } 
+            }
+            else if(age11<50){ //40대
+                if(gender=='male'){
+                    calculator(birth,gender,avg_male_height[3],avg_male_weight[3],1,1)
+                }
+                else{                  
+                    calculator(birth,gender,avg_female_height[3],avg_female_weight[3],1,1)
+                } 
+            }
+           
+            else if(age11<60){ //50대
+                if(gender=='male'){
+                    calculator(birth,gender,avg_male_height[4],avg_male_weight[4],1,1)
+                }
+                else{                  
+                    calculator(birth,gender,avg_female_height[4],avg_female_weight[4],1,1)
+                } 
+            }
+            else if(age11<70){//60대
+                if(gender=='male'){
+                    calculator(birth,gender,avg_male_height[5],avg_male_weight[5],1,1)
+                }
+                else{                  
+                    calculator(birth,gender,avg_female_height[5],avg_female_weight[5],1,1)
+                } 
+            }
+            else if(age11<80){ //70대
+                if(gender=='male'){
+                    calculator(birth,gender,avg_male_height[6],avg_male_weight[6],0,1)
+                }
+                else{                  
+                    calculator(birth,gender,avg_female_height[6],avg_female_weight[6],0,1)
+                } 
+
+            }
+            else{ //이상
+                if(gender=='male'){
+                    calculator(birth,gender,avg_male_height[7],avg_male_weight[7],0,1)
+                }
+                else{                  
+                    calculator(birth,gender,avg_female_height[7],avg_female_weight[7],0,1)
+                } 
+
+            }
            
 
             console.log(user_data)
@@ -201,11 +277,17 @@
         }
         function draw_chart(){
             
-
+            
             $.ajax({
                 url:"/static/test.json",
                 dataType:"json",
                 success:function(data){
+                    comp_data[0] = user_data[0] * 100 / avg_data[0]
+                    comp_data[1] = user_data[1] * 100 / avg_data[1]
+                    comp_data[2] = user_data[2] * 100 / avg_data[2]
+                    comp_data[3] = user_data[3] * 100 / avg_data[3]
+                    comp_data[4] = user_data[4] * 100 / avg_data[4]
+
                     const ctx = document.getElementById('myChart').getContext('2d');
                     const myChart = new Chart(ctx, {
                         type: 'radar', 
@@ -215,7 +297,7 @@
                             datasets: [
                                 {
                                     label: '사용자 입력',
-                                    data: user_data,
+                                    data: comp_data,
                                     fill: true,
                                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                                     borderColor: '#D91818',
@@ -225,7 +307,7 @@
                                     pointHoverBorderColor: '#D91818'
                                 },{
                                     label: '20대 평균여성',
-                                    data: avg_data,
+                                    data: [100,100,100,100,100],
                                     fill: true,
                                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                                     borderColor: '#1374F2',
@@ -263,6 +345,9 @@
             
                             
 
+            
+                            
+
 
 
             
@@ -278,94 +363,51 @@
 
                     <form  id='frm' name="frm" action="#" method="post">
     
-                            <div class="box_style">
-    
-                                <tr>
-                                    <td>생년월일</td><br><br>
-                                    <td><input type="text" id="birth" class="birth" placehloder="19970101"></td>
-                                </tr>
-    
-                            </div>
-            
-    
-    
-                            <div class="box_style">
-                                <tr>
-                                    <br><td>성별</td><br><br>
-                                    <td>
-                                        <select id="gender", name="gender">
-                                            <option value="">성별</option>
-                                            <option value="male">남성</option>
-                                            <option value="female">여성</option>
-                
-                                        </select>
-                                    <!-- <input type="radio" name="gender" value="male"> 
-                                        <label for="male">남성</label>
-                                        <input type="radio" name="gender" value="female" checked> 
-                                        <label for="female">여성</label>-->
-                
-                                    </td>
-                                </tr>
-                            </div>
-    
-    
-                            <div class="box_style">
-                                <tr>
-                                    <br><td>키</td><br><br>
-                                    <td><input type="text" id="height" class="height"></td>
-                                </tr>
-    
-                            </div>
-    
-                            
-                            <div class="box_style">
-                                <tr>
-                                    <br><td>몸무게</td><br><br>
-                                    <td><input type="text" id="weight" class="weight" ></td>
-                                </tr>
-                            </div>
-    
-                            
-                            <div class="box_style">
-                                <tr>
-                                    <br><td>활동량</td><br>
-                                    <td>
-                                        <select id="activity">
-                                            <option value="0">운동하지 않음</option>
-                                            <option value="1">가벼운 활동 (운동: 1~3일)</option>
-                                            <option value="2">보통 활동 (운동: 3~5일)</option>
-                                            <option value="3">많은 활동 (운동: 6~7일)</option>
-                                            <option value="4">격렬한 활동</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </div>
-                        
-                    </form> 
-            
-        
-        
-                        <div class="btn_div1">
-        
-                            <button id="submitbtn" class='real_btn1' type="button" onclick="submitBtn()">입력</button>
-        
+                        <div class="box_style">
+
+                            생년월일<br><br>
+                            <input type="text" id="birth" class="birth" placehloder="19970101">
                         </div>
-        
+                        <div class="box_style">
+                            <br>성별<br><br>
+                            <select id="gender", name="gender">
+                                <option value="">성별</option>
+                                <option value="male">남성</option>
+                                <option value="female">여성</option>
+                            </select>
+                        </div>
+                        <div class="box_style">
+                            <br>키<br><br>
+                            <input type="text" id="height" class="height">
+                        </div>
+                        <div class="box_style">
+                            <br>몸무게<br><br>
+                            <input type="text" id="weight" class="weight" >
+                        </div>
+                        <div class="box_style">
+                            <br>활동량<br>
+                            <select id="activity">
+                                <option value="0">운동하지 않음</option>
+                                <option value="1">가벼운 활동 (운동: 1~3일)</option>
+                                <option value="2">보통 활동 (운동: 3~5일)</option>
+                                <option value="3">많은 활동 (운동: 6~7일)</option>
+                                <option value="4">격렬한 활동</option>
+                            </select>
+                        </div>
+                        <div class="btn_div1">
+                            <button id="submitbtn" class='real_btn1' type="button" onclick="submitBtn()">입력</button>     
+                        </div>
                         <div class="btn_div2">
-        
-                            <button id="reset" class='real_btn2' type="button" onclick="resetBtn()">취소</button>  
-        
+                             <button id="reset" class='real_btn2' type="button" onclick="resetBtn()">취소</button>  
                         </div>
                         <div id="box3">
-                           
                         </div>
-                        
                         <div id="box4">
-                           
                         </div>
-
+                    </form> 
 
                 </div>
+                
                 <div id="box1">
                     
                     <img id="dummyimg" width="700px" height="600px" src = "https://cdn.pixabay.com/photo/2016/12/19/23/11/checklist-1919328_1280.png">
