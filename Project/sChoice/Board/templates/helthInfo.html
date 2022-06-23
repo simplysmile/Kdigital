@@ -1,6 +1,7 @@
 {%extends 'base.html' %}
 {%block mycontent%}
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/datainfo.css" />
 <script>
     function diBtn(){
         $.ajax({
@@ -228,15 +229,13 @@
 
 
 </script>
-<style>
-    .disease{width: 200px; height: 80px; text-align:center; float:center;}
-    #chartinfo #mychart #dinfo {width:80%;}
-    #chartinfo{background:'#ee2356';}
-</style>
+
 <h2>데이터 분석 페이지</h2>
-<div class='disease' onclick="diBtn()">당뇨</div>
-<div class='disease' onclick="htBtn()">심장질환</div>
-<div class='disease' onclick="kdBtn()">신장질환</div>
+<div id='choicebox'>
+    <div class='disease' onclick="diBtn()">당뇨</div>
+    <div class='disease' onclick="htBtn()">심장질환</div>
+    <div class='disease' onclick="kdBtn()">신장질환</div>
+</div>
 <div id="chartinfo">
 {% comment %} 그래프설명 {% endcomment %}
 </div>

@@ -1,0 +1,13 @@
+.disease {
+    width: 150px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #004d00;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    float:left;
+    }
+#chartinfo, #mychart, #dinfo {width:80%;}
+#chartinfo{background:'#ee2356';}
