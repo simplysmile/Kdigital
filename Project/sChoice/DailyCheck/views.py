@@ -307,6 +307,7 @@ def imgCheck(request,sdate):
             data_relist=[content]
         return JsonResponse(data_relist,safe=False)
     
+     
 def exerciseDelete(request,sdate,ex_no):
     u_id = request.session['session_user_id']
     date=sdate.split('-')
@@ -451,6 +452,7 @@ def exerciseCheck(request,sdate):
     exercise_aerobic=Exercise.objects.filter(aerobic='o')
     aerobic_list=[]
     for i in range(exercise_aerobic.count()//2):
+        
         health_time0=int(goal_burn_kcal*60/float(dailydata.cur_weight)/float(exercise_aerobic[2*i].met))
         health_time1=int(goal_burn_kcal*60/float(dailydata.cur_weight)/float(exercise_aerobic[2*i+1].met))
         health_dic={}
@@ -479,7 +481,39 @@ def exerciseCheck(request,sdate):
         
         aerobic_list.append(health_dic)
     
-    print(aerobic_list)
+    # 웨이트만 따로 분류하기
+    exercise_aerobic=Exercise.objects.filter(aerobic='x')
+    anaerobic_list=[]
+    for i in range(exercise_aerobic.count()//2):
+        
+        health_time0=int(goal_burn_kcal*60/float(dailydata.cur_weight)/float(exercise_aerobic[2*i].met))
+        health_time1=int(goal_burn_kcal*60/float(dailydata.cur_weight)/float(exercise_aerobic[2*i+1].met))
+        health_dic={}
+        health_dic['health_time0']=health_time0
+        health_dic['health_time1']=health_time1
+        
+        level0=exercise_aerobic[i*2].level
+        level1=exercise_aerobic[2*i+1].level
+        if level0==2:
+            levelstr0='(저강도)'
+        elif level0==3:
+            levelstr0='(중강도)'
+        else:
+            levelstr0='(고강도)'
+        if level1==2:
+            levelstr1='(저강도)'
+        elif level1==3:
+            levelstr1='(중강도)'
+        else:
+            levelstr1='(고강도)'
+        
+        health_dic['ex_name0']=exercise_aerobic[i*2].ex_name 
+        health_dic['ex_name1']=exercise_aerobic[2*i+1].ex_name 
+        health_dic['level0']=levelstr0
+        health_dic['level1']=levelstr1
+        
+        anaerobic_list.append(health_dic)
+    
     
     
     
@@ -554,7 +588,7 @@ def exerciseCheck(request,sdate):
     
     
         
-    content={'goal_burn_kcal':goal_burn_kcal,'b_list':b_list2,'exerciseList':data_list,'sdate':sdate,'user_category':user_category,'health_list':health_list,'aerobic_list':aerobic_list}
+    content={'anaerobic_list':anaerobic_list,'goal_burn_kcal':goal_burn_kcal,'b_list':b_list2,'exerciseList':data_list,'sdate':sdate,'user_category':user_category,'health_list':health_list,'aerobic_list':aerobic_list}
     return render(request,'exerciseCheck.html',content)
 
 def exercise1(request):
@@ -638,7 +672,7 @@ def saveBtn(request,sdate):
     
         return redirect(url)      
     
-    
+   
     
 
 def myStatus(request):
@@ -1003,9 +1037,10 @@ def addMealData(request, sdate):
             
 
         # print(f_id)
-        print(dlist)
+        # print(dlist)
 
-        sendData = {'indata':dlist}
+        sendData = {'indata':dlist,'mealdate':sdate}
+
         return JsonResponse(sendData)
 
     elif request.POST: 
@@ -1177,3 +1212,23 @@ def setGoals(request):
 
     
     return render(request,'setGoals.html',context)
+
+
+
+def delDailyMealData(request):
+    if 'f_id' in request.GET:
+        foodid = request.GET['f_id']
+        
+    if 'sdate' in request.GET:
+        sdate = request.GET['sdate']
+        
+    if 'mealtime' in request.GET:
+        mealtime = request.GET['mealtime']
+        
+    # 세션을 통해 아이디 
+    u_id = request.session['session_user_id']
+    delmeal = DailyMeal.objects.filter(d_member=u_id,d_meal_date=sdate,d_food=foodid,d_meal_time=mealtime)
+    delmeal.delete()
+    context={'msg':'성공적으로 삭제하였습니다.'}
+    
+    return JsonResponse(context)
