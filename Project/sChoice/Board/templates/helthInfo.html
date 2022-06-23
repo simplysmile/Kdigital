@@ -12,7 +12,6 @@
                 let newinfo=''
 
                 newinfo+='<img src="/static/bmi_data/heatmap_Diabetic.png" />'
-                newinfo+='<p>그래프설명</p>'
                 if(data.msg){
                     newinfo+='<p>'+data.msg+'</p>'
                 }else{
@@ -44,6 +43,22 @@
                 }
                 
                 $("#mychart").html(newinfo)
+                
+                
+                let chinfo=''
+                
+
+                $("#chartinfo").html(chinfo)
+
+                let diseaseinfo=''
+                diseaseinfo+="<h3>당뇨란?</h3>"
+                diseaseinfo+="<p>인슐린의 분비량이 부족하거나 정상적인 기능이 이루어지지 않는 등의 대사질환의 일종으로, 혈중 포도당 농도가 높은 것이 특징인 질환</p>"
+                diseaseinfo+="<h3>경과/합병증?</h3>"
+                diseaseinfo+="<p>갑자기 몸 안에서 인슐린이 부족하게 되면 급성 합병증이 생길 수 있다. 급성 합병증은 당뇨병성 케톤산증(diabetic ketoacidosis)과 고혈당성 고삼투압 증후군(hyperglycemic hyperosmolar syndrome)으로 즉각적인 치료가 필요하며, 적절히 치료하지 않을 경우 치명적이다. 심한 경우 의식을 잃을 수 있고 사망에 이를 수도 있다.                만성 합병증으로는 미세혈관질환 합병증으로 망막병증, 신장병증, 신경병증 등이 있고, 대혈관질환 합병증으로는 관상동맥질환, 말초동맥질환, 뇌혈관질환 등이 있다.</p>"
+                diseaseinfo+="<h3>예방방법</h3>"
+                diseaseinfo+="<p>생활습관 교정을 통해서 체중을 5~7% 줄이게 되면 일부는 제2형 당뇨병의 발병을 늦추거나 예방할 수 있다. 100% 예방하는 것은 아니지만 가장 믿을 만하고 부작용이 없는 방법이므로 적극 권장된다.</p>"
+                $("#dinfo").html(diseaseinfo)
+
             },//성공
             except:function(){
                 alert('실패')
@@ -93,50 +108,65 @@
                     newinfo+='</table>'
                 }
                 $("#mychart").html(newinfo)
+
+                let diseaseinfo=''
+                diseaseinfo+="<h3>심장질환이란?</h3>"
+                diseaseinfo+="<p>심장 자체 또는 심장에 연결된 주요 혈관이 좁아지거나 막혀서 발생하는 질환</p>"
+                diseaseinfo+="<h3>경과/합병증?</h3>"
+                diseaseinfo+="<p>- 두근거림, 흉통(angina pectoris), 목 정맥 팽대, 부종</p>"
+                diseaseinfo+="<ul>"
+                diseaseinfo+="<li>- 호흡곤란: 안정 시에 호흡곤란이 있다면 반드시 의학적 검사를 받아봐야 한다.</li>"
+                diseaseinfo+="<li>- 피로감: 일상생활 중에도 쉽게 피로감을 느끼게 된다.</li>"
+                diseaseinfo+="<li>- 청색증: 사지 말단이 푸른색을 띠는 것으로, 심장 기능 감소로 산소가 말단 조직으로 원활하게 전달되지 못하여 발생한다.</li>"
+                diseaseinfo+="<li>- 곤봉 손가락: 손톱이 뭉툭해지는 현상이다.</li>"
+                diseaseinfo+="<h3>예방방법</h3>"
+                diseaseinfo+="<p>심혈관계 질환, 특히 가장 많이 발생하는 높은 관상동맥질환의 경우 비만, 운동 부족, 흡연 등의 생활 습관적인 문제와 고혈압, 고지혈증, 당뇨 등 충분히 관리할 수 있는 질환이 그 원인이 된다. 따라서 심혈관 질환은 일상생활 습관을 바꿔 충분히 예방할 수 있다. 매일 30분 이상 유산소운동을 하고, 채소류와 같은 식물성 식품 위주로 식단을 구성하고, 흡연하지 않으며 또한 필요하다면 약을 복용하면서 평상시 혈압과 당을 잘 조절해야 한다.</p>"
+                
+                $("#dinfo").html(diseaseinfo)
             },//성공
             except:function(){
                 alert('실패')
             }//실패
         })
-
+        
     }//심장버튼
-
+    
     function kdBtn(){
         $.ajax({
             url:'{% url "Board:bmikidney" %}',
             data:{},
             dataType:'json',
             success:function(data){
-
+                
                 let newinfo=''
-
+                
                 newinfo+='<img src="/static/bmi_data/heatmap_KidneyDisease.png" />'
                 newinfo+='<p>그래프설명</p>'
-
+                
                 if(data.msg){
                     newinfo+='<p>'+data.msg+'</p>'
                 }else{
-
+                    
                     newinfo+='<table>'
-                    newinfo+='<tr>'
-                    newinfo+='<td>현재 몸무게</td>'
-                    newinfo+='<td>'+data.cur_w+'kg</td>'
-                    newinfo+='<td>목표 몸무게</td>'
-                    newinfo+='<td>'+data.goal_w+'kg</td>'
-                    newinfo+='</tr>'
-                    newinfo+='<tr>'
-                    newinfo+='<td>현재 BMI</td>'
-                    newinfo+='<td>'+data.cur_bmi+'</td>'
-                    newinfo+='<td>목표 BMI</td>'
-                    newinfo+='<td>'+data.goal_bmi+'</td>'
-                    newinfo+='</tr>'
-                    newinfo+='<tr>'
-                    newinfo+='<td>현재 발병률</td>'
-                    newinfo+='<td>'+data.cur_dp+'%</td>'
-                    newinfo+='<td>목표 달성시 예측 발병률</td>'
-                    newinfo+='<td>'+data.goal_dp+'%</td>'
-                    newinfo+='</tr>'
-                    newinfo+='<tr>'
+                        newinfo+='<tr>'
+                            newinfo+='<td>현재 몸무게</td>'
+                            newinfo+='<td>'+data.cur_w+'kg</td>'
+                            newinfo+='<td>목표 몸무게</td>'
+                            newinfo+='<td>'+data.goal_w+'kg</td>'
+                            newinfo+='</tr>'
+                            newinfo+='<tr>'
+                                newinfo+='<td>현재 BMI</td>'
+                                newinfo+='<td>'+data.cur_bmi+'</td>'
+                                newinfo+='<td>목표 BMI</td>'
+                                newinfo+='<td>'+data.goal_bmi+'</td>'
+                                newinfo+='</tr>'
+                                newinfo+='<tr>'
+                                    newinfo+='<td>현재 발병률</td>'
+                                    newinfo+='<td>'+data.cur_dp+'%</td>'
+                                    newinfo+='<td>목표 달성시 예측 발병률</td>'
+                                    newinfo+='<td>'+data.goal_dp+'%</td>'
+                                    newinfo+='</tr>'
+                                    newinfo+='<tr>'
                     newinfo+='<td colspan="2">유병률변화량</td>'
                     newinfo+='<td colspan="2">'+data.differs+'%</td>'
                     newinfo+='</tr>'
@@ -144,6 +174,22 @@
                 }
                 
                 $("#mychart").html(newinfo)
+                
+                let diseaseinfo=''
+                diseaseinfo+="<h3>신장질환이란?</h3>"
+                diseaseinfo+="<p>심장 자체 또는 심장에 연결된 주요 혈관이 좁아지거나 막혀서 발생하는 질환</p>"
+                diseaseinfo+="<h3>경과/합병증?</h3>"
+                diseaseinfo+="<p>- 두근거림, 흉통(angina pectoris), 목 정맥 팽대, 부종</p>"
+                diseaseinfo+="<ul>"
+                diseaseinfo+="<li>- 호흡곤란: 안정 시에 호흡곤란이 있다면 반드시 의학적 검사를 받아봐야 한다.</li>"
+                diseaseinfo+="<li>- 피로감: 일상생활 중에도 쉽게 피로감을 느끼게 된다.</li>"
+                diseaseinfo+="<li>- 청색증: 사지 말단이 푸른색을 띠는 것으로, 심장 기능 감소로 산소가 말단 조직으로 원활하게 전달되지 못하여 발생한다.</li>"
+                diseaseinfo+="<li>- 곤봉 손가락: 손톱이 뭉툭해지는 현상이다.</li>"
+                diseaseinfo+="<h3>예방방법</h3>"
+                diseaseinfo+="<p>심혈관계 질환, 특히 가장 많이 발생하는 높은 관상동맥질환의 경우 비만, 운동 부족, 흡연 등의 생활 습관적인 문제와 고혈압, 고지혈증, 당뇨 등 충분히 관리할 수 있는 질환이 그 원인이 된다. 따라서 심혈관 질환은 일상생활 습관을 바꿔 충분히 예방할 수 있다. 매일 30분 이상 유산소운동을 하고, 채소류와 같은 식물성 식품 위주로 식단을 구성하고, 흡연하지 않으며 또한 필요하다면 약을 복용하면서 평상시 혈압과 당을 잘 조절해야 한다.</p>"
+                $("#dinfo").html(diseaseinfo)
+
+
             },//성공
             except:function(){
                 alert('실패')
@@ -155,7 +201,7 @@
 
 </script>
 <style>
-    .disease{width: 200px; height: 80px; text-align:center;}
+    .disease{width: 200px; height: 80px; text-align:center; float:center;}
 </style>
 <h2>데이터 분석 페이지</h2>
 <div class='disease' onclick="diBtn()">당뇨</div>
@@ -163,5 +209,11 @@
 <div class='disease' onclick="kdBtn()">신장질환</div>
 <div id='mychart'>
     
+</div>
+<div id="chartinfo">
+
+</div>
+<div id='dinfo'>
+
 </div>
 {%endblock mycontent%}
