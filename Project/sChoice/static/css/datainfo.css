@@ -1,12 +1,13 @@
 * {
     margin: 0 auto;
+    font-family: "dohyeon";
 }
 .disease {
     width: 150px;
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background: #004d00;
+    background: #40e0d0;
     font-size: 16px;
     color: #fff;
     cursor: pointer;
