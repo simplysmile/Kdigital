@@ -43,7 +43,7 @@ td{
 }
 
 ul,li{
-    display:none;
+    list-style-type: none;
 }
 h2,h3{margin:0 auto;
     font-family: "dohyeon";
