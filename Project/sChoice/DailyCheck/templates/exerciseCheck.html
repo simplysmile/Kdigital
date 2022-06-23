@@ -32,40 +32,10 @@
         <button type="button" style='background-color:#86c7cc;' id='anaerobic'>무산소운동</button>
         <br><br>
         <table id='health_cont'>
-            {%if health_list%}
-            {%for health in health_list%}
-            <tr>
-                <td>{{health.ex_name0}}<br>{{health.level0}}</td>
-                <td>{{health.health_time0}}분</td>
-                <td>{{health.ex_name1}}<br>{{health.level1}}</td>
-                <td>{{health.health_time1}}분</td>
-            </tr>
-            {%endfor%}
-            {%endif%}
         </table>
         <table id='aerobic_cont'>
-            {%if aerobic_list%}
-            {%for aerobic in aerobic_list%}
-            <tr>
-                <td>{{aerobic.ex_name0}}<br>{{aerobic.level0}}</td>
-                <td>{{aerobic.health_time0}}분</td>
-                <td>{{aerobic.ex_name1}}<br>{{aerobic.level1}}</td>
-                <td>{{aerobic.health_time1}}분</td>
-            </tr>
-            {%endfor%}
-            {%endif%}
         </table>
         <table id='anaerobic_cont'>
-            {%if anaerobic_list%}
-            {%for anaerobic in anaerobic_list%}
-            <tr>
-                <td>{{anaerobic.ex_name0}}<br>{{anaerobic.level0}}</td>
-                <td>{{anaerobic.health_time0}}분</td>
-                <td>{{anaerobic.ex_name1}}<br>{{anaerobic.level1}}</td>
-                <td>{{anaerobic.health_time1}}분</td>
-            </tr>
-            {%endfor%}
-            {%endif%}
         </table>
             
 
@@ -294,8 +264,76 @@
             var exerciseName
             var exercisenumber
             var target1Name
-
+            $('#health_result').click(function(){
+                $.ajax({
+                    url:'{%url "DailyCheck:health_result"%}',
+                    dataType:'json',
+                    success:function(data){
+                        var str=''
+                        for(var i=0;i<data.length;i++){
+                            console.log(data[i].ex_name0)
+                            str+='<tr>'
+                            str+='<td>'+data[i].ex_name0+'<br>'+data[i].level0+'</td>'
+                            str+='<td>'+data[i].health_time0+'분</td>'
+                            str+='<td>'+data[i].ex_name1+'<br>'+data[i].level1+'</td>'
+                            str+='<td>'+data[i].health_time1+'분</td>'
+                            str+='</tr>'
+                        }
+                        $('#health_cont').html(str)
+                    },
+                    error:function(){
+                        alert('실패')
+                    }
+                })//ajax 
+            })//health_result function
+            $('#aerobic').click(function(){
+                $.ajax({
+                    url:'{%url "DailyCheck:aerobic"%}',
+                    dataType:'json',
+                    success:function(data){
+                        var str=''
+                        for(var i=0;i<data.length;i++){
+                            console.log(data[i].ex_name0)
+                            str+='<tr>'
+                            str+='<td>'+data[i].ex_name0+'<br>'+data[i].level0+'</td>'
+                            str+='<td>'+data[i].health_time0+'분</td>'
+                            str+='<td>'+data[i].ex_name1+'<br>'+data[i].level1+'</td>'
+                            str+='<td>'+data[i].health_time1+'분</td>'
+                            str+='</tr>'
+                        }
+                        $('#aerobic_cont').html(str)
+                    },
+                    error:function(){
+                        alert('실패')
+                    }
+                })//ajax 
+            })//aerobic function
+            $('#anaerobic').click(function(){
+                $.ajax({
+                    url:'{%url "DailyCheck:anaerobic"%}',
+                    dataType:'json',
+                    success:function(data){
+                        var str=''
+                        for(var i=0;i<data.length;i++){
+                            console.log(data[i].ex_name0)
+                            str+='<tr>'
+                            str+='<td>'+data[i].ex_name0+'<br>'+data[i].level0+'</td>'
+                            str+='<td>'+data[i].health_time0+'분</td>'
+                            str+='<td>'+data[i].ex_name1+'<br>'+data[i].level1+'</td>'
+                            str+='<td>'+data[i].health_time1+'분</td>'
+                            str+='</tr>'
+                        }
+                        $('#anaerobic_cont').html(str)
+                    },
+                    error:function(){
+                        alert('실패')
+                    }
+                })//ajax 
+            })//anaerobic function
             
+
+
+
             $(document).on('click','#health_result',function(){
                 $('#health_result').toggleClass('on333')
                 $('#health_cont').toggleClass('on3')
