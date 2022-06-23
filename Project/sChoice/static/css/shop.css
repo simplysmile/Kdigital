@@ -47,6 +47,9 @@ a:active{ color:white;}
 }
 .best_nth{
 	text-align: left;
+	position: relative;
+    display: block;
+	
 }
 .item_img .img_nth {
 	width: 342px;
@@ -61,48 +64,50 @@ a:active{ color:white;}
     font-weight: normal;
     height: 100px;
     text-align: left;
-	border: 1px solid silver;
+	display: block;
+	height: 130px;
+	padding: 5px 5px 0px 5px;
+	
+
+}
+.pri_re{
+	background-color: #F8F8F8;
+	color: #404040;
 }
 .item_name{
-    overflow: hidden;
-    display: block;
-    width: 315px;
-    color: #404040;
-    padding: 0px 20px 6px 7px;
-    font-size: 19px;
-    font-weight: 400;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    letter-spacing: 0px;
+	overflow: hidden;
+	width: 315;
+	font-size: 1.7em;
+	font-weight: 700;
+	text-overflow: ellipsis;
+	letter-spacing: 0px;
+	padding-left: 10px;
+	letter-spacing: -0.05em;
+	display: block;
+	position: relative;
+	text-overflow: ellipsis;
 }
-.item_name .item_price .item_review{
-	padding-left: 5px;
-    color: #333;
-    font-weight: 700;
-    font-size: 1.5em;
-    letter-spacing: -0.05em;
-    position: relative;
-    display: block;
-    margin: 17px 0px 18px;
+.item_price{
+	overflow: hidden;
+	font-size: 1.2em;
+	font-weight: 400;
+	text-overflow: ellipsis;
+	letter-spacing: 0px;
+	padding-left: 10px;
+	position: relative;
+	white-space: nowrap;
+    letter-spacing: 0px
+	
 }
-/* #best ul:nth-child(2) li>a:nth-child(1) span:nth-child(2){ display: block; width:48px; height: 48px; 
-	background: #202020; font-size: 16px; font-weight: 600; color:#fff; padding-top:11px; box-sizing: border-box;
-	position: relative; top:-360px; left:10px; text-align: center;}
+.item_review{
+	font-size: 1.2em;
+	font-weight: 400;
+	text-overflow: ellipsis;
+	letter-spacing: 0px;
+	display: block;
+	padding-left: 36px;
+	position: relative;
+	white-space: nowrap;
+    letter-spacing: 0px
 	
-#best ul:nth-child(2) li>a:nth-child(1) #best_top{ width:64px; height: 64px; padding:8px 0 0 10px; 
-	text-align: left;}
- 
-#best>ul:nth-child(2) li>a:nth-child(2){ display: block; width: 310px; height: 60px; }
- 
-#best>ul:nth-child(2) li>a:nth-child(2) span:nth-child(1){ font-size: 17px; display: block;
-	width:366px; height: 24px; font-weight: 500; margin-top:10px; color:#101010;}
-	
-#best>ul:nth-child(2) li>a:nth-child(2) span:nth-child(2){ font-size: 18px; display: inline-block; 
-	width:270px; height: 30px; font-weight: 700; margin-top:10px; color:#101010; }
-
-#best>ul:nth-child(2) li>a:nth-child(2) span:nth-child(2) span{ font-size: 16px; display: inline-block; 
-	width:52px; height: 24px; font-weight: 500; margin-top:10px; color:#606060; padding-left:3px;}
-	
-#best>ul:nth-child(2) li>a:nth-child(3){ display: inline-block; width:40px; height: 40px; 
-	background: url("../images/ico_set.png") no-repeat -45px -190px; background-size: 800px 800px; 
-	position: relative; left:325px; top:-29px;} */
+}
