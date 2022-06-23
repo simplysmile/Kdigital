@@ -414,110 +414,6 @@ def exerciseCheck(request,sdate):
     daily=Dailydata.objects.filter(user=u_id).order_by('day_no')[0]
     goal_burn_kcal=daily.goal_burn_kcal 
     
-    
-    # 나의 목표칼로리에 대한 운동테이블 출력
-    exercise_qs=Exercise.objects.all()
-    dailydata=Dailydata.objects.filter(user=u_id).order_by('-day_no')[0]
-    health_list=[]
-    for i in range(exercise_qs.count()//2):
-        health_time0=int(goal_burn_kcal*60/float(dailydata.cur_weight)/float(exercise_qs[2*i].met))
-        health_time1=int(goal_burn_kcal*60/float(dailydata.cur_weight)/float(exercise_qs[2*i+1].met))
-        health_dic={}
-        health_dic['health_time0']=health_time0
-        health_dic['health_time1']=health_time1
-        
-        level0=exercise_qs[i*2].level
-        level1=exercise_qs[2*i+1].level
-        if level0==2:
-            levelstr0='(저강도)'
-        elif level0==3:
-            levelstr0='(중강도)'
-        else:
-            levelstr0='(고강도)'
-        if level1==2:
-            levelstr1='(저강도)'
-        elif level1==3:
-            levelstr1='(중강도)'
-        else:
-            levelstr1='(고강도)'
-        
-        health_dic['ex_name0']=exercise_qs[i*2].ex_name 
-        health_dic['ex_name1']=exercise_qs[2*i+1].ex_name 
-        health_dic['level0']=levelstr0
-        health_dic['level1']=levelstr1
-        
-        health_list.append(health_dic)
-    
-    # 유산소운동만 따로 분류하기
-    exercise_aerobic=Exercise.objects.filter(aerobic='o')
-    aerobic_list=[]
-    for i in range(exercise_aerobic.count()//2):
-        
-        health_time0=int(goal_burn_kcal*60/float(dailydata.cur_weight)/float(exercise_aerobic[2*i].met))
-        health_time1=int(goal_burn_kcal*60/float(dailydata.cur_weight)/float(exercise_aerobic[2*i+1].met))
-        health_dic={}
-        health_dic['health_time0']=health_time0
-        health_dic['health_time1']=health_time1
-        
-        level0=exercise_aerobic[i*2].level
-        level1=exercise_aerobic[2*i+1].level
-        if level0==2:
-            levelstr0='(저강도)'
-        elif level0==3:
-            levelstr0='(중강도)'
-        else:
-            levelstr0='(고강도)'
-        if level1==2:
-            levelstr1='(저강도)'
-        elif level1==3:
-            levelstr1='(중강도)'
-        else:
-            levelstr1='(고강도)'
-        
-        health_dic['ex_name0']=exercise_aerobic[i*2].ex_name 
-        health_dic['ex_name1']=exercise_aerobic[2*i+1].ex_name 
-        health_dic['level0']=levelstr0
-        health_dic['level1']=levelstr1
-        
-        aerobic_list.append(health_dic)
-    
-    # 웨이트만 따로 분류하기
-    exercise_aerobic=Exercise.objects.filter(aerobic='x')
-    anaerobic_list=[]
-    for i in range(exercise_aerobic.count()//2):
-        
-        health_time0=int(goal_burn_kcal*60/float(dailydata.cur_weight)/float(exercise_aerobic[2*i].met))
-        health_time1=int(goal_burn_kcal*60/float(dailydata.cur_weight)/float(exercise_aerobic[2*i+1].met))
-        health_dic={}
-        health_dic['health_time0']=health_time0
-        health_dic['health_time1']=health_time1
-        
-        level0=exercise_aerobic[i*2].level
-        level1=exercise_aerobic[2*i+1].level
-        if level0==2:
-            levelstr0='(저강도)'
-        elif level0==3:
-            levelstr0='(중강도)'
-        else:
-            levelstr0='(고강도)'
-        if level1==2:
-            levelstr1='(저강도)'
-        elif level1==3:
-            levelstr1='(중강도)'
-        else:
-            levelstr1='(고강도)'
-        
-        health_dic['ex_name0']=exercise_aerobic[i*2].ex_name 
-        health_dic['ex_name1']=exercise_aerobic[2*i+1].ex_name 
-        health_dic['level0']=levelstr0
-        health_dic['level1']=levelstr1
-        
-        anaerobic_list.append(health_dic)
-    
-    
-    
-    
-    
     # 블럭에 뿌려주기랑 차트그리기로 만들기
     b_list = []
     daily_list = []
@@ -588,8 +484,124 @@ def exerciseCheck(request,sdate):
     
     
         
-    content={'anaerobic_list':anaerobic_list,'goal_burn_kcal':goal_burn_kcal,'b_list':b_list2,'exerciseList':data_list,'sdate':sdate,'user_category':user_category,'health_list':health_list,'aerobic_list':aerobic_list}
+    content={'goal_burn_kcal':goal_burn_kcal,'b_list':b_list2,'exerciseList':data_list,'sdate':sdate,'user_category':user_category}
     return render(request,'exerciseCheck.html',content)
+
+def health_result(request):
+    u_id = request.session['session_user_id']
+    daily=Dailydata.objects.filter(user=u_id).order_by('day_no')[0]
+    goal_burn_kcal=daily.goal_burn_kcal 
+    # 나의 목표칼로리에 대한 운동테이블 출력
+    exercise_qs=Exercise.objects.all()
+    dailydata=Dailydata.objects.filter(user=u_id).order_by('-day_no')[0]
+    health_list=[]
+    for i in range(exercise_qs.count()//2):
+        health_time0=int(goal_burn_kcal*60/float(dailydata.cur_weight)/float(exercise_qs[2*i].met))
+        health_time1=int(goal_burn_kcal*60/float(dailydata.cur_weight)/float(exercise_qs[2*i+1].met))
+        health_dic={}
+        health_dic['health_time0']=health_time0
+        health_dic['health_time1']=health_time1
+        
+        level0=exercise_qs[i*2].level
+        level1=exercise_qs[2*i+1].level
+        if level0==2:
+            levelstr0='(저강도)'
+        elif level0==3:
+            levelstr0='(중강도)'
+        else:
+            levelstr0='(고강도)'
+        if level1==2:
+            levelstr1='(저강도)'
+        elif level1==3:
+            levelstr1='(중강도)'
+        else:
+            levelstr1='(고강도)'
+        
+        health_dic['ex_name0']=exercise_qs[i*2].ex_name 
+        health_dic['ex_name1']=exercise_qs[2*i+1].ex_name 
+        health_dic['level0']=levelstr0
+        health_dic['level1']=levelstr1
+        
+        health_list.append(health_dic)
+    return JsonResponse(health_list,safe=False)    
+def aerobic(request):
+    u_id = request.session['session_user_id']
+    daily=Dailydata.objects.filter(user=u_id).order_by('day_no')[0]
+    goal_burn_kcal=daily.goal_burn_kcal 
+    # 유산소운동만 따로 분류하기
+    exercise_aerobic=Exercise.objects.filter(aerobic='o')
+    dailydata=Dailydata.objects.filter(user=u_id).order_by('-day_no')[0]
+    aerobic_list=[]
+    for i in range(exercise_aerobic.count()//2):
+        
+        health_time0=int(goal_burn_kcal*60/float(dailydata.cur_weight)/float(exercise_aerobic[2*i].met))
+        health_time1=int(goal_burn_kcal*60/float(dailydata.cur_weight)/float(exercise_aerobic[2*i+1].met))
+        health_dic={}
+        health_dic['health_time0']=health_time0
+        health_dic['health_time1']=health_time1
+        
+        level0=exercise_aerobic[i*2].level
+        level1=exercise_aerobic[2*i+1].level
+        if level0==2:
+            levelstr0='(저강도)'
+        elif level0==3:
+            levelstr0='(중강도)'
+        else:
+            levelstr0='(고강도)'
+        if level1==2:
+            levelstr1='(저강도)'
+        elif level1==3:
+            levelstr1='(중강도)'
+        else:
+            levelstr1='(고강도)'
+        
+        health_dic['ex_name0']=exercise_aerobic[i*2].ex_name 
+        health_dic['ex_name1']=exercise_aerobic[2*i+1].ex_name 
+        health_dic['level0']=levelstr0
+        health_dic['level1']=levelstr1
+        
+        aerobic_list.append(health_dic)
+    return JsonResponse(aerobic_list,safe=False)    
+def anaerobic(request):
+    u_id = request.session['session_user_id']
+    daily=Dailydata.objects.filter(user=u_id).order_by('day_no')[0]
+    goal_burn_kcal=daily.goal_burn_kcal 
+        
+    # 웨이트만 따로 분류하기
+    exercise_aerobic=Exercise.objects.filter(aerobic='x')
+    dailydata=Dailydata.objects.filter(user=u_id).order_by('-day_no')[0]
+    anaerobic_list=[]
+    for i in range(exercise_aerobic.count()//2):
+        
+        health_time0=int(goal_burn_kcal*60/float(dailydata.cur_weight)/float(exercise_aerobic[2*i].met))
+        health_time1=int(goal_burn_kcal*60/float(dailydata.cur_weight)/float(exercise_aerobic[2*i+1].met))
+        health_dic={}
+        health_dic['health_time0']=health_time0
+        health_dic['health_time1']=health_time1
+        
+        level0=exercise_aerobic[i*2].level
+        level1=exercise_aerobic[2*i+1].level
+        if level0==2:
+            levelstr0='(저강도)'
+        elif level0==3:
+            levelstr0='(중강도)'
+        else:
+            levelstr0='(고강도)'
+        if level1==2:
+            levelstr1='(저강도)'
+        elif level1==3:
+            levelstr1='(중강도)'
+        else:
+            levelstr1='(고강도)'
+        
+        health_dic['ex_name0']=exercise_aerobic[i*2].ex_name 
+        health_dic['ex_name1']=exercise_aerobic[2*i+1].ex_name 
+        health_dic['level0']=levelstr0
+        health_dic['level1']=levelstr1
+        
+        anaerobic_list.append(health_dic)
+    return JsonResponse(anaerobic_list,safe=False)    
+
 
 def exercise1(request):
     u_id = request.session['session_user_id']
