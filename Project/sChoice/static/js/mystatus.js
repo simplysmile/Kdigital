@@ -236,6 +236,7 @@ $(function(){
             }
             
             exertxt +='<li>가장 많이하신 운동은 '+data.einfo.mostexer+'이네요. 좋아하는 운동을 자주해보세요 :)</li>'
+            exertxt +='<li>오늘 까지 '+data.workoutday+'일 중에 '+ data.einfo.exerwk.reduce((a, b) => a + b, 0)+'일을 운동하셨어요.</li>'
             exertxt +='<li>요일별 운동현황은 월: '+data.einfo.exerwk[0]+'회, 화: '+data.einfo.exerwk[1]+'회, 수: '+data.einfo.exerwk[2]+'회, 목: '+data.einfo.exerwk[3]+'회, 금: '+data.einfo.exerwk[4]+'회, 토: '+data.einfo.exerwk[5]+'회, 일: '+data.einfo.exerwk[6]+'회 하셨네요 :)</li>'
             exertxt +='<li>간단한 걷기, 스트레칭이라도 매일 꾸준히 해주시는것이 좋아요 :) 앞으로도 힘내서 꾸준히 운동해주세요.</li>'
 
