@@ -39,7 +39,7 @@ table{
     width: 100%;
 }
 td{
-    width: 100%;
+    width: 25%;
 }
 
 ul,li{
@@ -57,3 +57,5 @@ h2,h3{margin:0 auto;
 .td_even{
     color:black;
 }
+
+img{width: 100%;}
