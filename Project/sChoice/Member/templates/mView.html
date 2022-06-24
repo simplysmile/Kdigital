@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900&display=swap&subset=korean" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
     
-    <link rel="stylesheet" href="{% static 'css/read.css' %}">
+    <link rel="stylesheet" href="{% static 'css/mview.css' %}">
     
     <title>언니's Choice - My Info</title>
     <script>
@@ -22,6 +22,11 @@
 </head>
 
     <section>
+        <div class ="main_logo">
+            <a class = "main_logo_text" href='/'><h2>UNNI'S CHOICE</h2></a>
+
+            
+        </div><br><br>
         <h1>나의 정보</h1>
         <table>
             <colgroup>
@@ -249,7 +254,7 @@
             </tr>
             <tr>
                 <td>목표기간 </td>
-                <td>{{view.goal_period}}개월</td>
+                <td>{{view.goal_period}}일</td>
             </tr>
             <tr>
                 <td><label class="label"  for="activity">활동량</label></td>
@@ -282,7 +287,7 @@
             </tr>
         </table>
         <div class="btn">
-            <div class="list"><a href="{% url 'Member:mUpdate' %}">정보수정</a></div>
-            <div class="list" onclick="deleteBtn()">삭제</div>
+            <div class="btn_list"><a href="{% url 'Member:mUpdate' %}">정보수정</a></div>
+            <div class="btn_list" onclick="deleteBtn()">삭제</div>
         </div>
         </section>
