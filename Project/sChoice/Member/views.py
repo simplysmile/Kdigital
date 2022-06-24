@@ -9,7 +9,7 @@ def mUpdate(request):
     if request.method =="GET":
         qs_member = Members.objects.get(user_id=user_id)
         
-        qs_daily = Dailydata.objects.filter(user=qs_member)[0]
+        qs_daily = Dailydata.objects.filter(user=qs_member).order_by('day_no')[0]
         print("ㅋㅣ",qs_daily)
         print("bmi",qs_daily.cur_bmi)
         print("bmi",qs_daily.cur_weight)
@@ -46,7 +46,7 @@ def mUpdate(request):
 
         # db에 수정저장
         qs_member = Members.objects.get(user_id=user_id)
-        qs_daily = Dailydata.objects.filter(user=qs_member)[0]
+        qs_daily = Dailydata.objects.filter(user=qs_member).order_by('day_no')[0]
         qs_daily.height = height
         qs_daily.cur_weight = cur_weight
         qs_daily.save()
@@ -91,8 +91,7 @@ def mView(request):
     user_id = request.session['session_user_id']
     print(user_id)
     qs_member = Members.objects.get(user_id=user_id)
-    qs_daily = Dailydata.objects.filter(user=qs_member)[0]
-
+    qs_daily = Dailydata.objects.filter(user=qs_member).order_by('day_no')[0]
     context={'view':qs_member, 'view1':qs_daily}
     return render(request,'mView.html',context)
 
