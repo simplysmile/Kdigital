@@ -1,3 +1,9 @@
+
+
+
+
+
+
 // 모달
 function addMeal(sdate,num){
     modal.style.display = "block";
@@ -41,9 +47,18 @@ function searchDB()
     var kword = document.getElementById('serDB').value;
 
     if($("#serDB").val().length<1){
-        alert('1글자 이상 입력하셔야 검색이 가능합니다.')
+        Swal.fire({
+            title: '',
+            text: '1글자 이상 입력하셔야 검색이 가능합니다.',
+            icon: 'info',
+            confirmButtonColor: '#87CEEB', 
+            confirmButtonText: 'OK', 
+        })
+        .then(function(){
+            //alert('1글자 이상 입력하셔야 검색이 가능합니다.')
+        })
         $("#serDB").focus()
-        return false
+        return false 
     }
     
     $.ajax({
@@ -59,6 +74,10 @@ function searchDB()
                 dblist += '<td>'+ data.data[i].f_weight + '</td>'
                 dblist += '<td>'+ data.data[i].f_cal + '</td>'
                 dblist += '<td><img width=20 height=20 src="/static/img/basic/plus_data.png" onclick="add_meal('+data.data[i].f_id+')"></td></tr>'
+            }
+            if (dblist == ''){
+                dblist += '<tr><td colspan=3> 검색하신 내용이 없습니다 </td></tr>'
+                dblist += '<tr><td colspan=3> 검색어를 바꿔서 다시 검색해주세요 :) </td></tr>'
             }
             $('#mealdb_tbody').html(dblist)
         },
@@ -78,6 +97,37 @@ function del_meal(num)
 
 function deltefromdb(num, mealSel, mealdate){
 
+    Swal.fire({
+        title: '정말로 삭제 하시겠습니까?',
+        text: "다시 되돌릴 수 없습니다. 신중하세요.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#87CEEB',
+        cancelButtonColor: '#eee',
+        confirmButtonText: '확인',
+        cancelButtonText: '취소'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            rmtxt = '.'+num
+            $(rmtxt).remove()
+
+            $.ajax({
+                type: "GET",
+                url:"/dailycheck/delDailyMealData/",
+                data: {"f_id":num, 'sdate':mealdate, 'mealtime':mealSel},
+                dataType:"json",   
+                success: function (data) {
+                    console.log('성공');
+                },
+                error: function () {
+                    console.log('error');
+                }
+            });
+        }
+    })
+
+
+/*
     if (confirm('정말로 삭제 하시겠습니까?')){
         rmtxt = '.'+num
         $(rmtxt).remove()
@@ -94,7 +144,7 @@ function deltefromdb(num, mealSel, mealdate){
                 console.log('error');
             }
         });
-    }
+    }*/
 
 
 }
@@ -180,10 +230,27 @@ function modi_meal(num){
 }
 function canceldBtnb()
 {
+    Swal.fire({
+        title: '등록을 취소하시겠습니까 ?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#87CEEB',
+        cancelButtonColor: '#eee',
+        confirmButtonText: '확인',
+        cancelButtonText: '취소'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            modal.style.display = "none";   
+            location.reload();
+        }
+    })
+
+
+    /*
     if (confirm('등록을 취소하시겠습니까?')){
         modal.style.display = "none";   
         location.reload();
-    }
+    }*/
 }
 function modifyMeal(sdate,num)
 {
