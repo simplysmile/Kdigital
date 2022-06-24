@@ -18,10 +18,16 @@
     #mealbox1{
         float: left;
         width: 63%;
+        border: 1px solid white;
+        border-radius: 30px;
     }
     #mealbox2{
         width: 37%;
-        float: left;
+        float: right;
+        
+        border-radius: 30px;
+        background-color : #f7f7f7;
+
     }
     #m_select{
         width:120px;
@@ -41,7 +47,8 @@
     }
     #meal_input{
         margin: 0 auto;
-        width: 100%;
+        width: 95%;
+        margin-right: 10px;
         border-collapse: collapse;
     }
     .m_in_tb thead tr th{
@@ -69,21 +76,24 @@
     #searchbox{
         margin:0 auto;
         margin-left: 50px;
+        margin-top: 20px;
     }
   
 
     #table-wrapper {
+        margin-top:10px;
+        margin-left: 10px;
         position:relative;
       }
     #table-scroll {
-        height:300px;
+        height:550px;
         overflow:auto;  
         margin-top:1px;
     }
     #table-wrapper table {
-        width:100%;
-      
+        width:98%;      
     }    
+
     #table-wrapper table thead th .overlayed-text {
         text-align: center;
         position:absolute;   
@@ -91,6 +101,14 @@
         display: block;  
         padding-left: 50px;  
     }
+
+    #table-wrapper th {
+        position: sticky;
+        top: 0px;
+        background-color: #A0DDE0 !important;
+        height: 30px;
+    }
+
 
     
 
@@ -201,17 +219,18 @@
             <!-- 선택된 음식을 보여주고, 무게에따라 칼로리 계산해서 개인 식단 db에 저장  -->
             <div id = "mealbox1">
                 <form name="frm" method="POST" id="mealdb_input"  onsubmit="return false;">  
-                    <br>  
+                      
                     <!-- 아침, 점심, 저녁, 간식 선택  --> 
-                    <select id="m_select" name="meal_time" >
-                        <option value="">선택해주세요</option>
-                        <option value="B">아침</option>
-                        <option value="L">점심</option>
-                        <option value="D">저녁</option>
-                        <option value="S">간식</option>
-                    </select>
-                    <br>
-                    <br>
+                    <div style="margin-left:50px" id='selbox'>
+                        <select id="m_select" name="meal_time" style="display:none;">
+                            <option value="">선택해주세요</option>
+                            <option value="B">아침</option>
+                            <option value="L">점심</option>
+                            <option value="D">저녁</option>
+                            <option value="S">간식</option>
+                        </select>
+                    </div>
+                   <br>
                     <table id="meal_input" class="m_in_tb" >
                         <colgroup>
                             <col width="15%">
@@ -234,11 +253,14 @@
                             </tr>
                         </thead>
                         <tbody id="meal_input_tbody">
+                            <tr>
+                                <td colspan=7> 등록할 식품이 없습니다 </td>
+                            </tr>
                         </tbody>
                     </table>
 
-                    <button type="button" id="registerdb" onclick="registerdbBtn('{{ sdate }}')" > 등록 </button> 
-                    <button type="button" id="canceldb" onclick="canceldBtnb()" > 취소 </button> 
+                    <button type="button" id="registerdb" class='saveBtn' onclick="registerdbBtn('{{ sdate }}')" > 등록 </button> 
+                    <button type="button" id="canceldb" class='noBtn' onclick="canceldBtnb()" > 취소 </button> 
                 </form>           
             </div>
 
@@ -247,22 +269,23 @@
             <div id = "mealbox2">
                 <!-- 검색어 입력  -->
                 <div id="searchbox">
-                    <input type="text" id="serDB" name="serDB" size="10" style="height:35px;">
-                    <button type="button" onclick="searchDB()">검색</button>
+                    <input type="text" id="serDB" name="serDB" size="20" style="height:35px;" placeholder="검색할 식품명을 입력하세요">
+                    <button type="button" onclick="searchDB()" id='okBtn' class='okBtn'>search</button>
                 </div>
-                <br>
+
                 <!-- food db 에서 검색된 결과 -->
                 <div id="table-wrapper">
                     <div id="table-scroll">
-                        <table id="mealdb" class="mealdb" >
-                            <thead>
-                                <tr>
+                        <table id="mealdb" class="mealdb"  >
+                            
+                                <tr bgcolor="#40e0d0">
                                     <th style="width:30%; text-align: center;"><span class="overlayed-text">이름</span></th>
                                     <th style="width:30%; text-align: center;"><span class="overlayed-text">무게</span></th>
                                     <th style="width:30%; text-align: center;"><span class="overlayed-text">칼로리</span></th>
                                     <th style="width:10%"><span class="overlayed-text"></span></th>
                                 </tr>
-                            </thead>
+                            
+                            
                             <tbody id="mealdb_tbody">
                              <!-- food db 를 테이블로 보여줌  -->
                             </tbody>

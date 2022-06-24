@@ -173,6 +173,10 @@ function add_meal(num)
     insertdata += '<td id="eat_fat'+adddata.f_id+'">'+adddata.f_fat+'</td>'
     insertdata += '<td><img width=20 height=20 src="/static/img/basic/minus_data.png" onclick="del_meal('+adddata.f_id+')"></td></tr>'
  
+    if (userdata.length ==1){
+
+        $('#meal_input_tbody').html('')
+    }
     $('#meal_input_tbody').append(insertdata)
     document.getElementById('foodweight').addEventListener('keydown',function(e){
         if(e.code === 'Enter'){
@@ -288,6 +292,23 @@ function modifyMeal(sdate,num)
             var msel= document.querySelector('#m_select').options[1].value 
             document.querySelector('#m_select').options[num].selected = true
 
+            if (mealtimesel=='B'){
+                $('#selbox').prepend('<p style="text-align:center; width:100px; font-size:30px;  font-weight: bold;background-color:#A0DDE0;">아침</p>')
+            }
+
+            else if (mealtimesel=='L'){
+                $('#selbox').prepend('<p style="text-align:center; width:100px; font-size:30px;  font-weight: bold;background-color:#A0DDE0;">점심</p>')
+            }
+
+            else if (mealtimesel=='D'){
+                $('#selbox').prepend('<p style="text-align:center; width:100px; font-size:30px;  font-weight: bold;background-color:#A0DDE0;">저녁</p>')
+            }
+
+            else if (mealtimesel==S){
+                $('#selbox').prepend('<p style="text-align:center; width:100px; font-size:30px;  font-weight: bold;background-color:#A0DDE0;">간식</p>')
+            }
+            
+
             var insertdata=''
             for(var i = 0 ; i < data.indata.length; i++){
                 
@@ -304,7 +325,10 @@ function modifyMeal(sdate,num)
                 
                 
             }
-            $('#meal_input_tbody').append(insertdata)
+            if ( insertdata !=''){
+
+                $('#meal_input_tbody').html(insertdata)
+            }
             
 
             
