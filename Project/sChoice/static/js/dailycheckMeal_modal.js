@@ -97,6 +97,7 @@ function del_meal(num)
 
 function deltefromdb(num, mealSel, mealdate){
 
+
     Swal.fire({
         title: '정말로 삭제 하시겠습니까?',
         text: "다시 되돌릴 수 없습니다. 신중하세요.",
@@ -252,6 +253,7 @@ function canceldBtnb()
         location.reload();
     }*/
 }
+var mealtimesel = ''
 function modifyMeal(sdate,num)
 {
     var mealSel = ''
@@ -259,6 +261,7 @@ function modifyMeal(sdate,num)
     if (num ==1){
         
         mealSel='B'
+
     }
     else if (num ==2){
         mealSel='L'
@@ -269,6 +272,7 @@ function modifyMeal(sdate,num)
     else if (num ==4){
         mealSel='S'
     }
+    mealtimesel = mealSel
     
     
     // 만약에 데이터가 있을 경우... 보여주기 . 
@@ -284,10 +288,6 @@ function modifyMeal(sdate,num)
             var msel= document.querySelector('#m_select').options[1].value 
             document.querySelector('#m_select').options[num].selected = true
 
-            //$('#m_select').html(mealSel)
-
-            
-            
             var insertdata=''
             for(var i = 0 ; i < data.indata.length; i++){
                 
@@ -300,7 +300,7 @@ function modifyMeal(sdate,num)
                 insertdata += '<td id="eat_carb'+adddata.f_id+'">'+adddata.f_carb+'</td>'
                 insertdata += '<td id="eat_prot'+adddata.f_id+'">'+adddata.f_prot+'</td>'
                 insertdata += '<td id="eat_fat'+adddata.f_id+'">'+adddata.f_fat+'</td>'
-                insertdata += '<td><img width=20 height=20 src="/static/img/basic/minus_data.png" onclick="deltefromdb('+adddata.f_id+',\'' +msel+ '\'' +',\'' +data.mealdate+'\')"></td></tr>'
+                insertdata += '<td><img width=20 height=20 src="/static/img/basic/minus_data.png" onclick="deltefromdb('+adddata.f_id+',\'' +mealtimesel+ '\'' +',\'' +data.mealdate+'\')"></td></tr>'
                 
                 
             }
@@ -378,9 +378,21 @@ function registerdbBtn(sdate)
         data: mymeallistDic,
         dataType:"json",   
         success: function (data) {
+            Swal.fire({
+                title: '',
+                text: data.msg,
+                icon: 'info',
+                confirmButtonColor: '#87CEEB', // confrim 버튼 색깔 지정
+                confirmButtonText: 'OK', // confirm 버튼 텍스트 지정
+                //"로그인을 하셔야 달력 상세보기가 가능합니다.",'','success'
+            })
+            .then(function(){
+                window.location.reload()
+            })
 
-            alert(data.msg)
-            window.location.reload()
+
+            //alert(data.msg)
+            //window.location.reload()
 
            
             
