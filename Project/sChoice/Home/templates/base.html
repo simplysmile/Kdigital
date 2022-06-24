@@ -227,9 +227,9 @@
 													class="ico- brand-"></span> <span class="title">게시판</span>
 													<ul class="">
 														<li class="first  menu-shop-category-217"><a href="{% url 'Board:exboard' nowpage=1%}"
-																class=""><span class="title">운동정보공유</span></a></li>
+																class=""><span class="title">운동정보</span></a></li>
 														<li class=" menu-shop-category-96"><a href="{% url 'Board:fdboard' nowpage=1%}"
-																class=""><span class="title">식단정보공유</span></a></li>
+																class=""><span class="title">식단정보</span></a></li>
 														
 													</ul>
 
@@ -255,20 +255,20 @@
 										<!--이게뭐지 없앨까-->
 										<li class="active home menu-"><a href="/"
 												class="home active current-"><span class="ico- home-"></span> <span
-													class="title">게시판</span></a></li>
+													class="title">Board</span></a></li>
 
 										<!--자가진단-->
 										<li class="product-search-trigger no-pjax menu-shop-keyword"><a
 												href="#" class="product-search-trigger no-pjax"><span
-													class="ico- search-"></span><span class="title">자가진단</span></a>
+													class="ico- search-"></span><span class="title">Diagnosis</span></a>
 
 													<ul class="">
 														<li class="first  menu-shop-category-217"><a href="{% url 'DailyCheck:selfCheck' %}"
-															class=""><span class="title">자가진단 보기</span></a></li>
+															class=""><span class="title">간단진단</span></a></li>
 														
 														{% if request.session.session_user_id%}
 														<li class=" menu-shop-category-96"><a href="{% url 'Board:yourbody'%}"
-															class=""><span class="title">데이터분석</span></a></li>	
+															class=""><span class="title">세부진단</span></a></li>	
 														{%endif%}	
 
 													</ul>
@@ -282,7 +282,7 @@
 										{% if not request.session.session_user_id%} 
 										<li class="has-children"><span class="has-children"><span
 													class="ico- user-"></span> <span
-													class="title">가입정보</span></span>
+													class="title">Member</span></span>
 											<ul class="">
 												<li class="first menu-user-login"><a
 														href="{% url 'Member:login' %}" class=""><span
@@ -310,7 +310,7 @@
 										<!--쇼핑차트-->
 										<li class="menu-user-cart dcore-cart-count-outer"><a
 												href="#" class=""><span
-													class="ico- cart-"></span> <span class="title">CART</span></a>
+													class="ico- cart-"></span> <span class="title">Shopping</span></a>
 													<ul class="">
 														<li class=" menu-shop-category-96"><a href="{% url 'Board:shop' %}"
 																class=""><span class="title">쇼핑추천</span></a></li>
