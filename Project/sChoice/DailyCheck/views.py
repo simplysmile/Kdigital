@@ -478,9 +478,20 @@ def exerciseCheck(request,sdate):
     user = Members.objects.get(user_id=u_id)  
     user_category=user.user_target
     
-    
+    if user_category=='abs':
+        user_category1='복부'
+    elif user_category=='arms':
+        user_category1='팔'
+    elif user_category=='chest':
+        user_category1='가슴'
+    elif user_category=='legs':
+        user_category1='하체'
+    elif user_category=='shoulders':
+        user_category1='어깨'
+    elif user_category=='all':
+        user_category1='전신'
         
-    content={'goal_burn_kcal':goal_burn_kcal,'b_list':b_list2,'exerciseList':data_list,'sdate':sdate,'user_category':user_category}
+    content={'goal_burn_kcal':goal_burn_kcal,'b_list':b_list2,'exerciseList':data_list,'sdate':sdate,'user_category':user_category1}
     return render(request,'exerciseCheck.html',content)
 
 def health_result(request):
@@ -611,8 +622,18 @@ def exercise1(request):
         data_dic['ex_name'] = row[5]
         data_dic['activity'] = row[1]
         data_dic['target_category']=row[6]
+        if row[6]=='Abs':
+            data_dic['target_category']='복부'
+        elif row[6]=='Arms':
+            data_dic['target_category']='팔'
+        elif row[6]=='Chest':
+            data_dic['target_category']='가슴'
+        elif row[6]=='Legs':
+            data_dic['target_category']='하체'
+        elif row[6]=='Shoulders':
+            data_dic['target_category']='어깨'
+            
         data_list.append(data_dic)
-    
     data_relist=list({v['ex_name']:v for v in data_list}.values())
     Oracles.oraclose(my_cursor,my_conn)
     return JsonResponse(data_relist,safe=False)

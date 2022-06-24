@@ -11,6 +11,7 @@ class Exercise(models.Model):
     # level_Choice=((2,'저강도 운동'),(3,'중강도 운동'),(6,'고강도 운동')) # 운동강도
     level = models.IntegerField(default=0,blank=True) # 운동강도
     ex_name=models.CharField(max_length=1000,blank=True) # 운동이름
+    # target_Choice=(('Abs','코어'),('Arms','팔'),('Back','등'),('Chest','가슴'),('Legs','하체'),('Shoulders','어깨')) # 운동강도
     target_category=models.CharField(max_length=1000,blank=True) # 타켓 카테고리
     muscle=models.CharField(max_length=1000,blank=True) # 자극되는 근육
     equipment=models.CharField(max_length=1000,blank=True) # 운동에 사용되는 운동기구

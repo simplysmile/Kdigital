@@ -24,12 +24,12 @@ $(function(){
             var cont2=''
             var remain_per=0
             if(remain_kcal<0){
-                cont1='달성 성공'
-                cont2='전체 목표 칼로리 : '+String(data[0].total_burn_kcal)+'kcal'
+                cont1='달성성공!'
+                cont2='goal : '+String(data[0].total_burn_kcal)+'kcal'
                 remain_per=0
             }else{
-                cont1=String(remain_kcal)+'% 남음'
-                cont2='전체 목표 칼로리 : '+String(data[0].total_burn_kcal)+'kcal'
+                cont1='burned : '+String(total_kcal)+'kcal'
+                cont2='goal : '+String(data[0].total_burn_kcal)+'kcal'
                 remain_per=remain_kcal
   
             }
