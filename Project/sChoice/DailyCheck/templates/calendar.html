@@ -72,14 +72,14 @@
             var inserttxt = `<ul>`+dateToArray[0]+'-'+dateToArray[1]+'-'+dateToArray[2]+`</ul>`
             var inserttxt2 = `<ul>`+dateToArray[0]+'-'+dateToArray[1]+'-'+dateToArray[2]+`</ul>`
 
-            var inserttxt2=''
+            inserttxt+='<br>'
             $.ajax({
                 url : "/dailycheck/"+clickeddate+"/imgCheck/",
                 dataType:'json',
                 success:function(data){
                     if(data[0].day_img!='/static/img/mem01.png'){
-                        inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/mealCheck/">식단</a></ul>'
-                        inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/exerciseCheck/">운동</a></ul>'
+                        inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/mealCheck/">식단 <img width="40px" src="/static/img/nav_icon/diet.png"></a></ul>'
+                        inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/exerciseCheck/">운동 <img width="40px" src="/static/img/nav_icon/workout.png"></a></ul>'
                         inserttxt +=    '<div style="padding-top:10px"><ul><img width=150 height=200 id= "imgDelete" onclick="imgDelete()" src="'+data[0].day_img+'"></ul>'
                         inserttxt +=    '<ul> 몸무게 : '+data[0].cur_weight+'kg</ul></div>'
                         }
@@ -87,14 +87,15 @@
                         var urlname= "/dailycheck/"+clickeddate+"/imgCheck/"
                         inserttxt+='<form method = "POST" action = "'+urlname+'" name="imgSave" id="imgSave" enctype="multipart/form-data">'
                         inserttxt+='{% csrf_token %}'    
-                        inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/mealCheck/">식단</a></ul>'
-                        inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/exerciseCheck/">운동</a></ul>'
-                        inserttxt +=    '<div style="padding-top:10px"><ul>이미지 : <input type="file" name="file" id="file"></ul>'
+                        inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/mealCheck/">식단 <img width="40px" src="/static/img/nav_icon/diet.png"></a></ul>'
+                        inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/exerciseCheck/">운동 <img width="40px" src="/static/img/nav_icon/workout.png"></a></ul>'
+                        inserttxt +=    '<div style="padding-top:10px"><ul>사진 : <input type="file" name="file" id="file" style="width:100px;"></ul>'
                         inserttxt +=    '<ul>몸무게 : <input type="number" min="0" max="1000" name="weight" id="weight" value="'+data[0].cur_weight+'"></ul></div><br>'
-                        inserttxt+='<button type="button" class="saveBtn" id="saveBtn" onclick="saveBtn()">Save</button>'
-                        
+                        inserttxt+='</form><button type="button" class="saveBtn" id="saveBtn" onclick="saveBtn()">Save</button>'
+
+                                               
                     }
-                        
+
                     $("#madalshows").html(inserttxt)
                     
 
