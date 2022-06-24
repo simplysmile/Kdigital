@@ -716,8 +716,15 @@ def myStatusData(request):
     exer = Dailyexercise.objects.filter(user=user, createdate__range=[today-datetime.timedelta(days=6), today])
     exer_all = Dailyexercise.objects.filter(user=user)
     
+    print('-----------------------------')
+    exckday = exer_all.order_by('createdate')
+    mealclday = meal_all.order_by('d_meal_date')
     
-
+    firstexckday = exckday[0].createdate
+    firstmealclday = mealclday[0].d_meal_date
+    createantday = user.createdate
+    dayarr = [firstexckday,firstmealclday,createantday]
+      
     #  ----- 몸무게 달성 그래프 반 도넛 그래프를 위한 정보
     # 사용자 몸무게 데이터를 날짜 역순으로 가져온다. 
     userDt = Dailydata.objects.filter(user=user).order_by('-add_date')
@@ -725,7 +732,8 @@ def myStatusData(request):
     goal_burn_cal = userDt[0].goal_burn_kcal
     goal_weight = user.goal_weight
     goal_period = user.goal_period
-    workoutdays = user.createdate
+    workoutdays = min(dayarr)
+    
     start_date = datetime.date(workoutdays.year, workoutdays.month, workoutdays.day)
     target_date = datetime.date(curr_year, curr_month, curr_day)
     d_day = target_date - start_date

@@ -20,7 +20,7 @@ $(function(){
                   ctx.font = '30px sans-serif';
                   ctx.textAlign = 'center';     
                   var daystr = String(data.workoutday)+'/'+String(data.goal_period) +' 일'
-                  var kgstr = '목표까지 '+String(data.weight[0]-data.goal_weight)+'kg!!'
+                  var kgstr = '목표까지 '+String(Math.round(data.weight[0]-data.goal_weight,2))+'kg!!'
                   ctx.fillText(daystr, width / 2 +(left), top + (height / 2)+70);
                   ctx.fillText(kgstr, width / 2 +(left), top + (height / 2)+120);
                 }
