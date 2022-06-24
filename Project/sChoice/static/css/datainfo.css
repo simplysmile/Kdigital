@@ -10,7 +10,9 @@
     font-family: "dohyeon";
 }
 
-
+#choicebox{
+    margin: auto;
+}
 .disease {
     margin:10px;
     width: 150px;
