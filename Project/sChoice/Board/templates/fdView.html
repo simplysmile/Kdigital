@@ -66,7 +66,7 @@
 
         <div id="buttonlist">
             {% if request.session.session_user_id%}
-            <a href="{% url 'Board:exReply' bitem.b_No nowpage %}"><div class="myb">답글</div></a>
+            <a href="{% url 'Board:fdReply' bitem.b_No nowpage %}"><div class="myb">답글</div></a>
             {%endif%}
             <a href="{% url 'Board:fdboard' nowpage %}"><div class="myb">목록</div></a>
             {% if bitem.member.user_id == request.session.session_user_id%}
