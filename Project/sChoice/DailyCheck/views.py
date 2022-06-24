@@ -477,7 +477,7 @@ def exerciseCheck(request,sdate):
         
     user = Members.objects.get(user_id=u_id)  
     user_category=user.user_target
-    
+    user_category1=''
     if user_category=='abs':
         user_category1='복부'
     elif user_category=='arms':
