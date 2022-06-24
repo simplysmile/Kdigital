@@ -13,7 +13,7 @@ table {
   width: 40%;
   border-collapse: collapse;
   margin-top: 20px;
-  margin-left: 400px;
+  margin-left: 570px;
   margin-right: 400px;
   line-height: 25px;
   border: 1px solid silver;
@@ -44,7 +44,7 @@ input{
 }
 .btn {
   margin-top: 0px;
-  margin-left: 400px;
+  margin-left: 375px;
   margin-right: 400px;
 }
 button {

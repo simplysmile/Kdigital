@@ -10,14 +10,15 @@ h1 {
 }
 
 table {
-  width: 40%;
+  width: 35%;
   border-collapse: collapse;
   margin-top: 20px;
-  margin-left: 400px;
+  margin-left: 600px;
   margin-right: 400px;
   line-height: 25px;
   border: 1px solid silver;
   border-top: 2px solid black;
+  position: relative;
 }
 th {
   padding: 10px 0 10px 20px;
