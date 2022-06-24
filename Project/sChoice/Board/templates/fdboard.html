@@ -114,7 +114,9 @@
 			<!--//다음페이지-->
 				</ul>
 			<!--//페이징처리-->
+		{% if request.session.session_user_id%}
 		<a href="{% url 'Board:fdwrite' nowpage %}" ><div class="write">쓰기</div></a>
+		{%endif%}
 	</section>
 
 	<script src="/static/js/bt_jquery.min.js"></script>
