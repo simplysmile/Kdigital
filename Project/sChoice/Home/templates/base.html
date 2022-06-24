@@ -207,6 +207,7 @@
 							<div class="inner">
 <!--nav div-->					<div id="nav">
 									<ul>
+										<!--어바웃어스/컨택/관리자-->
 										<li class="first has-children menu-about"><a href="#"
 												class="has-children"><span class="ico- collect-"></span> <span
 													class="title">About Us</span></a>
@@ -221,29 +222,29 @@
 
 										</li>
 
-
+										<!--게시판-->
 										<li class="menu-brand"><a href="{% url 'Board:exboard' nowpage=1%}" class=""><span
 													class="ico- brand-"></span> <span class="title">게시판</span>
 													<ul class="">
-														<li class="first  menu-shop-category-217"><a href="{% url 'Board:shop' %}"
-																class=""><span class="title">쇼핑추천</span></a></li>
 														<li class="first  menu-shop-category-217"><a href="{% url 'Board:exboard' nowpage=1%}"
 																class=""><span class="title">운동정보공유</span></a></li>
 														<li class=" menu-shop-category-96"><a href="{% url 'Board:fdboard' nowpage=1%}"
 																class=""><span class="title">식단정보공유</span></a></li>
-														<li class=" menu-shop-category-96"><a href="{% url 'Board:yourbody'%}"
-																class=""><span class="title">데이터분석</span></a></li>
-		
-		
+														
 													</ul>
 
 										</li>
 										
+										<!--달성기록-->
 										<li class="has-children"><span class="has-children"><span
 													class="ico- shop-"></span> <span class="title">달성 기록</span></span>
 											<ul class="">
 												<li class="first  menu-shop-category-217"><a href="{% url 'DailyCheck:calendar' %}"
 														class=""><span class="title">달력 보기</span></a></li>
+												<li class="first  menu-shop-category-217"><a href="{% url 'DailyCheck:exerciseCheck' sdate=0 %}"
+														class=""><span class="title">운동 달성현황</span></a></li>
+												<li class=" menu-shop-category-96"><a href="{% url 'DailyCheck:mealCheck' sdate=0 %}"
+														class=""><span class="title">식단 달성현황</span></a></li>
 												<li class=" menu-shop-category-96"><a href="{% url 'DailyCheck:myStatus' %}"
 														class=""><span class="title">일주일 달성현황</span></a></li>
 
@@ -251,10 +252,12 @@
 											</ul></a>
 										</li>
 
+										<!--이게뭐지 없앨까-->
 										<li class="active home menu-"><a href="/"
 												class="home active current-"><span class="ico- home-"></span> <span
-													class="title">진단</span></a></li>
+													class="title">게시판</span></a></li>
 
+										<!--자가진단-->
 										<li class="product-search-trigger no-pjax menu-shop-keyword"><a
 												href="#" class="product-search-trigger no-pjax"><span
 													class="ico- search-"></span><span class="title">자가진단</span></a>
@@ -262,6 +265,11 @@
 													<ul class="">
 														<li class="first  menu-shop-category-217"><a href="{% url 'DailyCheck:selfCheck' %}"
 															class=""><span class="title">자가진단 보기</span></a></li>
+														
+														{% if request.session.session_user_id%}
+														<li class=" menu-shop-category-96"><a href="{% url 'Board:yourbody'%}"
+															class=""><span class="title">데이터분석</span></a></li>	
+														{%endif%}	
 
 													</ul>
 												
@@ -270,7 +278,7 @@
 
 
 
-
+										<!--로그인/가입-->
 										{% if not request.session.session_user_id%} 
 										<li class="has-children"><span class="has-children"><span
 													class="ico- user-"></span> <span
@@ -298,9 +306,16 @@
 											</ul>
 										</li>
 										{% endif %}
+
+										<!--쇼핑차트-->
 										<li class="menu-user-cart dcore-cart-count-outer"><a
 												href="#" class=""><span
-													class="ico- cart-"></span> <span class="title">CART</span></a></li>
+													class="ico- cart-"></span> <span class="title">CART</span></a>
+													<ul class="">
+														<li class=" menu-shop-category-96"><a href="{% url 'Board:shop' %}"
+																class=""><span class="title">쇼핑추천</span></a></li>
+													</ul>
+												</li>
 									</ul>
 								</div>
 							</div>
