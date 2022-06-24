@@ -224,13 +224,12 @@
 
 										<!--게시판-->
 										<li class="menu-brand"><a href="{% url 'Board:exboard' nowpage=1%}" class=""><span
-													class="ico- brand-"></span> <span class="title">게시판</span>
+													class="ico- brand-"></span> <span class="title">Board</span>
 													<ul class="">
 														<li class="first  menu-shop-category-217"><a href="{% url 'Board:exboard' nowpage=1%}"
 																class=""><span class="title">운동정보</span></a></li>
 														<li class=" menu-shop-category-96"><a href="{% url 'Board:fdboard' nowpage=1%}"
 																class=""><span class="title">식단정보</span></a></li>
-														
 													</ul>
 
 										</li>
@@ -241,10 +240,6 @@
 											<ul class="">
 												<li class="first  menu-shop-category-217"><a href="{% url 'DailyCheck:calendar' %}"
 														class=""><span class="title">달력 보기</span></a></li>
-												<li class="first  menu-shop-category-217"><a href="{% url 'DailyCheck:exerciseCheck' sdate=0 %}"
-														class=""><span class="title">운동 달성현황</span></a></li>
-												<li class=" menu-shop-category-96"><a href="{% url 'DailyCheck:mealCheck' sdate=0 %}"
-														class=""><span class="title">식단 달성현황</span></a></li>
 												<li class=" menu-shop-category-96"><a href="{% url 'DailyCheck:myStatus' %}"
 														class=""><span class="title">전체 달성현황</span></a></li>
 
@@ -255,7 +250,7 @@
 										<!--이게뭐지 없앨까-->
 										<li class="active home menu-"><a href="/"
 												class="home active current-"><span class="ico- home-"></span> <span
-													class="title">Board</span></a></li>
+													class="title">게시판</span></a></li>
 
 										<!--자가진단-->
 										<li class="product-search-trigger no-pjax menu-shop-keyword"><a
@@ -268,7 +263,7 @@
 														
 														{% if request.session.session_user_id%}
 														<li class=" menu-shop-category-96"><a href="{% url 'Board:yourbody'%}"
-															class=""><span class="title">세부진단</span></a></li>	
+															class=""><span class="title">심층진단</span></a></li>	
 														{%endif%}	
 
 													</ul>
