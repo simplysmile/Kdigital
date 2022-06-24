@@ -36,32 +36,44 @@ def mUpdate(request):
         goal_weight = request.POST.get('goal_weight')
         goal_bodyfat = request.POST.get('goal_bodyfat')
         goal_period = request.POST.get('goal_period')
-        allergic_food = request.POST.get('allergic_food')
+        allergic_food = request.POST.get('activity')
         modidate = request.POST.get('modidate')
+        height = request.POST.get('height')
+        cur_weight = request.POST.get('cur_weight')
+        
+
         
 
         # db에 수정저장
-        qs = Members.objects.get(user_id=user_id)
-        qs.user_name =  user_name
-        qs.user_pw =  user_pw
-        qs.birth =  birth
-        qs.gender = gender
-        qs.phone =  phone
-        qs.email =  email
-        qs.zipcode = zipcode
-        qs.addressd1 =  addressd1
-        qs.addressd2 =  addressd2
-        qs.service =  service
-        qs.user_purpose =  user_purpose
-        qs.user_target =  user_target
-        qs.vegan =  vegan
-        qs.pro =  pro
-        qs.goal_weight =  goal_weight
-        qs.goal_bodyfat =  goal_bodyfat
-        qs.goal_period =  goal_period
-        qs.allergic_food =  allergic_food
-        qs.modidate =  modidate
-        qs.save()
+        qs_member = Members.objects.get(user_id=user_id)
+        qs_daily = Dailydata.objects.filter(user=qs_member)[0]
+        qs_daily.height = height
+        qs_daily.cur_weight = cur_weight
+        qs_daily.save()
+
+        qs_member.user_name =  user_name
+        qs_member.user_pw =  user_pw
+        qs_member.birth =  birth
+        qs_member.gender = gender
+        qs_member.phone =  phone
+        qs_member.email =  email
+        qs_member.zipcode = zipcode
+        qs_member.addressd1 =  addressd1
+        qs_member.addressd2 =  addressd2
+        qs_member.service =  service
+        qs_member.user_purpose =  user_purpose
+        qs_member.user_target =  user_target
+        qs_member.vegan =  vegan
+        qs_member.pro =  pro
+        qs_member.goal_weight =  goal_weight
+        qs_member.goal_bodyfat =  goal_bodyfat
+        qs_member.goal_period =  goal_period
+        qs_member.allergic_food =  allergic_food
+        qs_member.modidate =  modidate
+
+        qs_member.save()
+
+
         return redirect('Member:mView')
     
 
