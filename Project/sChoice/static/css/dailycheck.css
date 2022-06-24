@@ -1,6 +1,16 @@
+@font-face {
+
+  src : url("/static/font/BMDOHYEON_otf.otf"); 
+
+  font-family: "dohyeon";
+  
+
+}
+
 *{ 
 	margin: 0;
 	padding: 0;
+  font-family: "dohyeon";
 }
 #box1{
 
@@ -108,8 +118,8 @@ ul{
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
-  height: 500px
+  width: 90%;
+  height: 600px
   
 }
 
@@ -129,6 +139,55 @@ ul{
 
 
 
+.nextBtn,
+.nextBtn2,
+.okBtn,
+.noBtn,
+.saveBtn{
+  
+  font-size: 20px;
+  font-weight: bold;
+  border: 1px solid #f7f7f7;
+  
+  border-collapse: collapse;
+  width: 100px;
+  height: 50px;
+
+
+}
+.saveBtn,
+.noBtn{
+  float: right;
+  margin-top: 10px;
+ 
+
+}
+.noBtn{
+
+  padding-right: 10px;
+
+}
+
+.prevBtn:hover,
+.prevBtn:focus,
+.prevBtn2:hover,
+.prevBtn2:focus,
+.prevBtn22:hover,
+.prevBtn22:focus,
+.nextBtn:hover,
+.nextBtn:focus,
+.nextBtn2:hover,
+.nextBtn2:focus,
+.noBtn:hover,
+.noBtn:focus,
+.okBtn:hover,
+.okBtn:focus,
+.saveBtn:hover,
+.saveBtn:focus,
+.cancelBtn:hover,
+.cancelBtn:focus{
+  cursor: pointer;
+}
 
 
 
