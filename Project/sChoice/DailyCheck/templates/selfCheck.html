@@ -12,6 +12,7 @@
         var comp_data=[0,0,0,0,0];
         var avg_data=[0,0,0,0,0];
         var ageforuser=0;
+        var genderforuser=0;
 
         function calculator(birth,gender,height,weight,activity,isuser){
 
@@ -162,7 +163,7 @@
         //$("#submitBtn").on("click",function(){
         function submitBtn(){
 
-            alert('submitbutt')
+            //alert('submitbutt')
             var birth=document.getElementById("birth").value
             var gender=document.getElementById("gender").value
             //var gender=document.querySelector("input[name=gender]:checked").value
@@ -187,6 +188,14 @@
             var todaydate1 = yyyy1+mm1+dd1  
             var age11 = parseInt((Number(todaydate1)-Number(birth))*0.0001)
             ageforuser = Math.round(age11/10)*10
+            if(gender=='male'){
+                genderforuser='남성'
+            }
+            else{
+                genderforuser='여성'
+            }
+                
+            
 
             var avg_male_weight = [73.23, 75.91, 78.73, 76.37, 72.39, 69.22, 66.35, 62.76]
             var avg_female_weight = [59.36, 57.84, 59.21, 59.38, 58.83, 58.37, 57.18, 52.91]
@@ -296,7 +305,7 @@
                             labels: ['키','몸무게','BMI','기초대사량(BMR)','활동대사량(AMR)'],
                             datasets: [
                                 {
-                                    label: '사용자 입력',
+                                    label: '입력하신 값',
                                     data: comp_data,
                                     fill: true,
                                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
@@ -306,7 +315,7 @@
                                     pointHoverBackgroundColor: '#fff',
                                     pointHoverBorderColor: '#D91818'
                                 },{
-                                    label: '20대 평균여성',
+                                    label: String(ageforuser)+'대 평균'+genderforuser,
                                     data: [100,100,100,100,100],
                                     fill: true,
                                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
