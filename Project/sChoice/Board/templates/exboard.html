@@ -110,9 +110,11 @@
 				</ul>
 			<!--//페이징처리-->
 	  <!--/pagint-->
-	    {% if request.session.session_user_id%}
-		<a href="{% url 'Board:exwrite' nowpage %}" ><div class="write">쓰기</div></a>
-		{%endif%}
+	  <div id='btnbox'>
+		  {% if request.session.session_user_id%}
+		  <a href="{% url 'Board:exwrite' nowpage %}" ><div class="write">쓰기</div></a>
+		  {%endif%}
+	  </div>
 	</section>
 
 	<script src="/static/js/bt_jquery.min.js"></script>
