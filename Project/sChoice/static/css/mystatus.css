@@ -1,6 +1,17 @@
+@font-face {
+
+    src : url("/static/font/BMDOHYEON_otf.otf"); 
+  
+    font-family: "dohyeon";
+  
+}
 *{ 
     margin: 0 auto;
     padding: 0;
+    font-family: "dohyeon";
+}
+h2,h4{
+    font-family: "dohyeon";
 }
 table{
     margin: 0 auto;
