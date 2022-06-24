@@ -40,8 +40,8 @@ function searchDB()
     // 검색어
     var kword = document.getElementById('serDB').value;
 
-    if($("#serDB").val().length<=1){
-        alert('2글자 이상 입력하셔야 검색이 가능합니다.')
+    if($("#serDB").val().length<1){
+        alert('1글자 이상 입력하셔야 검색이 가능합니다.')
         $("#serDB").focus()
         return false
     }
