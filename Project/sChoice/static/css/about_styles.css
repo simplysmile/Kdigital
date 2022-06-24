@@ -1,4 +1,16 @@
 @charset "UTF-8";
+@font-face {
+
+  src : url("/static/font/BMDOHYEON_otf.otf"); 
+
+  font-family: "dohyeon";
+
+}
+* {
+  margin: 0 auto;
+  font-family: "dohyeon";
+}
+
 /*!
 * Start Bootstrap - One Page Wonder v6.0.5 (https://startbootstrap.com/theme/one-page-wonder)
 * Copyright 2013-2022 Start Bootstrap
