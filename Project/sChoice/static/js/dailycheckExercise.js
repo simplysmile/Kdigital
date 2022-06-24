@@ -52,7 +52,7 @@ $(function(){
                 note+='</tr>'
                 note+='<tr>'
                 for(let i=1;i<4;i++){
-                    note+='<td>'+data[i-1].ex_name+' : '+ data[i-1].burned_kcal+'kcal<br>('+Math.round(data[i-1].kcal_per)+'% 달성)</td>'
+                    note+='<td>'+data[i-1].ex_name+' : '+ data[i-1].burned_kcal+'kcal / '+data[i-1].goal_kcal+'kcal<br>('+Math.round(data[i-1].kcal_per)+'% 달성)</td>'
                 }
             }
             else{
@@ -71,7 +71,7 @@ $(function(){
                 note+='</tr>'
                 note+='<tr>'
                 for(let i=1;i<(data.length)+1;i++){
-                    note+='<td>'+data[i-1].ex_name+' : '+ data[i-1].burned_kcal+'kcal<br>('+Math.round(data[i-1].kcal_per)+'% 달성)</td>'
+                    note+='<td>'+data[i-1].ex_name+' : '+ data[i-1].burned_kcal+'kcal / '+data[i-1].goal_kcal+'kcal<br>('+Math.round(data[i-1].kcal_per)+'% 달성)</td>'
                 }
             }
 
