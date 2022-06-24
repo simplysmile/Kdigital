@@ -1,5 +1,6 @@
 section {
   text-align: center;
+  margin: 0 auto;
 }
 
 h1 {
@@ -10,11 +11,10 @@ h1 {
 }
 
 table {
+  margin: 0 auto;
   width: 35%;
   border-collapse: collapse;
   margin-top: 20px;
-  margin-left: 600px;
-  margin-right: 400px;
   line-height: 25px;
   border: 1px solid silver;
   border-top: 2px solid black;
@@ -53,9 +53,7 @@ td{
   border: 2px silver solid;
 }
 .btn {
-  margin-top: 0px;
-  margin-left: 400px;
-  margin-right: 400px;
+  margin: 0 auto;
 }
 
 

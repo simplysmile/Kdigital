@@ -91,10 +91,7 @@ def mView(request):
     user_id = request.session['session_user_id']
     print(user_id)
     qs_member = Members.objects.get(user_id=user_id)
-    qs_member.save()
-
-    qs_daily = Dailydata.objects.get(user=user_id)
-    qs_daily.save()
+    qs_daily = Dailydata.objects.filter(user=qs_member)[0]
 
     context={'view':qs_member, 'view1':qs_daily}
     return render(request,'mView.html',context)
