@@ -304,7 +304,7 @@ function modifyMeal(sdate,num)
                 $('#selbox').prepend('<p style="text-align:center; width:100px; font-size:30px;  font-weight: bold;background-color:#A0DDE0;">저녁</p>')
             }
 
-            else if (mealtimesel==S){
+            else if (mealtimesel=='S'){
                 $('#selbox').prepend('<p style="text-align:center; width:100px; font-size:30px;  font-weight: bold;background-color:#A0DDE0;">간식</p>')
             }
             
