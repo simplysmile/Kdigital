@@ -9,13 +9,19 @@
 ul{
   font-family: "dohyeon";
 }
+span{
+  font-family: "dohyeon";
+  font-size: 13px;
 
+}
 * {
 margin: 0;
 padding: 0;
 list-style: none;
 box-sizing: border-box;  
 font-family: Pretendard;
+/* font-family: "dohyeon"; */
+/* font-size: 13px; */
 }
 
 .rap {
@@ -133,7 +139,7 @@ a:hover{
     border: 1px solid #888;
     width: 50%;
 }
-ul{
+.modaltxt{
     font-size: 30px;
     font-weight: bold;
     text-align: center;    

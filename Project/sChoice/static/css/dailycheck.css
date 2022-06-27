@@ -6,6 +6,11 @@
   
 
 }
+/* span{
+  font-family: "dohyeon";
+  font-size: 13px;
+
+} */
 
 *{ 
 	margin: 0;
@@ -73,7 +78,7 @@ tr,td{
 
 }
 
-ul{
+mealtxt{
   font-size: 30px;
   font-weight: bold;
   text-align: center;    

@@ -3,15 +3,16 @@
 
 {% block mycontent %}
 
-
+<!--
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="/static/css/dailycheck.css" />
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/static/js/dailycheckMeal.js"></script>
 
 <style>
@@ -135,8 +136,8 @@
                 {% if bcnt %}
                 <td width=250 height=250 style='background-color:#A0DDE0;'> 
                     <a onclick="addMeal('{{ sdate }}',1)">
-                    <ul id="mealsel">아침</ul>
-                    <ul>{{ b_k }} kcal</ul>
+                    <ul class="mealtxt" id="mealsel">아침</ul>
+                    <ul class="mealtxt">{{ b_k }} kcal</ul>
                     <ul><p style="font-size:17px;">탄수화물: {{ b_c }}g</p></ul>
                     <ul><p style="font-size:17px;">단백질: {{ b_p }}g </p></ul>
                     <ul><p style="font-size:17px;">지방: {{ b_f }}g</p></ul>                 
@@ -151,8 +152,8 @@
                 {% if lcnt %}
                 <td width=250 height=250 style='background-color:#A0DDE0;'> 
                     <a onclick="addMeal('{{ sdate }}',2)">
-                    <ul>점심</ul>
-                    <ul>{{ l_k }} kcal</ul>
+                    <ul class="mealtxt">점심</ul>
+                    <ul class="mealtxt">{{ l_k }} kcal</ul>
                     <ul><p style="font-size:17px;">탄수화물: {{ l_c }}g</p></ul>
                     <ul><p style="font-size:17px;">단백질: {{ l_p }}g </p></ul>
                     <ul><p style="font-size:17px;">지방: {{ l_f }}g</p></ul>                 
@@ -171,8 +172,8 @@
                 {% if dcnt %}
                 <td width=250 height=250 style='background-color:#A0DDE0;'> 
                     <a onclick="addMeal('{{ sdate }}',3)">
-                    <ul>저녁</ul>
-                    <ul>{{ d_k }} kcal</ul>
+                    <ul class="mealtxt">저녁</ul>
+                    <ul class="mealtxt">{{ d_k }} kcal</ul>
                     <ul><p style="font-size:17px;">탄수화물: {{ d_c }}g</p></ul>
                     <ul><p style="font-size:17px;">단백질: {{ d_p }}g </p></ul>
                     <ul><p style="font-size:17px;">지방: {{ d_f }}g</p></ul>                 
@@ -187,8 +188,8 @@
                 {% if scnt %}
                 <td width=250 height=250 style='background-color:#A0DDE0;'> 
                     <a onclick="addMeal('{{ sdate }}',4)">
-                    <ul>간식</ul>
-                    <ul>{{ s_k }} kcal</ul>
+                    <ul class="mealtxt">간식</ul>
+                    <ul class="mealtxt">{{ s_k }} kcal</ul>
                     <ul><p style="font-size:17px;">탄수화물: {{ s_c }}g</p></ul>
                     <ul><p style="font-size:17px;">단백질: {{ s_p }}g </p></ul>
                     <ul><p style="font-size:17px;">지방: {{ s_f }}g</p></ul>                 

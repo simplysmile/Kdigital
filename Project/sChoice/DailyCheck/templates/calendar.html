@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block mycontent %}
 
-    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+   <!-- <script  src="http://code.jquery.com/jquery-latest.min.js"></script> -->
     <link rel="stylesheet" type="text/css" href="/static/css/calendar.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
@@ -78,19 +78,19 @@
                 dataType:'json',
                 success:function(data){
                     if(data[0].day_img!='/static/img/mem01.png'){
-                        inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/mealCheck/">식단 <img width="40px" src="/static/img/nav_icon/diet.png"></a></ul>'
-                        inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/exerciseCheck/">운동 <img width="40px" src="/static/img/nav_icon/workout.png"></a></ul>'
-                        inserttxt +=    '<div style="padding-top:10px"><ul><img width=150 height=200 id= "imgDelete" onclick="imgDelete()" src="'+data[0].day_img+'"></ul>'
-                        inserttxt +=    '<ul> 몸무게 : '+data[0].cur_weight+'kg</ul></div>'
+                        inserttxt +=    '<ul class="modaltxt"><a href="/dailycheck/'+clickeddate+'/mealCheck/">식단 <img width="40px" src="/static/img/nav_icon/diet.png"></a></ul>'
+                        inserttxt +=    '<ul class="modaltxt"><a href="/dailycheck/'+clickeddate+'/exerciseCheck/">운동 <img width="40px" src="/static/img/nav_icon/workout.png"></a></ul>'
+                        inserttxt +=    '<div style="padding-top:10px"><ul class="modaltxt"><img width=150 height=200 id= "imgDelete" onclick="imgDelete()" src="'+data[0].day_img+'"></ul>'
+                        inserttxt +=    '<ul class="modaltxt"> 몸무게 : '+data[0].cur_weight+'kg</ul></div>'
                         }
                         else{
                         var urlname= "/dailycheck/"+clickeddate+"/imgCheck/"
                         inserttxt+='<form method = "POST" action = "'+urlname+'" name="imgSave" id="imgSave" enctype="multipart/form-data">'
                         inserttxt+='{% csrf_token %}'    
-                        inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/mealCheck/">식단 <img width="40px" src="/static/img/nav_icon/diet.png"></a></ul>'
-                        inserttxt +=    '<ul><a href="/dailycheck/'+clickeddate+'/exerciseCheck/">운동 <img width="40px" src="/static/img/nav_icon/workout.png"></a></ul>'
-                        inserttxt +=    '<div style="padding-top:10px"><ul>사진 : <input type="file" name="file" id="file" style="width:100px;"></ul>'
-                        inserttxt +=    '<ul>몸무게 : <input type="number" min="0" max="1000" name="weight" id="weight" value="'+data[0].cur_weight+'"></ul></div><br>'
+                        inserttxt +=    '<ul class="modaltxt"><a href="/dailycheck/'+clickeddate+'/mealCheck/">식단 <img width="40px" src="/static/img/nav_icon/diet.png"></a></ul>'
+                        inserttxt +=    '<ul class="modaltxt"><a href="/dailycheck/'+clickeddate+'/exerciseCheck/">운동 <img width="40px" src="/static/img/nav_icon/workout.png"></a></ul>'
+                        inserttxt +=    '<div style="padding-top:10px"><ul class="modaltxt">사진 : <input type="file" name="file" id="file" style="width:100px;"></ul>'
+                        inserttxt +=    '<ul class="modaltxt">몸무게 : <input type="number" min="0" max="1000" name="weight" id="weight" value="'+data[0].cur_weight+'"></ul></div><br>'
                         inserttxt+='</form><button type="button" class="saveBtn" id="saveBtn" onclick="saveBtn()">Save</button>'
 
                                                
