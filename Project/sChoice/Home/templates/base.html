@@ -36,6 +36,7 @@
 		}
 	</script>
 
+	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
 
@@ -167,21 +168,8 @@
 		wcs.inflow("collectluxe.com");
 	</script>
 
-	<style>
-		@font-face {
-	
-			src : url("/static/font/BMDOHYEON_otf.otf"); 
-		
-			font-family: "dohyeon";
-		
-		}
-		*{
-			font-family: "dohyeon";
-		}
-		
-		
-	</style>
 </head>
+
 
 <body id="page-main" class="ko page-main">
 	<script type="text/javascript">
@@ -316,13 +304,13 @@
 
 											<ul class="">
 												<li class="first  menu-shop-category-217">
-													<a href="/dailycheck/selfCheck/" class="">
+													<a href="{% url 'DailyCheck:selfCheck' %}" class="">
 														<span class="title">간단진단</span>
 													</a>
 												</li>
 												{% if request.session.session_user_id%}
 												<li class="menu-shop-category-96">
-													<a href="board/yourbody/" class="">
+													<a href="{% url 'Board:yourbody'%}" class="">
 														<span class="title">심층진단</span>
 													</a>
 												</li>	

@@ -74,11 +74,11 @@ a:hover{
     border-collapse: collapse;
 }
 
-ul{
+/* ul{
   font-size: 30px;
   font-weight: bold;
   text-align: center;    
-}
+} */
 #weeklyBarChart_meal{
     margin-top: 30%;
 }
