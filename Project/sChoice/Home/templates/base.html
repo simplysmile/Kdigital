@@ -3,6 +3,7 @@
 <html class="user-space no-js pc" lang="ko">
 
 <head>
+	<!--
 	<meta charset="utf-8">
 	<meta property="og:type" content="website">
 	<meta property="og:url" content="https://www.collectluxe.com/">
@@ -10,7 +11,7 @@
 	<meta property="og:description"
 		content="콜렉트는 세계적인 명품 안경, 선글라스를 큐레이션하는 개인 맞춤형 프리미엄 아이웨어 편집숍입니다. 콜렉트 공식 온라인 스토어에서 다양한 제품을 만나보세요." />
 	<meta property="og:image"
-		content="https://www.collectluxe.com/api/dsavedownload/image/2989/Main+Image+1.jpg?w=0&h=0&download=0" />
+		content="https://www.collectluxe.com/api/dsavedownload/image/2989/Main+Image+1.jpg?w=0&h=0&download=0" /> -->
 	<meta property="og:image:width" content="1600" />
 	<meta property="og:image:height" content="1600" />
 	<meta property="fb:app_id" content="331468114915902" />
@@ -70,6 +71,7 @@
 	<script src="https://unpkg.com/select2@4.0.2/dist/js/select2.min.js"></script>
 	<script src="https://unpkg.com/select2@4.0.2/dist/js/i18n/ko.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://unpkg.com/select2@4.0.2/dist/css/select2.min.css" />
+	
 	<script src="/static/js/jquery.formatCurrency-1.4.0.pack.min.js"></script>
 	<script src="/static/js/jquery.dform/dform.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="/static/js/jquery.dform/dform.min.css" />
@@ -122,16 +124,23 @@
 	<link rel="stylesheet" type="text/css" href="/static/css/basic/helpers/datepicker.min.css" />
 	<link rel="stylesheet" type="text/css" href="/static/css/basic/helpers/ckeditor.min.css" />
 	<script src="/static/js/basic.min.js"></script>
+
 	<script src="/static/js/materialize.min.js"></script>
+
 	<script src="/static/js/dcore.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="/static/css/form.min.css" />
 	<link rel="stylesheet" type="text/css" href="/static/css/layout.min.css" />
 	<link rel="stylesheet" type="text/css" href="/static/css/common.min.css" />
 	<link rel="stylesheet" type="text/css" href="/static/css/pages.min.css" />
 	<link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+<!--
 	<script src="/static/js/pjax.min.js"></script>
+-->
 	<script src="/static/js/nav.min.js"></script>
 	<script src="/static/js/main.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>    
+
+
 	<script>
 		(function (i, s, o, g, r, a, m) { i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m) })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 		ga('create', 'UA-167588046-1', 'auto');
@@ -160,7 +169,7 @@
 
 </head>
 
-<body id="page-main" class=" ko page-main">
+<body id="page-main" class="ko page-main">
 	<script type="text/javascript">
 		wcs_do();
 	</script>
@@ -180,22 +189,15 @@
 		</div>
 	</div>
 	<div id="pjax-wrapper">
-		<div id="body-info" data-id="page-main" data-class=" ko page-main"></div>
+		<div id="body-info" data-id="page-main" data-class="ko page-main"></div>
 		<div id="header-padding"></div>
 		<div id="header">
 			<div class="container">
 				<div class="relative">
-					<div id="logo">
-						<a href="index.html">COLLECT</a>
+					<div id="logo"><a href="/"></a>
 					</div>
 					<div id="nav-extra-for-mobile">
 						<ul>
-							<li class="first product-search-trigger no-pjax menu-shop-keyword"><a href="shop/keyword"
-									class="product-search-trigger no-pjax"><span class="ico- search-"></span> <span
-										class="title">SEARCH</span></a></li>
-							<li class="menu-user-cart dcore-cart-count-outer"><a
-									href="https://www.collectluxe.com/user/cart" class=""><span
-										class="ico- cart-"></span> <span class="title">CART</span></a></li>
 							<li class="nav-trigger">
 								<button type="button" id="nav-trigger"><span class="ico-"><i></i></span></button>
 							</li>
@@ -208,124 +210,187 @@
 <!--nav div-->					<div id="nav">
 									<ul>
 										<!--어바웃어스/컨택/관리자-->
-										<li class="first has-children menu-about"><a href="#"
-												class="has-children"><span class="ico- collect-"></span> <span
-													class="title">About Us</span></a>
+										<li class="first has-children menu-about">
+											<a href="{% url 'AdminPage:aboutus' %}" class="">
+												<span class="ico- collect-"></span> 
+												<span class="title">About Us</span>
+											</a>
 											<ul class="">
-												<li class="first menu-about"><a href="{% url 'AdminPage:aboutus' %}" class=""><span
-															class="title">소개 </span></a></li>
-												<li class="first menu-about"><a href="{% url 'AdminPage:ad_contact_us' %}" class=""><span
-															class="title">문의사항</span></a></li>
-												<li class="first menu-about"><a href="{% url 'AdminPage:ad_login' %}" class=""><span
-															class="title">admin</span></a></li>
+												<li class="first menu-about">
+													<a href="{% url 'AdminPage:aboutus' %}" class="">
+														<span class="title">소개 </span>
+													</a>
+												</li>
+												<li class="first menu-about">
+													<a href="{% url 'AdminPage:ad_contact_us' %}" class="">
+														<span class="title">문의사항</span>
+													</a>
+												</li>
+												<li class="first menu-about">
+													<a href="{% url 'AdminPage:ad_login' %}" class="">
+														<span class="title">admin</span>
+													</a>
+												</li>
 											</ul>
-
 										</li>
-
+										<!--어바웃어스/컨택/관리자-->
 										<!--게시판-->
-										<li class="menu-brand"><a href="{% url 'Board:exboard' nowpage=1%}" class=""><span
-													class="ico- brand-"></span> <span class="title">Board</span>
-													<ul class="">
-														<li class="first  menu-shop-category-217"><a href="{% url 'Board:exboard' nowpage=1%}"
-																class=""><span class="title">운동정보</span></a></li>
-														<li class=" menu-shop-category-96"><a href="{% url 'Board:fdboard' nowpage=1%}"
-																class=""><span class="title">식단정보</span></a></li>
-													</ul>
-
+										<li class="menu-brand">
+											<a href="{% url 'Board:exboard' nowpage=1%}" class="">
+												<span class="ico- brand-"></span> 
+												<span class="title">Board</span>
+												<ul class="">
+													<li class="first  menu-shop-category-217">
+														<a href="{% url 'Board:exboard' nowpage=1%}" class="">
+															<span class="title">운동정보</span>
+														</a>
+													</li>
+													<li class=" menu-shop-category-96">
+														<a href="{% url 'Board:fdboard' nowpage=1%}" class="">
+															<span class="title">식단정보</span>
+														</a>
+													</li>
+												</ul>
+											</a>
 										</li>
-										
+										<!--게시판-->
 										<!--달성기록-->
-										<li class="has-children"><span class="has-children"><span
-													class="ico- shop-"></span> <span class="title">Calendar</span></span>
+										<li class="has-children">
+											<a href="{% url 'DailyCheck:calendar' %}" class="">
+												<span class="ico- shop-"></span>
+												<span class="title">Calendar</span>
+											</a>
+											
 											<ul class="">
-												<li class="first  menu-shop-category-217"><a href="{% url 'DailyCheck:calendar' %}"
-														class=""><span class="title">달력 보기</span></a></li>
-												<li class=" menu-shop-category-96"><a href="{% url 'DailyCheck:myStatus' %}"
-														class=""><span class="title">전체 달성현황</span></a></li>
+												<li class="first  menu-shop-category-217">
+													<a href="{% url 'DailyCheck:calendar' %}" class="">
+														<span class="title">달력 보기</span>
+													</a>
+												</li>
+												<li class=" menu-shop-category-96">
+													<a href="{% url 'DailyCheck:myStatus' %}" class="">
+														<span class="title">전체 달성현황</span>
+													</a>
+												</li>
 
-
-											</ul></a>
+											</ul>
+											
 										</li>
-
-										<!--이게뭐지 없앨까-->
-										<li class="active home menu-"><a href="/"
-												class="home active current-"><span class="ico- home-"></span> <span
-													class="title">게시판</span></a></li>
-
+										<!--달성기록-->
+										<!-- HOME -->
+										<li class="active home menu-">
+											<a href="/" class="home active current-">
+												<span class="ico- home-"></span> 
+												<span class="title">home</span>
+											</a>
+										</li>
+										<!-- HOME -->
 										<!--자가진단-->
-										<li class="product-search-trigger no-pjax menu-shop-keyword"><a
-												href="#" class="product-search-trigger no-pjax"><span
-													class="ico- search-"></span><span class="title">Diagnosis</span></a>
+										<li class="product-search-trigger no-pjax menu-shop-keyword">
+											{% if request.session.session_user_id%}
+											<a href="{% url 'Board:yourbody'%}" class="">
+												<span class="ico- search-"></span>
+												<span class="title">Diagnosis</span>
+											</a>
+											{%else%}
+											<a href="{% url 'DailyCheck:selfCheck' %}" class="">
+												<span class="ico- search-"></span>
+												<span class="title">Diagnosis</span>
+											</a>
 
-													<ul class="">
-														<li class="first  menu-shop-category-217"><a href="{% url 'DailyCheck:selfCheck' %}"
-															class=""><span class="title">간단진단</span></a></li>
-														
-														{% if request.session.session_user_id%}
-														<li class=" menu-shop-category-96"><a href="{% url 'Board:yourbody'%}"
-															class=""><span class="title">심층진단</span></a></li>	
-														{%endif%}	
+											{%endif%}	
 
-													</ul>
-												
-												
+											<ul class="">
+												<li class="first  menu-shop-category-217">
+													<a href="/dailycheck/selfCheck/" class="">
+														<span class="title">간단진단</span>
+													</a>
+												</li>
+												{% if request.session.session_user_id%}
+												<li class="menu-shop-category-96">
+													<a href="board/yourbody/" class="">
+														<span class="title">심층진단</span>
+													</a>
+												</li>	
+												{%endif%}	
+											</ul>												
 										</li>
-
-
-
+										<!--자가진단-->
 										<!--로그인/가입-->
 										{% if not request.session.session_user_id%} 
-										<li class="has-children"><span class="has-children"><span
-													class="ico- user-"></span> <span
-													class="title">Member</span></span>
+										<li class="has-children">
+											<span class="has-children">
+												<span class="ico- user-"></span> 
+												<span class="title">Member</span>
+											</span>
 											<ul class="">
-												<li class="first menu-user-login"><a
-														href="{% url 'Member:login' %}" class=""><span
-															class="title">로그인</span></a></li>
-												<li class="menu-user-signup"><a
-														href="{% url 'Member:signup' %}" class=""><span
-															class="title">회원가입</span></a></li>
+												<li class="first menu-user-login">
+													<a href="{% url 'Member:login' %}" class="">
+														<span class="title">로그인</span>
+													</a>
+												</li>
+												<li class="menu-user-signup">
+													<a href="{% url 'Member:signup' %}" class="">
+														<span class="title">회원가입</span>
+													</a>
+												</li>
 											</ul>
 										</li>
 										{% else %}
-										<li class="has-children"><span class="has-children"><span
-													class="ico- user-"></span> <span
-													class="title">Hello {{request.session.session_user_name}}님</span></span>
+										<li class="has-children">
+											<span class="has-children">
+												<span class="ico- user-"></span> 
+												<span class="title">Hello {{request.session.session_user_name}}님</span>
+											</span>
 											<ul class="">
-												<li class="first menu-user-login"><a
-														href="{% url 'Member:logout' %}" class=""><span
-															class="title">로그아웃</span></a></li>
-										<li class="menu-user-signup"><a
-													href="{% url 'Member:mView' %}" class=""><span
-														class="title">나의 정보</span></a></li>
+												<li class="first menu-user-login">
+													<a href="{% url 'Member:logout' %}" class="">
+														<span class="title">로그아웃</span>
+													</a>
+												</li>
+												<li class="menu-user-signup">
+													<a href="{% url 'Member:mView' %}" class="">
+														<span class="title">나의 정보</span>
+													</a>
+												</li>
 											</ul>
 										</li>
 										{% endif %}
-
+										<!--로그인/가입-->
 										<!--쇼핑차트-->
-										<li class="menu-user-cart dcore-cart-count-outer"><a
-												href="#" class=""><span
-													class="ico- cart-"></span> <span class="title">Shopping</span></a>
-													<ul class="">
-														<li class=" menu-shop-category-96"><a href="{% url 'Board:shop' %}"
-																class=""><span class="title">쇼핑추천</span></a></li>
-													</ul>
-												</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
+										<li class="menu-user-cart dcore-cart-count-outer">
+											<a href="{% url 'Board:shop' %}" class="">
+												<span class="ico- cart-"></span> 
+												<span class="title">Shopping</span>
+											</a>
+												<ul class="">
+													<li class=" menu-shop-category-96">
+														<a href="{% url 'Board:shop' %}" class="">
+															<span class="title">쇼핑추천</span>
+														</a>
+													</li>
+												</ul>
+											</a>
+										</li>
+										<!--쇼핑차트-->
+
+									</ul> <!--ul-->
+								</div><!-- id = nav div-->
+							</div><!--inner div-->
+						</div><!--outer div-->
+					</div><!--nav group div-->
+					
 				</div>
 			</div>
 		</div>
+
 
 		<div id="body">
 			{% block mycontent %}
         <!--!!!!!!BODY 내용!!!!!!!-->
 			{%endblock mycontent%}
 		</div> <!-- #body -->
-		
+	</div>	
 </body>
 
 </html>
