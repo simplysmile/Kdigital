@@ -23,7 +23,7 @@ Python, Oracle Cloud, Django, HTML, JS
 <img src="./page_ex/parts.png" width="90%" alt="page structure"></img>
 
 ### 개인 식단 관리
-<img src="./page_ex/personal_meal.jpg" width="40%" alt="page structure"></img>
+<img src="./page_ex/personal_meal.jpg" width="90%" alt="page structure"></img>
 
 ### BMI 기반 개인 유병율 분석
-<img src="./page_ex/personal_bmi.jpg" width="40%" alt="page structure"></img>
+<img src="./page_ex/personal_bmi.jpg" width="90%" alt="page structure"></img>
