@@ -10,8 +10,8 @@
 Python, Oracle Cloud, Django, HTML, JS
 
 ### 페이지 구성
-<img src="./page_ex/sturucture1.jpg" width="40%" height="30%" alt="page structure"></img>
-<img src="./page_ex/sturucture2.jpg" width="40%" height="30%" alt="page structure"></img>
+<img src="./page_ex/structure1.jpg" width="40%" height="30%" alt="page structure"></img>
+<img src="./page_ex/structure2.jpg" width="40%" height="30%" alt="page structure"></img>
 
 ### 주요 기능
 1. 로그인
