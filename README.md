@@ -10,7 +10,20 @@
 Python, Oracle Cloud, Django, HTML, JS
 
 ### 페이지 구성
+<img src="/page_es/sturucture1.jpg" width="40%" height="30%" alt="page structure"></img>
+<img src="/page_es/sturucture2.jpg" width="40%" height="30%" alt="page structure"></img>
+
+### 주요 기능
 1. 로그인
 2. 식단 & 운동 입력
 3. 개인 목표 도달 추세 분석
 4. 신체 정보 기반 유병률 분석
+
+### 제작 파트
+<img src="/page_es/parts.png" width="40%" height="30%" alt="page structure"></img>
+
+### 개인 식단 관리
+<img src="/page_es/personal_meal.jpg" width="40%" height="30%" alt="page structure"></img>
+
+### BMI 기반 개인 유병율 분석
+<img src="/page_es/personal_bmi.jpg" width="40%" height="30%" alt="page structure"></img>
